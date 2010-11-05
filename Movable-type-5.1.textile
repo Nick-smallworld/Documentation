@@ -17,7 +17,7 @@ h2. New and Updated
 ** API for custom objects
 * Sorting categories and folders
 * [[Better Website-Blog Integration]]
-* Managing every objects in the system level
+* Managing all objects in the system level
 * Improving Template Editor
 * Revamp permissions
 
