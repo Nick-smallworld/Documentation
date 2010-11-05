@@ -1,0 +1,31 @@
+This documentation is still in draft phase.
+
+h2. About
+
+* "Slideshare Presentation":http://www.slideshare.net/sakk/movable-type-51
+
+h2. Schedule
+
+* Starting Beta at the beginning of the year 2011
+
+h2. New and Updated
+
+* Listing Framework
+** More display options
+** Sort by columns
+** Custom filters
+** API for custom objects
+* Sorting categories and folders
+* [[Better Website-Blog Integration]]
+* Managing every objects in the system level
+* Improving Template Editor
+* Revamp permissions
+
+h2. Development
+
+* svn co http://code.sixapart.com/svn/movabletype/trunk
+
+h2. Resolved Issues
+
+
+h2. Known Issues
