@@ -1,4 +1,4 @@
-This documentation is still in draft phase.
+This documentation is still in draft.
 
 h2. About
 
