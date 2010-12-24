@@ -11,4 +11,4 @@ h2. Documentation
 
 h2. Events
 
-* [[Theme Contest 2010]]
+* [[Theme Contest  in Japan 2010]]
