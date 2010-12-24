@@ -12,6 +12,7 @@ by Takashi Hirasawa
 
 * "Download":http://mt.underhat.jp/theme/004/#themeDL
 * "Demo":http://mt.underhat.jp/theme/004/sample/
+* "Donation ware":http://mt.underhat.jp/license/
 
 h4. Required Plugins
 
@@ -29,6 +30,7 @@ by oscar
 
 * "Download":https://github.com/naoaki011/mt5-theme-mtvicuna-simple
 * "Demo":http://www.zelazny.mydns.jp/vicuna/
+* MIT License
 
 
 h4. Required Plugins
@@ -46,6 +48,7 @@ by Takashi Hirasawa
 
 * "Demo":http://mt.underhat.jp/theme/002/sample/
 * "Download":http://mt.underhat.jp/theme/002/#themeDL
+* "Donation ware":http://mt.underhat.jp/license/
 
 h4. Required Plugins
 
@@ -58,6 +61,7 @@ by yujiro
 
 * "Download":https://github.com/koikikukan/mt-theme-photolog
 * "Demo":http://www.koikikukan.com/photolog/
+* Freeware
 
 [[http://www.mtcontest.jp/entry/img/img_t_0011.jpg]]
 
@@ -88,6 +92,7 @@ by Hajime Fujimoto
 
 * "Download":http://hippos.jp/mt5bk4.zip
 * "Demo":http://food.hippos.jp/
+* "Creative Commons":http://creativecommons.org/licenses/by-sa/2.1/jp/
 
 h4. Required Plugins
 
@@ -113,6 +118,7 @@ by Takahiro
 
 * "Demo":http://demo.neo-shocker.com/
 * "Download":http://demo.neo-shocker.com/no9-theme.zip
+* Freeware
 
 h4. Required Plugins
 
@@ -129,6 +135,7 @@ by Takashi Hirasawa
 
 * "Demo":http://mt.underhat.jp/theme/001/sample/
 * "Download":http://mt.underhat.jp/theme/001/#themeDL
+* "Donation ware":http://mt.underhat.jp/license/
 
 h4. Required Plugins
 
@@ -161,6 +168,7 @@ by @Style
 
 * "Download":https://sv204.xserver.jp/~atstyle/atstyle.biz/theme_temp/free/mt5_html5/signup/
 * "Demo":http://atstyle.biz/mt5theme/html5/
+* Free for personal use
 
 h4. Required Plugins
 
@@ -175,6 +183,7 @@ by Toshihiro Gamo
 
 * "Download":http://hippos.jp/mt5bk2.zip
 * "Demo":http://lifeblog.hippos.jp/
+* "Creative Commons":http://creativecommons.org/licenses/by-sa/2.1/jp/
 
 h4. Required Plugins
 
@@ -189,6 +198,7 @@ by Toshihiro Gamo
 
 * "Download":http://hippos.jp/mt5bk3.zip
 * "Demo":http://sbc.hippos.jp/
+* "Creative Commons":http://creativecommons.org/licenses/by-sa/2.1/jp/
 
 h4. Required Plugins
 
@@ -196,9 +206,6 @@ h4. Required Plugins
 * MTIFFileExist
 * Mail Form
 * GetQueryParam
-
-
-
 
 
 h3. Photo Show
