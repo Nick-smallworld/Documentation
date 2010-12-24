@@ -11,4 +11,4 @@ h2. Documentation
 
 h2. Events
 
-* [[Theme Contest  in Japan 2010]]
+* [[Movable Type 5 Theme Contest 2010]]
