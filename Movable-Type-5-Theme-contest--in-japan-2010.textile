@@ -1,6 +1,6 @@
 h1. Movable Type 5 Theme Contest 2010
 
-The winners of Movable Type Theme contest in Japan. This page was translated from "the original post in Japanese":http://www.movabletype.jp/blog/mtcontest2010_awards.html.
+The winners of Movable Type Theme contest in Japan. This page was translated from "the original post":http://www.movabletype.jp/blog/mtcontest2010_awards.html.
 
 h2. First Prize
 
