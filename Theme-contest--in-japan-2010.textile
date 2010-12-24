@@ -1,5 +1,7 @@
 h1. MT Theme Contest 2010
 
+The winners of Movable Type Theme contest in Japan. This page was tranlated from "the original post in Japanese":http://www.movabletype.jp/blog/mtcontest2010_awards.html.
+
 h2. First Prize
 
 h3. MT underHat Piclog 
