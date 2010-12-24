@@ -8,3 +8,7 @@ h2. Releases
 h2. Documentation
 
 * [[Administrator's Guide]]
+
+h2. Events
+
+* [[Theme Contest 2010]]
