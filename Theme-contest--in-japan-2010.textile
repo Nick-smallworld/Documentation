@@ -1,10 +1,215 @@
 h1. MT Theme Contest 2010
 
-h2. Winners
+h2. First Prize
+
+h3. MT underHat Piclog 
+
+[[http://www.mtcontest.jp/entry/img/img_t_0009.jpg]]
+
+by Takashi Hirasawa
+
+* "Download":http://mt.underhat.jp/theme/004/#themeDL
+* "Demo":http://mt.underhat.jp/theme/004/sample/
+
+h4. Required Plugins
+
+* "MTTruncateURL 0.01":http://code.google.com/p/ogawa/wiki/MTTruncateURL_Plugin
+* "Sort Categories And Folders 1.11":http://www.h-fj.com/blog/archives/2009/09/24-190615.php
+* "PageBute 3.5.0":http://www.skyarc.co.jp/engineerblog/entry/2642.html
+
+h2. Second Prize
+
+h3. mt.Vicuna Simple 
+
+[[http://www.mtcontest.jp/entry/img/img_t_0016.jpg]]
+
+by oscar
+
+* "Download":https://github.com/naoaki011/mt5-theme-mtvicuna-simple
+* "Demo":http://www.zelazny.mydns.jp/vicuna/
+
+
+h4. Required Plugins
+
+None
+
+
+h2. Other Winners
+
+h3. MT underHat Canvas
+
+[[http://www.mtcontest.jp/entry/img/img_t_0002.jpg]]
+
+by Takashi Hirasawa
+
+* "Demo":http://mt.underhat.jp/theme/002/sample/
+* "Download":http://mt.underhat.jp/theme/002/#themeDL
+
+h4. Required Plugins
+
+* Sort Categories And Folders 1.11
+* PageBute 3.5.0 
+
+h3. Photolog
+
+by yujiro
+
+* "Download":https://github.com/koikikukan/mt-theme-photolog
+* "Demo":http://www.koikikukan.com/photolog/
+
+[[http://www.mtcontest.jp/entry/img/img_t_0011.jpg]]
+
+h4. Required Plugins
+
+none
+
+
+h3. TSUMIKI
+
+[[http://www.mtcontest.jp/entry/img/img_t_0004.jpg]]
+
+by nagomu
+
+* "Demo":http://tsumiki.nagomu.me/
+* "Download":http://tsumiki.nagomu.me/doc.html
+
+h4. Required Plugins
+
+None
+
+
+h3. YOKOSUKA FOODS
+
+[[http://www.mtcontest.jp/entry/img/img_t_0008.jpg]]
+
+by Hajime Fujimoto
+
+* "Download":http://hippos.jp/mt5bk4.zip
+* "Demo":http://food.hippos.jp/
+
+h4. Required Plugins
+
+* Action Streams
+* SortCatFld
+* NumericCustomFields
+* CKEditer
+* MailForm
+* GetQueryParam
+* SearchEntries
+* RealtimeRebuild
+* RebuildHelper
+
+
+
+h2. Other Participants
+
+h3. Number 9
+
+[[http://www.mtcontest.jp/entry/img/img_t_0003.jpg]]
+
+by Takahiro
+
+* "Demo":http://demo.neo-shocker.com/
+* "Download":http://demo.neo-shocker.com/no9-theme.zip
+
+h4. Required Plugins
+
+* jQuery
+* jQuery droppy plugin
+
+
 
 h3. MT underHat Chiwama
 
-* [[http://mt.underhat.jp/theme/001/ Download]]
-* [[http://mt.underhat.jp/theme/001/sample/ Demo]]
-
 [[http://www.mtcontest.jp/entry/img/img_t_0001.jpg]]
+
+by Takashi Hirasawa
+
+* "Demo":http://mt.underhat.jp/theme/001/sample/
+* "Download":http://mt.underhat.jp/theme/001/#themeDL
+
+h4. Required Plugins
+
+* Sort Categories And Folders 1.10
+* PageBute 3.4.3
+* CSVList 1.00 
+
+
+
+h3. qc-mt-simple
+
+by kimuray
+
+* "Download":http://mt-theme.quest-create.com/head-navi/post.html
+* "Demo":http://mt-theme.quest-create.com/
+
+[[http://www.mtcontest.jp/entry/img/img_t_0013.jpg]]
+
+h4. Required Plugins
+
+none
+
+
+
+h3. HTML5 for Movable Type 5
+
+[[http://www.mtcontest.jp/entry/img/img_t_0005.jpg]]
+
+by @Style
+
+* "Download":https://sv204.xserver.jp/~atstyle/atstyle.biz/theme_temp/free/mt5_html5/signup/
+* "Demo":http://atstyle.biz/mt5theme/html5/
+
+h4. Required Plugins
+
+none
+
+
+h3. Life Blog
+
+[[http://www.mtcontest.jp/entry/img/img_t_0006.jpg]]
+
+by Toshihiro Gamo
+
+* "Download":http://hippos.jp/mt5bk2.zip
+* "Demo":http://lifeblog.hippos.jp/
+
+h4. Required Plugins
+
+* Action Streams for Movable Type 5
+
+
+h3. SBC Corp
+
+[[http://www.mtcontest.jp/entry/img/img_t_0007.jpg]]
+
+by Toshihiro Gamo
+
+* "Download":http://hippos.jp/mt5bk3.zip
+* "Demo":http://sbc.hippos.jp/
+
+h4. Required Plugins
+
+* SortCatFld
+* MTIFFileExist
+* Mail Form
+* GetQueryParam
+
+
+
+
+
+h3. Photo Show
+
+by capypara
+
+* "Download":http://www.animal-party.org/theme/
+* "Demo":http://www.animal-party.org/
+
+[[http://www.mtcontest.jp/entry/img/img_t_0010.jpg]]
+
+h4. Required Plugins
+
+None
+
+
