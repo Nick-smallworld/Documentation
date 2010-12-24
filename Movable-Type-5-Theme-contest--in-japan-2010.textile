@@ -28,7 +28,7 @@ h3. mt.Vicuna Simple
 
 by oscar
 
-* "Download":https://github.com/naoaki011/mt5-theme-mtvicuna-simple
+* "Download":https://github.com/naoaki011/mt5-theme-mtvicuna-simple (from Github)
 * "Demo":http://www.zelazny.mydns.jp/vicuna/
 * MIT License
 
@@ -59,7 +59,7 @@ h3. Photolog
 
 by yujiro
 
-* "Download":https://github.com/koikikukan/mt-theme-photolog
+* "Download":https://github.com/koikikukan/mt-theme-photolog  (from Github)
 * "Demo":http://www.koikikukan.com/photolog/
 * Freeware
 
