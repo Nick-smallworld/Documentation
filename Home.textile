@@ -1,13 +1,14 @@
 Welcome to the Documentation wiki !
-We are currently migrating the existing wiki from http://wiki.movabletype.org/ and http://bugs.movabletype.org/default.asp?W5 to here.
+We are currently migrating the existing wiki from [[wiki.movabletype.org|http://wiki.movabletype.org/]] and [[FogBugz|http://bugs.movabletype.org/default.asp?W5]]to here.
 
 h2. Releases
 
 * [[Movable Type 5.1]]
 
-h2. Documentation
+h2. Developer's guide
 
-* [[Administrator's Guide]]
+* [[English|English developer's guide]]
+* [[Japanese|Japanese developer's guide]]
 
 h2. Events
 
