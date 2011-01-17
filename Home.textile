@@ -7,8 +7,8 @@ h2. Releases
 
 h2. Developer's guide
 
-* [[English|English developer's guide]]
-* [[Japanese|Japanese developer's guide]]
+* [[English|English developer guide]]
+* [[Japanese|Japanese developer guide]]
 
 h2. Events
 
