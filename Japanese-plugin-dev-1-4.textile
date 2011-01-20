@@ -27,6 +27,6 @@ Movable Typeの管理画面にログインし、自分のユーザー情報の�
 <__trans phrase="Close">
 </pre>
 
-これは「"Close"というフレーズに対応した文言を辞書ファイルから読み込み、&lt;__trans&gt; タグごと書き換えなさい」という指示になります。この"&lt;__trans&gt;"タグは以前は"&lt;MT_TRANS phrase="Close"&gt;"のように書いていました。"&lt;MT_TRANS&gt;"タグも使えますが、MT5のお作法として"&lt;__trans&gt;"を使って行きましょう。
+これは「"Close"というフレーズに対応した文言を辞書ファイルから読み込み、&lt;&#95;&#95;trans&gt; タグごと書き換えなさい」という指示になります。この"&lt;&#95;&#95;trans&gt;"タグは以前は"&lt;MT&#95;TRANS phrase="Close"&gt;"のように書いていました。"&lt;MT&#95;TRANS&gt;"タグも使えますが、MT5のお作法として"&lt;&#95;&#95;trans&gt;"を使って行きましょう。
 
 各言語用の辞書ファイルは"$MT_DIR/lib/MT/L10N"以下に配置されます。
