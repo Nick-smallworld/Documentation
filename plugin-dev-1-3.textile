@@ -1,0 +1,72 @@
+h1. Config Directiveについて
+
+h2. はじめに
+
+今回は、mt-config.cgiなどで設定する設定項目（Config Directive）について解説し、プラグインで追加する方法についても解説します。
+
+h2. Config Directiveとは？
+
+誤解を恐れず一言で表すと「mt-config.cgiで設定できる項目」になります。
+
+もう少し言葉を足すと、Movable Typeの設定で「環境変数」と呼ばれ、mt-config.cgiで設定を行います。
+
+プラグインで利用する場合、未設定のConfig Directiveを呼び出すとエラーになってしまいます。そこで、Config Directiveの追加が必要になります。
+
+h2. Config Directiveの追加
+
+Config Directiveの追加はconfig.yaml内で以下のように行います。 
+
+<pre>
+config_settings:
+    MyImageURL:
+        default: http://www.example.com/images/foo.jpg
+</pre>
+
+Config Directiveは、default以外にも以下のような値を取ります。
+
+* path
+** pathはブーリアン値（0 or 1）を取ります。1が指定された場合、相対パスで指定されたConfig Directiveを自動的に絶対パスに読み替えます。 
+
+<pre>
+config_settings:
+    MyLogPath:
+        default: /var/log/mt/errors.log
+        path: 1
+</pre>
+
+* handler
+** handlerは静的（static）なdefaultでは問題がある場合や、明示的に動的なdefault値を設定できるようにするためのものです。 
+
+<pre>
+config_settings:
+    MyLogPath:
+        handler: $Example::Example::Plugin::MyLogPath
+        path: 1
+</pre>
+
+* alias
+** aliasを利用すると既にあるConfig Directiveのエイリアスとして指定できます。 
+
+<pre>
+config_settings:
+    MyErrorLogPath:
+        alias: MyLogPath
+</pre>
+
+配列、ハッシュの場合、データの取得方法は以下のようになります。
+
+<pre>
+use MT;
+my $mt = new MT;
+my $scalar = $mt->config->ScalarConfig;
+my @array = $mt->config->ArrayConfig;
+my $hash = $mt->config->HashConfig;
+</pre>
+
+h2. まとめ
+
+今回はConfig Directiveについてご紹介しました。後々プラグインを作成するようになるとプラグインの設定をmt-config.cgiで行いたい場合が出てきます。これらは、管理画面のプラグインの設定とは毛色の違う設定になります。管理画面でプラグインの設定をする場合は、テンプレートなどを用意する必要があるため、mt-config.cgiで設定できる方が楽といった面もあります。
+
+ただし、Config Directiveで指定するのは基本設定を変更しない静的(static)なものを対象にするのが望ましいため、プラグインの挙動を動的に変えるためにConfig Directiveを利用するのは、お勧めできません。
+
+今回のConfig Directiveもそうですが、Movable Typeには色々な場面で設定が変更できます。例えばStyleCatcherなどのプラグインやテーマによって拡張できるものもあります。要所要所でベストな設定方法を取っておくとMovable Type本体のバージョンアップや、プラグインのバージョンアップ時に恩恵を受けられることも少なくありません。お作法を勉強してクールなプラグインを書いていきましょう！！
