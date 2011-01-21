@@ -378,3 +378,127 @@ $MT_DIR/
          |＿01-tags.t
 </pre>
 
+h2. テストの実行
+
+では、作成したプラグインに対してテストを行います。
+
+h3. 00-compile.t
+
+<pre>
+$ cd $MT_DIR
+$ perl plugin/MyPlugin03/t/00-compile.t
+perl plugins/MyPlugin03/t/00-compile.t 
+
+1..5
+ok 1 - MyPlugin03 plugin loaded correctry
+ok 2 - require MyPlugin03::L10N;
+ok 3 - require MyPlugin03::L10N::ja;
+ok 4 - require MyPlugin03::L10N::en_us;
+ok 5 - require MyPlugin03::Tags;
+</pre>
+
+h3. 01-tags.t
+
+<pre>
+$ perl plugins/MyPlugin03/t/01-tags.t
+1..7
+ok 1 - 'blog-name' template found
+ok 2 - Test blog loaded
+ok 3 - Test entry loaded
+
+ok 4 - perl test 1
+Hello, world!
+ok 5 - perl test 2
+hellow, world!
+ok 6 - perl test 3
+ok 7 - ok - php test 1 ok - php test 2 ok - php test 3 
+</pre>
+
+h3. proveコマンドでのテスト
+
+<pre>
+$ prove plugins/MyPlugin03/t/*.t
+plugins/MyPlugin03/t/00-compile....ok                                        
+plugins/MyPlugin03/t/01-tags.......ok                                        
+All tests successful.
+Files=2, Tests=12, 25 wallclock secs (14.38 cusr +  4.03 csys = 18.41 CPU)
+</pre>
+
+h3. 明示的にエラーを起こさせる
+
+上記のテストは全て成功しました。テストプログラムを修正して明示的にエラーを起こさせる事も可能ですが、ここではJSONのテスト情報を故意に書き換えエラーを発生させてみます。
+
+<pre>
+書き換え前
+
+#===== Edit here
+my $test_json = <<'JSON';
+[
+{ "r" : "1", "t" : "", "e" : ""},
+{ "r" : "1", "t" : "<MTHelloWorld>", "e" : "Hello, world!"},
+{ "r" : "1", "t" : "<MTHelloWorld lower_case=\"1\">", "e" : "hello, world!"}
+]
+JSON
+#=====
+
+書き換え後
+
+#===== Edit here
+my $test_json = <<'JSON';
+[
+{ "r" : "1", "t" : "", "e" : ""},
+{ "r" : "1", "t" : "<MTHelloWorld>", "e" : "Hello, World!"},
+{ "r" : "1", "t" : "<MTHelloWorld upper_case=\"1\">", "e" : "hello, world!"}
+]
+JSON
+#=====
+</pre>
+
+<pre>
+実行結果
+
+$ perl plugins/MyPlugin03/t/01-tags.t 
+1..7
+ok 1 - 'blog-name' template found
+ok 2 - Test blog loaded
+ok 3 - Test entry loaded
+
+ok 4 - perl test 1
+Hello, world!
+not ok 5 - perl test 2
+#   Failed test 'perl test 2'
+#   in plugins/MyPlugin03/t/01-tags.t at line 88.
+#          got: 'Hello, world!'
+#     expected: 'Hello, World!'
+HELLO, WORLD!
+not ok 6 - perl test 3
+#   Failed test 'perl test 3'
+#   in plugins/MyPlugin03/t/01-tags.t at line 88.
+#          got: 'HELLO, WORLD!'
+#     expected: 'hello, world!'
+ok 7 - ok - php test 1 not ok - php test 2\#     expected: Hello, World!\#          got: Hello, world!not ok - php test 3\#     expected: hello, world!\#          got: HELLO, WORLD!
+# Looks like you failed 2 tests of 7.
+</pre>
+
+結果を見ると、以下のエラーがPerlとPHP共に発生した事がわかります。
+
+# test 2 で"Hello, World!"が期待されたのに"Hello, world!"が戻ってきた
+# test 3 で"hello, world!"が期待されたのに"HELLO, WORLD!"が戻ってきた
+
+このように不具合箇所を修正していく事でバグの少ないコードを書いていく事ができます。
+
+h2. まとめ
+
+今回はボリュームが大きくなりましたがテストドリブンのプラグイン開発をする理由を実感していただけたでしょうか？
+
+テストドリブン開発でテストが通るようになっても、テストケースの作成の仕方しだいでは潜在的なバグが残る可能性はあります。しかし単体テストや複合テストのテストケースを先に作成する事で単純なバグの大半は修正可能になるはずです。
+
+またテスト中にテストケースが誤っていた事が分かったとします。その場合、単純にテストケースを変更してテストを通す事だけに注力するだけでなく、なぜエラーが発生したかを再検討してください。実はテストケースは正しく、潜在バグがそこに眠っているかもしれないからです。
+
+テストが終了しリリースの際には、この"t"ディレクトリは含まずにリリースしてください。なぜなら、この"t"ディレクトリは開発者しか利用しないものだからです。
+
+このドキュメントでテストドリブン開発とPHPプラグイン開発に興味を持っていただければ幸いです。
+
+h2. プラグインダウンロード
+
+MyPlugin03.zip(5.87KB)
