@@ -1,0 +1,71 @@
+h1. グローバル・モディファイアプラグインの開発について
+
+h2. はじめに
+
+今回は具体的なプラグインとしてグローバル・モディファイアプラグインを作成していく手順を解説します。
+
+h2. グローバル・モディファイアとは？
+
+グローバル・モディファイアは与えられた文字列に対して、すべて大文字に変換する、一部分にURLを付加するなどの加工処理を行います。
+
+グローバル・モディファイアは、利用する際に'&lt;MTEntryTitle lower_case="1"&gt;'といった形で、タグに対して付与し利用します。
+
+h2. プラグインの仕様とテストケースの作成
+
+プラグインの仕様を決定し、それを元にテストケースの作成を作成しましょう。
+
+h3. プラグインの仕様
+
+# タグによって与えられた文章を "rot13暗号":http://ja.wikipedia.org/wiki/ROT13 を用いて暗号化するグローバル・モディファイアを実装する。
+# 呼び出し時の引数が1のときのみ動作する
+
+h3. テストケース（00-compile.t）
+
+前回行ったMyPlugin03の内容と基本的に同じです。
+
+<pre>
+use strict;
+use lib qw( t/lib lib extlib );
+use warnings;
+use MT;
+use Test::More tests => 5;
+use MT::Test;
+
+ok(MT->component ('MyPlugin04'), "MyPlugin04 plugin loaded correctry");
+
+require_ok('MyPlugin04::L10N');
+require_ok('MyPlugin04::L10N::ja');
+require_ok('MyPlugin04::L10N::en_us');
+require_ok('MyPlugin04::Tags');
+
+1;
+</pre>
+
+h3. テストケース（01-tags.t）
+
+前回行ったテストからJSON部分を修正し利用します。エントリーを１件取得し、そのタイトルに対してrot13暗号をかけます。
+
+テストするのは以下の４項目です。 
+
+# 空文字列をインプットすると、空文字列が戻ってくる。
+# エントリー１件を取得し、そのタイトル"A Rainy Day"が戻ってくる。
+# エントリー１件を取得し、そのタイトル"A Rainy Day"をrot13暗号化しない"A Rainy Day"が戻ってくる。(rot13="0")
+# エントリー１件を取得し、そのタイトル"A Rainy Day"をrot13暗号化した"N Enval Qnl"が戻ってくる。(rot13="1")
+
+<pre>
+（前略）
+
+#===== Edit here
+my $test_json = <<'JSON';
+[
+{ "r" : "1", "t" : "", "e" : ""},
+{ "r" : "1", "t" : "<MTEntries lastn=\"1\"><MTEntryTitle></MTEntries>", "e" : "A Rainy Day"},
+{ "r" : "1", "t" : "<MTEntries lastn=\"1\"><MTEntryTitle rot13=\"0\"></MTEntries>", "e" : "A Rainy Day"},
+{ "r" : "1", "t" : "<MTEntries lastn=\"1\"><MTEntryTitle rot13=\"1\"></MTEntries>", "e" : "N Enval Qnl"}
+]
+JSON
+#=====
+
+（後略）
+</pre>
+
