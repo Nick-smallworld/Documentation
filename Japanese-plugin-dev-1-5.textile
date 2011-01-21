@@ -476,7 +476,8 @@ not ok 6 - perl test 3
 #   in plugins/MyPlugin03/t/01-tags.t at line 88.
 #          got: 'HELLO, WORLD!'
 #     expected: 'hello, world!'
-ok 7 - ok - php test 1 not ok - php test 2\#     expected: Hello, World!\#          got: Hello, world!not ok - php test 3\#     expected: hello, world!\#          got: HELLO, WORLD!
+ok 7 - ok - php test 1 not ok - php test 2\#     expected: Hello, World!\#          
+got: Hello, world!not ok - php test 3\#     expected: hello, world!\#          got: HELLO, WORLD!
 # Looks like you failed 2 tests of 7.
 </pre>
 
