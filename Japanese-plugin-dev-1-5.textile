@@ -1,0 +1,380 @@
+h1. テストドリブンでのプラグインの開発について
+
+h2. はじめに
+
+テストドリブンでのプラグイン開発と、それに伴ったファンクションタグプラグイン（Perl, PHP）を作成していく手順を解説します。
+
+h2. ファンクションタグとは？
+
+ファンクションタグは、MTタグの中でも値の出力を担っている部分です。"&lt;MTEntryTitle&gt;"などもファンクションタグの一つです。タグに与えられた情報、タグから得られた情報から文字列を作成し出力します。
+
+今回は単純なファンクションタグを作成します。
+
+h2. テストドリブン開発とは？
+
+従来の開発手法ではコードを書き終わってから結合テストを行うのが主でした。しかし、この手法ではエラーが出た際に問題箇所の特定がしづらく、バグの温床となってしまう場面が多々ありました。
+
+そこで、仕様書からテストケースを先に書いてしまい、単体テストや結合テストを行ってテストが正しく成功すること（もしくは明示的に失敗させること）でコードの確実性を持たせる手法として「テストドリブン開発」または「テストファースト開発」という開発手法が確立されました。
+
+Movable Typeの開発も同様にテストケースを書きテストを行っています。
+
+そこで、プラグイン開発でもテストドリブン開発を行って行きましょう。
+
+h2. プラグインの仕様とテストケースの作成
+
+h3. プラグインの仕様
+
+プラグイン（MyPlugin03）の仕様ですが、ここでは簡単に"&lt;MTHelloWorld&gt;"タグを書くと"Hello, world!"と表示されるファンクションタグとします。
+
+<pre>
+<MTHelloWorld> => Hello, world!
+</pre>
+
+h3. テスト環境の準備
+
+テストファイルを書く前にテスト環境の準備をします。テストする環境は仮想環境などを利用し、本番環境では絶対に行わないで下さい。理由はセキュリティ的に問題が発生する可能性があることと、テスト実行時にデータベースのリフレッシュを行うため本番データベースに負荷をかけないようにするためです。この後はMovable TypeがCentOS5で、既に動作するよう設定済みとして解説します。
+
+* Six Apartのサイトからテストスクリプト群を、Movable Typeの配置場所（$MT_DIRとします）配下にダウンロード 
+
+<pre>
+$ cd $MT_DIR
+$ svn co http://code.sixapart.com/svn/movabletype/trunk/t/
+</pre>
+
+* Perlモジュール（Test::Deep）のインストール
+
+<pre>
+# cpan Test::Deep
+
+  以下のモジュールもインストールします（cpanコマンドが自動的にインストールするかどうかを聞いてきます）
+
+    Test::Tester
+    Test::NoWarnings
+    Test::Builder
+</pre>
+
+* DBの準備
+
+プラグインテスト用のデータベースを作成します
+
+<pre>
+mysql> CREATE DATABASE mt_test;
+mysql> GRANT ALL PRIVILEGES ON mt_test.* TO mt@localhost;
+</pre>
+
+* php-mysql と php-gd をyumでインストール 
+
+<pre>
+# yum install php-mysql php-gd
+</pre>
+
+h3. テストファイルの配置位置など
+
+テストケースを配置するのは対象とするプラグインディレクトリの直下の"t"ディレクトリになります。
+
+<pre>
+例）00-compile.t, 01-tags.t
+
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin03/
+      |__ t
+         |＿ 00-compile.t
+         |＿ 01-tags.t
+</pre>
+
+h3. テストケース１（必要クラスのロードテスト, 00-compile.t）の作成
+
+プラグインに必要なクラスがロードされているか確認するためのテストケースを作成します。
+
+<pre>
+use strict;
+use lib qw( t/lib lib extlib );
+use warnings;
+use MT;
+use Test::More tests => 5;
+use MT::Test;
+
+ok(MT->component ('MyPlugin03'), "MyPlugin03 plugin loaded correctry");
+
+require_ok('MyPlugin03::L10N');
+require_ok('MyPlugin03::L10N::ja');
+require_ok('MyPlugin03::L10N::en_us');
+require_ok('MyPlugin03::Tags');
+
+1;
+</pre>
+
+このテストケースでは以下のテストを行います。
+
+# MyPlugin03がプラグインとして正しくロードされているか？
+# MyPlugin03::L10N クラスが正しくrequireされているか？
+# MyPlugin03::L10N::ja クラスが正しくrequireされているか？
+# MyPlugin03::L10N::en_us クラスが正しくrequireされているか？
+# MyPlugin03::L10N::Tags クラスが正しくrequireされているか？
+
+テストの個数が5件なので"use Test::More tests =&gt; 5;"と指定しています。 
+
+h3. テストケース２（タグの挙動テスト, 01-tags.t）の作成
+
+与えられたMTタグと、それに対して出される結果をJSON形式でテストケースファイル内に表記します。（"#===== Edit here"の場所）
+
+JSONの一行が一つのテストになっており以下のテストを行います。
+
+# 入力が何も無い場合、レスポンスも無い（空）
+# 入力が"&lt;MTHelloWorld&gt;"だったら、レスポンスは"Hello, world!"
+# 入力が"&lt;MTHelloWorld lower_case="1"&gt;だったら、全て小文字になりレスポンスは"hello, world!"
+
+注意） 
+
+* テストをスキップする行がある場合({"r" : "0",）のように記述してください。
+* JSONではデータの最終行に","をつけませんのでご注意ください。("hello, world!"} &lt;= コンマなし）
+* 今後のテストケースは、このJSONの部分を変更するだけで再利用できます。
+
+<pre>
+use strict;
+use warnings;
+use IPC::Open2;
+
+BEGIN {
+    $ENV{MT_CONFIG} = 'mysql-test.cfg';
+}
+
+$| = 1;
+
+use lib 't/lib', 'lib', 'extlib';
+use MT::Test qw(:db :data);
+use Test::More;
+use JSON -support_by_pp;
+use MT;
+use MT::Util qw(ts2epoch epoch2ts);
+use MT::Template::Context;
+use MT::Builder;
+
+require POSIX;
+
+my $mt = MT->new();
+
+#===== Edit here
+my $test_json = <<'JSON';
+[
+{ "r" : "1", "t" : "", "e" : ""},
+{ "r" : "1", "t" : "<MTHelloWorld>", "e" : "Hello, world!"},
+{ "r" : "1", "t" : "<MTHelloWorld lower_case=\"1\">", "e" : "hello, world!"}
+]
+JSON
+#=====
+
+$test_json =~ s/^ *#.*$//mg;
+$test_json =~ s/# *\d+ *(?:TBD.*)? *$//mg;
+
+（後略）
+</pre>
+
+h3. テストの実行方法
+
+まだプラグインが出来ていませんが、この状態でテストをするとどうなるのか試してみましょう。
+
+<pre>
+  $ cd $MT_DIR
+  $ perl plugins/MyPlugin03/t/00-compile.t 
+  1..5
+  not ok 1 - MyPlugin03 plugin loaded correctry
+  #   Failed test 'MyPlugin03 plugin loaded correctry'
+  #   in plugins/MyPlugin03/t/00-compile.t at line 11.
+  not ok 2 - require MyPlugin03::L10N;
+  #   Failed test 'require MyPlugin03::L10N;'
+  #   in plugins/MyPlugin03/t/00-compile.t at line 13.
+  #     Tried to require 'MyPlugin03::L10N'.
+  #     Error:  Can't locate MyPlugin03/L10N.pm in @INC （以下略）
+
+  $ perl plugins/MyPlugin03/t/01-tags.t 
+  1..7
+  ok 1 - 'blog-name' template found
+  ok 2 - Test blog loaded
+  ok 3 - Test entry loaded
+  
+  ok 4 - perl test 1
+  # -- error compiling: <MTHelloWorld> at line 1 is unrecognized.
+  Use of uninitialized value in concatenation (.) or string at plugins/MyPlugin03/t/01-tags.t line 87.
+  （以下略）
+</pre>
+
+何も実装されていないので、ブログの読み込みなど一部を除いて全てエラーになっています。
+
+また、テストケースを直接Perlで実行する方法と、proveコマンドを使う方法の２つがあります。proveコマンドはPerlで実行した時よりも個々の情報出力は少なめですが、実行結果を数値で表示してくれます。エラーが出るうちはperlコマンドでテストを行い、ある程度エラーが出なくなったらproveコマンドに移行するのが良いでしょう。proveコマンドは複数ファイルを指定して実行が可能です。
+
+<pre>
+  $ prove plugins/MyPlugin03/t/*.t
+  plugins/MyPlugin03/t/00-compile....NOK 1                                     
+  #   Failed test 'MyPlugin03 plugin loaded correctry'
+  #   in plugins/MyPlugin03/t/00-compile.t at line 11.
+  plugins/MyPlugin03/t/00-compile....NOK 2                                     
+  #   Failed test 'require MyPlugin03::L10N;'
+  #   in plugins/MyPlugin03/t/00-compile.t at line 13.
+  #     Tried to require 'MyPlugin03::L10N'.
+  （中略）
+  plugins/MyPlugin03/t/01-tags.......dubious                                   
+          Test returned status 2 (wstat 512, 0x200)
+  DIED. FAILED tests 5-6
+          Failed 2/7 tests, 71.43% okay
+  Failed Test                       Stat Wstat Total Fail  Failed  List of Failed
+  -------------------------------------------------------------------------------
+  plugins/MyPlugin03/t/00-compile.t    5  1280     5    5 100.00%  1-5
+  plugins/MyPlugin03/t/01-tags.t       2   512     7    2  28.57%  5-6
+  Failed 2/2 test scripts, 0.00% okay. 7/12 subtests failed, 41.67% okay.
+</pre>
+
+h2. ファンクションタグプラグインの開発(Perl)
+
+前章で作成したMyPlugin02を元にプラグインを作成します。
+
+h3. config.yaml
+
+&lt;MTHelloWorld&gt;タグの追加には以下のように"tags"=&gt; "function"=&gt; "タグ名" =&gt; $プラグイン名::ハンドラ名 を記述します。
+
+<pre>
+
+id: MyPlugin03
+key: MyPlugin03
+name: <__trans phrase="Sample Plugin Test Driven">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin03::L10N
+
+tags:
+    function:
+        HelloWorld: $MyPlugin03::MyPlugin03::Tags::_hdlr_hello_world
+</pre>
+
+h3. L10N.pm
+
+MyPlugin02と比べてパッケージ名だけが変更になっています。
+
+<pre>
+package MyPlugin03::L10N;
+use strict;
+use base 'MT::Plugin::L10N';
+
+1;
+</pre>
+
+h3. L10N/en_us.pm
+
+パッケージ、クラス名、辞書の変更などが行われています。
+
+<pre>
+package MyPlugin03::L10N::en_us;
+
+use strict;
+use base 'MyPlugin03::L10N';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    '_PLUGIN_DESCRIPTION' => 'Sample Test Driven test plugin',
+    '_PLUGIN_AUTHOR' => 'Plugin author',
+);
+
+1;
+</pre>
+
+h3. L10N/ja.pm
+
+L10N/en_us.pmと同じく、パッケージ名、クラス名、辞書の変更などが行われています。
+
+<pre>
+package MyPlugin03::L10N::ja;
+
+use strict;
+use base 'MyPlugin03::L10N::en_us';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    'Sample Plugin Test Driven' => 'サンプルプラグイン テストドリブン',
+    '_PLUGIN_DESCRIPTION' => 'テストドリブン テストプラグイン',
+    '_PLUGIN_AUTHOR' => 'プラグイン作者',
+);
+
+1;
+</pre>
+
+h3. Tags.pm
+
+新規で作成されるパッケージです。ハンドラ"_hdlr_Hello_world"が実装されています。"&lt;MTHelloWorld&gt;"タグにより、このハンドラが呼ばれ戻り値として"Hello, world!"が返りブログ記事などに表示されます。
+
+<pre>
+package MyPlugin03::Tags;
+use strict;
+
+sub _hdlr_hello_world {
+    my ($ctx, $args) = @_;
+
+    return "Hello, world!";
+}
+
+1;
+</pre>
+
+h3. ファイルの配置
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin03/
+      |__ config.yaml
+      |__ lib/
+      |  |＿ MyPlugin03/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |＿ Tags.pm
+      |__ t/
+         |＿00-compile.t
+         |＿01-tags.t
+</pre>
+
+h2. ファンクションタグプラグインの開発(PHP)
+
+ついPerl版のプラグインの作成で終わってしまいがちですが、ダイナミックパブリッシングに対応するためにもPHPのプラグインも同時に開発しましょう。
+
+h3. function.mthelloworld.php
+
+ファイル名はファンクションタグである事と&lt;MTHelloWorld&gt;タグである事から、 function.mthelloworld.phpとなります。
+
+<pre>
+<?php
+    function smarty_function_mthelloworld($args, &$ctx) {
+        return 'Hello, world!';
+    }
+?>
+</pre>
+
+function名はsmarty記法にのっとってsmarty_function_mthelloworldとなります。
+
+ファンクションタグとして&lt;MTHelloWorld&gt;が呼ばれると、このfunctionが"Hello, world!"を返し、ブログ記事などにダイナミックに表示されます。
+
+h3. ファイルの配置
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin03/
+      |__ config.yaml
+      |__ lib/
+      |  |＿ MyPlugin03/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |＿ Tags.pm
+      |__ php/
+      |  |＿function.mthelloworld.php
+      |__ t/
+         |＿00-compile.t
+         |＿01-tags.t
+</pre>
+
