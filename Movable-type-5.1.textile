@@ -6,7 +6,25 @@ h2. About
 
 h2. Schedule
 
-* Starting Beta at the beginning of the year 2011
+|_. Sprint |_. Period |_. Team's Goal |_. Eng/UI |_. QA |_. I18N/L10N |_. Product |_. Status |
+| m10 | 12/14-12/28 |  | Clean up code | Update test suites<br />Bug fix confirmation |  |  | Done |
+| m11 | 1/4-1/14 |  | Github migration<br />Update build scripts<br />Term Standardization<br />Update nightly builds script<br />Update copyright year| Update test suites<br />Bug fix confirmation |  |  | Done |
+| m12 | 1/17-1/28 |  | Prepare developer guides (1)<br />Clean up code | Smoke test<br />Bug fix confirmation | English UI check (1) | Prepare beta user guide (1) | In Progress  |
+| m13 (Beta 1) | 1/31-2/10 | *Beta Ready* | Prepare developer guides (1)<br />Clean up code | Smoke test<br />Verify Beta builds | JA L10N (1) | Prepare beta user guide (1) |  |
+| m14 (Beta 2) | 2/14-2/25 |  | Clean up code | Regression test<br />Upgrade test<br />Security audit (1) |  | Publish beta post |  |
+| m15 (Beta 3) | 2/28-3/11 | English string freeze | Fix release blockers | Regression test | English UI check (2) |  |  |
+| m16 (Beta 4)  | 3/14-3/25 | L10N string freeze | Fix release blockers | Regression test<br />Security audit (2) | JA L10N (2)<br />EMEA L10N | |  |
+| m17 (RC1) | 3/28-4/8 | *Code Freeze* | Complete development | Regression test |  | Prepare user guides |  |
+| m18 (RC2) | 4/11-4/15 |  | Prepare developer guide (2) |  |  | |  |
+| m19 (RC3) | 4/18-4/22 | Release Preparation | Publish developer guides (2)<br /> | Verify production builds |  | Update user guides |  |
+| m20 (Final) | 4/25-5/11 | *Ship it !!!* |  |  |  |  |  |
+
+
+
+
+
+
+
 
 h2. New and Updated
 
