@@ -1,4 +1,3 @@
-
 h2. About
 
 * "Introducing Movable Type 5.1 (Slideshare presentation)":http://www.slideshare.net/sakk/introducing-movable-type-51  (January 29, 2011)
@@ -34,13 +33,13 @@ h2. New in 5.1
 ** display any data in display options
 ** click column to sort the list
 ** "select all" from multi pages
-** filter by any column ("FogBugz 78767: FR: Improved Comment Queue Management":http://bugs.movabletype.org/default.asp?78767)
+** filter by any column ("78767:":http://bugs.movabletype.org/default.asp?78767)
 ** join multiple filters
 ** save as custom filters
 ** be available for entries, pages, comments, trackbacks, websites, blogs, users, permissions, and etc
 ** API for custom objects
 * [[Better Website-Blog Integration]]
-** Managing all contents at the system level ("FogBugz 103873: System level comment administration":http://bugs.movabletype.org/default.asp?103873)
+** Managing all contents at the system level ("103873":http://bugs.movabletype.org/default.asp?103873)
 ** mt:Entries include_blogs="all" *exclude_blogs="N"* attribute ("104098":http://bugs.movabletype.org/default.asp?104098)
 ** mt:Include parent="1" attribute
 ** -Create a blog without website- postponed to 5.2
@@ -48,7 +47,7 @@ h2. New in 5.1
 ** display code hint for Custom Fields in the listing
 ** "Include Templates" widget in Edit Template
 ** Syntax hilight on/off in Edit Template ("104129":http://bugs.movabletype.org/default.asp?104129)
-** "Publishing Status" pulldown in Create Entry ("FogBugz 104998: FR: Usability improvement to save entry as a draft":http://bugs.movabletype.org/default.asp?104998)
+** "Publishing Status" pulldown in Create Entry ("104998":http://bugs.movabletype.org/default.asp?104998)
 * Support modern browsers
 ** Internet Explorer 8
 ** Safari latest
