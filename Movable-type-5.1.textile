@@ -1,7 +1,7 @@
 
 h2. About
 
-* "Slideshare Presentation":http://www.slideshare.net/sakk/movable-type-51
+* "Introducing Movable Type 5.1 (Slideshare presentation)":http://www.slideshare.net/sakk/introducing-movable-type-51  (January 29, 2011)
 
 h2. Schedule
 
@@ -9,8 +9,11 @@ h2. Schedule
 | m10 | 12/14-12/28 |  | Clean up code | Update test suites<br />Bug fix confirmation |  |  | Done |
 | m11 | 1/4-1/14 |  | Github migration<br />Update build scripts<br />Term Standardization<br />Update nightly builds script<br />Update copyright year| Update test suites<br />Bug fix confirmation |  |  | Done |
 | m12 | 1/17-1/28 |  | Prepare developer guides (1)<br />Clean up code | Smoke test<br />Bug fix confirmation | English UI check (1) | Prepare beta user guide (1) | In Progress  |
-| m13 (Beta 1) | 1/31-2/10 | *Beta Ready* | Prepare developer guides (1)<br />Clean up code | Smoke test<br />Verify Beta builds | JA L10N (1) | Prepare beta user guide (1) |  |
-| m14 (Beta 2) | 2/14-2/25 |  | Clean up code | Regression test<br />Upgrade test<br />Security audit (1) |  | Publish beta post |  |
+| m13 (Beta 1) | 1/31-2/11 | *Beta Ready* | Prepare developer guides (1)<br />Clean up code | Smoke test<br />Verify Beta builds | JA L10N (1) | Prepare beta user guide (1) |  |
+| | 2/11 | *Review pull/patch requests (1)*  | Review patches | Bug triage | | | |
+| | 2/15 | *Release Beta 1*  |  | | |  Publish beta post | |
+| m14 (Beta 2) | 2/14-2/25 |  | Clean up code | Regression test<br />Upgrade test<br />Security audit (1) |  | |  |
+| | 2/25 | *Review pull/patch requests (2)*<br />Review Beta feedback  | Review patches | Bug triage | | | |
 | m15 (Beta 3) | 2/28-3/11 | English string freeze | Fix release blockers | Regression test | English UI check (2) |  |  |
 | m16 (Beta 4)  | 3/14-3/25 | L10N string freeze | Fix release blockers | Regression test<br />Security audit (2) | JA L10N (2)<br />EMEA L10N | |  |
 | m17 (RC1) | 3/28-4/8 | *Code Freeze* | Complete development | Regression test |  | Prepare user guides |  |
@@ -21,22 +24,36 @@ h2. Schedule
 
 
 
+h2. New in 5.1
 
-
-
-
-h2. New and Updated
-
-* Listing Framework
-** More display options
-** Sort by columns
-** Custom filters
+* Drag and drop to sorting categories and folders
+** sort_by="user_custom" attribute for mt:TopLevelCategories, mt:SubCategories, mt:CategoryNext, mt:CategoryPrevious
+* Drag and drop to change the order of input fileds in "Edit Entry" ("104074":http://bugs.movabletype.org/default.asp?104074)
+* The new listing framework to
+** load page faster by Ajax
+** display any data in display options
+** click column to sort the list
+** "select all" from multi pages
+** filter by any column ("FogBugz 78767: FR: Improved Comment Queue Management":http://bugs.movabletype.org/default.asp?78767)
+** join multiple filters
+** save as custom filters
+** be available for entries, pages, comments, trackbacks, websites, blogs, users, permissions, and etc
 ** API for custom objects
-* Sorting categories and folders
 * [[Better Website-Blog Integration]]
-* Managing all objects in the system level
-* Improving Template Editor
-* Revamp permissions
+** Managing all contents at the system level ("FogBugz 103873: System level comment administration":http://bugs.movabletype.org/default.asp?103873)
+** mt:Entries include_blogs="all" *exclude_blogs="N"* attribute ("104098":http://bugs.movabletype.org/default.asp?104098)
+** mt:Include parent="1" attribute
+** -Create a blog without website- postponed to 5.2
+* Usability improvements
+** display code hint for Custom Fields in the listing
+** "Include Templates" widget in Edit Template
+** Syntax hilight on/off in Edit Template ("104129":http://bugs.movabletype.org/default.asp?104129)
+** "Publishing Status" pulldown in Create Entry ("FogBugz 104998: FR: Usability improvement to save entry as a draft":http://bugs.movabletype.org/default.asp?104998)
+* Support modern browsers
+** Internet Explorer 8
+** Safari latest
+** Firefox latest
+
 
 h2. Development
 
@@ -44,7 +61,9 @@ h2. Development
 % cd movabletype
 % make me</code></pre>
 
+
 h2. Resolved Issues
 
+* "104509":http://bugs.movabletype.org/default.asp?104509 Issues with mt:If after MT5 upgrade
 
 h2. Known Issues
