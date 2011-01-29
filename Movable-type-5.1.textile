@@ -4,7 +4,7 @@ h2. About
 
 h2. Schedule
 
-|_. Sprint |_. Period |_. Team's Goal |_. Eng/UI |_. QA |_. I18N/L10N |_. Product |_. Status |
+|_. Sprint |_. Period |_. Team's Goal |_. Engineering/UI |_. QA |_. I18N/L10N |_. Product |_. Status |
 | m10 | 12/14-12/28 |  | Clean up code | Update test suites<br />Bug fix confirmation |  |  | Done |
 | m11 | 1/4-1/14 |  | Github migration<br />Update build scripts<br />Term Standardization<br />Update nightly builds script<br />Update copyright year| Update test suites<br />Bug fix confirmation |  |  | Done |
 | m12 | 1/17-1/28 |  | Prepare developer guides (1)<br />Clean up code | Smoke test<br />Bug fix confirmation | English UI check (1) | Prepare beta user guide (1) | In Progress  |
@@ -27,7 +27,7 @@ h2. New in 5.1
 
 * Drag and drop to sorting categories and folders
 ** sort_by="user_custom" attribute for mt:TopLevelCategories, mt:SubCategories, mt:CategoryNext, mt:CategoryPrevious
-* Drag and drop to change the order of input fileds in "Edit Entry" ("104074":http://bugs.movabletype.org/default.asp?104074)
+* Drag and drop to change the order of input fields in "Edit Entry" ("104074":http://bugs.movabletype.org/default.asp?104074)
 * The new listing framework to
 ** load page faster by Ajax
 ** display any data in display options
@@ -46,8 +46,8 @@ h2. New in 5.1
 * Usability improvements
 ** display code hint for Custom Fields in the listing
 ** "Include Templates" widget in Edit Template
-** Syntax hilight on/off in Edit Template ("104129":http://bugs.movabletype.org/default.asp?104129)
-** "Publishing Status" pulldown in Create Entry ("104998":http://bugs.movabletype.org/default.asp?104998)
+** Syntax hi-light on/off in Edit Template ("104129":http://bugs.movabletype.org/default.asp?104129)
+** "Publishing Status" pull-down in Create Entry ("104998":http://bugs.movabletype.org/default.asp?104998)
 * Support modern browsers
 ** Internet Explorer 8
 ** Safari latest
