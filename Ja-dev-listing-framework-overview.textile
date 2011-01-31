@@ -120,17 +120,20 @@ h3. Listing screens
 - condition := このリストを利用可能かを判定するサブルーチンを指定します。
 
 - scope_mode (wide|this|none) :=
+
 ListingFrameworkでは、基本的にオブジェクトのblog_idカラムに対する条件を付与します。
 scope_modeを指定すると、現在のscopeに応じてどのようにblog_idの条件を設定するかを変更できます。
+
 - wide := 現在のスコープと、下位のスコープを含めたblog_idを検索対象とします。
 - this := 常に現在のスコープのblog_idのみを検索対象とします。
 - none := blog_idを検索条件に含めません。
+
 =:
 
-- feed_link :=
-- feed_label :=
+- feed_link
+- feed_label := feedへのリンクを指定します。
 
-h2.  Templates 
+h2.  Customize List Screen
 
 h3.  list_common.tmpl 
 
