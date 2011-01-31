@@ -7,6 +7,7 @@ h2(#tutorial-plugin). プラグイン開発ガイド
 
 プラグインは、Movable Typeに独自の機能を追加する小さなソフトウェアです。Movable Typeのカスタマイズの中核ともいえるプラグインの開発方法を紹介します。
 
+
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
 # [[Config Directiveについて|Japanese-plugin-dev-1-3]]
@@ -34,7 +35,7 @@ h3(#theme). テーマ
 * "テーマの基本情報":http://www.movabletype.jp/documentation/developer/theme/registry.html
 * "標準のテーマ エレメント":http://www.movabletype.jp/documentation/developer/theme/core_elements.html
 * "プラグインによるテーマフレームワークの拡張":http://www.movabletype.jp/documentation/developer/theme/extend_theme_framewok.html
-* 
+
 
 h2(#deployment). 環境構築
 
