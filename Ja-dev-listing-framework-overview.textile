@@ -12,10 +12,6 @@ h3. 既存のリスト画面との互換性
 
 h3. レジストリからの拡張
 
-* 既存のオブジェクト一覧画面にカラムを追加
-* 独自オブジェクトの一覧画面を設計
-** もちろん、今までのようにフルスクラッチした独自のリストビューを利用する事も可能
-
 エントリ一覧画面に新しいカラムを追加する例
 
 ```yaml
@@ -34,6 +30,10 @@ list_properties:
                     return qq{<a href="$foo">$bar <img src="$buz" /></a>};
                 }
 ```
+
+h3. リスト画面の起動
+
+リスティングフレームワークは、 @mt.cgi?__mode=list&_type=foo@ というリクエストに対し、対応するメソッド @applications/cms/methods/list_foo@ が存在しない場合、 レジストリの @listing_screens/foo@ および @list_properties/foo@ から情報を収集して、自動的にリスト画面を生成します。
 
 h2. Registry
 
@@ -131,11 +131,78 @@ h4. Architecture of the "items"
 
 h2. Callbacks
 
+h3. list_template_param.object
+
+リスト画面が作成された際に、テンプレートのビルドの直前に呼び出されます。通常のテンプレートでの @template_param@ コールバックに相当します。
+
+h4. Synopsis
+
+```perl
+sub list_template_param_foo {
+    my $cb = shift;
+    my ( $app, $param, $tmpl ) = @_;
+    # Do something
+}
+```
+
+h4. Attributes
+
+- $app := MT::App クラスのインスタンスです
+- $param := テンプレートの構築時に渡されるパラメータを含むハッシュリファレンスです
+- $tmpl := 構築に使用される @MT::Template@ オブジェクトです
+
+h4. Return Value
+
+このコールバックは戻り値を要求しません。
+
 h3. cms_pre_load_filtered_list.object
+
+リストが要求された際、オブジェクトのロードの直前に呼び出されます。
+
+h4. Synopsis
+
+```perl
+sub cms_pre_load_filtered_list_foo {
+    my $cb = shift;
+    my ( $app, $filter, $options, $cols ) = @_;
+    # Do something
+}
+```
+
+h4. Attributes
+
+- $app := MT::App クラスのインスタンスです
+- $filter := MT::Filter クラスのインスタンスです
+- $options := 実行中のフィルタの @$terms@ などを含むハッシュリファレンスです
+- $cols := 現在要求されているカラムの一覧を含む配列リファレンスです
+
+h4. Return Value
+
+このコールバックは戻り値を要求しません。
 
 h3. cms_filtered_list_param.object
 
-h3. list_template_param.object
+リストが要求された際、作成されたリストが出力される直前に呼び出されます。
+
+h4. Synopsis
+
+```perl
+sub cms_filtered_list_param_foo {
+    my $cb = shift;
+    my ( $app, $res, $objs ) = @_;
+    # Do something
+}
+```
+
+h4. Attributes
+
+- $app := MT::App クラスのインスタンスです
+- $res := リクエストにマッチしたオブジェクトを、画面表示用に加工された配列リファレンスです
+- $objs := リクエストにマッチしたオブジェクトの配列リファレンスです
+
+h4. Return Value
+
+このコールバックは戻り値を要求しません。
 
 h2. More Customizing
 
