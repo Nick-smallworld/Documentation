@@ -502,4 +502,15 @@ h2. まとめ
 
 h2. プラグインダウンロード
 
-MyPlugin03.zip(5.87KB)
+[[MyPlugin03.zip(5.87KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin03.zip]]
+
+h2. プラグイン開発ガイド インデックス
+
+* [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+* [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+* [[Config Directiveについて|Japanese-plugin-dev-1-3]]
+* [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+* テストドリブンでのプラグインの開発について
+* [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+* [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+* [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
