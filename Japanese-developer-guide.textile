@@ -17,3 +17,7 @@ h2. プラグイン開発ガイド
 # ブロックタグ プラグインの開発
 # コンディショナルタグ プラグインの開発
 # プラグインのデバッグ
+
+h2. Movable Type 5.1 New Feature
+
+# [[リスティングフレームワーク|Ja-dev-listing-framework-overview]]
