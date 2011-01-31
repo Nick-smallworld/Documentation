@@ -83,12 +83,17 @@ h3. テストケース２（01-tags.t）の作成
 # カテゴリを持たないエントリー１件を取得し、アーカイブトップへのリンクが戻ってくる。
 
 <pre>
+途中改行されていますが、実際は９行です。
+
 #===== Edit here
 my $test_json = <<'JSON';
 [
 { "r" : "1", "t" : "", "e" : ""},
-{ "r" : "1", "t" : "<mt:Entries id=\"7\"><MTCategoryBreadcrumbs><MTCategoryBreadcrumbTab></MTCategoryBreadcrumbs></mt:Entries>", "e" : "[ <a href=\"http://narnia.na/nana/archives/\">Top</a> ] &lt; [ <a href=\"http://narnia.na/nana/archives/foo/index.html\">foo</a> ] &lt; [ <a href=\"http://narnia.na/nana/archives/foo/subfoo/index.html\">subfoo</a> ]"},
-{ "r" : "1", "t" : "<mt:Entries id=\"8\"><MTCategoryBreadcrumbs><MTCategoryBreadcrumbTab></MTCategoryBreadcrumbs></mt:Entries>", "e" : "[ <a href=\"http://narnia.na/nana/archives/\">Top</a> ]"}
+{ "r" : "1", "t" : "<mt:Entries id=\"7\"><MTCategoryBreadcrumbs><MTCategoryBreadcrumbTab></MTCategoryBreadcrumbs></mt:Entries>",
+ "e" : "[ <a href=\"http://narnia.na/nana/archives/\">Top</a> ] &lt; [ <a href=\"http://narnia.na/nana/archives/foo/index.html\">foo</a> ]
+ &lt; [ <a href=\"http://narnia.na/nana/archives/foo/subfoo/index.html\">subfoo</a> ]"},
+{ "r" : "1", "t" : "<mt:Entries id=\"8\"><MTCategoryBreadcrumbs><MTCategoryBreadcrumbTab></MTCategoryBreadcrumbs></mt:Entries>",
+ "e" : "[ <a href=\"http://narnia.na/nana/archives/\">Top</a> ]"}
 ]
 JSON
 #=====
