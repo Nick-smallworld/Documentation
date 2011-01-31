@@ -70,3 +70,14 @@ h2. まとめ
 ただし、Config Directiveで指定するのは基本設定を変更しない静的(static)なものを対象にするのが望ましいため、プラグインの挙動を動的に変えるためにConfig Directiveを利用するのは、お勧めできません。
 
 今回のConfig Directiveもそうですが、Movable Typeには色々な場面で設定が変更できます。例えばStyleCatcherなどのプラグインやテーマによって拡張できるものもあります。要所要所でベストな設定方法を取っておくとMovable Type本体のバージョンアップや、プラグインのバージョンアップ時に恩恵を受けられることも少なくありません。お作法を勉強してクールなプラグインを書いていきましょう！！
+
+h2. プラグイン開発ガイド インデックス
+
+* [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+* [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+* Config Directiveについて
+* [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+* [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+* [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+* [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+* [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
