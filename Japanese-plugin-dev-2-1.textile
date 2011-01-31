@@ -94,7 +94,8 @@ h3. テストケース２（01-tags.t）の作成
 my $test_json = <<'JSON';
 [
 { "r" : "1", "t" : "", "e" : ""},
-{ "r" : "1", "t" : "<mt:Entries id=\"7\"><MTCSSByCategory></mt:Entries>", "e" : "<link rel=\"stylesheet\" href=\"/mt-static/support/css/cat-foo-subfoo/screen.css\" type=\"text/css\" />"},
+{ "r" : "1", "t" : "<mt:Entries id=\"7\"><MTCSSByCategory></mt:Entries>",
+ "e" : "<link rel=\"stylesheet\" href=\"/mt-static/support/css/cat-foo-subfoo/screen.css\" type=\"text/css\" />"},
 { "r" : "1", "t" : "<mt:Entries id=\"8\"><MTCSSByCategory></mt:Entries>", "e" : ""}
 ]
 JSON
