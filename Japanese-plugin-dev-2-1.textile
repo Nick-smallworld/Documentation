@@ -60,8 +60,7 @@ $MT_DIR/
 
 h3. テストケース１（00-compile.t）の作成
 
-前々回行ったMyPlugin03と基本的に同じです。各オブジェクトが正しくロードされている
-かを確認します。
+前々回行ったMyPlugin03と基本的に同じです。各オブジェクトが正しくロードされているかを確認します。
 
 <pre>
 use strict;
@@ -108,7 +107,7 @@ h2. ファンクションタグ プラグインの開発（Perl）
 
 h3. config.yaml
 
-グローバル・モディファイアの追加には以下のように"tags"=> "modifier"=> "モディフ>ァイア名" => $プラグイン名::ハンドラ名 を記述します。
+グローバル・モディファイアの追加には以下のように"tags"=&gt; "modifier"=&gt; "モディファイア名" =&gt; $プラグイン名::ハンドラ名 を記述します。
 
 <pre>
 id: MyPlugin05
@@ -221,20 +220,18 @@ h3. 解説
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-02.png]]
 
-* $ctx-&gt;stash('entry')とすると、今処理をしているEntryオブジェクトが取得できま
-す。
+* $ctx-&gt;stash('entry')とすると、今処理をしているEntryオブジェクトが取得できます。
 Entryオブジェクトが取得できない場合、エラーを出力します。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-03.png]]
 
-* Entryオブジェクトからカテゴリを取得します。取得できない場合はブログ記事にカテ>ゴリが設定されていないため、何も出力せず処理を抜けます（return）。
+* Entryオブジェクトからカテゴリを取得します。取得できない場合はブログ記事にカテゴリが設定されていないため、何も出力せず処理を抜けます（return）。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-04.png]]
 
-* @basenames配列を用意し、ブログ記事に設定されているカテゴリの"basename(カテゴリ
-アーカイブに用いるURL PATH）" を孫＞子＞親の順に格納していきます。
-カテゴリの"parent"には親カテゴリのIDが入っています。親の場合は"0"が入っているの>でそこで処理を終了します。
-カテゴリを呼び出すには１９行目の"MT::Category-&gt;load($cat_id);"を用います。今>回は子や孫カテゴリですので、親カテゴリのカテゴリ idである"$cat-&gt;parent()"をloadの引数として渡します。
+* @basenames配列を用意し、ブログ記事に設定されているカテゴリの"basename(カテゴリアーカイブに用いるURL PATH）" を孫＞子＞親の順に格納していきます。
+カテゴリの"parent"には親カテゴリのIDが入っています。親の場合は"0"が入っているのでそこで処理を終了します。
+カテゴリを呼び出すには１９行目の"MT::Category-&gt;load($cat_id);"を用います。今回は子や孫カテゴリですので、親カテゴリのカテゴリ idである"$cat-&gt;parent()"をloadの引数として渡します。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-05.png]]
 
@@ -243,10 +240,8 @@ Entryオブジェクトが取得できない場合、エラーを出力します
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-06.png]]
 
-* "MT-&gt;instance"でアプリケーションの情報を取得し、その中のStaticWebPath設定を
-$css_dirに代入します。StaticWebPathの設定がされていない場合'/mt-static/'を指定し
-ます。
-$css_dirの末尾に'/'があるか確認し、無い場合は付加します。その後'support/css/'を>追加しています。
+* "MT-&gt;instance"でアプリケーションの情報を取得し、その中のStaticWebPath設定を$css_dirに代入します。StaticWebPathの設定がされていない場合'/mt-static/'を指定します。
+$css_dirの末尾に'/'があるか確認し、無い場合は付加します。その後'support/css/'を追加しています。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-07.png]]
 
@@ -300,27 +295,21 @@ h3. function.mtcssbycategory.php
 
 h3. 解説
 
-functionタグの作り方はPerl版と大きな差がありません。大きく違っている場所を *強調
-* しました。
+functionタグの作り方はPerl版と大きな差がありません。大きく違っている場所を *強調* しました。
 
-* function名は *smarty* 記法にのっとって *smarty_function_mtcssbycategory* とな>ります。一緒に呼び出し時の"$args","$ctx"の取得を行います。Perl版とは位置が逆にな
-っている事に注意してください。
+* function名は *smarty* 記法にのっとって *smarty_function_mtcssbycategory* となります。一緒に呼び出し時の"$args","$ctx"の取得を行います。Perl版とは位置が逆になっている事に注意してください。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-09.png]]
 
-* $ctx->stash('entry')とすると、今処理をしているEntryオブジェクトが取得できます>。
-Entryオブジェクトが取得できない場合、エラーを出力します。
+* $ctx->stash('entry')とすると、今処理をしているEntryオブジェクトが取得できます。Entryオブジェクトが取得できない場合、エラーを出力します。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-10.png]]
 
-* Entryオブジェクトからカテゴリを取得します。取得できない場合はブログ記事にカテ>ゴリが設定されていないため、何も出力せず処理を抜けます（return）。
+* Entryオブジェクトからカテゴリを取得します。取得できない場合はブログ記事にカテゴリが設定されていないため、何も出力せず処理を抜けます（return）。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-11.png]]
 
-* *basenames[]* 配列を用意し、ブログ記事に設定されているカテゴリの"basename(カテ
-ゴリアーカイブに用いるURL PATH）"を孫＞子＞親の順に格納していきます。
-カテゴリの"parent"には親カテゴリのIDが入っています。親の場合は"0"が入っているの>でそこで処理を終了します。
+* *basenames[]* 配列を用意し、ブログ記事に設定されているカテゴリの"basename(カテゴリアーカイブに用いるURL PATH）"を孫＞子＞親の順に格納していきます。
+カテゴリの"parent"には親カテゴリのIDが入っています。親の場合は"0"が入っているのでそこで処理を終了します。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-12.png]]
-$catは既にカテゴリオブジェクトなので"$cat->Load()"でデータベースから値の取得がで
-きます。何も無いところから新しくカテゴリオブジェクトをロードするには以下のように
-する必要があります。
+$catは既にカテゴリオブジェクトなので"$cat->Load()"でデータベースから値の取得ができます。何も無いところから新しくカテゴリオブジェクトをロードするには以下のようにする必要があります。
 <pre>
 $category = new Category;
 $loaded = $category->Load("category_id = " . $cat->parent);
@@ -424,16 +413,14 @@ h2. ブログ環境でのテスト
 * MTの管理画面が利用できる環境を用意します。（新規作成することを推奨します。）
 * クラシック ウェブサイト ＞ クラシックブログを作成します。
 * 今回作成したMyPlugin05をPlugin配下に配置します。
-* ブログ記事 アーカイブのテンプレートに、上記の形で<title>の上に<MTCSSByCategory>を記入し保存します。
-* ブログ記事メニューのカテゴリから、親カテゴリ"foo"、子カテゴリ"subfoo"を作成し>てください。
+* ブログ記事 アーカイブのテンプレートに、上記の形で&lt;title&gt;の上に&lt;MTCSSByCategory&gt;を記入し保存します。
+* ブログ記事メニューのカテゴリから、親カテゴリ"foo"、子カテゴリ"subfoo"を作成してください。
 * ブログ記事を３つ投稿します。１．カテゴリなし、２．カテゴリ"foo"、３．カテゴリ"subfoo"
-* 各ブログ記事の出力結果の<title>タグの１行上をチェックします。（StaticWebPathが
-/mt-static/だった場合）
+* 各ブログ記事の出力結果の&lt;title&gt;タグの１行上をチェックします。（StaticWebPathが/mt-static/だった場合）
 ** カテゴリなし：空行
 ** 親カテゴリ：<link rel="stylesheet" href="/mt-static/support/css/cat-foo/screen.css" type="text/css" />
 ** 子カテゴリ：<link rel="stylesheet" href="/mt-static/support/css/cat-foo-subfoo/screen.css" type="text/css" />
-* "/mt-static/support/"以下にディレクトリ"css/cat-foo"と"css/cat-foo-subfoo"を作
-成します。
+* "/mt-static/support/"以下にディレクトリ"css/cat-foo"と"css/cat-foo-subfoo"を作成します。
 * 作成したディレクトリにCSSファイル "screen.css"を作成します。
 * 簡単な例
 ** /mt-static/support/css/cat-foo/screen.css
@@ -448,17 +435,13 @@ h2. ブログ環境でのテスト
     background-color: #008000;
 }
 </pre>
-* これらのファイルを置き、ブラウザで閲覧する事でCSSの内容がカテゴリごとに上書き>されている事がわかります。実際に利用される際には、基本となるのデザイン（カテゴリ
-が無いもの）を作成し、そこからカテゴリ毎にCSSの上書きを行うといった手順で作業を>行ってください。
+* これらのファイルを置き、ブラウザで閲覧する事でCSSの内容がカテゴリごとに上書き>されている事がわかります。実際に利用される際には、基本となるのデザイン（カテゴリが無いもの）を作成し、そこからカテゴリ毎にCSSの上書きを行うといった手順で作業を>行ってください。
 
 h2. まとめ
 
-少し盛り沢山な内容でしたがいかがだったでしょうか？ファンクションタグを"Hellow, world!"だけで終わらせるのはもったいないので、実際に使えるネタとしてあげてみました
-。またファンクションタグの場合、Perl版とPHP版の違いが大きくない事も見て取れたの>ではないでしょうか。
+少し盛り沢山な内容でしたがいかがだったでしょうか？ファンクションタグを"Hellow, world!"だけで終わらせるのはもったいないので、実際に使えるネタとしてあげてみました。またファンクションタグの場合、Perl版とPHP版の違いが大きくない事も見て取れたの>ではないでしょうか。
 
-現在のコードですと、エラーハンドリング（問題を検知すること）や、設定など実装され
-ていない部分はありますし、ブログ記事には利用できますが、カテゴリアーカイブでは利
-用できないといった問題もあります。
+現在のコードですと、エラーハンドリング（問題を検知すること）や、設定など実装されていない部分はありますし、ブログ記事には利用できますが、カテゴリアーカイブでは利用できないといった問題もあります。
 
 この続きは是非ご自分で改造し、活用してみてください。
 
