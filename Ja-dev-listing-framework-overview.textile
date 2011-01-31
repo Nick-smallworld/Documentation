@@ -1,21 +1,17 @@
-h1. リスティングフレームワーク
+h1. リスティングフレームワークの全体像
 
-h2. Overview
+h2. 特徴
 
-h3. 各オブジェクトで共通のリスト画面
+リスティングフレームワークは、 @MT::Object@ を継承したオブジェクトに対して、フィルタリングやソートなどの機能を含む、共通のリスト画面を提供します。プラグイン作成者は、レジストリに各種設定を追加することで、独自のオブジェクトのリスト画面を作成し、振る舞いを設定することが出来ます。
+また、既存のコアオブジェクトの一覧画面に対しても、カラムやフィルタの追加をレジストリ経由で行うことが出来ます。
 
-* リスト機能
-** ユーザーがカスタマイズ可能なフィルタ
-*** カスタマイズしたフィルタに名前をつけて保存
-** 表示項目のカスタマイズ
-** 選択したカラムでソート
-* リストアクションは5.0以前と基本変わらず
-** xhrオプションを利用する事でより快適なアクションを作成可能
-* 画面設定はユーザー/スコープごとに保存される
+h3. 既存のリスト画面との互換性
 
-h3. レジストリから拡張可能
+新しいリスティングフレームワークでは、テンプレートタグ @mtapp:listing@ は使用していません。 @mtapp:listing@ タグは後方互換性のため引き続きサポートされますが、リスティングフレームワークの各種機能を利用することは出来ません。
+既存の @list_actions@ や、フィルタ設定を含むリスト画面へのリンク[1]は可能な限り動作するようになっています。
 
-次のような事がプラグインから簡単に実現できる
+h3. レジストリからの拡張
+
 * 既存のオブジェクト一覧画面にカラムを追加
 * 独自オブジェクトの一覧画面を設計
 ** もちろん、今までのようにフルスクラッチした独自のリストビューを利用する事も可能
@@ -23,10 +19,10 @@ h3. レジストリから拡張可能
 エントリ一覧画面に新しいカラムを追加する例
 
 ```yaml
+# In config.yaml of your plugin.
 list_properties:
     entry:
         my_column1: My Column #データベースのカラム定義からフィルタ/ソート/表示を自動作成
-
         my_column2:           #ソートとカラムの表示を独自に定義
             base: __common.string
             sort: |
@@ -39,7 +35,43 @@ list_properties:
                 }
 ```
 
-h2.  Registry 
+h2. Registry
+
+以下のレジストリキーに値を追加していくことで、リストを作成/カスタマイズ出来ます。
+
+- listing_screens := リスト画面の全体の振る舞いを設定します
+- list_properties := リストにカラムやフィルタを追加します
+- system_filters := リストに、すぐに利用可能なビルトインフィルタを追加します
+- list_actions := リストに、オブジェクト単位で適用可能なアクションを追加します
+- content_actions := リストに、画面全体に適用するアクションを追加します
+
+h3. Listing screens
+
+リスト画面の全体の振る舞いを設定します。
+
+- object_label
+- object_label_plural
+- contents_label
+- contents_label_plural
+- container_label
+- container_label_plural := オブジェクトの表示名や、関連するオブジェクトの表示名を指定できます。省略された場合datasourceのclass_labelメソッドなどから自動的に作成されます。
+- primary := プライマリカラムとして利用するListPropertyの識別名を指定します。プライマリカラムは、カラム幅が優先的に広く表示されます。
+- view := このリストを表示可能なスコープを指定します。省略した場合すべてのスコープで表示されます。
+- default_sort_key := リストを表示した際に最初にsortを行うListPropertyの識別名を指定します。
+- premission := このリストにアクセスするために必要な権限を指定します。指定した権限を持たないログインユーザーのアクセスに対してはエラーを発生させます。
+- condition := このリストを利用可能かを判定するサブルーチンを指定します。
+- scope_mode :=
+
+ ListingFrameworkでは、基本的にオブジェクトのblog_idカラムに対する条件を付与します。scope_modeを指定すると、現在のscopeに応じてどのようにblog_idの条件を設定するかを変更できます。
+
+- wide := 現在のスコープと、下位のスコープを含めたblog_idを検索対象とします。
+- this := 常に現在のスコープのblog_idのみを検索対象とします。
+- none := blog_idを検索条件に含めません。
+
+=:
+
+- feed_link
+- feed_label := feedへのリンクを指定します。
 
 h3.  List properties 
 
@@ -97,54 +129,24 @@ h4. Architecture of the "items"
 ]
 ```
 
-h3. Listing screens
+h2. Callbacks
 
-- object_label
-- object_label_plural
-- contents_label
-- contents_label_plural
-- container_label
-- container_label_plural :=
+h3. cms_pre_load_filtered_list.object
 
-オブジェクトの表示名や、関連するオブジェクトの表示名を指定できます。省略された場合datasourceのclass_labelメソッドなどから自動的に作成されます。
-=:
+h3. cms_filtered_list_param.object
 
-- primary := プライマリカラムとして利用するListPropertyの識別名を指定します。プライマリカラムは、カラム幅が優先的に広く表示されます。
+h3. list_template_param.object
 
-- view := このリストを表示可能なスコープを指定します。省略した場合すべてのスコープで表示されます。
+h2. More Customizing
 
-- default_sort_key := リストを表示した際に最初にsortを行うListPropertyの識別名を指定します。
-
-- premission := このリストにアクセスするために必要な権限を指定します。指定した権限を持たないログインユーザーのアクセスに対してはエラーを発生させます。
-
-- condition := このリストを利用可能かを判定するサブルーチンを指定します。
-
-- scope_mode (wide|this|none) :=
-
-ListingFrameworkでは、基本的にオブジェクトのblog_idカラムに対する条件を付与します。
-scope_modeを指定すると、現在のscopeに応じてどのようにblog_idの条件を設定するかを変更できます。
-
-- wide := 現在のスコープと、下位のスコープを含めたblog_idを検索対象とします。
-- this := 常に現在のスコープのblog_idのみを検索対象とします。
-- none := blog_idを検索条件に含めません。
-
-=:
-
-- feed_link
-- feed_label := feedへのリンクを指定します。
-
-h2.  Customize List Screen
-
-h3.  list_common.tmpl 
-
-h4.  javascript/jQuery API 
-
-h5. event
-
-* listReady
-
-h4.  Misc 
+h3. list_common.tmpl 
 
 * listing/foo.tmplがincludeされる
 
+h2.  JavaScript and jQuery API 
 
+h3. event
+
+* listReady
+
+fn1. 以前のバージョンで使われていた @http://example.com/mt.cgi?__mode=list&_type=entry&filter=status&filter_val=2@ のような形式のリンク
