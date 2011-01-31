@@ -152,7 +152,7 @@ h2. プラグイン開発のベストプラクティス
 
 h2. プラグインダウンロード
 
-MyPlugin01.zip(430B)
+[[MyPlugin01.zip(430B)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin01.zip]]
 
 h2. プラグイン開発ガイド インデックス
 
