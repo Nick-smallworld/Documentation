@@ -320,8 +320,7 @@ $cat = $category;
 * basename[]配列の順を「孫＞子＞親」から *array_reverse* の利用で「親＞子＞孫」の順に変更。変更後、'-'でjoinし文字列にします。その上で初めに"cat-"を、終わりに"/screen.css"を追加し$cat_tmpに代入します。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-13.png]]
 
-* *"MT::get_instance()"* でアプリケーションの情報を取得し、その中のStaticWebPath設定を$css_dirに代入します。StaticWebPathの設定がされていない場合'/mt-static/'を
-指定します。
+* *"MT::get_instance()"* でアプリケーションの情報を取得し、その中のStaticWebPath設定を$css_dirに代入します。StaticWebPathの設定がされていない場合'/mt-static/'を指定します。
 $css_dirの末尾に'/'があるか確認し、無い場合は付加します。その後'support/css/'を追加しています。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-14.png]]
 
