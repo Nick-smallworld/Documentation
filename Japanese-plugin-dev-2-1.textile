@@ -22,7 +22,7 @@ h3. 仕様の策定
 ** 詳細＞ドキュメント：「http://www.example.com/docs/」
 ** 詳細＞プラグイン作者：「http://www.example.com/about/」
 ** リソース：「タグ：&lt;$MTCSSByCategory$&gt;」
-* ブログ記事アーカイブのテンプレートの<head>に"&lt;MTCSSByCategory&gt;"タグを追加するだけ
+* ブログ記事アーカイブのテンプレートの&lt;head&gt;に"&lt;MTCSSByCategory&gt;"タグを追加するだけ
 * ブログ記事にカテゴリが無い場合は、何も出力しない
 * ブログ記事にカテゴリがある場合は以下の処理をする
 ** カテゴリの親子関係を確認する
@@ -254,7 +254,7 @@ h2. ファンクションタグ プラグインの開発（PHP）
 
 h3. function.mtcssbycategory.php
 
-ファイル名はファンクションタグである事と<MTCSCByCategory>タグである事から、function.mtcssbycategory.phpとなります。
+ファイル名はファンクションタグである事と&lt;MTCSCByCategory&gt;タグである事から、function.mtcssbycategory.phpとなります。
 
 <pre>
 <?php
@@ -300,7 +300,7 @@ functionタグの作り方はPerl版と大きな差がありません。大き�
 * function名は *smarty* 記法にのっとって *smarty_function_mtcssbycategory* となります。一緒に呼び出し時の"$args","$ctx"の取得を行います。Perl版とは位置が逆になっている事に注意してください。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-09.png]]
 
-* $ctx->stash('entry')とすると、今処理をしているEntryオブジェクトが取得できます。Entryオブジェクトが取得できない場合、エラーを出力します。
+* @$ctx->stash('entry')@ とすると、今処理をしているEntryオブジェクトが取得できます。Entryオブジェクトが取得できない場合、エラーを出力します。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-10.png]]
 
 * Entryオブジェクトからカテゴリを取得します。取得できない場合はブログ記事にカテゴリが設定されていないため、何も出力せず処理を抜けます（return）。
@@ -309,23 +309,23 @@ functionタグの作り方はPerl版と大きな差がありません。大き�
 * *basenames[]* 配列を用意し、ブログ記事に設定されているカテゴリの"basename(カテゴリアーカイブに用いるURL PATH）"を孫＞子＞親の順に格納していきます。
 カテゴリの"parent"には親カテゴリのIDが入っています。親の場合は"0"が入っているのでそこで処理を終了します。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-12.png]]
-$catは既にカテゴリオブジェクトなので"$cat->Load()"でデータベースから値の取得ができます。何も無いところから新しくカテゴリオブジェクトをロードするには以下のようにする必要があります。
+$catは既にカテゴリオブジェクトなので @"$cat->Load()"@ でデータベースから値の取得ができます。何も無いところから新しくカテゴリオブジェクトをロードするには以下のようにする必要があります。
 <pre>
 $category = new Category;
 $loaded = $category->Load("category_id = " . $cat->parent);
 $cat = $category;
 </pre>
 
-* basename[]配列の順を「孫＞子＞親」から *array_reverse* の利用で「親＞子＞孫」>の順に変更。変更後、'-'でjoinし文字列にします。その上で初めに"cat-"を、終わりに"/screen.css"を追加し$cat_tmpに代入します。
+* basename[]配列の順を「孫＞子＞親」から *array_reverse* の利用で「親＞子＞孫」の順に変更。変更後、'-'でjoinし文字列にします。その上で初めに"cat-"を、終わりに"/screen.css"を追加し$cat_tmpに代入します。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-13.png]]
 
 * *"MT::get_instance()"* でアプリケーションの情報を取得し、その中のStaticWebPath設定を$css_dirに代入します。StaticWebPathの設定がされていない場合'/mt-static/'を
 指定します。
-$css_dirの末尾に'/'があるか確認し、無い場合は付加します。その後'support/css/'を>追加しています。
+$css_dirの末尾に'/'があるか確認し、無い場合は付加します。その後'support/css/'を追加しています。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-14.png]]
 
 * 最後にPATHやタグを追加しreturnします。
-returnされる値は'<link rel="stylesheet" href="/mt-static/support/css/cat-foo-subfoo/screen.css" type="text/css/">'のような形になります。
+returnされる値は'&lt;link rel="stylesheet" href="/mt-static/support/css/cat-foo-subfoo/screen.css" type="text/css/"&gt;'のような形になります。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-15.png]]
 
 h2. ファイルの配置
@@ -393,7 +393,9 @@ Files=2, Tests=12, 27 wallclock secs (12.70 cusr +  5.31 csys = 18.01 CPU)
 テストでの確認は終了しました。実際に管理画面からブログ記事アーカイブの"&lt;title&gt;"タグの上に"&lt;MTCSSByCategory&gt;"タグを記入し、再構築すると"&lt;title&gt;"タグの上にカテゴリ毎のCSSファイルのリンクが書き込まれます。
 
 * 記入
-<pre>（前略）
+
+<pre>
+（前略）
     <MTCSSByCategory>
     <title><$mt:EntryTitle encode_html="1"$> - <$mt:BlogName encode_html="1"$></title>
 </head>
@@ -401,7 +403,9 @@ Files=2, Tests=12, 27 wallclock secs (12.70 cusr +  5.31 csys = 18.01 CPU)
 </pre>
 
 * 出力
-<pre>（前略）
+
+<pre>
+（前略）
     <link rel="stylesheet" href="/mt-static/support/css/cat-foo-subfoo/screen.css" type="text/css" />
     <title>Verse 4 - none</title>
 </head>
@@ -418,8 +422,8 @@ h2. ブログ環境でのテスト
 * ブログ記事を３つ投稿します。１．カテゴリなし、２．カテゴリ"foo"、３．カテゴリ"subfoo"
 * 各ブログ記事の出力結果の&lt;title&gt;タグの１行上をチェックします。（StaticWebPathが/mt-static/だった場合）
 ** カテゴリなし：空行
-** 親カテゴリ：<link rel="stylesheet" href="/mt-static/support/css/cat-foo/screen.css" type="text/css" />
-** 子カテゴリ：<link rel="stylesheet" href="/mt-static/support/css/cat-foo-subfoo/screen.css" type="text/css" />
+** 親カテゴリ：&lt;link rel="stylesheet" href="/mt-static/support/css/cat-foo/screen.css" type="text/css" /&gt;
+** 子カテゴリ：&lt;link rel="stylesheet" href="/mt-static/support/css/cat-foo-subfoo/screen.css" type="text/css" /&gt;
 * "/mt-static/support/"以下にディレクトリ"css/cat-foo"と"css/cat-foo-subfoo"を作成します。
 * 作成したディレクトリにCSSファイル "screen.css"を作成します。
 * 簡単な例
@@ -435,11 +439,11 @@ h2. ブログ環境でのテスト
     background-color: #008000;
 }
 </pre>
-* これらのファイルを置き、ブラウザで閲覧する事でCSSの内容がカテゴリごとに上書き>されている事がわかります。実際に利用される際には、基本となるのデザイン（カテゴリが無いもの）を作成し、そこからカテゴリ毎にCSSの上書きを行うといった手順で作業を>行ってください。
+* これらのファイルを置き、ブラウザで閲覧する事でCSSの内容がカテゴリごとに上書きされている事がわかります。実際に利用される際には、基本となるのデザイン（カテゴリが無いもの）を作成し、そこからカテゴリ毎にCSSの上書きを行うといった手順で作業を行ってください。
 
 h2. まとめ
 
-少し盛り沢山な内容でしたがいかがだったでしょうか？ファンクションタグを"Hellow, world!"だけで終わらせるのはもったいないので、実際に使えるネタとしてあげてみました。またファンクションタグの場合、Perl版とPHP版の違いが大きくない事も見て取れたの>ではないでしょうか。
+少し盛り沢山な内容でしたがいかがだったでしょうか？ファンクションタグを"Hellow, world!"だけで終わらせるのはもったいないので、実際に使えるネタとしてあげてみました。またファンクションタグの場合、Perl版とPHP版の違いが大きくない事も見て取れたのではないでしょうか。
 
 現在のコードですと、エラーハンドリング（問題を検知すること）や、設定など実装されていない部分はありますし、ブログ記事には利用できますが、カテゴリアーカイブでは利用できないといった問題もあります。
 
