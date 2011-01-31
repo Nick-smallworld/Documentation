@@ -12,4 +12,4 @@ h2. Developer's guide
 
 h2. Events
 
-* "Movable Type 5 Theme Contest  2010":https://github.com/movabletype/Documentation/wiki/Movable-Type-5-Theme-contest--in-japan-2010
+* "Movable Type 5 Theme Contest  2010":Movable-Type-5-Theme-contest--in-japan-2010
