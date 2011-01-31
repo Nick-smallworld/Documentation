@@ -184,7 +184,7 @@ h2. まとめ
 
 h2. プラグインダウンロード
 
-MyPlugin02.zip(1.86KB)
+[[MyPlugin02.zip(1.86KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin02.zip]]
 
 h2. プラグイン開発ガイド インデックス
 
