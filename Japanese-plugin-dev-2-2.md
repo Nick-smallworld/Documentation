@@ -1,0 +1,620 @@
+h1. ブロックタグ プラグインの開発について
+
+h2. はじめに
+
+今回はブロックタグを実現するプラグインを解説します。
+
+h2. ブロックタグとは？
+
+ブロックタグの代表格は&lt;MTBlogs&gt;&lt;MTEntries&gt;&lt;MTTags&gt;のようなタグです。
+
+&lt;MTBlogs&gt;～&lt;/MTBlogs&gt;のように利用します。
+
+これらは主にデータベースから情報を集め、その情報を元に中のファンクションタグなどに情報を与え、文字や文章を出力させます。
+
+上記のような理由でブロックタグはループ処理をしますが、Perl版の処理と、PHP版の処>理で記述法が変わってきます。簡単に説明すると以下になります。
+
+h3. Perl版
+
+* タグのプログラム内で配列を用意し、そこにオブジェクトなどを格納します。
+* その後、プログラム内で配列をループさせオブジェクトなどをコンテキストに格納します
+* テンプレートのブロックタグの中に記載されているファンクションタグにコンテキストを渡し、文字などとあわせて出力します。
+* 全ての配列に対して処理を行ったらブロックタグを抜けます。
+
+h3. PHP版
+
+* タグのプログラム内で配列を用意し、そこにオブジェクトなどを格納します。
+* 取得した配列をコンテキストに格納します。
+* １回テンプレートのブロックタグの中に記載されているファンクションタグにコンテキ
+ストを渡し、文字などとあわせて出力します。出力後、一旦プログラムを抜けます。
+* ２回目以降はコンテキストから配列を取得し、次の行の処理を行いプログラムを抜けます。
+* 全ての配列に対して処理が終わったら、コンテキストを初期化しプログラムを抜けます。
+
+h2. プラグインの仕様とテストケースの作成
+
+h3. プラグインの仕様
+
+プラグインの仕様は以下になります。
+
+* ループ部分のブロックタグ(&lt;MTCategoryBreadcrumbs&gt;)
+* パンくずを表示するファンクションタグ(&lt;MTCategoryBreadcrumbTab&gt;)
+* 配置するタグは以下のとおり
+<pre>&lt;p&gt;&lt;MTCategoryBreadcrumbs&gt;&lt;MTCategoryBreadcrumbTab&gt;&lt;/MTCategoryBreadcrumbs&gt;&lt;/p&gt;
+</pre>
+* 利用対象はブログ記事のみ
+* カテゴリが設定されていない場合は以下の表示になり、"Top"はアーカイブトップペー>ジへのリンクが張られている
+<pre>[ Top ]
+</pre>
+* カテゴリが設定されている場合、パンくずリストに親カテゴリから順に配置する
+<pre>[ Top ] < [ foo ] < [ subfoo ]
+</pre>
+* カテゴリのアーカイブが作成されていない場合、上記"foo"のようにリンクは張られな>い
+* カテゴリのアーカイブが作成されている場合、上記"subfoo"のようにカテゴリアーカイ
+ブへのリンクが張られる
+* 対象とするカテゴリはメインカテゴリ（☆印付きの物）のみ
+
+h3. テストケース１（00-compile.t）の作成
+
+各オブジェクトが正しくロードされているかを確認します。
+
+<pre>
+use strict;
+use lib qw( t/lib lib extlib );
+use warnings;
+use MT;
+use Test::More tests => 5;
+use MT::Test;
+
+ok(MT->component ('MyPlugin05'), "MyPlugin05 plugin loaded correctry");
+
+require_ok('MyPlugin05::L10N');
+require_ok('MyPlugin05::L10N::ja');
+require_ok('MyPlugin05::L10N::en_us');
+require_ok('MyPlugin05::Tags');
+
+1;
+</pre>
+
+h3. テストケース２（01-tags.t）の作成
+
+テストするのは以下の３項目です。
+
+# 空文字列をインプットすると、空文字列が戻ってくる。
+# 複数カテゴリを持ったエントリー１件を取得し、パンくずリストが戻ってくる。
+# カテゴリを持たないエントリー１件を取得し、アーカイブトップへのリンクが戻ってくる。
+
+<pre>
+#===== Edit here
+my $test_json = <<'JSON';
+[
+{ "r" : "1", "t" : "", "e" : ""},
+{ "r" : "1", "t" : "<mt:Entries id=\"7\"><MTCategoryBreadcrumbs><MTCategoryBreadcrumbTab></MTCategoryBreadcrumbs></mt:Entries>", "e" : "[ <a href=\"http://narnia.na/nana/archives/\">Top</a> ] &lt; [ <a href=\"http://narnia.na/nana/archives/foo/index.html\">foo</a> ] &lt; [ <a href=\"http://narnia.na/nana/archives/foo/subfoo/index.html\">subfoo</a> ]"},
+{ "r" : "1", "t" : "<mt:Entries id=\"8\"><MTCategoryBreadcrumbs><MTCategoryBreadcrumbTab></MTCategoryBreadcrumbs></mt:Entries>", "e" : "[ <a href=\"http://narnia.na/nana/archives/\">Top</a> ]"}
+]
+JSON
+#=====
+ </pre>
+
+h2. ファンクションタグ プラグインの開発（Perl）
+
+前章で作成したMyPlugin05を元にプラグインを作成します。
+
+h3. config.yaml
+
+グローバル・モディファイアの追加には以下のように"tags"=> "modifier"=> "モディファイア名" => $プラグイン名::ハンドラ名 を記述します。
+
+"modifier"には、ブロックタグは"block"、ファンクションタグには"function"を記載します。
+
+<pre>
+id: MyPlugin06
+name: <__trans phrase="Sample Plugin Block tag">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin06::L10N
+
+tags:
+    block:
+        CategoryBreadcrumbs: $MyPlugin06::MyPlugin06::Tags::hdlr_categorybreadcrumbs
+    function:
+        CategoryBreadcrumbTab: $MyPlugin06::MyPlugin06::Tags::hdlr_categorybreadcrumbtab
+</pre>
+
+h3. L10N.pm
+
+<pre>
+package MyPlugin06::L10N;
+use strict;
+use base 'MT::Plugin::L10N';
+
+1;
+</pre>
+
+h3. L10N/en_us.pm
+
+<pre>
+package MyPlugin06::L10N::en_us;
+
+use strict;
+use base 'MyPlugin06::L10N';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    '_PLUGIN_DESCRIPTION' => 'Sample block tag',
+    '_PLUGIN_AUTHOR' => 'Plugin author',
+);
+
+1;
+</pre>
+
+h3. L10N/ja.pm
+
+<pre>
+package MyPlugin06::L10N::ja;
+
+use strict;
+use base 'MyPlugin06::L10N::en_us';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    'Sample Plugin Block tag' => 'サンプルプラグイン ブロックタグ',
+    '_PLUGIN_DESCRIPTION' => 'ブロックタグ テストプラグイン',
+    '_PLUGIN_AUTHOR' => 'プラグイン作者',
+);
+
+1;
+</pre>
+
+h3. Tags.pm
+
+<pre>
+package MyPlugin06::Tags;
+use strict;
+
+sub hdlr_categorybreadcrumbs {
+    my ($ctx, $args, $cond) = @_;
+
+    my $blog = $ctx->stash('blog') || return;
+    my $entry = $ctx->stash('entry')
+        || $ctx->error(MT->translate('You used an [_1] tag outside of the proper context.', 'CategoryBreadcrumbs'));
+    my $cat = $entry->category() || return _hdlr_top_link($blog);
+
+    my @categories = ();
+    while (1){
+        if ($cat->parent() == 0) {
+            push (@categories, $cat);
+            last;
+        }
+        push (@categories, $cat);
+        $cat = MT::Category->load($cat->parent());
+    }
+    @categories = reverse @categories;
+
+    my $out = _hdlr_top_link($blog);
+    for my $category (@categories) {
+        local $ctx->{__stash}{category} = $category;
+
+        my $tokens = $ctx->stash('tokens');
+        my $builder = $ctx->stash('builder');
+
+        $out .= $builder->build( $ctx, $tokens, $cond)
+            || return $ctx->error( $builder->errstr );
+    }
+
+    return $out;
+}
+
+sub hdlr_categorybreadcrumbtab {
+    my ($ctx, $args) = @_;
+
+    my $blog = $ctx->stash('blog') || return;
+    my $category = $ctx->stash('category')
+        || $ctx->error(MT->translate('You used an [_1] tag outside of the proper context.', 'CategoryBreadcrumbsTab'));
+
+    require MT::Util;
+    my $url = $blog->archive_url;
+    $url .= '/' unless $url =~ m!/$!;
+    $url .= MT::Util::archive_file_for(undef, $blog, 'Category', $category);
+
+    my $count = MT::Placement->count({category_id => $category->id});
+
+    my $anchor_start = '';
+    my $anchor_end = '';
+    if ( $url && $count ) {
+        $anchor_start = '<a href="' . $url . '">';
+        $anchor_end = '</a>';
+    }
+
+    my $label = $category->label;
+    my $out = ' &lt; [ ' . $anchor_start . $label . $anchor_end. ' ]';
+
+    return $out;
+}
+
+sub _hdlr_top_link {
+    my ($blog) = @_;
+    my $blog_url = $blog->archive_url;
+
+    return "[ <a href=\"$blog_url\">Top</a> ]";
+}
+
+1;
+</pre>
+
+h3. 解説
+
+* パッケージ宣言
+初めにpackage宣言をし、"use strict;"しています。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-01.png]]
+
+* ハンドラ関数宣言(&lt;MTCategoryBreadcrumbs&gt;)
+ハンドラ関数宣言と呼び出し時の"$ctx", "$args"の代入です。この関数はブロックタグ(<MTCategoryBreadcrumbs>)になります。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-02.png]]
+
+* コンテキスト（$ctx）からのオブジェクトの取得
+7行目、 @$ctx->stash('blog')@ とすると、今処理をしているBlogオブジェクトが取得できます。Blogオブジェクトが取得できない場合、エラー表示せず処理を抜けます。
+8～10行目、 @$ctx->stash('entry')@ とすると、今処理をしているEntryオブジェクトが取得できます。Entryオブジェクトが取得できない場合、エラーを出力します。Entryオブジェクト（ブログ記事）のカテゴリを$catに代入しています。
+カテゴリが指定されていない場合、アーカイブトップへのパス（[ Top ]）をパンくずリストの先頭として表示し処理を終了します。
+このアーカイブトップへのパスを作成するのが関数"_hdlr_top_link($blog)"（後述）になります。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-03.png]]
+
+* カテゴリの配列の準備
+categories配列を用意し、ブログ記事に設定されているカテゴリを孫＞子＞親の順に格納していきます。
+カテゴリの"parent"には親カテゴリのIDが入っています。トップレベルの親の場合は"0"が入っているのでそこで処理を終了します。
+カテゴリを呼び出すには１９行目の @"MT::Category->load($cat_id);"@ を用います。今回は子や孫カテゴリですので、親カテゴリのカテゴリ idである @"$cat->parent()"@ をloadの引数として渡します。
+21行目で配列をリバースし、「孫＞子＞親」から「親＞子＞孫」の順に変更します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-04.png]]
+
+* ブロックタグで囲われた範囲の内部処理
+23行目で、このブロックタグの出力の先頭に（[ Top ]）（後述）を用意します。
+for文を用いてカテゴリ配列の中から一つずつカテゴリを処理します。
+25行目でコンテキストにカテゴリを設定します。
+$tokenと$builderを用意しブロックタグにはさまれた部分の処理を行います。処理に失敗した場合はビルドエラーが返ります。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-05.png]]
+
+* タグの終了
+ブロックタグ内の文字列を返し処理を終了します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-06.png]]
+
+* ハンドラ関数宣言(&lt;MTCategoryBreadcrumbTab&gt;)
+ハンドラ関数宣言と呼び出し時の"$ctx", "$args"の代入です。この関数はブロックタグの内部で利用するファンクションタグ(<MTCategoryBreadcrumbTab>)になります。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-07.png]]
+
+* コンテキスト（$ctx）からのオブジェクトの取得
+@$ctx->stash('blog')@ とすると、今処理をしているBlogオブジェクトが取得できます。Blogオブジェクトが取得できない場合、エラー表示せず処理を抜けます。
+@$ctx->stash('category')@ とすると、今処理をしているCategoryオブジェクトが取得できます。Categoryオブジェクトが取得できない場合、エラーを出力します。Categoryオブジェクトを$categoryに代入しています。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-08.png]]
+
+* カテゴリアーカイブURLの取得
+MT::Utilを利用し、処理中のカテゴリのアーカイブURLを取得します。（$url）
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-09.png]]
+
+* カテゴリの利用チェック
+処理中のカテゴリの利用回数をカウントします。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-10.png]]
+
+* aタグの準備
+空のaタグを用意します。その中でURLがあり、利用回数が１以上の場合、aタグ（$anchor_start, $anchor_end）をセットします。利用回数がゼロの時はカテゴリアーカイブパスが無いためリンクしません。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-11.png]]
+
+* カテゴリラベルの生成と処理の終了
+58行でカテゴリのラベル（表示名）を取得します。
+59行で（ &lt; [ &lt;a href="http://www.example.com/foo/subfoo/"&gt; ]）といった文字列を準備し、61行目で文字列を返します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-12.png]]
+
+* パンくずリストの先頭リンクの作成
+パンくずリストの（[ Top ]）を準備する内部関数です。
+Topの部分に、アーカイブパスへのリンクが付きます。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-13.png]]
+
+h2. ファンクションタグ プラグインの開発（PHP）
+
+h3. block.mtcategorybreadcrumbs.php
+
+ファイル名はブロックタグである事と<MTCategoryBreadcrumbs>タグである事から、block.mtcategorybreadcrumbs.phpとなります。
+
+<pre>
+<?php
+    function smarty_block_mtcategorybreadcrumbs ($args, $content, &$ctx, &$repeat) {
+        $localvars = array('_categories', '_categories_counter', 'category');
+
+        $blog = $ctx->stash('blog');
+        if (!$blog) {
+            return;
+        }
+        $entry = $ctx->stash('entry');
+        if (!$entry) {
+            return;
+        }
+        $cat = $entry->category();
+        if (!$cat) {
+            return _hdlr_top_link($blog);
+        }
+
+        if (!isset($content)) {
+            $ctx->localize($localvars);
+
+            while (1) {
+                if ($cat->parent == 0) {
+                    $categories[] = $cat;
+                    break;
+                }
+                $categories[] = $cat;
+                $category_id = $cat->category_parent;
+                $cat = $ctx->mt->db()->fetch_category($category_id);
+            }
+            $categories = array_reverse($categories);
+            $ctx->stash('_categories', $categories);
+            $counter = 0;
+        } else {
+            $categories = $ctx->stash('_categories');
+            $counter = $ctx->stash('_categories_counter');
+        }
+
+
+        if ($counter < count($categories)) {
+            $category = $categories[$counter];
+            $ctx->stash('category', $category);
+            $ctx->stash('_categories_counter', $counter + 1);
+            $repeat = true;
+        } else {
+            $ctx->restore($localvars);
+            $repeat = false;
+        }
+        if ($counter == 1) {
+            $content = _hdlr_top_link($blog) . $content; 
+        }
+        return $content;
+    }
+
+    function _hdlr_top_link ($blog) {
+        $blog_url = $blog->archive_url();
+
+        return "[ <a href=\"$blog_url\">Top</a> ]";
+    }
+?>
+</pre>
+
+h3. 解説
+
+* ハンドラ関数宣言(&lt;MTCategoryBreadcrumbs&gt;)
+
+block名はsmarty記法にのっとって smarty_block_mtcategorybreadcrumbs となります。一緒に呼び出し時の"$args", "$content", "$ctx", "$repeat"の取得をします。Perl版と異なる事に注意してください。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-14.png]]
+
+* コンテキスト（$ctx）からのオブジェクトの取得
+
+コンテキスト($ctx)からオブジェクトを取得します。
+Blogオブジェクトを取得し、取得できなかった場合はそのまま処理を抜けます。
+Entryオブジェクトを取得し、取得できなかった場合もそのまま処理を抜けます。
+Entryオブジェクトにカテゴリが設定されていなかった場合はアーカイブトップへのリンク（[ Top ]）（後述）を返し処理を抜けます。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-15.png]]
+
+* 初期値の設定と２回目以降の値の設定
+
+18行目で確認しているのは"$content"に値が設定されているかです。値が設定されていた場合、19行～32行目の操作を行います。値が設定されていた場合は34～35行目の処理を行います（後述）。
+19行目で値の永続化を行うための初期化をします。これらにはカテゴリの配列や、処理中のカテゴリ配列の行数などがあります。
+21～30行目はPerl版の12～21行の処理とほぼ同じです。カテゴリ配列に「親＞子＞孫」の順でカテゴリが定義されます。
+31行目でコンテキストにカテゴリ配列をセットします。
+32行目でカテゴリ配列の処理行数を0に設定しています。
+18行目で$contentに値が設定されていた場合、２回目以降のループである事が分かるのでコンテキストからカテゴリ配列と、カテゴリ配列の処理行数を34～35行目で取得します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-16.png]]
+
+* ループ処理
+
+カテゴリ配列の行数が、処理行数を超えなければ、39～40行目でカテゴリを取得しコンテキストにカテゴリをセットし、41行目で処理行数を１プラスします（次の処理で次の行を参照させるため）。
+42行目ではループが続くという事で$repeatにtrueをセットし、このif文を抜けます。 38行目で処理行数が超えている（全ての行の処理が終わった）場合、永続化されている情報を開放し、$repeatにfalseをセットしてループを終了します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-17.png]]
+
+* 関数の終了
+
+ループ中であっても、ループが終わっていてもPHP版のブロックタグは関数を抜けます。ここでは、$counterが１のとき（つまりループの初回）に処理中の文字列 $content の先頭へ、アーカイブトップへのリンク（[ Top ]）（後述）を付与します。これで「Top＞親」という出力になります。
+初回以外は $content をそのまま（「Top＞親＞子」）返して関数を抜けます。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-18.png]]
+
+* パンくずリストの先頭リンクの作成
+
+Perl版と同じくパンくずリストの（[ Top ]）を準備する内部関数です。
+Topの部分に、アーカイブパスへのリンクが付きます。
+
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-19.png]]
+
+h3. function.mtcategorybreadcrumbtab.php
+
+ファイル名はファンクションタグである事と<MTCategoryBreadcrumbTab>タグである事から、function.mtcategorybreadcrumbtab.phpとなります。
+
+<pre>
+<?php
+    function smarty_function_mtcategorybreadcrumbtab ($args, &$ctx) {
+
+        $blog = $ctx->stash('blog');
+        $category = $ctx->stash('category');
+
+        $args['blog_id'] = $ctx->stash('blog_id');
+        if (!$category) return '';
+        $url = $ctx->mt->db()->category_link($category->category_id, $args);
+        $blog = $ctx->stash('blog');
+        $index = $ctx->mt->config('IndexBasename');
+        $ext = $blog->blog_file_extension;
+        if ($ext) $ext = '.' . $ext; 
+        $index .= $ext;
+        $url = preg_replace('/\/(#.*)?$/', "/$index\$1", $url);
+
+        $cat_list[] = $category->category_id;
+        $placements = $ctx->mt->db()->fetch_placements(array('category_id' => $cat_list));
+        if ($placements[0]) {
+            $count = 1;
+        }
+
+        $anchor_start = '';
+        $anchor_end = '';
+        if ( $url && $count ) {
+            $anchor_start = '<a href="' . $url . '">';
+            $anchor_end = '</a>';
+        }
+
+        $label = $category->label;
+        $out = ' &lt; [ ' . $anchor_start . $label . $anchor_end. ' ]';
+ 
+        return $out;
+    }
+?>
+</pre>
+
+h3. 解説
+
+* ハンドラ関数宣言(<MTCategoryBreadcrumbTab>)ブロックタグのループ内で利用されるファンクションタグです。
+
+function名はsmarty記法にのっとって smarty_function_mtcategorybreadcrumbtab となります。一緒に呼び出し時の"$args", "$ctx"の取得をします。Perl版と異なる事に注意してください。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-20.png]]
+
+* コンテキスト（$ctx）からのオブジェクトの取得
+
+ブログとカテゴリのオブジェクトをコンテキストから取得します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-21.png]]
+
+* カテゴリアーカイブURLの取得
+
+Perl版の場合"MT::Util::archive_file_for()"が利用できましたが、PHP版には用意されていないため、<MTCategoryArchiveLink> ( $MT_DIR/php/lib/function.mtcategoryarchivelink.php ) のPHPコードから必要な物を引用しました。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-22.png]]
+
+* カテゴリの利用チェック
+
+処理中のカテゴリの利用回数をカウントします。具体的にはMT::Placementsオブジェクトを対象のカテゴリIDでfetchし、$placements[0]が存在したら対象のカテゴリが利用されている（$count = 1;）ものとします。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-23.png]]
+
+* aタグの準備
+
+空のaタグを用意します。その中でURLがあり、利用回数が１以上の場合、aタグ（$anchor_start, $anchor_end）をセットします。利用回数がゼロの時はカテゴリアーカイブパスが無いためリンクしません。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-24.png]]
+
+* カテゴリラベルの生成と処理の終了
+
+30行でカテゴリのラベル（表示名）を取得します。
+31行で（ &lt; [ &lt;a href="http://www.example.com/foo/subfoo/"&gt; ]）といった文字列を準備し、33行目で文字列を返します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-25.png]]
+
+h2. ファイルの配置
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin06/
+      |__ config.yaml
+      |__ lib/
+      |  |＿ MyPlugin06/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |＿ Tags.pm
+      |__ php/
+      |  |＿block.mtcategorybreadcrumbs.php
+      |  |＿function.mtcategorybreadcrumbtab.php
+      |__ t/
+         |＿00-compile.t
+         |＿01-tags.t
+</pre>
+
+h2. テストの実行
+
+では、作成したプラグインに対してテストを行います。
+
+h3. 00-compile.t
+
+<pre>
+$ cd $MT_DIR
+$ perl plugins/MyPlugin06/t/00-compile.t 
+1..5
+ok 1 - MyPlugin05 plugin loaded correctry
+ok 2 - require MyPlugin05::L10N;
+ok 3 - require MyPlugin05::L10N::ja;
+ok 4 - require MyPlugin05::L10N::en_us;
+ok 5 - require MyPlugin05::Tags;
+</pre>
+
+h3. 01-tags.t
+
+<pre>
+$ perl plugins/MyPlugin06/t/01-tags.t 
+1..7
+ok 1 - 'blog-name' template found
+ok 2 - Test blog loaded
+ok 3 - Test entry loaded
+ok 4 - perl test 1
+ok 5 - perl test 2
+ok 6 - perl test 3
+ok 7 - ok - php test 1 ok - php test 2 ok - php test 3 
+</pre>
+
+h3. proveコマンドでのテスト
+
+<pre>
+$ prove plugins/MyPlugin06/t/*.t
+plugins/MyPlugin06/t/00-compile.t .. ok   
+plugins/MyPlugin06/t/01-tags.t ..... ok   
+All tests successful.
+Files=2, Tests=12, 44 wallclock secs ( 0.07 usr  0.18 sys + 17.69 cusr  8.18 csys = 26.12 CPU)
+Result: PASS
+</pre>
+
+テストでの確認は終了しました。実際に管理画面からブログ記事アーカイブの"&lt;div id="alphe-inner"&gt;"の下に、"&lt;p&gt;&lt;MTCategoryBreadcrumbs&gt;&lt;MTCategoryBreadcrumbTab&gt;&lt;/MTCategoryBreadcrumbs&gt;&lt;/p&gt;"タグを記入し、スタティックの場合は再構築後、ダイナミックではそのまま各ブログ記事にパンくずリストが書き込まれます。
+
+* 記入例
+
+<pre>
+（前略）
+<div id="alpha">
+  <div id="alpha-inner">
+  <p><MTCategoryBreadcrumbs><MTCategoryBreadcrumbTab></MTCategoryBreadcrumbs></p>
+（後略）
+</pre>
+
+* 出力例
+
+<pre>
+（前略）
+<div id="alpha">
+  <div id="alpha-inner">
+  <p>[ <a href="http://narnia.na/test5/">Top</a> ] &lt; [ foo ] &lt; [ <a href="http://narnia.na/test5/foo/subfoo/index.html">subfoo</a> ]</p>
+（後略）
+</pre>
+
+h2. まとめ
+
+今回のポイントは「どうやって処理をループさせるか」「どうやってコンテキスト使ってブロックタグの内側に情報を渡すか」にあります。直感的なのはやはりPerl版ではないでしょうか？
+
+PHP版は少しだけハードルが高いですが、ご自分でプラグインを書くときには是非チャレンジしてみてください。
+
+また、実用に耐えるように、レイアウトを自由に変更できたり、CSSとの連係を取るなどの実装も練習になるので試してみてください。
+
+h2. プラグインダウンロード
+
+[[MyPlugin06.zip(7.61KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin06.zip]]
