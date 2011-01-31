@@ -12,7 +12,7 @@ h2. ブロックタグとは？
 
 これらは主にデータベースから情報を集め、その情報を元に中のファンクションタグなどに情報を与え、文字や文章を出力させます。
 
-上記のような理由でブロックタグはループ処理をしますが、Perl版の処理と、PHP版の処>理で記述法が変わってきます。簡単に説明すると以下になります。
+上記のような理由でブロックタグはループ処理をしますが、Perl版の処理と、PHP版の処理で記述法が変わってきます。簡単に説明すると以下になります。
 
 h3. Perl版
 
@@ -25,8 +25,7 @@ h3. PHP版
 
 * タグのプログラム内で配列を用意し、そこにオブジェクトなどを格納します。
 * 取得した配列をコンテキストに格納します。
-* １回テンプレートのブロックタグの中に記載されているファンクションタグにコンテキ
-ストを渡し、文字などとあわせて出力します。出力後、一旦プログラムを抜けます。
+* １回テンプレートのブロックタグの中に記載されているファンクションタグにコンテキストを渡し、文字などとあわせて出力します。出力後、一旦プログラムを抜けます。
 * ２回目以降はコンテキストから配列を取得し、次の行の処理を行いプログラムを抜けます。
 * 全ての配列に対して処理が終わったら、コンテキストを初期化しプログラムを抜けます。
 
@@ -42,13 +41,13 @@ h3. プラグインの仕様
 <pre>&lt;p&gt;&lt;MTCategoryBreadcrumbs&gt;&lt;MTCategoryBreadcrumbTab&gt;&lt;/MTCategoryBreadcrumbs&gt;&lt;/p&gt;
 </pre>
 * 利用対象はブログ記事のみ
-* カテゴリが設定されていない場合は以下の表示になり、"Top"はアーカイブトップペー>ジへのリンクが張られている
+* カテゴリが設定されていない場合は以下の表示になり、"Top"はアーカイブトップページへのリンクが張られている
 <pre>[ Top ]
 </pre>
 * カテゴリが設定されている場合、パンくずリストに親カテゴリから順に配置する
 <pre>[ Top ] < [ foo ] < [ subfoo ]
 </pre>
-* カテゴリのアーカイブが作成されていない場合、上記"foo"のようにリンクは張られな>い
+* カテゴリのアーカイブが作成されていない場合、上記"foo"のようにリンクは張られない
 * カテゴリのアーカイブが作成されている場合、上記"subfoo"のようにカテゴリアーカイ
 ブへのリンクが張られる
 * 対象とするカテゴリはメインカテゴリ（☆印付きの物）のみ
@@ -101,7 +100,7 @@ h2. ファンクションタグ プラグインの開発（Perl）
 
 h3. config.yaml
 
-グローバル・モディファイアの追加には以下のように"tags"=> "modifier"=> "モディファイア名" => $プラグイン名::ハンドラ名 を記述します。
+グローバル・モディファイアの追加には以下のように"tags"=&gt; "modifier"=&gt; "モディファイア名" =&gt; $プラグイン名::ハンドラ名 を記述します。
 
 "modifier"には、ブロックタグは"block"、ファンクションタグには"function"を記載します。
 
@@ -251,7 +250,7 @@ h3. 解説
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-01.png]]
 
 * ハンドラ関数宣言(&lt;MTCategoryBreadcrumbs&gt;)
-ハンドラ関数宣言と呼び出し時の"$ctx", "$args"の代入です。この関数はブロックタグ(<MTCategoryBreadcrumbs>)になります。
+ハンドラ関数宣言と呼び出し時の"$ctx", "$args"の代入です。この関数はブロックタグ(&lt;MTCategoryBreadcrumbs&gt;)になります。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-02.png]]
 
@@ -285,7 +284,7 @@ $tokenと$builderを用意しブロックタグにはさまれた部分の処理
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-06.png]]
 
 * ハンドラ関数宣言(&lt;MTCategoryBreadcrumbTab&gt;)
-ハンドラ関数宣言と呼び出し時の"$ctx", "$args"の代入です。この関数はブロックタグの内部で利用するファンクションタグ(<MTCategoryBreadcrumbTab>)になります。
+ハンドラ関数宣言と呼び出し時の"$ctx", "$args"の代入です。この関数はブロックタグの内部で利用するファンクションタグ(&lt;MTCategoryBreadcrumbTab&gt;)になります。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-07.png]]
 
@@ -326,7 +325,7 @@ h2. ファンクションタグ プラグインの開発（PHP）
 
 h3. block.mtcategorybreadcrumbs.php
 
-ファイル名はブロックタグである事と<MTCategoryBreadcrumbs>タグである事から、block.mtcategorybreadcrumbs.phpとなります。
+ファイル名はブロックタグである事と&lt;MTCategoryBreadcrumbs&gt;タグである事から、block.mtcategorybreadcrumbs.phpとなります。
 
 <pre>
 <?php
@@ -393,13 +392,11 @@ h3. block.mtcategorybreadcrumbs.php
 h3. 解説
 
 * ハンドラ関数宣言(&lt;MTCategoryBreadcrumbs&gt;)
-
 block名はsmarty記法にのっとって smarty_block_mtcategorybreadcrumbs となります。一緒に呼び出し時の"$args", "$content", "$ctx", "$repeat"の取得をします。Perl版と異なる事に注意してください。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-14.png]]
 
 * コンテキスト（$ctx）からのオブジェクトの取得
-
 コンテキスト($ctx)からオブジェクトを取得します。
 Blogオブジェクトを取得し、取得できなかった場合はそのまま処理を抜けます。
 Entryオブジェクトを取得し、取得できなかった場合もそのまま処理を抜けます。
@@ -408,7 +405,6 @@ Entryオブジェクトにカテゴリが設定されていなかった場合は
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-15.png]]
 
 * 初期値の設定と２回目以降の値の設定
-
 18行目で確認しているのは"$content"に値が設定されているかです。値が設定されていた場合、19行～32行目の操作を行います。値が設定されていた場合は34～35行目の処理を行います（後述）。
 19行目で値の永続化を行うための初期化をします。これらにはカテゴリの配列や、処理中のカテゴリ配列の行数などがあります。
 21～30行目はPerl版の12～21行の処理とほぼ同じです。カテゴリ配列に「親＞子＞孫」の順でカテゴリが定義されます。
@@ -419,30 +415,26 @@ Entryオブジェクトにカテゴリが設定されていなかった場合は
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-16.png]]
 
 * ループ処理
-
 カテゴリ配列の行数が、処理行数を超えなければ、39～40行目でカテゴリを取得しコンテキストにカテゴリをセットし、41行目で処理行数を１プラスします（次の処理で次の行を参照させるため）。
 42行目ではループが続くという事で$repeatにtrueをセットし、このif文を抜けます。 38行目で処理行数が超えている（全ての行の処理が終わった）場合、永続化されている情報を開放し、$repeatにfalseをセットしてループを終了します。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-17.png]]
 
 * 関数の終了
-
 ループ中であっても、ループが終わっていてもPHP版のブロックタグは関数を抜けます。ここでは、$counterが１のとき（つまりループの初回）に処理中の文字列 $content の先頭へ、アーカイブトップへのリンク（[ Top ]）（後述）を付与します。これで「Top＞親」という出力になります。
 初回以外は $content をそのまま（「Top＞親＞子」）返して関数を抜けます。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-18.png]]
 
 * パンくずリストの先頭リンクの作成
-
 Perl版と同じくパンくずリストの（[ Top ]）を準備する内部関数です。
 Topの部分に、アーカイブパスへのリンクが付きます。
-
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-19.png]]
 
 h3. function.mtcategorybreadcrumbtab.php
 
-ファイル名はファンクションタグである事と<MTCategoryBreadcrumbTab>タグである事から、function.mtcategorybreadcrumbtab.phpとなります。
+ファイル名はファンクションタグである事と&lt;MTCategoryBreadcrumbTab&gt;タグである事から、function.mtcategorybreadcrumbtab.phpとなります。
 
 <pre>
 <?php
@@ -484,38 +476,32 @@ h3. function.mtcategorybreadcrumbtab.php
 
 h3. 解説
 
-* ハンドラ関数宣言(<MTCategoryBreadcrumbTab>)ブロックタグのループ内で利用されるファンクションタグです。
-
+* ハンドラ関数宣言(&lt;MTCategoryBreadcrumbTab&gt;)ブロックタグのループ内で利用されるファンクションタグです。
 function名はsmarty記法にのっとって smarty_function_mtcategorybreadcrumbtab となります。一緒に呼び出し時の"$args", "$ctx"の取得をします。Perl版と異なる事に注意してください。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-20.png]]
 
 * コンテキスト（$ctx）からのオブジェクトの取得
-
 ブログとカテゴリのオブジェクトをコンテキストから取得します。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-21.png]]
 
 * カテゴリアーカイブURLの取得
-
-Perl版の場合"MT::Util::archive_file_for()"が利用できましたが、PHP版には用意されていないため、<MTCategoryArchiveLink> ( $MT_DIR/php/lib/function.mtcategoryarchivelink.php ) のPHPコードから必要な物を引用しました。
+Perl版の場合"MT::Util::archive_file_for()"が利用できましたが、PHP版には用意されていないため、&lt;MTCategoryArchiveLink&gt; ( $MT_DIR/php/lib/function.mtcategoryarchivelink.php ) のPHPコードから必要な物を引用しました。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-22.png]]
 
 * カテゴリの利用チェック
-
-処理中のカテゴリの利用回数をカウントします。具体的にはMT::Placementsオブジェクトを対象のカテゴリIDでfetchし、$placements[0]が存在したら対象のカテゴリが利用されている（$count = 1;）ものとします。
+処理中のカテゴリの利用回数をカウントします。具体的にはMT::Placementsオブジェクトを対象のカテゴリIDでfetchし、 @$placements[0]@ が存在したら対象のカテゴリが利用されている（$count = 1;）ものとします。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-23.png]]
 
 * aタグの準備
-
 空のaタグを用意します。その中でURLがあり、利用回数が１以上の場合、aタグ（$anchor_start, $anchor_end）をセットします。利用回数がゼロの時はカテゴリアーカイブパスが無いためリンクしません。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-24.png]]
 
 * カテゴリラベルの生成と処理の終了
-
 30行でカテゴリのラベル（表示名）を取得します。
 31行で（ &lt; [ &lt;a href="http://www.example.com/foo/subfoo/"&gt; ]）といった文字列を準備し、33行目で文字列を返します。
 
