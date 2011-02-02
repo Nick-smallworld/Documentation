@@ -293,13 +293,28 @@ h2. More Customizing
 
 h3. list_common.tmpl 
 
-* listing/foo.tmplがincludeされる
+テンプレートのサーチパスに @listing/foo_list_header.tmpl@ が存在する場合、自動的にインクルードされます。インクルードされたテンプレートからMTMLの変数にアクセスすることで、様々なカスタマイズやJavascriptコードの追加などが行えます。
 
-h2.  JavaScript and jQuery API 
+```xml
+<mt:setvarblock name="jq_js_include" append="1"> 
+    // Some JavaScript 
+</mt:setvarblock>
+```
 
-h3. event
+h2. JavaScript and jQuery API in Common Listing Screen
 
-* listReady
+h3. Events
 
+h4. listReady
+
+XHRを利用したリストの内容の読み込みが完了したタイミングでイベント @listReady@ が発生します。
+
+```js
+jQuery(window).bind('listReady', function() {
+    // Do something after the List table was rendered.
+})
+```
+
+h2. Foot Notes
 
 fn1. 以前のバージョンで使われていた @http://example.com/mt.cgi?__mode=list&_type=entry&filter=status&filter_val=2@ のような形式のリンク
