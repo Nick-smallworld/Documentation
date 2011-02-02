@@ -126,93 +126,11 @@ list_actions:
             # リストfooにアクションbuzzを追加
 ```
 
-h3. Listing screens
-
-リスト画面の全体の振る舞いを設定します。
-
-- object_label
-- object_label_plural
-- contents_label
-- contents_label_plural
-- container_label
-- container_label_plural := オブジェクトの表示名や、関連するオブジェクトの表示名を指定できます。省略された場合datasourceのclass_labelメソッドなどから自動的に作成されます。
-- primary := プライマリカラムとして利用するListPropertyの識別名を指定します。プライマリカラムは、カラム幅が優先的に広く表示されます。
-- view := このリストを表示可能なスコープを指定します。省略した場合すべてのスコープで表示されます。
-- default_sort_key := リストを表示した際に最初にsortを行うListPropertyの識別名を指定します。
-- premission := このリストにアクセスするために必要な権限を指定します。指定した権限を持たないログインユーザーのアクセスに対してはエラーを発生させます。
-- condition := このリストを利用可能かを判定するサブルーチンを指定します。
-- scope_mode :=
-
- ListingFrameworkでは、基本的にオブジェクトのblog_idカラムに対する条件を付与します。scope_modeを指定すると、現在のscopeに応じてどのようにblog_idの条件を設定するかを変更できます。
-
-- wide := 現在のスコープと、下位のスコープを含めたblog_idを検索対象とします。
-- this := 常に現在のスコープのblog_idのみを検索対象とします。
-- none := blog_idを検索条件に含めません。
-
-=:
-
-- feed_link
-- feed_label := feedへのリンクを指定します。
-
-h3.  List properties 
-
-* registry経由で、リストに対して要素(プロパティ)を追加する
-* 各要素にはprototypeベースの継承関係がある
-** Perlのpackageベースのクラス継承では無い事に注意
-** 関数だけではなく値も継承される
-* DBのカラムと直結した省略記法を利用できる
-
-h4. プロパティの定義
-
-* 一つのプロパティのなかに、以下の諸動作を一括で定義する
-** カラムの表示の定義
-** フィルタリングの定義
-** ソートの定義
-* 例えばentryのリストにtitleというプロパティを追加する場合、
-** titleプロパティの表示形式
-** titleプロパティでのフィルタ方法の定義
-** titleプロパティでのソート方法の定義
-* を、そのプロパティの属性として記述することになります
-* もちろんフィルタのみを行うようなプロパティも記述可能です
-
-h4. filter type
-
-* terms
-* grep
-
-h4. column view
-
-* raw
-* html
-* html_link
-* bulk_html
-
-h4. sorting
-
-* sort
-* bulk_sort
-
-h3. System filters
-
-* リスト画面に埋め込むフィルタを定義
-
-h4. Architecture of the "items"
-
-```perl
-[                                #itemsは複数のフィルタ定義を並べた配列リファレンス
-    {                            #個別のフィルタ定義
-        type => 'foo',           #このフィルタに対応するListPropertyの識別子をtypeとして指定
-        args => {                #ListPropertyのtermsに渡す値を記述
-            option => 'equal',
-            value  => 'Hoge',
-        }
-    },
-]
-```
-
-h3. list_actions
-
-h3. content_actions
+* [[Registry: listing-screens|Ja-dev-registry-listing-screens]]
+* [[Registry: list_properties|Ja-dev-registry-list-properties]]
+* [[Registry: system_filters|Ja-dev-registry-system-filters]]
+* [[Registry: list_actions|Ja-dev-registry-list-actions]]
+* [[Registry: content_actions|Ja-dev-registry-content-actions]]
 
 h2. Callbacks
 
