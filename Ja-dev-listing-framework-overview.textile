@@ -42,20 +42,63 @@ h3. リスト画面の構造
 リスト画面は、JavaScriptコードや、現在ユーザーが利用可能なフィルタの一覧、オブジェクトに対して実行可能なアクションの一覧などを含むHTMLページです。リスト画面のロードが完了した時や、ユーザーがリスト画面でフィルタの設定を変更した時に、リスト画面はMTに対して、XHRでリストの内容を要求します。要求には、フィルタの種類や、件数の上限、表示したいカラムの一覧などが含まれます。MTは、要求に応じてデータベースからオブジェクトのロードを行い、適切なHTMLスニペットに変換し、JSON形式でリストの内容を返します。リスト画面は受け取ったJSONデータを展開し、テーブルにレンダリングします。
 以下、実際に返されるJSONデータの例です。
 
-```js
-[
-    [
-        1,
-        "Welcome to Movable Type",
-        "foo"
-    ],
-    [
-        2,
-        "My First Post",
-        "bar"
-    ]
-]
-```
+
+<pre>
+{
+   "error" : null,
+   "result" : {
+      "messages" : [],
+      "count" : "158",
+      "page" : "1",
+      "page_max" : 4,
+      "columns" : "id,title,author_name,category_id,authored_on,modified_on,comment_count,ping_count",
+      "id" : "_allpass"
+      "filters" : [
+         {
+            "can_save" : "1",
+            "can_delete" : "1",
+            "can_edit" : "1",
+            "id" : "10",
+            "label" : "カテゴリのないエントリ",
+            "items" : [
+               {
+                  "args" : {
+                     "value" : "0"
+                  },
+                  "type" : "category_id"
+               }
+            ]
+         },
+         // ...略
+      ],
+      "objects" : [
+         [
+            "179",
+            "179",
+            "My First Entry",
+            "メロディ",
+            "-",
+            "17 hours ago",
+            "17 hours ago",
+            "<a href=\"http://example.com/mt.cgi?__mode=list&filter=entry&_type=comment&blog_id=2&filter_val=179\">0</a>",
+            "<a href=\"http://example.com/mt.cgi?__mode=list&filter=entry_id&_type=ping&blog_id=2&filter_val=179\">0</a>"
+         ],
+         [
+            "178",
+            "178",
+            "My Second Entry",
+            "メロディ",
+            "-",
+            "17 hours ago",
+            "17 hours ago",
+            "<a href=\"http://example.com/mt.cgi?__mode=list&filter=entry&_type=comment&blog_id=2&filter_val=178\">0</a>",
+            "<a href=\"http://example.com/mt.cgi?__mode=list&filter=entry_id&_type=ping&blog_id=2&filter_val=178\">0</a>"
+         ],
+         //...略
+      ]
+   }
+}
+</pre>
 
 h2. Registry
 
