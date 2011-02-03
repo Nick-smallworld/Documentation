@@ -1,10 +1,71 @@
 h1.  Registry: list_properties 
 
-* registry経由で、リストに対して要素(プロパティ)を追加する
-* 各要素にはprototypeベースの継承関係がある
-** Perlのpackageベースのクラス継承では無い事に注意
-** 関数だけではなく値も継承される
-* DBのカラムと直結した省略記法を利用できる
+h2. list_properties の構造
+
+リスティングフレームワークでは、リストプロパティと呼ばれる要素を追加することで、リスト画面に、表示列やフィルタなどの機能を追加していくことが出来ます。一つのプロパティのなかには、以下の諸動作を一括で定義します。
+
+* カラムの表示の定義
+* フィルタリングの定義
+* ソートの定義
+
+例えばentryのリストにtitleというプロパティを追加する場合、
+
+* titleプロパティの表示形式
+* titleプロパティでのフィルタ方法の定義
+* titleプロパティでのソート方法の定義
+
+を、そのプロパティの属性として記述することになります。もちろん、フィルタのみを行うようなプロパティも記述可能です。
+
+```yaml
+list_properties:
+    entry:                # __mode=list&_type=entryのリクエストで
+        title:            # titleという列で
+            label: Entry
+            html: $Core::MT::Entry::title_html
+            # ...以下、ブログ記事のタイトルを表示/フィルタする場合の設定
+        body:
+            label: Body
+            html: $Core::MT::Entry::body_html
+            # ...以下、ブログ記事の本文を表示/フィルタする場合の設定
+```
+
+h2. プロパティの継承
+
+リストプロパティには継承関係を設定することが出来ます。@base@ に継承元となるリストIDとプロパティIDを、ドット @.@ でつないだ文字列を指定します。
+
+```yaml
+#entryリストのtitleプロパティを、__virtual.labelから継承し、labelだけ変更
+list_properties:
+    entry:
+        title:
+            label: Title
+            base: __virtual.label
+```
+
+h3. Auto
+
+プロパティに @auto@ フラグを指定することで、該当カラムのスキーマから判断される継承元を自動的に設定できます。プロパティIDと同じ名前のカラムがオブジェクトに存在している必要があります。
+表示名については自動で設定されませんので、 @label@ をあわせて指定してください。
+
+```yaml
+list_properties:
+    entry:
+        title:
+            auto: 1
+            label: Title
+        # EntryオブジェクトのTitleカラムはstring型なので、自動的に
+        # @__virtual.string@ を継承し、テキスト検索型のフィルタと
+        # ソートルーチンを利用できる
+        keyword: Keyword
+        # これは
+        # keyword:
+        #     auto: 1
+        #     label: Keyword
+        # のシンタックスシュガー
+```
+
+
+
 
 h2. プロパティの定義
 
@@ -19,22 +80,64 @@ h2. プロパティの定義
 * を、そのプロパティの属性として記述することになります
 * もちろんフィルタのみを行うようなプロパティも記述可能です
 
-h3. filter type
 
-* terms
-* grep
 
-h3. column view
+- alternative_label
+- args_via_param
+- asc_count
+- auto
+- base
+- base_type
+- bulk_cats
+- bulk_html
+- bulk_sort
+- category_class
+- class
+- col
+- col_class
+- comment_class
+- condition
+- count_args
+- count_class
+- count_col
+- count_terms
+- default_sort_order
+- display
+- entry_class
+- filter_editable
+- filter_label
+- filter_tmpl
+- filter_type
+- grep
+- html
+- html_link
+- init
+- label
+- label_via_param
+- list_permit_action
+- list_screen
+- meta_type
+- order
+- priority
+- raw
+- ref_column
+- screen_name
+- single_select_options
+- singleton
+- site_name
+- sort
+- sub_fields
+- tag_ds
+- tagged_class
+- terms
+- use_future
+- validate_item
+- view
+- view_filter
+- zero_state_label
 
-* raw
-* html
-* html_link
-* bulk_html
 
-h3. sorting
 
-* sort
-* bulk_sort
 
 h2. See Also
 
