@@ -2,7 +2,7 @@ h1.  Registry: list_properties
 
 h2. list_properties の構造
 
-リスティングフレームワークでは、リストプロパティと呼ばれる要素を追加することで、リスト画面に、表示列やフィルタなどの機能を追加していくことが出来ます。一つのプロパティのなかには、以下の諸動作を一括で定義します。
+リスティングフレームワークでは、リストプロパティと呼ばれる要素をレジストリに追加することで、リスト画面に、表示列やフィルタなどの機能を追加していくことが出来ます。一つのプロパティのなかには、以下の諸動作を一括で定義します。
 
 * カラムの表示の定義
 * フィルタリングの定義
@@ -64,80 +64,119 @@ list_properties:
         # のシンタックスシュガー
 ```
 
+h2. 指定可能な値
 
+h3. args_via_param
 
+CGIパラメータからフィルタを生成するサブルーチンを指定します。
 
-h2. プロパティの定義
+h3. auto
 
-* 一つのプロパティのなかに、以下の諸動作を一括で定義する
-** カラムの表示の定義
-** フィルタリングの定義
-** ソートの定義
-* 例えばentryのリストにtitleというプロパティを追加する場合、
-** titleプロパティの表示形式
-** titleプロパティでのフィルタ方法の定義
-** titleプロパティでのソート方法の定義
-* を、そのプロパティの属性として記述することになります
-* もちろんフィルタのみを行うようなプロパティも記述可能です
+プロパティの自動継承を行うかを指定します。
 
+h3. base
 
+プロパティの継承元を指定します。
 
-- alternative_label
-- args_via_param
-- asc_count
-- auto
-- base
-- base_type
-- bulk_cats
-- bulk_html
-- bulk_sort
-- category_class
-- class
-- col
-- col_class
-- comment_class
-- condition
-- count_args
-- count_class
-- count_col
-- count_terms
-- default_sort_order
-- display
-- entry_class
-- filter_editable
-- filter_label
-- filter_tmpl
+h3. bulk_html
+
+リストとして表示するコンテンツの内容を一括で生成するサブルーチンを指定します。
+
+h3. bulk_sort
+
+ロード済みオブジェクトのソートを行うサブルーチンを指定します。 @sort@ の指定がなく、 @bulk_sort@ が指定されている場合のみ有効となりますが、その場合、ページに含まれないものを含めた全オブジェクトがロードされます。そのため、パフォーマンスの劣化を招く恐れがあります。
+
+h3. condition
+
+プロパティが利用可能なスコープを指定します。
+
+h3. default_sort_order
+
+初期ソートの方向を指定します。
+
+h3. display
+
+テーブルへの表示を行うかを指定します。 以下のうちの一つを指定します。
+
+- force := 必ず表示。ユーザーは表示オプションで非表示とすることは出来ません。
+- default := 初期状態では表示。ユーザーは表示オプションで非表示とすることが出来ます。
+- optional := 初期状態では非表示。ユーザーは表示オプションで表示させることが出来ます。
+- none := 常に非表示
+
+省略した場合 @optional@ となります。
+
+h3. filter_editable
+
+ユーザーがフィルタアイテムの編集を行えるかを指定します。
+
+h3. filter_label
+
+フィルタアイテムの選択欄で、テーブルのヘッダとは異なる表示を行う場合に指定します。
+
+h3. filter_tmpl
+
+フィルタアイテムとして利用する MTML テンプレートを指定します。
+
 - filter_type
-- grep
-- html
-- html_link
-- init
-- label
-- label_via_param
-- list_permit_action
-- list_screen
-- meta_type
-- order
-- priority
-- raw
-- ref_column
-- screen_name
-- single_select_options
-- singleton
-- site_name
-- sort
-- sub_fields
-- tag_ds
-- tagged_class
-- terms
-- use_future
-- validate_item
-- view
-- view_filter
-- zero_state_label
 
+h3. grep
 
+SQL では絞り込みが行えない場合などに、全アイテムのロード後に実行されるPerlコードによってオブジェクトのフィルタリングを実装する場合にサブルーチンを指定します。パフォーマンスの劣化を招く恐れがあります。
 
+h3. html
+
+テーブルに表示する HTML を返すサブルーチンを指定します。
+
+h3. html_link
+
+テーブルに表示するコンテンツにリンクを指定できます。
+
+h3. init
+
+MT::ListProperty クラスのインスタンスが作成された際の初期化ルーチンを指定できます。
+
+h3. label
+
+プロパティの表示名を指定します。
+
+h3. label_via_param
+
+フィルタの表示名をリクエストパラメータから生成するサブルーチンを指定できます。
+
+h3. raw
+
+オブジェクトの値を返すサブルーチンを指定します。
+
+h3. sort
+
+ソートの指定を行うサブルーチンを指定します。 @MT::Object::load@ に渡される @$terms@ @$args@ を受け取って、必要なパラメータを指定してください。
+
+h3. sub_fields
+
+サブフィールドの一覧を指定します。同じカラム内に、ユーザーが表示/非表示を選択可能な表示要素を含めることが出来ます。
+
+```yaml
+list_properties:
+    entry:
+        title:
+            sub_fields:
+                - 
+                     class: excerpt
+                     label: Excerpt
+                     display: default
+```
+
+h3. terms
+
+オブジェクトのフィルタリングを行うサブルーチンを指定します。 @MT::Object::load@ に渡される @$terms@ @$args@ を受け取って、必要なパラメータを指定してください。
+
+h3. validate_item
+
+フィルタリングの実行前にリクエストパラメータの整合性を確認するサブルーチンを指定します。
+
+h3. view
+
+このプロパティが利用可能なスコープを指定します。
 
 h2. See Also
 
