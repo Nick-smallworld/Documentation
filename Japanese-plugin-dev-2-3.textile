@@ -81,3 +81,220 @@ JSON
 （後略）
 </pre>
 
+h2. コンディショナルタグ プラグインの開発（Perl）
+
+前章で作成したMyPlugin06を元にプラグインを作成します。
+
+h3. config.yaml
+
+グローバル・モディファイアの追加には以下のように"tags"=> "modifier"=> "モディファイア名?" => $プラグイン名::ハンドラ名 を記述します。
+
+"modifier"には、ブロックタグは"block"を記載します。
+
+モディファイア名の後に"?"が入っているのに注意してください。このように書くとブロックタグではなくコンディショナルタグと認識されます。
+
+<pre>
+id: MyPlugin07
+name: <__trans phrase="Sample Plugin Conditional tag">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin07::L10N
+
+tags:
+    block:
+        CategoryIfToplevel?: $MyPlugin07::MyPlugin07::Tags::hdlr_category_if_toplevel
+</pre>
+
+h3. L10N.pm
+
+<pre>
+package MyPlugin07::L10N;
+use strict;
+use base 'MT::Plugin::L10N';
+
+1;
+</pre>
+
+h3. L10N/en_us.pm
+
+<pre>
+package MyPlugin07::L10N::en_us;
+
+use strict;
+use base 'MyPlugin07::L10N';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    '_PLUGIN_DESCRIPTION' => 'Sample conditional tag',
+    '_PLUGIN_AUTHOR' => 'Plugin author',
+);
+
+1;
+</pre>
+
+h3. L10N/ja.pm
+
+<pre>
+package MyPlugin07::L10N::ja;
+
+use strict;
+use base 'MyPlugin07::L10N::en_us';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    'Sample Plugin Conditional tag' => 'サンプルプラグイン コンディショナルタグ',
+    '_PLUGIN_DESCRIPTION' => ' テストプラグイン',
+    '_PLUGIN_AUTHOR' => 'プラグイン作者',
+);
+
+1;
+</pre>
+
+h3. Tags.pm
+
+<pre>
+package MyPlugin07::Tags;
+use strict;
+
+sub hdlr_category_if_toplevel {
+    my ($ctx, $args, $cond) = @_;
+
+    my $entry = $ctx->stash('entry');
+    my $cat = $entry->category() || return 0;
+
+    return ($cat->parent() == 0);
+}
+
+1;
+</pre>
+
+h2. コンディショナルタグ プラグインの開発（PHP）
+
+h3. block.mtcategoryiftoplevel.php
+
+ファイル名はコンディショナルタグの場合でもblockタグとして扱い、&lt;MTCategoryIfToplevel&gt;タグである事から、block.mtcategoryiftoplevel.phpとなります。
+
+<pre>
+<?php
+    function smarty_block_mtcategoryiftoplevel ($args, $content, &$ctx, &$repeat) {
+        if (!isset($content)) {
+            $entry = $ctx->stash('entry');
+            $cat = $entry->category();
+            if (!$cat) {
+                $flag = 0;
+            } else {
+                if ($cat->parent == 0) {
+                    $flag = 1;
+                } else {
+                    $flag = 0;
+                }
+            }
+            return $ctx->_hdlr_if($args, $content, $ctx, $repeat, $flag);
+        } else {
+            return $ctx->_hdlr_if($args, $content, $ctx, $repeat);
+        }
+    }
+?>
+</pre>
+
+h2.  ファイルの配置
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin07/
+      |__ config.yaml
+      |__ lib/
+      |  |＿ MyPlugin07/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |＿ Tags.pm
+      |__ php/
+      |  |＿block.mtcategoryiftoplevel.php
+      |__ t/
+         |＿00-compile.t
+         |＿01-tags.t
+</pre>
+
+h2. テストの実行
+
+では、作成したプラグインに対してテストを行います。
+
+h3. 00-compile.t
+
+<pre>
+$ perl plugins/MyPlugin07/t/00-compile.t 
+1..5
+ok 1 - MyPlugin07 plugin loaded correctry
+ok 2 - require MyPlugin07::L10N;
+ok 3 - require MyPlugin07::L10N::ja;
+ok 4 - require MyPlugin07::L10N::en_us;
+ok 5 - require MyPlugin07::Tags;
+</pre>
+
+h3. 01-tags.t
+
+<pre>
+$ perl plugins/MyPlugin07/t/01-tags.t 
+1..7
+ok 1 - 'blog-name' template found
+ok 2 - Test blog loaded
+ok 3 - Test entry loaded
+ok 4 - perl test 1
+ok 5 - perl test 2
+ok 6 - perl test 3
+ok 7 - ok - php test 1 ok - php test 2 ok - php test 3 
+</pre>
+
+h3. proveコマンドでのテスト
+
+<pre>
+$ prove plugins/MyPlugin07/t/*.t
+plugins/MyPlugin07/t/00-compile.t .. ok   
+plugins/MyPlugin07/t/01-tags.t ..... ok   
+All tests successful.
+Files=2, Tests=12, 29 wallclock secs ( 0.08 usr  0.07 sys + 15.45 cusr  4.73 csys = 20.33 CPU)
+Result: PASS
+</pre>
+
+テストでの確認は終了しました。実際に管理画面からブログ記事アーカイブの"<div id="alphe-inner">"の下にタグを記入し、スタティックの場合は再構築後、ダイナミックではそのまま各ブログ記事にトップレベルカテゴリに関する事が書き込まれます。
+
+* 記入例
+
+<pre>
+（前略）
+<div id="alpha">
+  <div id="alpha-inner">
+    <MTCategoryIfToplevel>
+    <p>このブログ記事にはトップレベルカテゴリが設定されています。</p>
+    <MTElse>
+    <p>このブログ記事にはカテゴリが設定されていないか、トップレベルカテゴリ以外が設定されています。</p>
+    </MTCategoryIfToplevel>
+（後略）
+</pre>
+
+* 出力例
+
+<pre>
+（前略）
+<div id="alpha">
+  <div id="alpha-inner">
+    <p>このブログ記事にはトップレベルカテゴリが設定されています。</p>
+（後略）
+</pre>
+
+h2. まとめ
+
+前回のブロックタグと同じく、Perl版はコード内で処理をし、PHP版はコードを一旦抜けるようになっています。
+
+やはり直感的なのはPerl版ですが、PHP版も今回の解説でご理解頂いたと思います。Perl版のプラグインを書く場合は一緒にPHP版も書いてみましょう。
+
+h2. プラグインダウンロード
+
+MyPlugin07.zip
+
