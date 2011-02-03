@@ -2,17 +2,19 @@ h1. Registry: listing_screens
 
 リスト画面の全体の振る舞いを設定します。
 
-- object_label
-- object_label_plural
-- contents_label
-- contents_label_plural
-- container_label
-- container_label_plural := オブジェクトの表示名や、関連するオブジェクトの表示名を指定できます。省略された場合datasourceのclass_labelメソッドなどから自動的に作成されます。
-- primary := プライマリカラムとして利用するListPropertyの識別名を指定します。プライマリカラムは、カラム幅が優先的に広く表示されます。
-- view := このリストを表示可能なスコープを指定します。省略した場合すべてのスコープで表示されます。
-- default_sort_key := リストを表示した際に最初にsortを行うListPropertyの識別名を指定します。
-- premission := このリストにアクセスするために必要な権限を指定します。指定した権限を持たないログインユーザーのアクセスに対してはエラーを発生させます。
-- condition := このリストを利用可能かを判定するサブルーチンを指定します。
+h2. 設定可能な値
+
+- condition := 現在のコンテキストでこのリスト画面を表示するか判定するサブルーチンを指定します。
+- contents_label := このリスト画面で扱うオブジェクトが子要素をもつ場合、子要素の表示名を指定します。
+- contents_label_plural := このリスト画面で扱うオブジェクトが子要素をもつ場合、子要素の表示名の複数形を指定します。
+- default_sort_key := リスト画面を開いたときの初期ソートを行うプロパティの @property_id@ を指定します。
+- feed_label := リスト画面が出力するフィードのラベルを指定します。
+- feed_link := リスト画面と関連付けられるフィードのリンクを指定します。
+- object_label := リスト画面に表示するオブジェクトの表示名を指定します。
+- object_label_plural := リスト画面に表示するオブジェクトの表示名の複数形を指定します。
+- object_type := リスト画面に表示するオブジェクトの @class_type@ を指定します。省略した場合、このリスト画面のIDが使用されます。
+- permission := リスト画面にアクセスするために必要なpermit_actionを指定します。複数の値をカンマ区切りで指定できます。
+- primary := プライマリ表示[1]を行うカラムの @property_id@ を指定します。
 - scope_mode :=
 
  ListingFrameworkでは、基本的にオブジェクトのblog_idカラムに対する条件を付与します。scope_modeを指定すると、現在のscopeに応じてどのようにblog_idの条件を設定するかを変更できます。
@@ -22,9 +24,11 @@ h1. Registry: listing_screens
 - none := blog_idを検索条件に含めません。
 
 =:
-
-- feed_link
-- feed_label := feedへのリンクを指定します。
+- screen_label := 画面の表示名を指定します。
+- search_label := クイック検索の表示名を指定します。
+- search_type := クイック検索の対象となるオブジェクトを指定します。
+- template := デフォルトのテンプレート @list_common.tmpl@ と異なるテンプレートを使ってリストのレンダリングを行う場合に、テンプレートのパスを指定します。
+- view := リスト画面を表示するスコープを指定します。
 
 
 h2. See Also
@@ -34,3 +38,7 @@ h2. See Also
 * [[Registry: system_filters|Ja-dev-registry-system-filters]]
 * [[Registry: list_actions|Ja-dev-registry-list-actions]]
 * [[Registry: content_actions|Ja-dev-registry-content-actions]]
+
+h2. Foot notes
+
+fn1. プライマリ表示が指定されたカラムは、表示幅の最大値が設定されず、他のカラムが非表示になった場合にテーブルを埋める役割を果たします。
