@@ -16,7 +16,7 @@ h2(#tutorial-plugin). プラグイン開発ガイド
 # [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
 # [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
 # [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
-
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
 
 h2(#mt51). Movable Type 5.1 の新機能
 
