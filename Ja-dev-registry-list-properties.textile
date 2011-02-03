@@ -1,0 +1,45 @@
+h1.  Registry: list_properties 
+
+* registry経由で、リストに対して要素(プロパティ)を追加する
+* 各要素にはprototypeベースの継承関係がある
+** Perlのpackageベースのクラス継承では無い事に注意
+** 関数だけではなく値も継承される
+* DBのカラムと直結した省略記法を利用できる
+
+h2. プロパティの定義
+
+* 一つのプロパティのなかに、以下の諸動作を一括で定義する
+** カラムの表示の定義
+** フィルタリングの定義
+** ソートの定義
+* 例えばentryのリストにtitleというプロパティを追加する場合、
+** titleプロパティの表示形式
+** titleプロパティでのフィルタ方法の定義
+** titleプロパティでのソート方法の定義
+* を、そのプロパティの属性として記述することになります
+* もちろんフィルタのみを行うようなプロパティも記述可能です
+
+h3. filter type
+
+* terms
+* grep
+
+h3. column view
+
+* raw
+* html
+* html_link
+* bulk_html
+
+h3. sorting
+
+* sort
+* bulk_sort
+
+h2. See Also
+
+* [[Lising Framework Overview|Ja-dev-listing-framework-overview]]
+* [[Registry: listing_screens|Ja-dev-registry-listing-screens]]
+* [[Registry: system_filters|Ja-dev-registry-system-filters]]
+* [[Registry: list_actions|Ja-dev-registry-list-actions]]
+* [[Registry: content_actions|Ja-dev-registry-content-actions]]

@@ -3,9 +3,10 @@ h1. Movable Type 開発者向けガイド
 開発者向けのドキュメントです。
 
 
-h2. プラグイン開発ガイド
+h2(#tutorial-plugin). プラグイン開発ガイド
 
-プラグインは、Movable Typeに独自の機能を追加する小さなソフトウェアです。Movable Typeのカスタマイズの中核ともいえるプラグインの開発方法をを紹介します。
+プラグインは、Movable Typeに独自の機能を追加する小さなソフトウェアです。Movable Typeのカスタマイズの中核ともいえるプラグインの開発方法を紹介します。
+
 
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
@@ -17,6 +18,25 @@ h2. プラグイン開発ガイド
 # [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
 
 
-h2. Movable Type 5.1 New Feature
+h2(#mt51). Movable Type 5.1 の新機能
 
 # [[リスティングフレームワーク|Ja-dev-listing-framework-overview]]
+
+
+h2(#framework). 開発者向けフレームワーク
+
+* "更新履歴をプラグインで利用する":http://www.movabletype.jp/documentation/developer/revisable.html
+* "パーミッションの管理":http://www.movabletype.jp/documentation/developer/permissions.html
+* "内部文字列のUTF8化と、エンコード / デコード処理":http://www.movabletype.jp/documentation/developer/utf8.html
+
+h3(#theme). テーマ
+
+* "テーマの構造":http://www.movabletype.jp/documentation/developer/theme/index.html
+* "テーマの基本情報":http://www.movabletype.jp/documentation/developer/theme/registry.html
+* "標準のテーマ エレメント":http://www.movabletype.jp/documentation/developer/theme/core_elements.html
+* "プラグインによるテーマフレームワークの拡張":http://www.movabletype.jp/documentation/developer/theme/extend_theme_framewok.html
+
+
+h2(#deployment). 環境構築
+
+* "FastCGIのインストールと設定":http://www.movabletype.jp/documentation/developer/server/fastcgi.html

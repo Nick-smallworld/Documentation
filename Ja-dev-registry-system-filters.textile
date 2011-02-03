@@ -1,0 +1,26 @@
+h1. Registry: system_filters
+
+* リスト画面に埋め込むフィルタを定義
+
+h2. Architecture of the "items"
+
+```perl
+[                                #itemsは複数のフィルタ定義を並べた配列リファレンス
+    {                            #個別のフィルタ定義
+        type => 'foo',           #このフィルタに対応するListPropertyの識別子をtypeとして指定
+        args => {                #ListPropertyのtermsに渡す値を記述
+            option => 'equal',
+            value  => 'Hoge',
+        }
+    },
+]
+```
+
+h2. See Also
+
+* [[Lising Framework Overview|Ja-dev-listing-framework-overview]]
+* [[Registry: listing_screens|Ja-dev-registry-listing-screens]]
+* [[Registry: list_properties|Ja-dev-registry-list-properties]]
+* [[Registry: list_actions|Ja-dev-registry-list-actions]]
+* [[Registry: content_actions|Ja-dev-registry-content-actions]]
+

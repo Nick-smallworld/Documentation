@@ -1,4 +1,4 @@
-h1. リスティングフレームワークの全体像
+h1. リスティングフレームワーク
 
 h2. 特徴
 
@@ -35,6 +35,14 @@ h3. リスト画面の起動
 
 リスティングフレームワークは、 @mt.cgi?__mode=list&_type=foo@ というリクエストに対し、対応するメソッド @applications/cms/methods/list_foo@ が存在しない場合、 レジストリの @listing_screens/foo@ および @list_properties/foo@ から情報を収集して、自動的にリスト画面を生成します。
 
+h3. リスト画面の構造
+
+リスティングフレームワークが作成するリスト画面では、XMLHttpRequestを利用してリストの内容を動的に取得します。以下、リスト画面全体のHTMLページを「リスト画面」と呼びます。また、リスト画面がXHRでリクエストするオブジェクトの内容を「リストの内容」または「フィルタされたリスト」と呼びます。コールバックを作成し、カスタマイズを行う場合には、カスタマイズを行う対象が「リスト画面」なのか「リストの内容」なのかを把握し、適切なコールバックを選択する必要があります。
+
+リスト画面は、JavaScriptコードや、現在ユーザーが利用可能なフィルタの一覧、オブジェクトに対して実行可能なアクションの一覧などを含むHTMLページです。リスト画面のロードが完了した時や、ユーザーがリスト画面でフィルタの設定を変更した時に、リスト画面はMTに対して、XHRでリストの内容を要求します。要求には、フィルタの種類や、件数の上限、表示したいカラムの一覧などが含まれます。MTは、要求に応じてデータベースからオブジェクトのロードを行い、適切なHTMLスニペットに変換し、JSON形式でリストの内容を返します。リスト画面は受け取ったJSONデータを展開し、テーブルにレンダリングします。
+
+* [[JSONデータの例|https://gist.github.com/807368]]
+
 h2. Registry
 
 以下のレジストリキーに値を追加していくことで、リストを作成/カスタマイズ出来ます。
@@ -45,89 +53,27 @@ h2. Registry
 - list_actions := リストに、オブジェクト単位で適用可能なアクションを追加します
 - content_actions := リストに、画面全体に適用するアクションを追加します
 
-h3. Listing screens
+これらのレジストリキーの下に、任意のリストIDを指定し、リストの定義を行います。通常は表示するオブジェクトのobject_typeと同じものを指定します。
 
-リスト画面の全体の振る舞いを設定します。
-
-- object_label
-- object_label_plural
-- contents_label
-- contents_label_plural
-- container_label
-- container_label_plural := オブジェクトの表示名や、関連するオブジェクトの表示名を指定できます。省略された場合datasourceのclass_labelメソッドなどから自動的に作成されます。
-- primary := プライマリカラムとして利用するListPropertyの識別名を指定します。プライマリカラムは、カラム幅が優先的に広く表示されます。
-- view := このリストを表示可能なスコープを指定します。省略した場合すべてのスコープで表示されます。
-- default_sort_key := リストを表示した際に最初にsortを行うListPropertyの識別名を指定します。
-- premission := このリストにアクセスするために必要な権限を指定します。指定した権限を持たないログインユーザーのアクセスに対してはエラーを発生させます。
-- condition := このリストを利用可能かを判定するサブルーチンを指定します。
-- scope_mode :=
-
- ListingFrameworkでは、基本的にオブジェクトのblog_idカラムに対する条件を付与します。scope_modeを指定すると、現在のscopeに応じてどのようにblog_idの条件を設定するかを変更できます。
-
-- wide := 現在のスコープと、下位のスコープを含めたblog_idを検索対象とします。
-- this := 常に現在のスコープのblog_idのみを検索対象とします。
-- none := blog_idを検索条件に含めません。
-
-=:
-
-- feed_link
-- feed_label := feedへのリンクを指定します。
-
-h3.  List properties 
-
-* registry経由で、リストに対して要素(プロパティ)を追加する
-* 各要素にはprototypeベースの継承関係がある
-** Perlのpackageベースのクラス継承では無い事に注意
-** 関数だけではなく値も継承される
-* DBのカラムと直結した省略記法を利用できる
-
-h4. プロパティの定義
-
-* 一つのプロパティのなかに、以下の諸動作を一括で定義する
-** カラムの表示の定義
-** フィルタリングの定義
-** ソートの定義
-* 例えばentryのリストにtitleというプロパティを追加する場合、
-** titleプロパティの表示形式
-** titleプロパティでのフィルタ方法の定義
-** titleプロパティでのソート方法の定義
-* を、そのプロパティの属性として記述することになります
-* もちろんフィルタのみを行うようなプロパティも記述可能です
-
-h4. filter type
-
-* terms
-* grep
-
-h4. column view
-
-* raw
-* html
-* html_link
-* bulk_html
-
-h4. sorting
-
-* sort
-* bulk_sort
-
-h3. System filters
-
-* リスト画面に埋め込むフィルタを定義
-
-h4. Architecture of the "items"
-
-```perl
-[                                #itemsは複数のフィルタ定義を並べた配列リファレンス
-    {                            #個別のフィルタ定義
-        type => 'foo',           #このフィルタに対応するListPropertyの識別子をtypeとして指定
-        args => {                #ListPropertyのtermsに渡す値を記述
-            option => 'equal',
-            value  => 'Hoge',
-        }
-    },
-]
+```yaml
+listing_screens:
+    foo:
+        # オブジェクトfooを表示するリストfooを定義し、基本的な振る舞いを指定
+list_properties:
+    foo:
+        fizz:
+            # リストfooにプロパティfizzを追加
+list_actions:
+    foo:
+        buzz:
+            # リストfooにアクションbuzzを追加
 ```
+
+* [[Registry: listing-screens|Ja-dev-registry-listing-screens]]
+* [[Registry: list_properties|Ja-dev-registry-list-properties]]
+* [[Registry: system_filters|Ja-dev-registry-system-filters]]
+* [[Registry: list_actions|Ja-dev-registry-list-actions]]
+* [[Registry: content_actions|Ja-dev-registry-content-actions]]
 
 h2. Callbacks
 
@@ -208,12 +154,28 @@ h2. More Customizing
 
 h3. list_common.tmpl 
 
-* listing/foo.tmplがincludeされる
+テンプレートのサーチパスに @listing/foo_list_header.tmpl@ が存在する場合、自動的にインクルードされます。インクルードされたテンプレートからMTMLの変数にアクセスすることで、様々なカスタマイズやJavascriptコードの追加などが行えます。
 
-h2.  JavaScript and jQuery API 
+```xml
+<mt:setvarblock name="jq_js_include" append="1"> 
+    // Some JavaScript 
+</mt:setvarblock>
+```
 
-h3. event
+h2. JavaScript and jQuery API in Common Listing Screen
 
-* listReady
+h3. Events
+
+h4. listReady
+
+XHRを利用したリストの内容の読み込みが完了したタイミングでイベント @listReady@ が発生します。
+
+```js
+jQuery(window).bind('listReady', function() {
+    // Do something after the List table was rendered.
+})
+```
+
+h2. Foot Notes
 
 fn1. 以前のバージョンで使われていた @http://example.com/mt.cgi?__mode=list&_type=entry&filter=status&filter_val=2@ のような形式のリンク
