@@ -1,3 +1,83 @@
 h1. コンディショナルタグ プラグインの開発について
 
-h2. 
+h2. はじめに
+
+今回はコンディショナルタグを実現するプラグインを解説します。
+
+h2. コンディショナルタグとは？
+
+ブロックタグの代表格は&lt;MTIf&gt;&lt;MTIfBlog&gt;&lt;MTIfCategory&gt;などのタグです。
+
+&lt;MTIfBlog&gt;〜&lt;MTElse&gt;〜&lt;MTIfBlog&gt; のように利用します。
+
+これらは条件分岐を実装したMTタグです。
+
+コンディショナルタグもブロックタグと同じようにPerl版とPHP版で記述方法が若干違いますがPHPの実装の章で解説させていただきます。
+
+h2. プラグインの仕様とテストケースの作成
+
+h3. プラグインの仕様
+
+プラグインの仕様は以下になります。
+
+* タグ名（&lt;MTCategoryIfToplevel）
+* ブログ記事アーカイブで利用する
+* メインのカテゴリがトップレベル（親）カテゴリの時は正、違えば負
+* ブログ記事にカテゴリが設置されていない場合も負
+* 以下のようにタグを記述する
+
+<pre>
+<MTCategoryIfToplevel>
+<p>このブログ記事にはトップレベルカテゴリが設定されています。</p>
+<MTElse>
+<p>このブログ記事にはカテゴリが設定されていないか、トップレベルカテゴリ以外が設定されています。</p>
+</MTCategoryIfToplevel
+</pre>
+
+* 結果が正な場合 @<p>このブログ記事にはトップレベルカテゴリが設定されています。</p>@ が表示される
+* 結果が負な場合 @<p>このブログ記事にはカテゴリが設定されていないか、トップレベルカテゴリ以外が設定されています。</p>@ が表示される
+
+h3. テストケース１（00-compile.t）の作成
+
+以前に行ったものと同じです。各オブジェクトが正しくロードされているかを確認します。
+
+<pre>
+use strict;
+use lib qw( t/lib lib extlib );
+use warnings;
+use MT;
+use Test::More tests => 5;
+use MT::Test;
+
+ok(MT->component ('MyPlugin07'), "MyPlugin07 plugin loaded correctry");
+
+require_ok('MyPlugin07::L10N');
+require_ok('MyPlugin07::L10N::ja');
+require_ok('MyPlugin07::L10N::en_us');
+require_ok('MyPlugin07::Tags');
+
+1;
+</pre>
+
+h3. テストケース２（01-tags.t）の作成
+
+テストするのは以下の３項目です。
+
+# 空文字列をインプットすると、空文字列が戻ってくる
+# メインカテゴリにトップレベルカテゴリが設定されている場合文字列"AAA"が返る
+# メインカテゴリにトップレベルカテゴリが設定されていない場合文字列"BBB"が返る
+
+<pre>
+（前略）
+#===== Edit here
+my $test_json = <<'JSON';
+[
+{ "r" : "1", "t" : "", "e" : ""},
+{ "r" : "1", "t" : "<mt:Entries id=\"6\"><MTCategoryIfToplevel>AAA<MTElse>BBB</MTCategoryIfToplevel></mt:Entries>", "e" : "AAA"},
+{ "r" : "1", "t" : "<mt:Entries id=\"8\"><MTCategoryIfToplevel>AAA<MTElse>BBB</MTCategoryIfToplevel></mt:Entries>", "e" : "BBB"}
+]
+JSON
+#=====
+（後略）
+</pre>
+
