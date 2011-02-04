@@ -286,6 +286,7 @@ validate_item => sub {
         MT->translate('option is required') );
     return 1;
 },
+```
 
 h3. view
 
