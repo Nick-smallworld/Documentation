@@ -70,29 +70,66 @@ h3. args_via_param
 
 CGIパラメータからフィルタを生成するサブルーチンを指定します。
 
+```perl
+                    args_via_param => sub {
+                        my $prop = shift;
+                        my ( $app, $val ) = @_;  # $val にパラメータ"filter_val"の値が入る
+                        return { option => 'equal', string => $val };
+                    },
+```
+
 h3. auto
 
-プロパティの自動継承を行うかを指定します。
+プロパティの自動継承を行うかを指定します。デフォルトは偽です。
 
 h3. base
 
-プロパティの継承元を指定します。
+プロパティの継承元を指定します。デフォルトはundef (継承元なし)です。
 
 h3. bulk_html
 
 リストとして表示するコンテンツの内容を一括で生成するサブルーチンを指定します。
 
+```perl
+bulk_html => sub {
+    my $prop = shift;
+    my ($objs, $app, $opts) = @_;
+    my %authors = map { $_->author_id => 1 } @$objs;
+    my @authors = MT->model('author')->load(
+        { id => [ keys %authors ], },
+    );
+    my %author_name = map { $_->id => $_->display_name } @authors;
+    my @out;
+    for my $obj (@$objs) {
+        my $name = $author_name{ $obj->author_id };
+        push @out, $name;
+    }
+    return @out;
+},
+```
+
 h3. bulk_sort
 
-ロード済みオブジェクトのソートを行うサブルーチンを指定します。 @sort@ の指定がなく、 @bulk_sort@ が指定されている場合のみ有効となりますが、その場合、ページに含まれないものを含めた全オブジェクトがロードされます。そのため、パフォーマンスの劣化を招く恐れがあります。
+ロード済みオブジェクトのソートを行うサブルーチンを指定します。 @sort@ の指定がなく、 @bulk_sort@ が指定されている場合のみ有効となります。bulk_sortを行う場合、ページに含まれないものを含めた全オブジェクトがロードされます。そのため、パフォーマンスの劣化を招く恐れがあります。
+
+```perl
+bulk_sort => sub {
+    my $prop = shift;
+    my ($objs, $opts) = @_;
+    return sort {
+        $a->name cmp $b->name
+    } @$objs;
+},
+
+```
 
 h3. condition
 
-プロパティが利用可能なスコープを指定します。
+プロパティが利用可能となる条件を判定するサブルーチンを指定します。
 
 h3. default_sort_order
 
-初期ソートの方向を指定します。
+初期ソートの方向を指定します。ascend か descend が指定できます。デフォルトは ascend です。
 
 h3. display
 
@@ -116,8 +153,6 @@ h3. filter_label
 h3. filter_tmpl
 
 フィルタアイテムとして利用する MTML テンプレートを指定します。
-
-- filter_type
 
 h3. grep
 
