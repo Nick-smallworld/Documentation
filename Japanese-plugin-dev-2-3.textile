@@ -228,7 +228,7 @@ h3. 解説
 * ハンドラ関数宣言(&lt;MTCategoryIfToplevel&gt;)
 block名はsmarty記法にのっとって smarty_block_mtcategoryiftoplevel となります。一緒に呼び出し時の"$args", "$content", "$ctx", "$repeat"の取得をします。Perl版と異なる事に注意してください。
 
-[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-04.png]]
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-05.png]]
 
 * 正・負判定
 １行目で$contentに何もセットされない場合は２〜１５行が実行されます。セットされていた場合は１７行目で次の処理に移行します。
