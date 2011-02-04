@@ -207,13 +207,40 @@ h3. label_via_param
 
 フィルタの表示名をリクエストパラメータから生成するサブルーチンを指定できます。
 
+```perl
+label_via_param => sub {
+    my $prop = shift;
+    my ( $app, $val ) = @_;
+    return MT->translate(
+        '[_1] in [_2]: [_3]',
+        $prop->datasource->class_label_plural,
+        $prop->label,
+        MT::Util::encode_html($val),
+    );
+},
+```
+
 h3. raw
 
 オブジェクトの値を返すサブルーチンを指定します。
 
+raw => sub {
+    my $prop = shift;
+    my ( $obj, $app, $opts ) = @_;
+    return $obj->title;
+},
+
 h3. sort
 
 ソートの指定を行うサブルーチンを指定します。 @MT::Object::load@ に渡される @$terms@ @$args@ を受け取って、必要なパラメータを指定してください。
+
+```perl
+$prop->{sort} = sub {
+    my $prop = shift;
+    my ( $terms, $args, $opts ) = @_;
+    $args->{sort} = 'title';
+}
+```
 
 h3. sub_fields
 
