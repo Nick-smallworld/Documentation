@@ -235,16 +235,18 @@ h3. sort
 ソートの指定を行うサブルーチンを指定します。 @MT::Object::load@ に渡される @$terms@ @$args@ を受け取って、必要なパラメータを指定してください。
 
 ```perl
-$prop->{sort} = sub {
+sort => sub {
     my $prop = shift;
     my ( $terms, $args, $opts ) = @_;
     $args->{sort} = 'title';
+    return;
 }
 ```
 
 h3. sub_fields
 
-サブフィールドの一覧を指定します。同じカラム内に、ユーザーが表示/非表示を選択可能な表示要素を含めることが出来ます。
+サブフィールドの一覧を指定します。同じカラム内に、ユーザーが表示/非表示を選択可能な表示要素を含めることが出来ます。複数のサブフィールドを配列で指定します。各サブフィールドの指定は、 @class@, @label@ と @display@ の値を持つハッシュで表現します。
+JavaScriptにより、@class@ で指定したCSSクラスに対して、自動的に表示/非表示の処理が行われます。
 
 ```yaml
 list_properties:
@@ -261,13 +263,37 @@ h3. terms
 
 オブジェクトのフィルタリングを行うサブルーチンを指定します。 @MT::Object::load@ に渡される @$terms@ @$args@ を受け取って、必要なパラメータを指定してください。
 
+```perl
+terms => sub {
+    my $prop = shift;
+    my ( $args, $db_terms, $db_args, $opts ) = @_;
+    my $value  = $args->{value};
+    return { $col => $value };
+},
+```
+
 h3. validate_item
 
 フィルタリングの実行前にリクエストパラメータの整合性を確認するサブルーチンを指定します。
 
+```perl
+validate_item => sub {
+    my $prop   = shift;
+    my ($item) = @_;
+    my $args   = $item->{args};
+    my $option = $args->{option}
+        or return $prop->error(
+        MT->translate('option is required') );
+    return 1;
+},
+
 h3. view
 
 このプロパティが利用可能なスコープを指定します。
+
+```perl
+view => [ 'system', 'website', ],
+```
 
 h2. See Also
 
