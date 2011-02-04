@@ -171,6 +171,29 @@ sub hdlr_category_if_toplevel {
 1;
 </pre>
 
+h3. 解説
+
+* パッケージ宣言
+初めにpackage宣言をし、"use strict;"しています。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-01.png]]
+
+* ハンドラ宣言（&lt;MTCategoryIfToplevel&gt;）
+ハンドラ関数宣言と呼び出し時の"$ctx", "$args"の代入です。この関数はブロックタグ(&lt;MTCategoryIfToplevel&gt;)になります。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-02.png]]
+
+* コンテキスト（$ctx）からのオブジェクトの取得
+７行めでコンテキストからブログ記事オブジェクト（エントリオブジェクト）を取得します。
+８行めでエントリのカテゴリを取得します。取得できない（カテゴリが設定されていない）場合は0（負）を返します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-03.png]]
+
+* 正・負の判定
+親カテゴリのカテゴリIDをチェックし、値が"0"だった場合は親カテゴリなので1（正）を返します。値が"0"以外だった場合は親カテゴリではないので0（負）を返します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-04.png]]
+
 h2. コンディショナルタグ プラグインの開発（PHP）
 
 h3. block.mtcategoryiftoplevel.php
@@ -199,6 +222,21 @@ h3. block.mtcategoryiftoplevel.php
     }
 ?>
 </pre>
+
+h3. 解説
+
+* ハンドラ関数宣言(&lt;MTCategoryIfToplevel&gt;)
+block名はsmarty記法にのっとって smarty_block_mtcategoryiftoplevel となります。一緒に呼び出し時の"$args", "$content", "$ctx", "$repeat"の取得をします。Perl版と異なる事に注意してください。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-04.png]]
+
+* 正・負判定
+１行目で$contentに何もセットされない場合は２〜１５行が実行されます。セットされていた場合は１７行目で次の処理に移行します。
+４行目で$ctxからブログ記事（エントリ）オブジェクトを取得します。５行目でブログ記事のカテゴリを取得します。
+６行目でカテゴリが取得できない（カテゴリが設定されていない）場合、$flagに0（負）を設定し、１５行目で処理を戻します。
+カテゴリが取得できた場合は、親カテゴリのIDが0の場合、設定されているカテゴリは親カテゴリなので$flagに1（正）を設定し、１５行目で処理を戻します。親カテゴリのIDが0以外の場合、親カテゴリではないため、$flagに0（負）を設定し、１５行目で処理を戻します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-06.png]]
 
 h2.  ファイルの配置
 
