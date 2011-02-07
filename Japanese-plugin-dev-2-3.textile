@@ -6,9 +6,9 @@ h2. はじめに
 
 h2. コンディショナルタグとは？
 
-ブロックタグの代表格は&lt;MTIf&gt;&lt;MTIfBlog&gt;&lt;MTIfCategory&gt;などのタグです。
+コンディショナルタグの代表格は&lt;MTIf&gt;&lt;MTIfBlog&gt;&lt;MTIfCategory&gt;などのタグです。
 
-&lt;MTIfBlog&gt;〜&lt;MTElse&gt;〜&lt;MTIfBlog&gt; のように利用します。
+&lt;MTIfBlog&gt;〜&lt;MTElse&gt;〜&lt;/MTIfBlog&gt; のように利用します。
 
 これらは条件分岐を実装したMTタグです。
 
@@ -322,6 +322,7 @@ Result: PASS
 （前略）
 <div id="alpha">
   <div id="alpha-inner">
+
     <p>このブログ記事にはトップレベルカテゴリが設定されています。</p>
 （後略）
 </pre>
