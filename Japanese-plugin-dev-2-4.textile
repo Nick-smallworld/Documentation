@@ -18,5 +18,53 @@ h2. テストでのデバッグ
 ** シンタックスエラー
 *** 表示されるエラーメッセージを元にコードを修正する
 * プラグイン一覧画面で正しい情報が表示されない、多言語対応されない
+** config.yamlの情報が正しいか確認・修正する
 ** L10N.pm, L10N/en_us.pm, L10N/ja.pm に正しくパスが通っているか確認・修正する
-** 同じく、内容が正しいか（例："Test Code" => ”テストコード”、コードやconfig.yamlには”Test Codes"と書いてある）
+** 同じく、内容が正しいか（例："Test Code" => ”テストコード”、config.yamlには”Test Codes"と書いてあるため日本語化されない）
+
+h3. doLog関数によるログ取得（perl版）
+
+通常「Printfデバッグ」などと呼ばれる方法ですが、Perl版のプラグインではprintfが利用できないため代わりとなるdoLog関数を用意し、それを利用します。
+
+<pre>
+sub doLog {
+    my ($msg, $class) = @_;
+    return unless defined($msg)
+
+    require MT::Log;
+    my $log = new MT::Log;
+    $log->message($msg);
+    $log->level(MT::Log::DEBUG());
+    $log->class($class);
+    $log->save or die $log->errstr;
+}
+</pre>
+
+* $msg : ログに残したい文言
+* level : ログレベル
+
+|MT::Log::INFO()|1|情報|
+|MT::Log::WARNING()|2|警告|
+|MT::Log::ERROR()|4|エラー|
+|MT::Log::SECURITY()|8|セキュリティ|
+|MT::Log::ERROR()|16|デバッグ|
+
+* $class : ログクラス
+
+|author|ユーザ|
+|blog|ブログ|
+|website|ウェブサイト|
+|entry|ブログ記事|
+|page|ウェブページ|
+|category|カテゴリ|
+|folder|フォルダ|
+|tag|タグ|
+|comment|コメント|
+|ping|トラックバック|
+|search|検索|
+|asset|アイテム|
+|template|テンプレート|
+|theme|テーマ|
+|publish|出力|
+|system|システム|
+
