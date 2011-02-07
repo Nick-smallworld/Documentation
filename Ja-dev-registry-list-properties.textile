@@ -70,29 +70,66 @@ h3. args_via_param
 
 CGIパラメータからフィルタを生成するサブルーチンを指定します。
 
+```perl
+                    args_via_param => sub {
+                        my $prop = shift;
+                        my ( $app, $val ) = @_;  # $val にパラメータ"filter_val"の値が入る
+                        return { option => 'equal', string => $val };
+                    },
+```
+
 h3. auto
 
-プロパティの自動継承を行うかを指定します。
+プロパティの自動継承を行うかを指定します。デフォルトは偽です。
 
 h3. base
 
-プロパティの継承元を指定します。
+プロパティの継承元を指定します。デフォルトはundef (継承元なし)です。
 
 h3. bulk_html
 
 リストとして表示するコンテンツの内容を一括で生成するサブルーチンを指定します。
 
+```perl
+bulk_html => sub {
+    my $prop = shift;
+    my ($objs, $app, $opts) = @_;
+    my %authors = map { $_->author_id => 1 } @$objs;
+    my @authors = MT->model('author')->load(
+        { id => [ keys %authors ], },
+    );
+    my %author_name = map { $_->id => $_->display_name } @authors;
+    my @out;
+    for my $obj (@$objs) {
+        my $name = $author_name{ $obj->author_id };
+        push @out, $name;
+    }
+    return @out;
+},
+```
+
 h3. bulk_sort
 
-ロード済みオブジェクトのソートを行うサブルーチンを指定します。 @sort@ の指定がなく、 @bulk_sort@ が指定されている場合のみ有効となりますが、その場合、ページに含まれないものを含めた全オブジェクトがロードされます。そのため、パフォーマンスの劣化を招く恐れがあります。
+ロード済みオブジェクトのソートを行うサブルーチンを指定します。 @sort@ の指定がなく、 @bulk_sort@ が指定されている場合のみ有効となります。bulk_sortを行う場合、ページに含まれないものを含めた全オブジェクトがロードされます。そのため、パフォーマンスの劣化を招く恐れがあります。
+
+```perl
+bulk_sort => sub {
+    my $prop = shift;
+    my ($objs, $opts) = @_;
+    return sort {
+        $a->name cmp $b->name
+    } @$objs;
+},
+
+```
 
 h3. condition
 
-プロパティが利用可能なスコープを指定します。
+プロパティが利用可能となる条件を判定するサブルーチンを指定します。
 
 h3. default_sort_order
 
-初期ソートの方向を指定します。
+初期ソートの方向を指定します。ascend か descend が指定できます。デフォルトは ascend です。
 
 h3. display
 
@@ -117,19 +154,46 @@ h3. filter_tmpl
 
 フィルタアイテムとして利用する MTML テンプレートを指定します。
 
-- filter_type
-
 h3. grep
 
 SQL では絞り込みが行えない場合などに、全アイテムのロード後に実行されるPerlコードによってオブジェクトのフィルタリングを実装する場合にサブルーチンを指定します。パフォーマンスの劣化を招く恐れがあります。
+
+```perl
+grep => sub {
+    my $prop = shift;
+    my ( $args, $objs, $opts ) = @_;
+    return grep { some_complex_judge( $_ ) } @$objs;
+```
 
 h3. html
 
 テーブルに表示する HTML を返すサブルーチンを指定します。
 
+```perl
+html => sub {
+    my $prop = shift;
+    my ( $obj, $app, $opts ) = @_;
+    return sprintf '<p class="foo">%s</p>', $obj->text;
+}
+```
+
 h3. html_link
 
 テーブルに表示するコンテンツにリンクを指定できます。
+
+```perl
+html_link => sub {
+    my $prop = shift;
+    my ( $obj, $app, $opts ) = @_;
+    return $app->uri(
+        mode => 'foo',
+        args => {
+            id => $obj->id,
+        },
+    );
+},
+```
+
 
 h3. init
 
@@ -143,17 +207,46 @@ h3. label_via_param
 
 フィルタの表示名をリクエストパラメータから生成するサブルーチンを指定できます。
 
+```perl
+label_via_param => sub {
+    my $prop = shift;
+    my ( $app, $val ) = @_;
+    return MT->translate(
+        '[_1] in [_2]: [_3]',
+        $prop->datasource->class_label_plural,
+        $prop->label,
+        MT::Util::encode_html($val),
+    );
+},
+```
+
 h3. raw
 
 オブジェクトの値を返すサブルーチンを指定します。
+
+raw => sub {
+    my $prop = shift;
+    my ( $obj, $app, $opts ) = @_;
+    return $obj->title;
+},
 
 h3. sort
 
 ソートの指定を行うサブルーチンを指定します。 @MT::Object::load@ に渡される @$terms@ @$args@ を受け取って、必要なパラメータを指定してください。
 
+```perl
+sort => sub {
+    my $prop = shift;
+    my ( $terms, $args, $opts ) = @_;
+    $args->{sort} = 'title';
+    return;
+}
+```
+
 h3. sub_fields
 
-サブフィールドの一覧を指定します。同じカラム内に、ユーザーが表示/非表示を選択可能な表示要素を含めることが出来ます。
+サブフィールドの一覧を指定します。同じカラム内に、ユーザーが表示/非表示を選択可能な表示要素を含めることが出来ます。複数のサブフィールドを配列で指定します。各サブフィールドの指定は、 @class@, @label@ と @display@ の値を持つハッシュで表現します。
+JavaScriptにより、@class@ で指定したCSSクラスに対して、自動的に表示/非表示の処理が行われます。
 
 ```yaml
 list_properties:
@@ -170,13 +263,38 @@ h3. terms
 
 オブジェクトのフィルタリングを行うサブルーチンを指定します。 @MT::Object::load@ に渡される @$terms@ @$args@ を受け取って、必要なパラメータを指定してください。
 
+```perl
+terms => sub {
+    my $prop = shift;
+    my ( $args, $db_terms, $db_args, $opts ) = @_;
+    my $value  = $args->{value};
+    return { $col => $value };
+},
+```
+
 h3. validate_item
 
 フィルタリングの実行前にリクエストパラメータの整合性を確認するサブルーチンを指定します。
 
+```perl
+validate_item => sub {
+    my $prop   = shift;
+    my ($item) = @_;
+    my $args   = $item->{args};
+    my $option = $args->{option}
+        or return $prop->error(
+        MT->translate('option is required') );
+    return 1;
+},
+```
+
 h3. view
 
 このプロパティが利用可能なスコープを指定します。
+
+```perl
+view => [ 'system', 'website', ],
+```
 
 h2. See Also
 
