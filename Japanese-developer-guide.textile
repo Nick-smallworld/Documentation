@@ -18,6 +18,7 @@ h2(#tutorial-plugin). プラグイン開発ガイド
 # [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
 # [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
 # [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+
 h2(#mt51). Movable Type 5.1 の新機能
 
 # [[リスティングフレームワーク|Ja-dev-listing-framework-overview]]
