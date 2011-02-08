@@ -289,3 +289,4 @@ h2. プラグイン開発ガイド インデックス
 # [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
 # [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
 # [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
