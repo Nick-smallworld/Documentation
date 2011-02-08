@@ -1,4 +1,4 @@
-h1. デバッグ
+h1. プラグインのデバッグ
 
 h2. はじめに
 
@@ -24,7 +24,7 @@ h2. テストでのデバッグ
 
 h2. doLog関数によるログ取得（perl版）
 
-通常「Printfデバッグ」などと呼ばれる方法ですが、Perl版のプラグインではprintfが利用できないため代わりとなるdoLog関数を用意し、それを利用します。
+通常「printfデバッグ」などと呼ばれる方法ですが、Perl版のプラグインではprintfが利用できないため代わりとなるdoLog関数を用意し、それを利用します。
 
 <pre>
 sub doLog {
@@ -52,22 +52,22 @@ sub doLog {
 * $class : ログクラス
 5.1からクラスが細かく設定出きるようになりました
 
-|author|ユーザ|
-|blog|ブログ|
-|website|ウェブサイト|
-|entry|ブログ記事|
-|page|ウェブページ|
-|category|カテゴリ|
-|folder|フォルダ|
-|tag|タグ|
-|comment|コメント|
-|ping|トラックバック|
-|search|検索|
-|asset|アイテム|
-|template|テンプレート|
-|theme|テーマ|
-|publish|出力|
-|system|システム|
+|author|ユーザー|5.1〜|
+|blog|ブログ|5.1〜|
+|website|ウェブサイト|5.1〜|
+|entry|ブログ記事||
+|page|ウェブページ|5.1〜|
+|category|カテゴリ|5.1〜|
+|folder|フォルダ|5.1〜|
+|tag|タグ|5.1〜|
+|comment|コメント||
+|ping|トラックバック||
+|search|検索||
+|asset|アイテム|5.1〜|
+|template|テンプレート|5.1〜|
+|theme|テーマ|5.1〜|
+|publish|公開||
+|system|システム|5.1〜（旧 ログ）|
 
 呼び出し方は以下のように行います。
 
@@ -94,5 +94,103 @@ doLog(Dumper($MT_Blog_Object));
 </pre>
 
 この様にすると、システムログとしてデータが保存されますので、これを参考にデバッグしていきます。
+プラグイン公開時には必要ないので、必ず当該箇所を忘れずにコメントアウトするか、削除してください。
 
+h2. デバッグモードを利用したデバッグ
 
+システムメニューで、『全般』から『デバッグモード』を編集すると管理画面にデバッグ情報が「警告とメッセージ」として画面下部に表示されます。
+
+|0|デバッグ無し|
+|1|処理秒数とデバッグメッセージ|
+|2|処理秒数とスタックトレース|
+|4|処理秒数と発行したSQL文|
+|8|構築時に４分の１秒以上かかっている箇所の一覧|
+|128|リクエスト・レスポンスをSTDERRに出力する|
+
+設定値は加算することで出力するメッセージを一緒に出力することができます。例えばスタックトレースとSQL文を出力したい場合は2+4=6で、6を指定します。
+モード128は大量のデータが出力されるので、気をつけて設定してください。
+
+また、0以外を設定すると画面右にデバッグ用のツールバーが表示されます。そこから発行したSQL文やCache、リクエスト値、HTTPヘッダが参照できるので、こちらも参考にしてデバッグ作業ができます。
+
+h2. perlデバッガでデバッグをする（簡易版）
+
+MT内でどんな情報がやりとりされているのか、perlのデバッガ機能を使って確認します。
+この方法は簡易版ですので、ちゃんとプラグインのトレースを行いたい方は以下のドキュメントをご覧ください。
+
+[[Movable Type のプラグインをperl debuggerでデバッグする（エムロジック放課後プロジェクト）|http://labs.m-logic.jp/2008/04/debugging_plugin_with_perl_debugger.html]]
+
+h3. perlデバッガの起動
+
+以下のコマンドでPerlデバッガを起動します。
+
+<pre>
+$ cd $MT_DIR
+$ perl -d mt.cgi 1>/dev/null 2>&1
+
+Loading DB routines from perl5db.pl version 1.28
+Editor support available.
+
+Enter h or `h h' for help, or `man perldebug' for more help.
+
+  DB<1> 
+</pre>
+
+ブログID : 1 のオブジェクトをロードし、内容を参照します。
+
+<pre>
+  DB<1> $blog = MT::Blog->load(1);
+  DB<2> x $blog
+0  MT::Website=HASH(0xa3f8294)
+   '__core_final_post_load_mark' => 1
+   '__is_stored' => 1
+   '__meta' => MT::Meta::Proxy=HASH(0xa3f7dc0)
+      '__pkeys' => HASH(0xa3f83e4)
+         'blog_id' => 1
+      'pkg' => 'MT::Website'
+   '__triggers' => HASH(0xa3f821c)
+        empty hash
+   '_class_trigger_results' => ARRAY(0xa3f8270)
+      0  ARRAY(0xa3f82dc)
+         0  MT::Website=HASH(0xa3f8294)
+            -> REUSED_ADDRESS
+      1  ARRAY(0xa3f8348)
+           empty array
+      2  ARRAY(0xa3f8024)
+         0  ''
+   'column_values' => HASH(0xa3f8324)
+      'allow_anon_comments' => undef
+      'allow_comment_html' => 1
+      'allow_commenter_regist' => 1
+      'allow_comments_default' => 1
+      'allow_pings' => 1
+（後略）
+</pre>
+
+このようにデータを取得し、正しく結果が得られたか確認します。具体的なPerlデバッガの利用法はここでは割愛します。
+
+h2. PHP版プラグインのデバッグ
+
+PHP版のプラグインはprintfが利用できるので、プラグインから直にデバッグ出力をしてしまいましょう。その出力を元にデバッグを進めて下さい。
+
+h2. まとめ
+
+簡単でシステムと密に入り組んでいるプラグインなどを作成する時はデバッガを利用したデバッグが有効ですが、通常はテストケースから得られた情報だけで十分情報が得られます。この事からも、プラグイン作成前にテストケースを書いておく事を強くお勧めしています。
+
+１から書き始めたコードにバグが無い事はほぼありませんので、これらのデバッグスキルを向上はコーディングスキルの向上につながります。
+
+バグが出た場合でも、闇雲にトライアンドエラーを続けるのではなく、どのあたりにバグが潜んでいそうか見当をつける癖をつけることも一つの方法です。
+
+一つの言語で身についたコーディングスキル（デバッグスキル）は、他の言語でも有用です。この期にスキルアップを目指しましょう。
+
+h2. プラグイン開発ガイド インデックス
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# [[Config Directiveについて|Japanese-plugin-dev-1-3]]
+# [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
