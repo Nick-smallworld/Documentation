@@ -166,7 +166,7 @@ h3. word_setting_system.tmpl
 
 これで管理画面で設定する準備が整いました。
 
-h2. ファンクションタグ プラグイン（&ltMTHelloWorld2&gt;）の開発（Perl）
+h2. ファンクションタグ プラグイン（&lt;MTHelloWorld2&gt;）の開発（Perl）
 
 Tags.pm以外はMyPlugin03とあまり変わらないため、Tags.pmの注意する点に集中して解説します。
 
