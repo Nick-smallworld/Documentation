@@ -28,3 +28,138 @@ h3. 管理画面 プラグイン設定画面
 ** [ブログメニュー]の[ツール] &gt; [プラグイン] を選択し、[サンプルプラグイン プラグイン設定 1.0] &gt; [設定] 画面を開く
 ** [言葉] text入力欄の下に「表示させたい言葉を入力してください。'こんにちは、xxx！'」と表示
 ** [言葉] text入力欄にフレーズを入力し、[変更を保存]ボタンをクリックして設定する
+
+h3. ファンクションタグ（&lt;MTHelloWorld2&gt;）
+
+プラグイン設定画面で設定された[言葉]により、「こんにちは、○○！」と表示するファンクションタグを作成します。
+
+* システムレベルの[言葉]を取得する
+* ブログレベルでの[言葉]を取得する
+* なにも設定されていなかった場合の初期値の[言葉]を「世界」にする
+* ブログレベルの[言葉]を設定していたら、「こんにちは、（ブログレベル設定）！」と出力しタグを終了する
+* ブログレベルの設定が無く、システムレベルの[言葉]を設定していたら、「こんにちは、（システムレベル設定）！」と出力しタグを終了する
+* ブログレベル、システムレベルの両方の[言葉]を設定していなかった場合は「こんにちは、世界！」と出力しタグを終了する
+
+h2. 管理画面設定の開発
+
+h3. config.yaml
+
+<pre>
+id: MyPlugin08
+key: MyPlugin08
+name: <__trans phrase="Sample Plugin plugin config">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin08::L10N
+
+blog_config_template: word_setting_blog.tmpl
+system_config_template: word_setting_system.tmpl
+settings:
+    word_setting_blog:
+        default:
+        scope: blog
+    word_setting_system:
+        default:
+        scope: system
+
+tags:
+    function:
+        HelloWorld2: $MyPlugin08::MyPlugin08::Tags::_hdlr_hello_world_2
+</pre>
+
+* "blog_config_template", "system_config_template" に、設定画面のテンプレート名を設定します（詳細後述）
+* "settings"で設定名を"word_setting_blog", "word_setting_system"とし、それぞれ初期値"default"は空欄、設定の"scope"をそれぞれ"blog"と"system"にします。
+
+h3. word_setting_blog.tmpl
+
+ブログの設定画面で使用するテンプレートです。このファイルは"MyPlugin08/tmpl/word_setting_blog.tmpl"に配置します。
+ブログ設定"word_setting_blog"を設定するためのテンプレートです。
+
+<pre>
+<mtapp:setting id="word_setting_blog" label="<__trans phrase='_MyPlugin08_Word'>"
+    hint="<__trans phrase="Please input the word, 'Hello, xxx!'">" show_hint=1>
+    <input type="text" name="word_setting_blog" id="word_setting_blog"
+        value="<mt:GetVar name="word_setting_blog">" />
+</mtapp:setting>
+</pre>
+
+この記述を行うと自動的に以下のようにHTMLを作成します。（わかりやすいよう整形してあります）
+
+<pre>
+<!-- Plugin Config -->
+
+<div id="plugin17-config" class="config">
+    <form method="post" action="/cgi-bin/mt/mt.cgi" id="plugin-17-form">
+        <input type="hidden" name="__mode" value="save_plugin_config" />
+        <input type="hidden" name="blog_id" value="2" />
+        <input type="hidden" name="return_args" value="__mode=cfg_plugins&amp;_type=blog&amp;blog_id=2&amp;id=2" />
+        <input type="hidden" name="plugin_sig" value="MyPlugin08" />
+        <input type="hidden" name="magic_token" value="（略）" />
+
+        <fieldset>
+            <div id="word_setting_blog-field" class="field field-left-label ">
+                <div class="field-header">
+                     <label id="word_setting_blog-label" for="word_setting_blog">言葉</label>
+                </div>
+                <div class="field-content ">
+                    <input type="text" name="word_setting_blog" id="word_setting_blog" value="" />
+                    <div class="hint">表示させたい言葉を入力してください。'こんにちは、xxx！'</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="actions-bar settings-actions-bar last-child">
+            <button mt:mode="save_plugin_config" type="submit"
+                class="save action primary-button first-child last-child">変更を保存</button>
+        </div>
+    </form>
+</div>
+</pre>
+
+h3. word_setting_system.tmpl
+
+システムの設定画面で使用するテンプレートです。このファイルは"MyPlugin08/tmpl/word_setting_system.tmpl"に配置します。
+システム設定"word_setting_system"を設定するためのテンプレートです。
+
+<pre>
+<mtapp:setting id="word_setting_system" label="<__trans phrase='_MyPlugin08_Word'>"
+    hint="<__trans phrase="Please input the word, 'Hello, xxx!'">" show_hint=1>
+    <input type="text" name="word_setting_system" id="word_setting_system"
+        value="<mt:GetVar name="word_setting_system">" />
+</mtapp:setting>
+</pre>
+
+この記述を行うと自動的に以下のようにHTMLを作成します。（わかりやすいよう整形してあります）
+
+<pre>
+<!-- Plugin Config -->
+
+<div id="plugin17-config" class="config ui-tabs-panel ui-widget-content ui-corner-bottom last-child">
+    <form class="first-child last-child" method="post" action="/cgi-bin/mt/mt.cgi" id="plugin-17-form">
+        <input class="first-child hidden" name="__mode" value="save_plugin_config" type="hidden">
+        <input class="hidden" name="return_args" value="__mode=cfg_plugins&amp;_type=blog&amp;blog_id=0&amp;id=2">
+        <input class="hidden" name="plugin_sig" value="MyPlugin08" type="hidden">
+        <input class="hidden" name="magic_token" value="（略）" type="hidden">
+
+    <fieldset>
+        <div id="word_setting_system-field" class="field field-left-label  first-child last-child">
+            <div class="field-header first-child">
+                <label class="first-child last-child" id="word_setting_system-label" for="word_setting_system">言葉</label>
+            </div>
+            <div class="field-content  last-child">
+                <input class="first-child text" name="word_setting_system" id="word_setting_system" value="" type="text">
+                <div class="hint last-child">表示させたい言葉を入力してください。'こんにちは、xxx！'</div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="actions-bar settings-actions-bar last-child">
+        <button mt:mode="save_plugin_config" type="submit"
+            class="save action primary-button first-child last-child">変更を保存</button>
+    </div>
+</form>
+</div>
+</pre>
