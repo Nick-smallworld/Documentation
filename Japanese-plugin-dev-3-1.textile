@@ -163,3 +163,40 @@ h3. word_setting_system.tmpl
 </form>
 </div>
 </pre>
+
+これで管理画面で設定する準備が整いました。
+
+h2. ファンクションタグ プラグイン（&ltMTHelloWorld2&gt;）の開発（Perl）
+
+Tags.pm以外はMyPlugin03とあまり変わらないため、Tags.pmの注意する点に集中して解説します。
+
+<pre>
+package MyPlugin08::Tags;
+use strict;
+
+sub _hdlr_hello_world_2 {
+    my ($ctx, $args) = @_;
+    my $blog_id = 'blog:' . $ctx->stash('blog_id');
+    my $plugin = MT->component('MyPlugin08');
+
+    my $word_blog = $plugin->get_config_value('word_setting_blog', $blog_id);
+    my $word_sys = $plugin->get_config_value('word_setting_system', 'system');
+
+    my $word_default = MT->translate('world');
+
+    my $word = $word_blog ? $word_blog :
+                 ( $word_sys ? $word_sys : $word_default );
+
+    return MT->translate( 'Hello, [_1]!', $word );
+}
+
+1;
+</pre>
+
+* @$ctx->stash('blog_id')@ をつかって、"blog:12"のような文字列 @$blog_id@ を取得します
+* プラグインオブジェクトを @MT->component('MyPlugin08')@ から取得します
+* ブログ設定を @$word_blog@、システム設定を @$word_sys@ として @$plugin->get_config_value(（設定名）, （'system' or $blog_id）)@ を実行し取得します。
+* @$word_default@ として初期値「世界」を設定します
+** プログラム内ではローカライズとして @<__trans>@ を利用していましたが、プログラム内では @MT->translate()@ を利用します
+* 三項演算子を利用して、ブログ設定がある場合は @$word_blog@ を、ブログ設定が無い場合はシステム設定 @$word_sys@ を、両方無い場合はデフォルトの @$word_default@ を @$word@ に設定します。
+* 「こんにちは、 @$word@ ！」を返します。
