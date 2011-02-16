@@ -355,6 +355,8 @@ h2. プラグインダウンロード
 
 [[MyPlugin08.zip(8.11KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin08.zip]]
 
+h2. プラグイン開発ガイド インデックス
+
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
 # [[Config Directiveについて|Japanese-plugin-dev-1-3]]
