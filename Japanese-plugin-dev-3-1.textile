@@ -12,7 +12,8 @@ Config Directiveが「静」の設定だとすると、管理画面から行う�
 
 各プラグインの管理画面に「設定」項目を表示し、そこで設定をする事でプラグインに情報が反映されます。
 
-[[hoge.png]]
+例）MultiBlogプラグインの設定画面
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/03-01-01.png]]
 
 h2. 今回作成するプラグインの仕様
 
@@ -28,6 +29,9 @@ h3. 管理画面 プラグイン設定画面
 ** [ブログメニュー]の[ツール] &gt; [プラグイン] を選択し、[サンプルプラグイン プラグイン設定 1.0] &gt; [設定] 画面を開く
 ** [言葉] text入力欄の下に「表示させたい言葉を入力してください。'こんにちは、xxx！'」と表示
 ** [言葉] text入力欄にフレーズを入力し、[変更を保存]ボタンをクリックして設定する
+
+プラグイン設定の画面仕様
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/03-01-02.png]]
 
 h3. ファンクションタグ（&lt;MTHelloWorld2&gt;）
 
@@ -86,7 +90,7 @@ h3. word_setting_blog.tmpl
 </mtapp:setting>
 </pre>
 
-この記述を行うと自動的に以下のようにHTMLを作成します。（わかりやすいよう整形してあります）
+この記述を行うと管理画面内のプラグイン設定で自動的に以下のようにHTMLを作成します。（わかりやすいよう整形してあります）
 
 <pre>
 <!-- Plugin Config -->
@@ -132,7 +136,7 @@ h3. word_setting_system.tmpl
 </mtapp:setting>
 </pre>
 
-この記述を行うと自動的に以下のようにHTMLを作成します。（わかりやすいよう整形してあります）
+この記述を行うと管理画面内のプラグイン設定で自動的に以下のようにHTMLを作成します。（わかりやすいよう整形してあります）
 
 <pre>
 <!-- Plugin Config -->
@@ -197,6 +201,168 @@ sub _hdlr_hello_world_2 {
 * プラグインオブジェクトを @MT->component('MyPlugin08')@ から取得します
 * ブログ設定を @$word_blog@、システム設定を @$word_sys@ として @$plugin->get_config_value(（設定名）, （'system' or $blog_id）)@ を実行し取得します。
 * @$word_default@ として初期値「世界」を設定します
-** プログラム内ではローカライズとして @<__trans>@ を利用していましたが、プログラム内では @MT->translate()@ を利用します
+** テンプレート内などではローカライズとして @<__trans>@ を利用していましたが、プログラム内では @MT->translate()@ を利用します
 * 三項演算子を利用して、ブログ設定がある場合は @$word_blog@ を、ブログ設定が無い場合はシステム設定 @$word_sys@ を、両方無い場合はデフォルトの @$word_default@ を @$word@ に設定します。
 * 「こんにちは、 @$word@ ！」を返します。
+
+h2. ファンクションタグ プラグイン（&lt;MTHelloWorld2&gt;）の開発（PHP）
+
+PHP版もPerl版とほとんど変わらない構造ですが、関数名などが違います。また、ローカライズもPerl版の物を利用しないため手順を追加する必要があります。
+
+h3. function.mthelloworld2.php
+
+<pre>
+<?php
+    function smarty_function_mthelloworld2($args, &$ctx) {
+        $mt = MT::get_instance();
+        $blog_id = 'blog:' . $ctx->stash('blog_id');
+
+        $cfg = $mt->db()->fetch_plugin_data('MyPlugin08', 'configuration:' . $blog_id);
+        $word_blog = $cfg['word_setting_blog'];
+
+        $cfg = $mt->db()->fetch_plugin_data('MyPlugin08', 'configuration');
+        $word_sys = $cfg['word_setting_system'];
+
+        $word_default = $mt->translate('world');
+
+        $word = $word_blog ? $word_blog :
+                  ( $word_sys ? $word_sys : $word_default );
+
+        return $mt->translate( 'Hello, [_1]!', $word );
+    }
+?>
+</pre>
+
+* MTオブジェクト @$mt@ を、 @MT::get_instance()@ を使って取得します
+* @$ctx->stash('blog_id')@ をつかって、"blog:12"のような文字列 @$blog_id@ を取得します
+* プラグイン設定 @$cfg@ を @$mt->db()->fetch_plugin_data('MyPlugin08', 'configuration:' . $blog_id)@ を実行し取得します。
+** ブログ設定 @$word_blog@ を @$cfg['word_setting_blog']@ として取得します。
+* プラグイン設定 @$cfg@ を @$mt->db()->fetch_plugin_data('MyPlugin08', 'configuration')@ を実行し取得します。
+** ブログ設定 @$word_sys@ を @$cfg['word_setting_system']@ として取得します。
+* @$word_default@ として初期値「世界」を設定します
+** テンプレート内などではローカライズとして @<__trans>@ を利用していましたが、プログラム内では @$mt->translate()@ を利用します
+* 三項演算子を利用して、ブログ設定がある場合は @$word_blog@ を、ブログ設定が無い場合はシステム設定 @$word_sys@ を、両方無い場合はデフォルトの @$word_default@ を @$word@ に設定します。
+* 「こんにちは、 @$word@ ！」を返します。
+
+h3. init.MyPlugin08.php
+
+PHP版のプラグインでローカライズをする場合、Perl版のL10N.pmなどを使った方法が使えません。
+
+そこで、プラグインを初期化する時に実行される @init.（プラグイン名）.php@ ファイルを用意し、Perl版の"L10N/ja.pm"などに変わる物を読み込ませます。
+
+<pre>
+<?php
+$lang = substr(strtolower($this->config('DefaultLanguage')), 0, 2);
+if (!@include_once("lib/l10n_$lang.php")) {
+    include_once("lib/l10n_en.php");
+}
+?>
+</pre>
+
+処理自体はとても簡単で、DefaultLanguagenの設定を読み最初の２文字を使ってローカライズファイルを読み込みます。読み込めなかった場合、"l10n_en.php"が読み込まれます。
+
+これらのコードはプラグインのハンドラ関数に直接書けばよいのですが、複雑なプラグインで関数が増えてくると毎回書かなくてはならないので、初期化時に読み込むようにします。
+
+h3. l10n_en.php
+
+今回のPHP版プラグインでは英語文言を必要としないため、 @$Lexicon_en@ は空になります。
+
+<pre>
+<?php
+global $Lexicon_en;
+$Lexicon_en = array(
+);
+?>
+</pre>
+
+h3. l10n_ja.php
+
+日本語のローカライズファイルです。Lexiconが @$Lexicon_ja@ となっているのに気をつけてください。
+
+<pre>
+<?php
+global $Lexicon_ja;
+$Lexicon_ja = array(
+    'world' => '世界',
+    'Hello, [_1]!' => 'こんにちは、[_1]！',
+);
+?>
+</pre>
+
+h2. ファイルの配置
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin08/
+      |__ config.yaml
+      |__ lib/
+      |  |＿ MyPlugin08/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |＿ Tags.pm
+      |__ php/
+      |  |＿function.mthelloworld2.php
+      |  |＿init.MyPlugin08.php
+      |  |＿lib/
+      |        |＿ l10n_en.php
+      |        |＿ l10n_ja.php
+      |__ t/
+      |  |＿00-compile.t
+      |  |＿01-tags.t
+      |__ tmpl/
+         |＿word_setting_blog.tmpl
+         |＿word_setting_system.tmpl
+</pre>
+
+h2. &lt;MTHelloWorld2&gt;の動作確認
+
+h3. ブログ記事テンプレートにタグを追加
+
+以下のようにブログ記事テンプレートにタグを"alpha-inner"直下に追加します。
+
+<pre>
+                    <div id="alpha">
+                        <div id="alpha-inner">
+                        <p><mt:HelloWorld2></p>
+</pre>
+
+h3. 設定の反映の確認
+
+以下のような設定で表示結果を見ます。
+
+|システム設定|ブログ設定|表示結果|
+|||「こんにちは、世界！」|
+|システム||「こんにちは、システム！」|
+||ブログ|「こんにちは、ブログ！」|
+|システム|ブログ|「こんにちは、ブログ！」|
+
+注目していただきたいのは、システム設定に何かしら設定されていた場合でも、ブログ設定が当てはまるという事です。
+これはプログラム内でそのように作ってあるからですが、もちろん逆（両方設定されていたらシステム設定を利用する）も可能です。
+ただ、システムデフォルトでシステム設定しておき、ブログ設定でそれを上書きするのが通常の利用のされ方なので、あえて逆に作る意味は特殊な例になります。
+
+h2. まとめ
+
+プラグインの設定を行うだけであれば、config.yamlに項目を追加しtmplフォルダにテンプレートファイルを配置するだけで済むのが今回のポイントでしょうか？
+
+Config Directiveとの使い分けですが、先にも書きましたが一度設定してしまえばシステム全体で利用される物をConfig Directive、システム構築後に設定変更する可能性のある物はプラグイン設定画面を用意するという使い分けがよいでしょう。
+
+プラグイン設定画面を用意する事で、自分以外のプラグイン利用者に有益な事ですので、積極的に利用してみて下さい。
+
+h2. プラグインダウンロード
+
+[[MyPlugin08.zip(8.11KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin08.zip]]
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# [[Config Directiveについて|Japanese-plugin-dev-1-3]]
+# [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+# プラグインの設定方法
