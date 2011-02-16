@@ -8,7 +8,7 @@ h2. Schedule
 | m10 | 12/14-12/28 |  | Clean up code | Update test suites<br />Bug fix confirmation |  |  | Done |
 | m11 | 1/4-1/14 |  | Github migration<br />Update build scripts<br />Term Standardization<br />Update nightly builds script<br />Update copyright year| Update test suites<br />Bug fix confirmation |  |  | Done |
 | m12 | 1/17-1/28 |  | Prepare developer guides (1)<br />Clean up code | Smoke test<br />Bug fix confirmation | -English UI check (1)- skipped to m13 | Prepare beta user guide (1) |Done  |
-| m13 (Beta 1) | 1/31-2/11 | *Beta Ready* | Prepare developer guides (1)<br />Clean up code | Smoke test<br />Verify Beta builds | English UI check (1) | Prepare beta user guide (1) |  |
+| m13 (Beta 1) | 1/31-2/11 | *Beta Ready* | Prepare developer guides (1)<br />Clean up code | Smoke test<br />Verify Beta builds | English UI check (1) | Prepare beta user guide (1) |Done  |
 | | 2/11 | *Review pull/patch requests (1)*  | Review patches | Bug triage | | | |
 | | 2/15 | *Release Beta 1*  |  | | |  Publish beta post | |
 | m14 (Beta 2) | 2/14-2/25 |  | Clean up code | Regression test<br />Upgrade test<br />Security audit (1) | JA L10N (1) | |  |
