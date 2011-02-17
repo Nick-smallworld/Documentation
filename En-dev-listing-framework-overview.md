@@ -1,0 +1,180 @@
+h1. The Listing Framework
+
+h2. Description
+
+The listing Framework provides a common listing user interface for objects that inherits @MT::Object@. The framework includes various functions such as filtering and sorting the list. A plugin author can use this framework to display a list of custom objects as well as adding custom columns or filters to the existing core MT object via Registry.
+
+h3. Backward compatibility 
+
+This new listing framework doesn't use @mtapp:listing@ template tag. @mtapp:listing@ is still supported for the backward compatibility, but it does not provide new functions such as filtering or sorting.
+Existing @list_actions@ and URL links ( such as http://example.com/mt.cgi?__mode=list&_type=entry&filter=status&filter_val=2 ) should work in most cases.
+
+
+h3. Adding to Registry
+
+The following example in plugin's config.yaml adds a custom column to "Manage Entries" list. 
+
+```yaml
+list_properties:
+    entry:
+        my_column1: My Column #Generate view/filter/sort automatically based on the database column
+        my_column2:           #Define custom view/sort
+            base: __common.string
+            sort: |
+                sub {
+                    #do something
+                } 
+            html: |
+                sub {
+                    return qq{<a href="$foo">$bar <img src="$buz" /></a>};
+                }
+```
+
+h3. Initializing a list
+
+When MT receives a request like @mt.cgi?__mode=list&_type=foo@ and if corresponding method @applications/cms/methods/list_foo@ does not exist, the listing framework generate a list automatically from the information ( @listing_screens/foo@ and @list_properties/foo@ ) written in the registry.
+
+
+h3. Structure of the list
+
+The listing framework calls XHR (XMLHttpRequest) to fetch the listing data, and render HTML to display the listing screen. You can use various callbacks to customize either the listing data, the listing screen, or both.
+The listing screen consists of HTML and JavaScript that build the list, its available filters and actions. When the listing screen is loaded, or a user changes the filter settings, the listing screen calls XHR to fetch the data. The XHR contains parameters such as the filter type, the number of rows, and the requested columns. Based on the request, Movable Type loads objects from the database, convert them to proper HTML snipets, and then return the listing data in JSON format. The listing screen receives the JSON response and render it as the list.
+
+* [[Example of the JSON response|https://gist.github.com/807368]]
+
+h2. Registry
+
+You can create or customize a list by adding value to the following registry keys.
+
+- listing_screens := Define the overall behavior of the list.
+- list_properties := Add columns and filters to the list.
+- system_filters := Add built-in filters to the list.
+- list_actions := Add actions for the objects in the list.
+- content_actions := Add actions for the listing screen.
+
+To add values under each registry key, specify the list ID that is usually same as the object_type of the list.
+
+```yaml
+listing_screens:
+    foo:
+        # Define a new list "foo" and its overall behavior.
+list_properties:
+    foo:
+        fizz:
+            # Add a properties "fizz" to the list "foo"
+list_actions:
+    foo:
+        buzz:
+            # Add a action "buzz" to the list "foo"
+```
+
+* [[Registry: listing-screens|Ja-dev-registry-listing-screens]]
+* [[Registry: list_properties|Ja-dev-registry-list-properties]]
+* [[Registry: system_filters|Ja-dev-registry-system-filters]]
+* [[Registry: list_actions|Ja-dev-registry-list-actions]]
+* [[Registry: content_actions|Ja-dev-registry-content-actions]]
+
+h2. Callbacks
+
+h3. list_template_param.object
+
+The list_template_param callback will be called just before building the list template, similar to  @template_param@ for the common template.
+
+h4. Synopsis
+
+```perl
+sub list_template_param_foo {
+    my $cb = shift;
+    my ( $app, $param, $tmpl ) = @_;
+    # Do something
+}
+```
+
+h4. Attributes
+
+- $app := An instance of the MT::App.
+- $param := A hash reference of parameters that is passed to build the template.
+- $tmpl := @MT::Template@ object to build the template.
+
+h4. Return Value
+
+This callback does not require a return value.
+
+
+h3. cms_pre_load_filtered_list.object
+
+The cms_pre_load_filtered_list callback will be called just before loading the object when the list is requested.
+
+
+h4. Synopsis
+
+```perl
+sub cms_pre_load_filtered_list_foo {
+    my $cb = shift;
+    my ( $app, $filter, $options, $cols ) = @_;
+    # Do something
+}
+```
+
+h4. Attributes
+
+- $app := An instance of the MT::App class.
+- $filter := An instance of the MT::Filter class.
+- $options := A hash reference of the current filter that includes @$terms@.
+- $cols := An array reference of the list of requested columns.
+
+
+h4. Return Value
+
+This callback does not require a return value.
+
+h3. cms_filtered_list_param.object
+
+The cms_filtered_list_param callback will be called just before rendering the generated list.
+
+h4. Synopsis
+
+```perl
+sub cms_filtered_list_param_foo {
+    my $cb = shift;
+    my ( $app, $res, $objs ) = @_;
+    # Do something
+}
+```
+
+h4. Attributes
+
+- $app := An instance of the MT::App class.
+- $res := An array reference of the matched objects that are modified for rendering.
+- $objs := An array reference of the matched objects.
+
+h4. Return Value
+
+This callback does not require a return value.
+
+h2. Customizing further
+
+h3. list_common.tmpl 
+
+If @listing/foo_list_header.tmpl@ exists in the template search path, it will be included automatically. You can customize listing screens or add JavaScript code by accessing MTML variables in the included template.
+
+
+```xml
+<mt:setvarblock name="jq_js_include" append="1"> 
+    // Some JavaScript 
+</mt:setvarblock>
+```
+
+h2. JavaScript and jQuery API in Common Listing Screen
+
+h3. Events
+
+h4. listReady
+
+The event @listReady@ will be called when the list is loaded.
+
+```js
+jQuery(window).bind('listReady', function() {
+    // Do something after the List table was rendered.
+})
+```
