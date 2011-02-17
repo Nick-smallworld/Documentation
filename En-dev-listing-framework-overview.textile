@@ -2,15 +2,15 @@ h1. The Listing Framework
 
 h2. Description
 
-The listing Framework provides a common listing user interface for objects that inherits @MT::Object@. The framework includes various functions such as filtering and sorting the list. A plugin author can use this framework to display a list of custom objects as well as adding custom columns or filters to the existing core MT object via Registry.
+The listing Framework provides a common listing user interface for objects that inherits @MT::Object@. The framework includes various functions such as filtering and sorting the list. A plugin author can use this framework to generate a list of custom objects as well as adding custom columns or filters to the existing core MT object.
 
 h3. Backward compatibility 
 
 This new listing framework doesn't use @mtapp:listing@ template tag. @mtapp:listing@ is still supported for the backward compatibility, but it does not provide new functions such as filtering or sorting.
-Existing @list_actions@ and URL links ( such as http://example.com/mt.cgi?__mode=list&_type=entry&filter=status&filter_val=2 ) should work in most cases.
+Existing @list_actions@ and URL links ( such as http://example.com/mt.cgi?__mode=list&_type=entry&filter=status&filter_val=2 ) should work fine in most cases.
 
 
-h3. Adding to Registry
+h3. Adding to the Registry
 
 The following example in plugin's config.yaml adds a custom column to "Manage Entries" list. 
 
@@ -32,13 +32,13 @@ list_properties:
 
 h3. Initializing a list
 
-When MT receives a request like @mt.cgi?__mode=list&_type=foo@ and if corresponding method @applications/cms/methods/list_foo@ does not exist, the listing framework generate a list automatically from the information ( @listing_screens/foo@ and @list_properties/foo@ ) written in the registry.
+When MT receives a request like @mt.cgi?__mode=list&_type=foo@ and if corresponding method @applications/cms/methods/list_foo@ does not exist, the listing framework generate a list automatically from the information written in the registry  ( @listing_screens/foo@ and @list_properties/foo@ ) .
 
 
 h3. Structure of the list
 
-The listing framework calls XHR (XMLHttpRequest) to fetch the listing data, and render HTML to display the listing screen. You can use various callbacks to customize either the listing data, the listing screen, or both.
-The listing screen consists of HTML and JavaScript that build the list, its available filters and actions. When the listing screen is loaded, or a user changes the filter settings, the listing screen calls XHR to fetch the data. The XHR contains parameters such as the filter type, the number of rows, and the requested columns. Based on the request, Movable Type loads objects from the database, convert them to proper HTML snipets, and then return the listing data in JSON format. The listing screen receives the JSON response and render it as the list.
+The listing framework calls XHR (XMLHttpRequest) to get *listing data*, and render HTML to display the *listing screen*. You can use various callbacks to customize either the listing data, the listing screen, or both.
+The listing screen consists of HTML and JavaScript to render the list, the available filters and the actions. When the listing screen is loaded, or a user changes the filter settings, the listing screen calls XHR to get the data. The XHR contains parameters such as the filter type, the number of rows, and the requested columns. Based on the request, Movable Type loads objects from the database, convert them to proper HTML snippets, and then return the listing data in JSON format. The listing screen receives the JSON response and render it as the list.
 
 * [[Example of the JSON response|https://gist.github.com/807368]]
 
@@ -65,7 +65,7 @@ list_properties:
 list_actions:
     foo:
         buzz:
-            # Add a action "buzz" to the list "foo"
+            # Add an action "buzz" to the list "foo"
 ```
 
 * [[Registry: listing-screens|Ja-dev-registry-listing-screens]]
@@ -78,7 +78,7 @@ h2. Callbacks
 
 h3. list_template_param.object
 
-The list_template_param callback will be called just before building the list template, similar to  @template_param@ for the common template.
+The *list_template_param* callback will be called just before building the list template, similar to  @template_param@ for the common template.
 
 h4. Synopsis
 
@@ -103,7 +103,7 @@ This callback does not require a return value.
 
 h3. cms_pre_load_filtered_list.object
 
-The cms_pre_load_filtered_list callback will be called just before loading the object when the list is requested.
+The *cms_pre_load_filtered_list* callback will be called just before loading the object when the list is requested.
 
 
 h4. Synopsis
@@ -130,7 +130,7 @@ This callback does not require a return value.
 
 h3. cms_filtered_list_param.object
 
-The cms_filtered_list_param callback will be called just before rendering the generated list.
+The *cms_filtered_list_param* callback will be called just before rendering the generated list.
 
 h4. Synopsis
 
@@ -145,7 +145,7 @@ sub cms_filtered_list_param_foo {
 h4. Attributes
 
 - $app := An instance of the MT::App class.
-- $res := An array reference of the matched objects that are modified for rendering.
+- $res := An array reference of the matched objects that were modified for rendering.
 - $objs := An array reference of the matched objects.
 
 h4. Return Value
