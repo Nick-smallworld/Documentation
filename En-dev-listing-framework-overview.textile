@@ -2,7 +2,7 @@ h1. The Listing Framework
 
 h2. Description
 
-The listing Framework provides a common listing user interface for objects that inherits @MT::Object@. The framework includes various functions such as filtering and sorting the list. A plugin author can use this framework to generate a list of custom objects as well as adding custom columns or filters to the existing core MT object.
+The listing Framework provides a common listing user interface for objects that inherits @MT::Object@. The framework includes various functions such as filtering and sorting the list. A plugin author can use this framework to generate a list of custom objects as well as adding custom columns or filters to the existing MT objects.
 
 h3. Backward compatibility 
 
