@@ -1,10 +1,12 @@
 h1. コンディショナルタグ プラグインの開発について
 
-h2. はじめに
+h1. +はじめに+
 
 今回はコンディショナルタグを実現するプラグインを解説します。
 
-h2. コンディショナルタグとは？
+***
+
+h1. +コンディショナルタグとは？+
 
 コンディショナルタグの代表格は&lt;MTIf&gt;&lt;MTIfBlog&gt;&lt;MTIfCategory&gt;などのタグです。
 
@@ -14,9 +16,11 @@ h2. コンディショナルタグとは？
 
 コンディショナルタグもブロックタグと同じようにPerl版とPHP版で記述方法が若干違いますがPHPの実装の章で解説させていただきます。
 
-h2. プラグインの仕様とテストケースの作成
+***
 
-h3. プラグインの仕様
+h1. +プラグインの仕様とテストケースの作成+
+
+h2. プラグインの仕様
 
 プラグインの仕様は以下になります。
 
@@ -37,7 +41,7 @@ h3. プラグインの仕様
 * 結果が正な場合 @<p>このブログ記事にはトップレベルカテゴリが設定されています。</p>@ が表示される
 * 結果が負な場合 @<p>このブログ記事にはカテゴリが設定されていないか、トップレベルカテゴリ以外が設定されています。</p>@ が表示される
 
-h3. テストケース１（00-compile.t）の作成
+h2. テストケース１（00-compile.t）の作成
 
 以前に行ったものと同じです。各オブジェクトが正しくロードされているかを確認します。
 
@@ -59,7 +63,7 @@ require_ok('MyPlugin07::Tags');
 1;
 </pre>
 
-h3. テストケース２（01-tags.t）の作成
+h2. テストケース２（01-tags.t）の作成
 
 テストするのは以下の３項目です。
 
@@ -81,11 +85,13 @@ JSON
 （後略）
 </pre>
 
-h2. コンディショナルタグ プラグインの開発（Perl）
+***
+
+h1. +コンディショナルタグ プラグインの開発（Perl）+
 
 前章で作成したMyPlugin06を元にプラグインを作成します。
 
-h3. config.yaml
+h2. config.yaml
 
 グローバル・モディファイアの追加には以下のように"tags"=&gt; "modifier"=&gt; "モディファイア名?" =&gt; $プラグイン名::ハンドラ名 を記述します。
 
@@ -108,7 +114,7 @@ tags:
         CategoryIfToplevel?: $MyPlugin07::MyPlugin07::Tags::hdlr_category_if_toplevel
 </pre>
 
-h3. L10N.pm
+h2. L10N.pm
 
 <pre>
 package MyPlugin07::L10N;
@@ -118,7 +124,7 @@ use base 'MT::Plugin::L10N';
 1;
 </pre>
 
-h3. L10N/en_us.pm
+h2. L10N/en_us.pm
 
 <pre>
 package MyPlugin07::L10N::en_us;
@@ -135,7 +141,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. L10N/ja.pm
+h2. L10N/ja.pm
 
 <pre>
 package MyPlugin07::L10N::ja;
@@ -153,7 +159,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. Tags.pm
+h2. Tags.pm
 
 <pre>
 package MyPlugin07::Tags;
@@ -171,7 +177,7 @@ sub hdlr_category_if_toplevel {
 1;
 </pre>
 
-h3. 解説
+h2. 解説
 
 * パッケージ宣言
 初めにpackage宣言をし、"use strict;"しています。
@@ -194,9 +200,11 @@ h3. 解説
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-04.png]]
 
-h2. コンディショナルタグ プラグインの開発（PHP）
+***
 
-h3. block.mtcategoryiftoplevel.php
+h1. +コンディショナルタグ プラグインの開発（PHP）+
+
+h2. block.mtcategoryiftoplevel.php
 
 ファイル名はコンディショナルタグの場合でもblockタグとして扱い、&lt;MTCategoryIfToplevel&gt;タグである事から、block.mtcategoryiftoplevel.phpとなります。
 
@@ -223,7 +231,7 @@ h3. block.mtcategoryiftoplevel.php
 ?>
 </pre>
 
-h3. 解説
+h2. 解説
 
 * ハンドラ関数宣言(&lt;MTCategoryIfToplevel&gt;)
 block名はsmarty記法にのっとって smarty_block_mtcategoryiftoplevel となります。一緒に呼び出し時の"$args", "$content", "$ctx", "$repeat"の取得をします。Perl版と異なる事に注意してください。
@@ -238,7 +246,9 @@ block名はsmarty記法にのっとって smarty_block_mtcategoryiftoplevel と�
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-06.png]]
 
-h2.  ファイルの配置
+***
+
+h1.  +ファイルの配置+
 
 <pre>
 $MT_DIR/
@@ -259,11 +269,13 @@ $MT_DIR/
          |＿01-tags.t
 </pre>
 
-h2. テストの実行
+***
+
+h1. +テストの実行+
 
 では、作成したプラグインに対してテストを行います。
 
-h3. 00-compile.t
+h2. 00-compile.t
 
 <pre>
 $ perl plugins/MyPlugin07/t/00-compile.t 
@@ -275,7 +287,7 @@ ok 4 - require MyPlugin07::L10N::en_us;
 ok 5 - require MyPlugin07::Tags;
 </pre>
 
-h3. 01-tags.t
+h2. 01-tags.t
 
 <pre>
 $ perl plugins/MyPlugin07/t/01-tags.t 
@@ -289,7 +301,7 @@ ok 6 - perl test 3
 ok 7 - ok - php test 1 ok - php test 2 ok - php test 3 
 </pre>
 
-h3. proveコマンドでのテスト
+h2. proveコマンドでのテスト
 
 <pre>
 $ prove plugins/MyPlugin07/t/*.t
@@ -327,17 +339,23 @@ Result: PASS
 （後略）
 </pre>
 
-h2. まとめ
+***
+
+h1. +まとめ+
 
 前回のブロックタグと同じく、Perl版はコード内で処理をし、PHP版はコードを一旦抜けるようになっています。
 
 やはり直感的なのはPerl版ですが、PHP版も今回の解説でご理解頂いたと思います。Perl版のプラグインを書く場合は一緒にPHP版も書いてみましょう。
 
-h2. プラグインダウンロード
+***
+
+h1. +プラグインダウンロード+
 
 [[MyPlugin07.zip(6.11KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin07.zip]]
 
-h2. プラグイン開発ガイド インデックス
+***
+
+h1. +プラグイン開発ガイド インデックス+
 
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
