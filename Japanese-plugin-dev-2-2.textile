@@ -1,10 +1,12 @@
 h1. ブロックタグ プラグインの開発について
 
-h2. はじめに
+h1. +はじめに+
 
 今回はブロックタグを実現するプラグインを解説します。
 
-h2. ブロックタグとは？
+***
+
+h1. +ブロックタグとは？+
 
 ブロックタグの代表格は&lt;MTBlogs&gt;&lt;MTEntries&gt;&lt;MTTags&gt;のようなタグです。
 
@@ -14,14 +16,14 @@ h2. ブロックタグとは？
 
 上記のような理由でブロックタグはループ処理をしますが、Perl版の処理と、PHP版の処理で記述法が変わってきます。簡単に説明すると以下になります。
 
-h3. Perl版
+h2. Perl版
 
 * タグのプログラム内で配列を用意し、そこにオブジェクトなどを格納します。
 * その後、プログラム内で配列をループさせオブジェクトなどをコンテキストに格納します
 * テンプレートのブロックタグの中に記載されているファンクションタグにコンテキストを渡し、文字などとあわせて出力します。
 * 全ての配列に対して処理を行ったらブロックタグを抜けます。
 
-h3. PHP版
+h2. PHP版
 
 * タグのプログラム内で配列を用意し、そこにオブジェクトなどを格納します。
 * 取得した配列をコンテキストに格納します。
@@ -29,9 +31,11 @@ h3. PHP版
 * ２回目以降はコンテキストから配列を取得し、次の行の処理を行いプログラムを抜けます。
 * 全ての配列に対して処理が終わったら、コンテキストを初期化しプログラムを抜けます。
 
-h2. プラグインの仕様とテストケースの作成
+***
 
-h3. プラグインの仕様
+h1. +プラグインの仕様とテストケースの作成+
+
+h2. プラグインの仕様
 
 プラグインの仕様は以下になります。
 
@@ -52,7 +56,7 @@ h3. プラグインの仕様
 ブへのリンクが張られる
 * 対象とするカテゴリはメインカテゴリ（☆印付きの物）のみ
 
-h3. テストケース１（00-compile.t）の作成
+h2. テストケース１（00-compile.t）の作成
 
 各オブジェクトが正しくロードされているかを確認します。
 
@@ -74,7 +78,7 @@ require_ok('MyPlugin05::Tags');
 1;
 </pre>
 
-h3. テストケース２（01-tags.t）の作成
+h2. テストケース２（01-tags.t）の作成
 
 テストするのは以下の３項目です。
 
@@ -102,11 +106,13 @@ JSON
 #=====
  </pre>
 
-h2. ファンクションタグ プラグインの開発（Perl）
+***
+
+h1. +ファンクションタグ プラグインの開発（Perl）+
 
 前章で作成したMyPlugin05を元にプラグインを作成します。
 
-h3. config.yaml
+h2. config.yaml
 
 グローバル・モディファイアの追加には以下のように"tags"=&gt; "modifier"=&gt; "モディファイア名" =&gt; $プラグイン名::ハンドラ名 を記述します。
 
@@ -129,7 +135,7 @@ tags:
         CategoryBreadcrumbTab: $MyPlugin06::MyPlugin06::Tags::hdlr_categorybreadcrumbtab
 </pre>
 
-h3. L10N.pm
+h2. L10N.pm
 
 <pre>
 package MyPlugin06::L10N;
@@ -139,7 +145,7 @@ use base 'MT::Plugin::L10N';
 1;
 </pre>
 
-h3. L10N/en_us.pm
+h2. L10N/en_us.pm
 
 <pre>
 package MyPlugin06::L10N::en_us;
@@ -156,7 +162,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. L10N/ja.pm
+h2. L10N/ja.pm
 
 <pre>
 package MyPlugin06::L10N::ja;
@@ -174,7 +180,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. Tags.pm
+h2. Tags.pm
 
 <pre>
 package MyPlugin06::Tags;
@@ -250,7 +256,7 @@ sub _hdlr_top_link {
 1;
 </pre>
 
-h3. 解説
+h2. 解説
 
 * パッケージ宣言
 初めにpackage宣言をし、"use strict;"しています。
@@ -329,9 +335,11 @@ Topの部分に、アーカイブパスへのリンクが付きます。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-13.png]]
 
-h2. ファンクションタグ プラグインの開発（PHP）
+***
 
-h3. block.mtcategorybreadcrumbs.php
+h1. +ファンクションタグ プラグインの開発（PHP）+
+
+h2. block.mtcategorybreadcrumbs.php
 
 ファイル名はブロックタグである事と&lt;MTCategoryBreadcrumbs&gt;タグである事から、block.mtcategorybreadcrumbs.phpとなります。
 
@@ -397,7 +405,7 @@ h3. block.mtcategorybreadcrumbs.php
 ?>
 </pre>
 
-h3. 解説
+h2. 解説
 
 * ハンドラ関数宣言(&lt;MTCategoryBreadcrumbs&gt;)
 block名はsmarty記法にのっとって smarty_block_mtcategorybreadcrumbs となります。一緒に呼び出し時の"$args", "$content", "$ctx", "$repeat"の取得をします。Perl版と異なる事に注意してください。
@@ -440,7 +448,7 @@ Topの部分に、アーカイブパスへのリンクが付きます。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-19.png]]
 
-h3. function.mtcategorybreadcrumbtab.php
+h2. function.mtcategorybreadcrumbtab.php
 
 ファイル名はファンクションタグである事と&lt;MTCategoryBreadcrumbTab&gt;タグである事から、function.mtcategorybreadcrumbtab.phpとなります。
 
@@ -482,7 +490,7 @@ h3. function.mtcategorybreadcrumbtab.php
 ?>
 </pre>
 
-h3. 解説
+h2. 解説
 
 * ハンドラ関数宣言(&lt;MTCategoryBreadcrumbTab&gt;)ブロックタグのループ内で利用されるファンクションタグです。
 function名はsmarty記法にのっとって smarty_function_mtcategorybreadcrumbtab となります。一緒に呼び出し時の"$args", "$ctx"の取得をします。Perl版と異なる事に注意してください。
@@ -515,7 +523,9 @@ Perl版の場合"MT::Util::archive_file_for()"が利用できましたが、PHP�
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-25.png]]
 
-h2. ファイルの配置
+***
+
+h1. +ファイルの配置+
 
 <pre>
 $MT_DIR/
@@ -537,11 +547,13 @@ $MT_DIR/
          |＿01-tags.t
 </pre>
 
-h2. テストの実行
+***
+
+h1. +テストの実行+
 
 では、作成したプラグインに対してテストを行います。
 
-h3. 00-compile.t
+h2. 00-compile.t
 
 <pre>
 $ cd $MT_DIR
@@ -554,7 +566,7 @@ ok 4 - require MyPlugin05::L10N::en_us;
 ok 5 - require MyPlugin05::Tags;
 </pre>
 
-h3. 01-tags.t
+h2. 01-tags.t
 
 <pre>
 $ perl plugins/MyPlugin06/t/01-tags.t 
@@ -568,7 +580,7 @@ ok 6 - perl test 3
 ok 7 - ok - php test 1 ok - php test 2 ok - php test 3 
 </pre>
 
-h3. proveコマンドでのテスト
+h2. proveコマンドでのテスト
 
 <pre>
 $ prove plugins/MyPlugin06/t/*.t
@@ -604,7 +616,9 @@ Result: PASS
 （後略）
 </pre>
 
-h2. まとめ
+***
+
+h1. +まとめ+
 
 今回のポイントは「どうやって処理をループさせるか」「どうやってコンテキスト使ってブロックタグの内側に情報を渡すか」にあります。直感的なのはやはりPerl版ではないでしょうか？
 
@@ -612,11 +626,15 @@ PHP版は少しだけハードルが高いですが、ご自分でプラグイ�
 
 また、実用に耐えるように、レイアウトを自由に変更できたり、CSSとの連係を取るなどの実装も練習になるので試してみてください。
 
-h2. プラグインダウンロード
+***
+
+h1. +プラグインダウンロード+
 
 [[MyPlugin06.zip(7.61KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin06.zip]]
 
-h2. プラグイン開発ガイド インデックス
+***
+
+h1. +プラグイン開発ガイド インデックス+
 
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
