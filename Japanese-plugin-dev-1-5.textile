@@ -1,16 +1,20 @@
 h1. テストドリブンでのプラグインの開発について
 
-h2. はじめに
+h1. +はじめに+
 
 テストドリブンでのプラグイン開発と、それに伴ったファンクションタグプラグイン（Perl, PHP）を作成していく手順を解説します。
 
-h2. ファンクションタグとは？
+***
+
+h1. +ファンクションタグとは？+
 
 ファンクションタグは、MTタグの中でも値の出力を担っている部分です。"&lt;MTEntryTitle&gt;"などもファンクションタグの一つです。タグに与えられた情報、タグから得られた情報から文字列を作成し出力します。
 
 今回は単純なファンクションタグを作成します。
 
-h2. テストドリブン開発とは？
+***
+
+h1. +テストドリブン開発とは？+
 
 従来の開発手法ではコードを書き終わってから結合テストを行うのが主でした。しかし、この手法ではエラーが出た際に問題箇所の特定がしづらく、バグの温床となってしまう場面が多々ありました。
 
@@ -20,9 +24,11 @@ Movable Typeの開発も同様にテストケースを書きテストを行っ�
 
 そこで、プラグイン開発でもテストドリブン開発を行って行きましょう。
 
-h2. プラグインの仕様とテストケースの作成
+***
 
-h3. プラグインの仕様
+h1. +プラグインの仕様とテストケースの作成+
+
+h2. プラグインの仕様
 
 プラグイン（MyPlugin03）の仕様ですが、ここでは簡単に"&lt;MTHelloWorld&gt;"タグを書くと"Hello, world!"と表示されるファンクションタグとします。
 
@@ -30,7 +36,7 @@ h3. プラグインの仕様
 <MTHelloWorld> => Hello, world!
 </pre>
 
-h3. テスト環境の準備
+h2. テスト環境の準備
 
 テストファイルを書く前にテスト環境の準備をします。テストする環境は仮想環境などを利用し、本番環境では絶対に行わないで下さい。理由はセキュリティ的に問題が発生する可能性があることと、テスト実行時にデータベースのリフレッシュを行うため本番データベースに負荷をかけないようにするためです。この後はMovable TypeがCentOS5で、既に動作するよう設定済みとして解説します。
 
@@ -68,7 +74,7 @@ mysql> GRANT ALL PRIVILEGES ON mt_test.* TO mt@localhost;
 # yum install php-mysql php-gd
 </pre>
 
-h3. テストファイルの配置位置など
+h2. テストファイルの配置位置など
 
 テストケースを配置するのは対象とするプラグインディレクトリの直下の"t"ディレクトリになります。
 
@@ -83,7 +89,7 @@ $MT_DIR/
          |＿ 01-tags.t
 </pre>
 
-h3. テストケース１（必要クラスのロードテスト, 00-compile.t）の作成
+h2. テストケース１（必要クラスのロードテスト, 00-compile.t）の作成
 
 プラグインに必要なクラスがロードされているか確認するためのテストケースを作成します。
 
@@ -115,7 +121,7 @@ require_ok('MyPlugin03::Tags');
 
 テストの個数が5件なので"use Test::More tests =&gt; 5;"と指定しています。 
 
-h3. テストケース２（タグの挙動テスト, 01-tags.t）の作成
+h2. テストケース２（タグの挙動テスト, 01-tags.t）の作成
 
 与えられたMTタグと、それに対して出される結果をJSON形式でテストケースファイル内に表記します。（"#===== Edit here"の場所）
 
@@ -171,7 +177,7 @@ $test_json =~ s/# *\d+ *(?:TBD.*)? *$//mg;
 （後略）
 </pre>
 
-h3. テストの実行方法
+h2. テストの実行方法
 
 まだプラグインが出来ていませんが、この状態でテストをするとどうなるのか試してみましょう。
 
@@ -225,11 +231,13 @@ h3. テストの実行方法
   Failed 2/2 test scripts, 0.00% okay. 7/12 subtests failed, 41.67% okay.
 </pre>
 
-h2. ファンクションタグプラグインの開発(Perl)
+***
+
+h1. +ファンクションタグプラグインの開発(Perl)+
 
 前章で作成したMyPlugin02を元にプラグインを作成します。
 
-h3. config.yaml
+h2. config.yaml
 
 &lt;MTHelloWorld&gt;タグの追加には以下のように"tags"=&gt; "function"=&gt; "タグ名" =&gt; $プラグイン名::ハンドラ名 を記述します。
 
@@ -250,7 +258,7 @@ tags:
         HelloWorld: $MyPlugin03::MyPlugin03::Tags::_hdlr_hello_world
 </pre>
 
-h3. L10N.pm
+h2. L10N.pm
 
 MyPlugin02と比べてパッケージ名だけが変更になっています。
 
@@ -262,7 +270,7 @@ use base 'MT::Plugin::L10N';
 1;
 </pre>
 
-h3. L10N/en_us.pm
+h2. L10N/en_us.pm
 
 パッケージ、クラス名、辞書の変更などが行われています。
 
@@ -281,7 +289,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. L10N/ja.pm
+h2. L10N/ja.pm
 
 L10N/en_us.pmと同じく、パッケージ名、クラス名、辞書の変更などが行われています。
 
@@ -301,7 +309,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. Tags.pm
+h2. Tags.pm
 
 新規で作成されるパッケージです。ハンドラ"_hdlr_Hello_world"が実装されています。"&lt;MTHelloWorld&gt;"タグにより、このハンドラが呼ばれ戻り値として"Hello, world!"が返りブログ記事などに表示されます。
 
@@ -318,7 +326,7 @@ sub _hdlr_hello_world {
 1;
 </pre>
 
-h3. ファイルの配置
+h2. ファイルの配置
 
 <pre>
 $MT_DIR/
@@ -337,11 +345,13 @@ $MT_DIR/
          |＿01-tags.t
 </pre>
 
-h2. ファンクションタグプラグインの開発(PHP)
+***
+
+h1. +ファンクションタグプラグインの開発(PHP)+
 
 ついPerl版のプラグインの作成で終わってしまいがちですが、ダイナミックパブリッシングに対応するためにもPHPのプラグインも同時に開発しましょう。
 
-h3. function.mthelloworld.php
+h2. function.mthelloworld.php
 
 ファイル名はファンクションタグである事と&lt;MTHelloWorld&gt;タグである事から、 function.mthelloworld.phpとなります。
 
@@ -357,7 +367,7 @@ function名はsmarty記法にのっとってsmarty_function_mthelloworldとな�
 
 ファンクションタグとして&lt;MTHelloWorld&gt;が呼ばれると、このfunctionが"Hello, world!"を返し、ブログ記事などにダイナミックに表示されます。
 
-h3. ファイルの配置
+h2. ファイルの配置
 
 <pre>
 $MT_DIR/
@@ -378,11 +388,13 @@ $MT_DIR/
          |＿01-tags.t
 </pre>
 
-h2. テストの実行
+***
+
+h1. +テストの実行+
 
 では、作成したプラグインに対してテストを行います。
 
-h3. 00-compile.t
+h2. 00-compile.t
 
 <pre>
 $ cd $MT_DIR
@@ -397,7 +409,7 @@ ok 4 - require MyPlugin03::L10N::en_us;
 ok 5 - require MyPlugin03::Tags;
 </pre>
 
-h3. 01-tags.t
+h2. 01-tags.t
 
 <pre>
 $ perl plugins/MyPlugin03/t/01-tags.t
@@ -414,7 +426,7 @@ ok 6 - perl test 3
 ok 7 - ok - php test 1 ok - php test 2 ok - php test 3 
 </pre>
 
-h3. proveコマンドでのテスト
+h2. proveコマンドでのテスト
 
 <pre>
 $ prove plugins/MyPlugin03/t/*.t
@@ -424,7 +436,7 @@ All tests successful.
 Files=2, Tests=12, 25 wallclock secs (14.38 cusr +  4.03 csys = 18.41 CPU)
 </pre>
 
-h3. 明示的にエラーを起こさせる
+h2. 明示的にエラーを起こさせる
 
 上記のテストは全て成功しました。テストプログラムを修正して明示的にエラーを起こさせる事も可能ですが、ここではJSONのテスト情報を故意に書き換えエラーを発生させてみます。
 
@@ -488,7 +500,9 @@ got: Hello, world!not ok - php test 3\#     expected: hello, world!\#          g
 
 このように不具合箇所を修正していく事でバグの少ないコードを書いていく事ができます。
 
-h2. まとめ
+***
+
+h1. +まとめ+
 
 今回はボリュームが大きくなりましたがテストドリブンのプラグイン開発をする理由を実感していただけたでしょうか？
 
@@ -500,11 +514,15 @@ h2. まとめ
 
 このドキュメントでテストドリブン開発とPHPプラグイン開発に興味を持っていただければ幸いです。
 
-h2. プラグインダウンロード
+***
+
+h1. +プラグインダウンロード+
 
 [[MyPlugin03.zip(5.87KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin03.zip]]
 
-h2. プラグイン開発ガイド インデックス
+***
+
+h1. +プラグイン開発ガイド インデックス+
 
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
