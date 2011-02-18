@@ -1,25 +1,29 @@
 h1. グローバル・モディファイアプラグインの開発について
 
-h2. はじめに
+h1. +はじめに+
 
 今回は具体的なプラグインとしてグローバル・モディファイアプラグインを作成していく手順を解説します。
 
-h2. グローバル・モディファイアとは？
+***
+
+h1. +グローバル・モディファイアとは？+
 
 グローバル・モディファイアは与えられた文字列に対して、すべて大文字に変換する、一部分にURLを付加するなどの加工処理を行います。
 
 グローバル・モディファイアは、利用する際に'&lt;MTEntryTitle lower_case="1"&gt;'といった形で、タグに対して付与し利用します。
 
-h2. プラグインの仕様とテストケースの作成
+***
+
+h1. +プラグインの仕様とテストケースの作成+
 
 プラグインの仕様を決定し、それを元にテストケースの作成を作成しましょう。
 
-h3. プラグインの仕様
+h2. プラグインの仕様
 
 # タグによって与えられた文章を "rot13暗号":http://ja.wikipedia.org/wiki/ROT13 を用いて暗号化するグローバル・モディファイアを実装する。
 # 呼び出し時の引数が1のときのみ動作する
 
-h3. テストケース（00-compile.t）
+h2. テストケース（00-compile.t）
 
 前回行ったMyPlugin03の内容と基本的に同じです。
 
@@ -41,7 +45,7 @@ require_ok('MyPlugin04::Tags');
 1;
 </pre>
 
-h3. テストケース（01-tags.t）
+h2. テストケース（01-tags.t）
 
 前回行ったテストからJSON部分を修正し利用します。エントリーを１件取得し、そのタイトルに対してrot13暗号をかけます。
 
@@ -69,11 +73,13 @@ JSON
 （後略）
 </pre>
 
-h2. rot13グローバル・モディファイアの開発（Perl）
+***
+
+h1. +rot13グローバル・モディファイアの開発（Perl）+
 
 前章で作成したMyPlugin03を元にプラグインを作成します。
 
-h3. config.yaml
+h2. config.yaml
 
 グローバル・モディファイアを追加には以下のように"tags"=&gt; "modifier"=&gt; "モディファイア名" =&gt; $プラグイン名::ハンドラ名 を記述します。 
 
@@ -92,7 +98,7 @@ tags:
         rot13: $MyPlugin04::MyPlugin04::Tags::_hdlr_rot13
 </pre>
 
-h3. L10N.pm
+h2. L10N.pm
 
 <pre>
 package MyPlugin04::L10N;
@@ -102,7 +108,7 @@ use base 'MT::Plugin::L10N';
 1;
 </pre>
 
-h3. L10N/en_us.pm
+h2. L10N/en_us.pm
 
 <pre>
 package MyPlugin04::L10N::en_us;
@@ -119,7 +125,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. L10N/ja.pm
+h2. L10N/ja.pm
 
 <pre>
 package MyPlugin04::L10N::ja;
@@ -137,7 +143,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. Tags.pm
+h2. Tags.pm
 
 rot13の実装です。$arg（引数）に１が設定されていない場合は、そのままreturnします。１が設定されていた場合はrot13暗号をかけた$strをreturnします。 
 
@@ -157,7 +163,7 @@ sub _hdlr_rot13 {
 1;
 </pre>
 
-h3. ファイルの配置
+h2. ファイルの配置
 
 <pre>
 $MT_DIR/
@@ -176,11 +182,13 @@ $MT_DIR/
          |＿01-tags.t
 </pre>
 
-h2. rot13グローバル・モディファイアの開発（PHP）
+***
+
+h1. +rot13グローバル・モディファイアの開発（PHP）+
 
 PHP版のプラグイン開発を行います。
 
-h3. modifier.rot13.php
+h2. modifier.rot13.php
 
 ファイル名はグローバル・モディファイアである事と、モディファイア名がrot13である事から、modifier.rot13.phpとなります。 
 
@@ -200,7 +208,7 @@ function名はsmarty記法にのっとってsmarty_modifier_rot13となります
 
 また実装に関してはPHP4.2以降にはrot13を行う"str_rot13()"関数があるので、そちらを用います。
 
-h3. ファイルの配置
+h2. ファイルの配置
 
 <pre>
 $MT_DIR/
@@ -221,11 +229,13 @@ $MT_DIR/
          |＿01-tags.t
 </pre>
 
-h2. テストの実行
+***
+
+h1. +テストの実行+
 
 では、作成したプラグインに対してテストを行います。
 
-h3. 00-compile.t
+h2. 00-compile.t
 
 <pre>
 $ perl plugins/MyPlugin04/t/00-compile.t 
@@ -237,7 +247,7 @@ ok 4 - require MyPlugin04::L10N::en_us;
 ok 5 - require MyPlugin04::Tags;
 </pre>
 
-h3. 01-tags.t
+h2. 01-tags.t
 
 <pre>
 $ perl plugins/MyPlugin04/t/01-tags.t
@@ -254,7 +264,7 @@ ok 6 - perl test 3
 ok 7 - ok - php test 1 ok - php test 2 ok - php test 3 
 </pre>
 
-h3. proveコマンドでのテスト
+h2. proveコマンドでのテスト
 
 <pre>
 $ prove plugins/MyPlugin04/t/*.t
@@ -266,7 +276,9 @@ Files=2, Tests=12, 24 wallclock secs (12.23 cusr +  4.98 csys = 17.21 CPU)
 
 全てのテストにパスし、初めに考えた仕様どおりに動作している事がわかります。
 
-h2. まとめ
+***
+
+h1. +まとめ+
 
 グローバル・モディファイアは色々な場面で利用されます。（ "グローバル・モディファイアリファレンス":http://www.movabletype.jp/documentation/appendices/modifiers/ ）
 
@@ -274,11 +286,15 @@ h2. まとめ
 
 プラグイン開発ステップ・バイ・ステップ シーズン１はこれで終了です。プラグイン作成の大枠を体感していただけたでしょうか？シーズン２ではさらにブロックタグやコンディショナルタグなどの解説に進む予定です。
 
-h2. プラグインダウンロード
+***
+
+h1. +プラグインダウンロード+
 
 [[MyPlugin04.zip(5.94KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin04.zip]]
 
-h2. プラグイン開発ガイド インデックス
+***
+
+h1. +プラグイン開発ガイド インデックス+
 
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
