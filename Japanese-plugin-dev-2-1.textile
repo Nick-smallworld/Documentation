@@ -1,18 +1,22 @@
 h1. ファンクションタグ プラグインの開発について
 
-h2. はじめに
+h1. +はじめに+
 
 今回は既に「テストドリブンでのプラグインの開発について」で紹介しているファンクションタグについて、改めて解説させていただきます。
 
-h2. ファンクションタグとは？
+***
+
+h1. +ファンクションタグとは？+
 
 ファンクションタグとは、タグの内部処理を行い、その結果をブログ記事やウェブページなどに出力するものです。
 
 前回のファンクションタグ"&lt;MTHelloWorld&gt;"は、特に処理をせず毎回"Hello, world!"を出力するだけの物でしたが、今回はデータベース処理なども含めて解説します。
 
-h2. プラグインの仕様とテストケースの作成
+***
 
-h3. 仕様の策定
+h1. +プラグインの仕様とテストケースの作成+
+
+h2. 仕様の策定
 
 仕様としては以下を満たす実装を行います。
 
@@ -35,7 +39,7 @@ h3. 仕様の策定
 * 書き込まれたCSSファイルのパスにCSSを配置すると、CSSの要素が新設や上書きされる
 * このタグはブログ記事アーカイブ以外、例えばカテゴリアーカイブなどでは動作せずエラーとなります。
 
-h3. テスト環境の準備
+h2. テスト環境の準備
 
 "$MT_DIR/t/mysql-test.cfg"に以下の一行を追加
 
@@ -43,7 +47,7 @@ h3. テスト環境の準備
 StaticWebPath /mt-static/
 </pre>
 
-h3. テストファイルの配置位置など
+h2. テストファイルの配置位置など
 
 従来と同じく"$MT_DIR/t/"配下になります。
 
@@ -58,7 +62,7 @@ $MT_DIR/
          |＿ 01-tags.t
 </pre>
 
-h3. テストケース１（00-compile.t）の作成
+h2. テストケース１（00-compile.t）の作成
 
 前々回行ったMyPlugin03と基本的に同じです。各オブジェクトが正しくロードされているかを確認します。
 
@@ -80,7 +84,7 @@ require_ok('MyPlugin05::Tags');
 1;
 </pre>
 
-h3. テストケース２（01-tags.t）の作成
+h2. テストケース２（01-tags.t）の作成
 
 テストするのは以下の３項目です。
 
@@ -102,11 +106,13 @@ JSON
 #=====
 </pre>
 
-h2. ファンクションタグ プラグインの開発（Perl）
+***
+
+h1. ファンクションタグ プラグインの開発（Perl）
 
 前々章で作成したMyPlugin03を元にプラグインを作成します。
 
-h3. config.yaml
+h2. config.yaml
 
 グローバル・モディファイアの追加には以下のように"tags"=&gt; "modifier"=&gt; "モディファイア名" =&gt; $プラグイン名::ハンドラ名 を記述します。
 
@@ -125,7 +131,7 @@ tags:
         CSSByCategory: $MyPlugin05::MyPlugin05::Tags::_hdlr_cssbycategory
 </pre>
 
-h3. L10N.pm
+h2. L10N.pm
 
 <pre>
 package MyPlugin05::L10N;
@@ -135,7 +141,7 @@ use base 'MT::Plugin::L10N';
 1;
 </pre>
 
-h3. L10N/en_us.pm
+h2. L10N/en_us.pm
 
 <pre>
 package MyPlugin05::L10N::en_us;
@@ -152,7 +158,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. L10N/ja.pm
+h2. L10N/ja.pm
 
 
 <pre>
@@ -171,7 +177,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. Tags.pm
+h2. Tags.pm
 
 <pre>
 package MyPlugin05::Tags;
@@ -211,7 +217,7 @@ sub _hdlr_cssbycategory {
 1;
 </pre>
 
-h3. 解説
+h2. 解説
 
 * 初めにpackage宣言をし、"use strict;"しています。
 
@@ -251,9 +257,11 @@ returnされる値は'&lt;link rel="stylesheet" href="/mt-static/support/css/cat
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-08.png]]
 
-h2. ファンクションタグ プラグインの開発（PHP）
+***
 
-h3. function.mtcssbycategory.php
+h1. +ファンクションタグ プラグインの開発（PHP）+
+
+h2. function.mtcssbycategory.php
 
 ファイル名はファンクションタグである事と&lt;MTCSCByCategory&gt;タグである事から、function.mtcssbycategory.phpとなります。
 
@@ -294,7 +302,7 @@ h3. function.mtcssbycategory.php
 ?>
 </pre>
 
-h3. 解説
+h2. 解説
 
 functionタグの作り方はPerl版と大きな差がありません。大きく違っている場所を *強調* しました。
 
@@ -328,7 +336,9 @@ $css_dirの末尾に'/'があるか確認し、無い場合は付加します。
 returnされる値は'&lt;link rel="stylesheet" href="/mt-static/support/css/cat-foo-subfoo/screen.css" type="text/css/"&gt;'のような形になります。
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-01-15.png]]
 
-h2. ファイルの配置
+***
+
+h1. +ファイルの配置+
 
 <pre>
 $MT_DIR/
@@ -349,11 +359,13 @@ $MT_DIR/
          |＿01-tags.t
 </pre>
 
-h2. テストの実行
+***
+
+h1. +テストの実行+
 
 では、作成したプラグインに対してテストを行います。
 
-h3. 00-complie.t
+h2. 00-complie.t
 
 <pre>
 $ cd $MT_DIR
@@ -366,7 +378,7 @@ ok 4 - require MyPlugin05::L10N::en_us;
 ok 5 - require MyPlugin05::Tags;
 </pre>
 
-h3. 01-tags.t
+h2. 01-tags.t
 
 <pre>
 $ perl plugins/MyPlugin05/t/01-tags.t
@@ -380,7 +392,7 @@ ok 6 - perl test 3
 ok 7 - ok - php test 1 ok - php test 2 ok - php test 3
 </pre>
 
-h3. proveコマンドでのテスト
+h2. proveコマンドでのテスト
 
 <pre>
 $ prove plugins/MyPlugin05/t/*.t
@@ -412,7 +424,9 @@ Files=2, Tests=12, 27 wallclock secs (12.70 cusr +  5.31 csys = 18.01 CPU)
 （後略）
 </pre>
 
-h2. ブログ環境でのテスト
+***
+
+h1. +ブログ環境でのテスト+
 
 * MTの管理画面が利用できる環境を用意します。（新規作成することを推奨します。）
 * クラシック ウェブサイト ＞ クラシックブログを作成します。
@@ -441,7 +455,9 @@ h2. ブログ環境でのテスト
 </pre>
 * これらのファイルを置き、ブラウザで閲覧する事でCSSの内容がカテゴリごとに上書きされている事がわかります。実際に利用される際には、基本となるのデザイン（カテゴリが無いもの）を作成し、そこからカテゴリ毎にCSSの上書きを行うといった手順で作業を行ってください。
 
-h2. まとめ
+***
+
+h1. +まとめ+
 
 少し盛り沢山な内容でしたがいかがだったでしょうか？ファンクションタグを"Hellow, world!"だけで終わらせるのはもったいないので、実際に使えるネタとしてあげてみました。またファンクションタグの場合、Perl版とPHP版の違いが大きくない事も見て取れたのではないでしょうか。
 
@@ -449,11 +465,13 @@ h2. まとめ
 
 この続きは是非ご自分で改造し、活用してみてください。
 
-h2. プラグインダウンロード
+***
+
+h1. +プラグインダウンロード+
 
 [[MyPlugin05.zip(6.64KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin05.zip]]
 
-h2. プラグイン開発ガイド インデックス
+h1. +プラグイン開発ガイド インデックス+
 
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
