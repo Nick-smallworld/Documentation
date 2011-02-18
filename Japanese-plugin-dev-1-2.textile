@@ -1,10 +1,12 @@
 h1. レジストリ、YAMLについて
 
-h2. はじめに
+h1. +はじめに+
 
 今回は、プラグイン開発の中心となるMovable Typeのレジストリについてと、プラグインやテーマのレジストリ設定に利用するYAML形式のファイルについて解説します。
 
-h2. レジストリの解説
+***
+
+h1. +レジストリの解説+
 
 レジストリとはMovable Typeの内部構造を階層的に保持するための仕組みです。階層的に設定を保持するという意味でMS Windowsのレジストリと似ています。
 
@@ -112,7 +114,9 @@ sub core_compose_menus {
 
 プラグインにより設定や表示を変更する場合、レジストリへ項目を上書きや追加します。これによりMovable Typeをカスタマイズすることができます。
 
-h2. YAMLとは？YAMLの利便性
+***
+
+h1. +YAMLとは？YAMLの利便性+
 
 YAMLは"YAML Ain't a Markup Language"の略で、HTMLのようなマークアップ言語ではありません。テキストで書かれデータ構造を記載するのに適した記法になっています。同じような理由でつかわれる言語としてXMLがありますが、YAMLの記載がシンプルであることより、設定やAPIからのデータ転送などにもYAMLが利用することが増えてきています。
 
@@ -160,7 +164,9 @@ author_link: http://www.example.com/about/
 doc_link: http://www.example.com/docs/
 </pre>
 
-h2. YAMLの文法
+***
+
+h1. +YAMLの文法+
 
 YAMLの記述方法はとてもシンプルです。インデントをきっちりそろえる必要があるのが注意点です。
 
@@ -224,13 +230,15 @@ description: >
 StyleCatcher lets you easily browse through styles and then apply them to your blog in just a few clicks.
 </pre>
 
-h2. まとめ
+***
+
+h1. +まとめ+
 
 今回はプラグイン開発に必須なレジストリの概念と、YAMLの利用方法について解説しました。
 
 レジストリについてはハードルが高いと思いますが、プラグイン開発を進めると徐々に解ってきますので次のステップに進みましょう。
 
-h2. プラグイン開発ガイド インデックス
+h1. +プラグイン開発ガイド インデックス+
 
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # レジストリ、YAMLについて
