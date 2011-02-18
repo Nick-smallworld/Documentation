@@ -1,10 +1,12 @@
 h1. プラグインのローカライゼーションについて
 
-h2. はじめに
+h1. +はじめに+
 
 今回はローカライズによる多言語対応について、その仕組みとプラグインでの利用についてを解説します。
 
-h2. ローカライズ技術
+***
+
+h1. +ローカライズ技術+
 
 一般的にローカライズとは、使用する言語環境に合わせてプログラムを動作させるようにすることを指します。
 
@@ -71,11 +73,13 @@ Movable Typeの管理画面は、HTMLファイルのようなテンプレート�
 
 これらの辞書機能を、テンプレート・ファイルだけではなく、スクリプト内で利用するための関数（メソッド）として、 *translate関数* が用意されています。この関数を利用することで、エラーメッセージやログなどのスクリプトの処理結果を言語にあわせて出力できます。
 
-h2. 言語別に処理する仕組みをプラグインにも適用する
+***
+
+h1. +言語別に処理する仕組みをプラグインにも適用する+
 
 上で説明した内容はプラグインでも利用できます。プラグインに関連する項目について辞書ファイルを用意し、config.yamlに辞書ファイルの設定（"l10n_class: MyPlugin02::L10N"）を記載します。
 
-h3. 編集前のconfig.yaml
+h2. 編集前のconfig.yaml
 
 <pre>
 id: MyPlugin02
@@ -87,7 +91,7 @@ author_link: http://www.example.com/about/
 doc_link: http://www.example.com/docs/
 </pre>
 
-h3. 編集後のconfig.yaml
+h2. 編集後のconfig.yaml
 
 <pre>
 id: MyPlugin02
@@ -100,7 +104,7 @@ doc_link: http://www.example.com/docs/
 l10n_class: MyPlugin02::L10N
 </pre>
 
-h3. L10N.pm の作成
+h2. L10N.pm の作成
 
 辞書ファイルの雛形を作ります。'MT::Plugin::L10N'の継承クラスとして作成することで、細かい実装について気にする必要がなくなります。
 
@@ -112,7 +116,7 @@ use base 'MT::Plugin::L10N';
 1;
 </pre>
 
-h3. en_us.pmの作成
+h2. en_us.pmの作成
 
 英語の辞書ファイルを作成します。'MyPlugin02::L10N'の継承クラスとして作成します。
 
@@ -131,7 +135,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. ja.pmの作成
+h2. ja.pmの作成
 
 日本語の辞書ファイルを作成します。'MyPlugin02::L10N::en_us'の継承クラスとして作成します。
 
@@ -153,7 +157,7 @@ use vars qw( %Lexicon );
 1;
 </pre>
 
-h3. ファイルの配置
+h2. ファイルの配置
 
 作成した辞書ファイルを配置します。
 
@@ -170,23 +174,29 @@ MT_DIR/
                |＿ ja.pm
 </pre>
 
-h3. プラグインの表示結果
+h2. プラグインの表示結果
 
 ファイルを正しく配置した上で、管理画面のプラグイン設定を開くと以下の様に表示され正しく動作していることが分かります。
 
 !http://www.movabletype.jp/documentation/developer/plugins/images/l10n_01.png!
 
-h2. まとめ
+***
+
+h1. +まとめ+
 
 今回はMovable Typeの中でローカライズの挙動と、プラグインでの利用方法を解説しました。
 
 ローカライズはMovable Typeの動作の中で、とても重要なものの中の一つです。今回きっちりと覚えて、英語文言を用意し海外の人にも使ってもらえるプラグインを作成しましょう！！もちろんドイツ語など他の言語辞書も用意できたら、すばらしいですね！！
 
-h2. プラグインダウンロード
+***
+
+h1. +プラグインダウンロード+
 
 [[MyPlugin02.zip(1.86KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin02.zip]]
 
-h2. プラグイン開発ガイド インデックス
+***
+
+h1. +プラグイン開発ガイド インデックス+
 
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
