@@ -1,10 +1,11 @@
 h1. プラグインの設定方法
 
-h2. はじめに
+h1. +はじめに+
 
 プラグインの設定方法は環境変数を利用する方法もありますが、今回は管理画面のプラグイン設定で簡単に設定する方法を解説します。
 
-h2. プラグイン設定とは？
+
+h1. +プラグイン設定とは？+
 
 プラグイン設定とは、名前のとおり設定によりプラグインの挙動を変更するための設定方法です。
 
@@ -15,9 +16,10 @@ h2. プラグイン設定とは？
 例）MultiBlogプラグインの設定画面
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/03-01-01.png]]
 
-h2. 今回作成するプラグインの仕様
 
-h3. 管理画面 プラグイン設定画面
+h1. +今回作成するプラグインの仕様+
+
+h2. 管理画面 プラグイン設定画面
 
 「[[5. テストドリブンでのプラグイン開発について|Japanese-plugin-dev-1-5]]」で作成した&lt;MTHelloWorld&gt;プラグインを改造し&lt;MTHellowWorld2&gt;を作成します。
 
@@ -33,7 +35,8 @@ h3. 管理画面 プラグイン設定画面
 プラグイン設定の画面仕様
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/03-01-02.png]]
 
-h3. ファンクションタグ（&lt;MTHelloWorld2&gt;）
+
+h2. ファンクションタグ（&lt;MTHelloWorld2&gt;）
 
 プラグイン設定画面で設定された[言葉]により、「こんにちは、○○！」と表示するファンクションタグを作成します。
 
@@ -44,9 +47,11 @@ h3. ファンクションタグ（&lt;MTHelloWorld2&gt;）
 * ブログレベルの設定が無く、システムレベルの[言葉]を設定していたら、「こんにちは、（システムレベル設定）！」と出力しタグを終了する
 * ブログレベル、システムレベルの両方の[言葉]を設定していなかった場合は「こんにちは、世界！」と出力しタグを終了する
 
-h2. 管理画面設定の開発
 
-h3. config.yaml
+h1. +管理画面設定の開発+
+
+
+h2. config.yaml
 
 <pre>
 id: MyPlugin08
@@ -77,7 +82,8 @@ tags:
 * "blog_config_template", "system_config_template" に、設定画面のテンプレート名を設定します（詳細後述）
 * "settings"で設定名を"word_setting_blog", "word_setting_system"とし、それぞれ初期値"default"は空欄、設定の"scope"をそれぞれ"blog"と"system"にします。
 
-h3. word_setting_blog.tmpl
+
+h2. word_setting_blog.tmpl
 
 ブログの設定画面で使用するテンプレートです。このファイルは"MyPlugin08/tmpl/word_setting_blog.tmpl"に配置します。
 ブログ設定"word_setting_blog"を設定するためのテンプレートです。
@@ -123,7 +129,8 @@ h3. word_setting_blog.tmpl
 </div>
 </pre>
 
-h3. word_setting_system.tmpl
+
+h2. word_setting_system.tmpl
 
 システムの設定画面で使用するテンプレートです。このファイルは"MyPlugin08/tmpl/word_setting_system.tmpl"に配置します。
 システム設定"word_setting_system"を設定するためのテンプレートです。
@@ -170,7 +177,8 @@ h3. word_setting_system.tmpl
 
 これで管理画面で設定する準備が整いました。
 
-h2. ファンクションタグ プラグイン（&lt;MTHelloWorld2&gt;）の開発（Perl）
+
+h1. +ファンクションタグ プラグイン（&lt;MTHelloWorld2&gt;）の開発（Perl）+
 
 Tags.pm以外はMyPlugin03とあまり変わらないため、Tags.pmの注意する点に集中して解説します。
 
@@ -205,11 +213,12 @@ sub _hdlr_hello_world_2 {
 * 三項演算子を利用して、ブログ設定がある場合は @$word_blog@ を、ブログ設定が無い場合はシステム設定 @$word_sys@ を、両方無い場合はデフォルトの @$word_default@ を @$word@ に設定します。
 * 「こんにちは、 @$word@ ！」を返します。
 
-h2. ファンクションタグ プラグイン（&lt;MTHelloWorld2&gt;）の開発（PHP）
+h1. +ファンクションタグ プラグイン（&lt;MTHelloWorld2&gt;）の開発（PHP）+
+
 
 PHP版もPerl版とほとんど変わらない構造ですが、関数名などが違います。また、ローカライズもPerl版の物を利用しないため手順を追加する必要があります。
 
-h3. function.mthelloworld2.php
+h2. function.mthelloworld2.php
 
 <pre>
 <?php
@@ -244,7 +253,8 @@ h3. function.mthelloworld2.php
 * 三項演算子を利用して、ブログ設定がある場合は @$word_blog@ を、ブログ設定が無い場合はシステム設定 @$word_sys@ を、両方無い場合はデフォルトの @$word_default@ を @$word@ に設定します。
 * 「こんにちは、 @$word@ ！」を返します。
 
-h3. init.MyPlugin08.php
+
+h2. init.MyPlugin08.php
 
 PHP版のプラグインでローカライズをする場合、Perl版のL10N.pmなどを使った方法が使えません。
 
@@ -263,7 +273,8 @@ if (!@include_once("lib/l10n_$lang.php")) {
 
 これらのコードはプラグインのハンドラ関数に直接書けばよいのですが、複雑なプラグインで関数が増えてくると毎回書かなくてはならないので、初期化時に読み込むようにします。
 
-h3. l10n_en.php
+
+h2. l10n_en.php
 
 今回のPHP版プラグインでは英語文言を必要としないため、 @$Lexicon_en@ は空になります。
 
@@ -275,7 +286,8 @@ $Lexicon_en = array(
 ?>
 </pre>
 
-h3. l10n_ja.php
+
+h2. l10n_ja.php
 
 日本語のローカライズファイルです。Lexiconが @$Lexicon_ja@ となっているのに気をつけてください。
 
@@ -289,7 +301,8 @@ $Lexicon_ja = array(
 ?>
 </pre>
 
-h2. ファイルの配置
+
+h1. +ファイルの配置+
 
 <pre>
 $MT_DIR/
@@ -317,9 +330,11 @@ $MT_DIR/
          |＿word_setting_system.tmpl
 </pre>
 
-h2. &lt;MTHelloWorld2&gt;の動作確認
 
-h3. ブログ記事テンプレートにタグを追加
+h1. +&lt;MTHelloWorld2&gt;の動作確認+
+
+
+h2. ブログ記事テンプレートにタグを追加
 
 以下のようにブログ記事テンプレートにタグを"alpha-inner"直下に追加します。
 
@@ -329,7 +344,8 @@ h3. ブログ記事テンプレートにタグを追加
                         <p><mt:HelloWorld2></p>
 </pre>
 
-h3. 設定の反映の確認
+
+h2. 設定の反映の確認
 
 以下のような設定で表示結果を見ます。
 
@@ -343,7 +359,8 @@ h3. 設定の反映の確認
 これはプログラム内でそのように作ってあるからですが、もちろん逆（両方設定されていたらシステム設定を利用する）も可能です。
 ただ、システムデフォルトでシステム設定しておき、ブログ設定でそれを上書きするのが通常の利用のされ方なので、あえて逆に作る意味は特殊な例になります。
 
-h2. まとめ
+
+h1. +まとめ+
 
 プラグインの設定を行うだけであれば、config.yamlに項目を追加しtmplフォルダにテンプレートファイルを配置するだけで済むのが今回のポイントでしょうか？
 
@@ -351,11 +368,13 @@ h2. まとめ
 
 プラグイン設定画面を用意する事で、自分以外のプラグイン利用者に有益な事ですので、積極的に利用してみて下さい。
 
-h2. プラグインダウンロード
+
+h1. +プラグインダウンロード+
 
 [[MyPlugin08.zip(8.11KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin08.zip]]
 
-h2. プラグイン開発ガイド インデックス
+
+h1. +プラグイン開発ガイド インデックス+
 
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
 # [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
