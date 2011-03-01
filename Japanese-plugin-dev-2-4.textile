@@ -33,7 +33,7 @@ h1. +doLog関数によるログ取得（perl版）+
 <pre>
 sub doLog {
     my ($msg, $class) = @_;
-    return unless defined($msg)
+    return unless defined($msg);
 
     require MT::Log;
     my $log = new MT::Log;
