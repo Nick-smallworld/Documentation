@@ -8,10 +8,103 @@ h1. はじめに
 
 ***
 
+h1. コールバックとは？
+
+コールバックとは、MTのコードの色々な場面に設置されているフックポイントを「フック」してMTを機能拡張します。
+
+フックポイントはオブジェクトの編集や保存、ページ構築やAPIの操作といった場所に設置されています。
+
+config.yamlでフックポイントと、それを処理するハンドラ関数を指定する事で、コールバックが利用可能になります。
+
+***
+
 h1. 単純なコールバックの例
 
 ここでは「ブログ記事の保存後」に設置されているフックポイントを利用してコールバックする例を挙げます。
 
-フックポイントはMTのコードの色々な場面に設置されており、そこを「フック」して機能拡張を行います。
+h2. 仕様
 
+今回利用するフックポイントは「ブログ記事の保存後」です。実際は @cms_post_save.entry@ という名称で呼ばれるフックポイントです。
 
+# ブログ記事を保存するとフックポイント @cms_post_save.entry@ が呼ばれる
+# 新規作成されたブログ記事の場合、ログに "save entry title (ブログ記事ID): ブログ記事タイトル" と保存される 
+# 既存のブログ記事を保存した場合、ログに "edit entry title (ブログ記事ID): ブログ記事タイトル" と保存される
+# ログは「デバッグ」ログとして保存する
+
+h2. config yaml
+
+<pre>
+id: MyPlugin09
+key: MyPlugin09
+name: <__trans phrase="Sample Plugin callback">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin09::L10N
+
+callbacks:
+    MT::App::CMS::cms_post_save.entry: $MyPlugin09::MyPlugin09::Callbacks::post_save_entry
+</pre>
+
+h3. 解説
+
+* MT::App::CMS::cms_post_save.entry
+** 今回利用するフックポイント
+** ブログ記事（entry）の保存（save）後（post）=&gt; @cms_post_save.entry@
+* $MyPlugin09::MyPlugin09::Callbacks::post_save_entry
+** 今回利用するハンドラ関数
+** （$プラグイン名）::（Perlモジュール）::（ハンドラ関数）
+
+h2. Callbacks.pm
+
+<pre>
+package MyPlugin09::Callbacks;
+use strict;
+
+sub post_save_entry {
+    my ($cb, $app, $obj, $org_obj) = @_;
+
+    my $id = $obj->id;
+    my $title = $obj->title;
+
+    eval {
+        if (defined($org_obj->id)) {
+            doLog("edit entry title ($id): $title");
+        }
+    };
+    if ( $@ ) {
+        doLog("save entry title ($id): $title");
+    }
+}
+
+sub doLog {
+    my ($msg, $class) = @_;
+    return unless defined($msg);
+
+    require MT::Log;
+    my $log = new MT::Log;
+    $log->message($msg);
+    $log->level(MT::Log::DEBUG());
+    $log->class($class);
+    $log->save or die $log->errstr;
+}
+
+1;
+</pre>
+
+h3. 解説
+
+* sub post_save_entry {}
+** ($cb, $app, $obj, $org_obj) =&gt; （コールバック、アプリケーション情報、保存後オブジェクト、保存直前オブジェクト）
+** ブログ記事オブジェクトのidとタイトルを取得
+** 保存直前オブジェクトのidを確認（新規作成の場合、保存直前にはまだidが設定されていないため）
+*** idが設定されていた場合、"edit entry title (ブログ記事ID): ブログ記事タイトル"をdoLog関数経由でデバッグログを書き込み
+*** idが設定されていなかった場合エラーになる（新規作成時）ためevalで囲い、エラーになった場合if($@)でエラーをキャッチ
+**** エラーをキャッチされた場合、"save entry title (ブログ記事ID): ブログ記事タイトル"をdoLog関数経由でデバッグログを書き込み
+* sub doLog {}
+** [[プラグインの設定方法|Japanese-plugin-dev-3-1]] で紹介したデバッグログ出力関数
+*** MTのログにログレベル デバッグで情報を保存
+**** 新規作成の場合、"save entry title (1): 始めてのブログ記事"などと書き込み
+**** 既存の場合、"edit entry title (1): 始めてのブログ記事"などと書き込み
