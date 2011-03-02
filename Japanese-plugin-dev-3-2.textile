@@ -147,6 +147,6 @@ h1. フックポイント
 # コメント、トラックバック（フィルタ）
 # テンプレートセット修正
 
-詳しくは以下のドキュメントをご参考下さい。（英語、将来日本語化される予定あり）
+詳しくは以下のドキュメントをご参考下さい。（英語）
 
 [[MOVABLETYPE.org : Events and Callbacks in Movable Type: Table of Contents|http://www.movabletype.org/documentation/developer/callbacks/]]
