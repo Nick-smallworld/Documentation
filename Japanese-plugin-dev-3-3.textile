@@ -22,7 +22,8 @@ h1. +スケジュールタスクとは？+
 
 この動作をさせるには、以下の設定や実行を行う必要があります。詳細は割愛します。
 
-* UNIX, Linuxの場合のcron、Windowsのタスク・スケジューラで、"$MT_DIR/tools/run-periodic-tasks"を起動する
+* コマンドラインから直接"$MT_DIR/tools/run-periodic-tasks"を起動する
+* UNIX, Linuxの場合のcron、Windowsのタスク・スケジューラで、"$MT_DIR/tools/run-periodic-tasks"を定期的に自動起動する
 * ログフィードを取得する
 * XML-RPCのAPI、mt.runPeriodicTasksを利用する
 
