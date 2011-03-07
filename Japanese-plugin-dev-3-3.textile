@@ -71,3 +71,95 @@ h3. 解説
 * code
 ** 今回利用するハンドラ関数
 ** （$プラグイン名）::（Perlモジュール）::（ハンドラ関数）
+
+h2. Tasks.pm
+
+<pre>
+package MyPlugin10::Tasks;
+use strict;
+
+sub do_task {
+    doLog("run scheduled tasks");
+}
+
+sub doLog {
+    my ($msg, $class) = @_;
+    return unless defined($msg);
+
+    require MT::Log;
+    my $log = new MT::Log;
+    $log->message($msg);
+    $log->level(MT::Log::DEBUG());
+    $log->class($class);
+    $log->save or die $log->errstr;
+}
+
+1;
+</pre>
+
+h3. 解説
+
+* 起動すると @do_task@ 関数が呼ばれる
+* @do_task@ 関数の中の処理が行われる
+** 今回は @doLog@ 関数（ [[プラグインのデバッグ|Japanese-plugin-dev-2-4]] 参照）を使って"run scheduled tasks"がデバッグログに出力される
+
+***
+
+h1. +起動の確認+
+
+今回はLinuxでrun-periodic-tasksを直に実行して、その挙動を確認します。
+
+h2. 起動
+
+<pre>
+$ cd $MT_DIR
+$ sudo -u apache ./tools/run-periodic-tasks
+$ sudo -u apache ./tools/run-periodic-tasks
+</pre>
+
+h3. 解説
+
+* sudoユーザをapacheとしていますが、環境によって異なるので適宜書き換えて下さい。（例：www-data, SuExecユーザ名）
+* 時間を開けずにrun-periodic-tasksを２回起動しています。
+
+h2. 確認
+
+* [システムメニュー] &gt; [ツール] &gt; [ログ] でログ一覧を表示した後、ログレコードの @レベル@ を @デバッグ@ にしてフィルタをかけます。
+* "run scheduled tasks"行が日付「直前」で１行出力されているのを確認します。
+
+h3. 解説
+
+* ２回起動したので、本来であれば2行"run scheduled tasks"が表示されそうですが、実行間隔を２分（１２０秒）としてあるため、最初に起動してから２分以内は何度 run-periodic-tasks を起動しても"MyCustomTask"は実行されません。
+* ２分以上時間をあけてから、もう一度 run-periodic-tasks を起動すると"MyCustomTask"が実行され、ログに"run scheduled tasks"と追記されます。
+
+***
+
+h1. +まとめ+
+
+今回のようにタスクを新設することで、一定期間後にコメントやトラックバックを閉じたり、ログをバックアップを取った上で削除などの処理ができます。
+
+方法もconfig.yamlに追加し、ハンドラ関数を実装するだけですので比較的簡単です。この期に「定期的にやっている処理」をスケジュールタスク化されてみてはいかがでしょうか？
+
+***
+
+h1. +プラグインダウンロード+
+
+[[MyPlugin10.zip(2.25KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin10.zip]]
+
+***
+
+h1. +プラグイン開発ガイド インデックス+
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# [[環境変数について|Japanese-plugin-dev-1-3]]
+# [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+# [[プラグインの設定方法|Japanese-plugin-dev-3-1]]
+# [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
+# スケジュールタスクの開発
