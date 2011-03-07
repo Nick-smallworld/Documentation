@@ -22,8 +22,52 @@ h1. +スケジュールタスクとは？+
 
 この動作をさせるには、以下の設定や実行を行う必要があります。詳細は割愛します。
 
-* コマンドラインから直接"$MT_DIR/tools/run-periodic-tasks"を起動する
-* UNIX, Linuxの場合のcron、Windowsのタスク・スケジューラで、"$MT_DIR/tools/run-periodic-tasks"を定期的に自動起動する
-* ログフィードを取得する
-* XML-RPCのAPI、mt.runPeriodicTasksを利用する
+* コマンドラインから直接"$MT_DIR/tools/run-periodic-tasks"を定期的に起動する
+* UNIX, Linuxの場合のcronで、Windowsの場合はタスク・スケジューラで"$MT_DIR/tools/run-periodic-tasks"を、定期的に自動起動するよう設定する
+* ログフィードを定期的に取得する
+* XML-RPCのAPI、mt.runPeriodicTasksを定期的に利用する
 
+***
+
+h1. +単純なタスクの例+
+
+ここでは、単純なタスクの追加プラグインを作成し実際に起動させるところを解説します。
+
+h2. 仕様
+
+# 起動間隔は２分
+# 起動時にデバッグログとして"run scheduled tasks"と表示
+
+h2. config.yaml
+
+<pre>
+id: MyPlugin10
+key: MyPlugin10
+name: <__trans phrase="Sample Plugin Scheduled Tasks">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin10::L10N
+
+tasks:
+    MyCustomTask:
+        label: Do something every two minutes
+        frequency: 120
+        code: $MyPlugin10::MyPlugin10::Tasks::do_task
+</pre>
+
+h3. 解説
+
+* tasks
+** タスクを設定するレジストリのトップ
+* 例）MyCustomTask
+** 追加するタスク名
+* label
+** タスクの説明文
+* frequency
+** タスクの起動間隔（秒）
+* code
+** 今回利用するハンドラ関数
+** （$プラグイン名）::（Perlモジュール）::（ハンドラ関数）
