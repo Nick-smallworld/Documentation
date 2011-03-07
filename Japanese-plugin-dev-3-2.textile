@@ -245,4 +245,4 @@ h1. +プラグイン開発ガイド インデックス+
 # [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
 # [[プラグインの設定方法|Japanese-plugin-dev-3-1]]
 # コールバックとフックポイント
-# [[スケジュールタスクの開発|Japanese-plugin-dev-3-2]]
+# [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
