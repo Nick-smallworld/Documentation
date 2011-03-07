@@ -4,8 +4,6 @@ h1. +はじめに+
 
 今回は、プラグイン開発の中心となるMovable Typeのレジストリについてと、プラグインやテーマのレジストリ設定に利用するYAML形式のファイルについて解説します。
 
-***
-
 h1. +レジストリの解説+
 
 レジストリとはMovable Typeの内部構造を階層的に保持するための仕組みです。階層的に設定を保持するという意味でMS Windowsのレジストリと似ています。
@@ -114,8 +112,6 @@ sub core_compose_menus {
 
 プラグインにより設定や表示を変更する場合、レジストリへ項目を上書きや追加します。これによりMovable Typeをカスタマイズすることができます。
 
-***
-
 h1. +YAMLとは？YAMLの利便性+
 
 YAMLは"YAML Ain't a Markup Language"の略で、HTMLのようなマークアップ言語ではありません。テキストで書かれデータ構造を記載するのに適した記法になっています。同じような理由でつかわれる言語としてXMLがありますが、YAMLの記載がシンプルであることより、設定やAPIからのデータ転送などにもYAMLが利用することが増えてきています。
@@ -163,8 +159,6 @@ author_name: Plugin author
 author_link: http://www.example.com/about/
 doc_link: http://www.example.com/docs/
 </pre>
-
-***
 
 h1. +YAMLの文法+
 
@@ -229,8 +223,6 @@ description: >
 =>
 StyleCatcher lets you easily browse through styles and then apply them to your blog in just a few clicks.
 </pre>
-
-***
 
 h1. +まとめ+
 

@@ -4,8 +4,6 @@ h1. +はじめに+
 
 今回はブロックタグを実現するプラグインを解説します。
 
-***
-
 h1. +ブロックタグとは？+
 
 ブロックタグの代表格は&lt;MTBlogs&gt;&lt;MTEntries&gt;&lt;MTTags&gt;のようなタグです。
@@ -30,8 +28,6 @@ h2. PHP版
 * １回テンプレートのブロックタグの中に記載されているファンクションタグにコンテキストを渡し、文字などとあわせて出力します。出力後、一旦プログラムを抜けます。
 * ２回目以降はコンテキストから配列を取得し、次の行の処理を行いプログラムを抜けます。
 * 全ての配列に対して処理が終わったら、コンテキストを初期化しプログラムを抜けます。
-
-***
 
 h1. +プラグインの仕様とテストケースの作成+
 
@@ -105,8 +101,6 @@ my $test_json = <<'JSON';
 JSON
 #=====
  </pre>
-
-***
 
 h1. +ファンクションタグ プラグインの開発（Perl）+
 
@@ -335,8 +329,6 @@ Topの部分に、アーカイブパスへのリンクが付きます。
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-13.png]]
 
-***
-
 h1. +ファンクションタグ プラグインの開発（PHP）+
 
 h2. block.mtcategorybreadcrumbs.php
@@ -523,8 +515,6 @@ Perl版の場合"MT::Util::archive_file_for()"が利用できましたが、PHP�
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-02-25.png]]
 
-***
-
 h1. +ファイルの配置+
 
 <pre>
@@ -546,8 +536,6 @@ $MT_DIR/
          |＿00-compile.t
          |＿01-tags.t
 </pre>
-
-***
 
 h1. +テストの実行+
 
@@ -616,8 +604,6 @@ Result: PASS
 （後略）
 </pre>
 
-***
-
 h1. +まとめ+
 
 今回のポイントは「どうやって処理をループさせるか」「どうやってコンテキスト使ってブロックタグの内側に情報を渡すか」にあります。直感的なのはやはりPerl版ではないでしょうか？
@@ -626,13 +612,9 @@ PHP版は少しだけハードルが高いですが、ご自分でプラグイ�
 
 また、実用に耐えるように、レイアウトを自由に変更できたり、CSSとの連係を取るなどの実装も練習になるので試してみてください。
 
-***
-
 h1. +プラグインダウンロード+
 
 [[MyPlugin06.zip(7.61KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin06.zip]]
-
-***
 
 h1. +プラグイン開発ガイド インデックス+
 

@@ -4,8 +4,6 @@ h1. +はじめに+
 
 今回はコンディショナルタグを実現するプラグインを解説します。
 
-***
-
 h1. +コンディショナルタグとは？+
 
 コンディショナルタグの代表格は&lt;MTIf&gt;&lt;MTIfBlog&gt;&lt;MTIfCategory&gt;などのタグです。
@@ -15,8 +13,6 @@ h1. +コンディショナルタグとは？+
 これらは条件分岐を実装したMTタグです。
 
 コンディショナルタグもブロックタグと同じようにPerl版とPHP版で記述方法が若干違いますがPHPの実装の章で解説させていただきます。
-
-***
 
 h1. +プラグインの仕様とテストケースの作成+
 
@@ -84,8 +80,6 @@ JSON
 #=====
 （後略）
 </pre>
-
-***
 
 h1. +コンディショナルタグ プラグインの開発（Perl）+
 
@@ -200,8 +194,6 @@ h2. 解説
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-04.png]]
 
-***
-
 h1. +コンディショナルタグ プラグインの開発（PHP）+
 
 h2. block.mtcategoryiftoplevel.php
@@ -246,8 +238,6 @@ block名はsmarty記法にのっとって smarty_block_mtcategoryiftoplevel と�
 
 [[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-06.png]]
 
-***
-
 h1.  +ファイルの配置+
 
 <pre>
@@ -268,8 +258,6 @@ $MT_DIR/
          |＿00-compile.t
          |＿01-tags.t
 </pre>
-
-***
 
 h1. +テストの実行+
 
@@ -339,21 +327,15 @@ Result: PASS
 （後略）
 </pre>
 
-***
-
 h1. +まとめ+
 
 前回のブロックタグと同じく、Perl版はコード内で処理をし、PHP版はコードを一旦抜けるようになっています。
 
 やはり直感的なのはPerl版ですが、PHP版も今回の解説でご理解頂いたと思います。Perl版のプラグインを書く場合は一緒にPHP版も書いてみましょう。
 
-***
-
 h1. +プラグインダウンロード+
 
 [[MyPlugin07.zip(6.11KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin07.zip]]
-
-***
 
 h1. +プラグイン開発ガイド インデックス+
 

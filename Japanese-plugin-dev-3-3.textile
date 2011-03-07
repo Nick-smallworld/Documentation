@@ -6,8 +6,6 @@ MTは、"$MT_DIR/tools/run-periodic-tasks"の利用などで、スケジュー�
 
 今回はこれらのスケジュールタスクにプラグインを用いてタスクの追加を行う方法を解説します。
 
-***
-
 h1. +スケジュールタスクとは？+
 
 スケジュールタスクとは文字通り予定されているタスクを定期的に実行するものです。
@@ -26,8 +24,6 @@ h1. +スケジュールタスクとは？+
 * UNIX, Linuxの場合のcronで、Windowsの場合はタスク・スケジューラで"$MT_DIR/tools/run-periodic-tasks"を、定期的に自動起動するよう設定する
 * ログフィードを定期的に取得する
 * XML-RPCのAPI、mt.runPeriodicTasksを定期的に利用する
-
-***
 
 h1. +単純なタスクの例+
 
@@ -103,8 +99,6 @@ h3. 解説
 * @do_task@ 関数の中の処理が行われる
 ** 今回は @doLog@ 関数（ [[プラグインのデバッグ|Japanese-plugin-dev-2-4]] 参照）を使って"run scheduled tasks"がデバッグログに出力される
 
-***
-
 h1. +起動の確認+
 
 今回はLinuxでrun-periodic-tasksを直に実行して、その挙動を確認します。
@@ -132,21 +126,15 @@ h3. 解説
 * ２回起動したので、本来であれば2行"run scheduled tasks"が表示されそうですが、実行間隔を２分（１２０秒）としてあるため、最初に起動してから２分以内は何度 run-periodic-tasks を起動しても"MyCustomTask"は実行されません。
 * ２分以上時間をあけてから、もう一度 run-periodic-tasks を起動すると"MyCustomTask"が実行され、ログに"run scheduled tasks"と追記されます。
 
-***
-
 h1. +まとめ+
 
 今回のようにタスクを新設することで、一定期間後にコメントやトラックバックを閉じたり、ログをバックアップを取った上で削除などの処理ができます。
 
 方法もconfig.yamlに追加し、ハンドラ関数を実装するだけですので比較的簡単です。この期に「定期的にやっている処理」をスケジュールタスク化されてみてはいかがでしょうか？
 
-***
-
 h1. +プラグインダウンロード+
 
 [[MyPlugin10.zip(2.25KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin10.zip]]
-
-***
 
 h1. +プラグイン開発ガイド インデックス+
 
