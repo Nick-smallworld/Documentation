@@ -48,7 +48,9 @@ for my $obj (@obj) {
 }
 </pre>
 
-h3. $arg と $term
+h3. $termについて
+
+h3. $argについて
 
 h2. オブジェクトを一つずつ読み込む（load_iter）
 
@@ -116,6 +118,11 @@ if ( $obj->isa('MT::Foo') ) {
 h1. +MTオブジェクトの利用方法(PHP)+
 
 h2. 読み込み
+
+<pre>
+my $mt = $ctx->mt;
+my $obj = $mt->db()->fetch_foo($foo_id);
+</pre>
 
 h1. +まとめ+
 
