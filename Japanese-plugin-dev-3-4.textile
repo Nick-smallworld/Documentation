@@ -6,27 +6,112 @@ h1. +MTオブジェクトの利用方法(perl)+
 
 h2. 従来の記述法とこれからの記述法
 
+<pre>
+my $obj = MT::Foo->new();
+</pre>
+
+<pre>
+my $class_name = 'foo';
+my $class = MT->model($class_name);
+my $obj = $class->new();
+</pre>
+
+<pre>
+my @classes = MT->models($class_name);
+</pre>
+
 h2. オブジェクトの新規作成
 
-h2. オブジェクトの読み込み（load）
+<pre>
+my $class = MT->model($class_name);
+my $obj = $class->new();
+</pre>
+
+<pre>
+my $obj = MT->model($class_name)->new();
+</pre>
+
+h2. オブジェクトを一つ読み込む（id指定してのload）
+
+<pre>
+my $obj = $class->load($id);
+</pre>
+
+h2. オブジェクトをすべて読み込む（$arg, $termを指定してのload）
+
+<pre>
+my $arg = { sort => 'created_on', direction => 'ascend', limit => 20 };
+my $term = { author_id => $author->id, blog_id => $blog->id };
+my @obj = $class->load({$term, $arg});
+for my $obj (@obj) {
+    # do something
+}
+</pre>
+
+h3. $arg と $term
 
 h2. オブジェクトを一つずつ読み込む（load_iter）
 
+<pre>
+my $iter = $class->load_iter({$term, $arg});
+while (my $obj = $iter->()) {
+    # do something
+}
+</pre>
+
 h2. 値の設定
+
+<pre>
+$obj->hoge('hogehoge');
+</pre>
 
 h2. 値の取得
 
+<pre>
+my $value = $obj->hoge();
+</pre>
+
 h2. 保存
+
+<pre>
+$obj->save()
+    or die $obj->errstr;
+</pre>
 
 h2. 削除
 
+<pre>
+$obj->remove
+    or die $obj->errstr;
+</pre>
+
 h2. 一括削除
+
+<pre>
+$obj->remove_all
+    or die $obj->errstr;
+</pre>
 
 h2. 子オブジェクトの削除
 
+<pre>
+$obj->remove_children({ key => 'object_id' });
+$obj->SUPER::remove;
+</pre>
+
 h2. オブジェクトのカウント
 
+<pre>
+$count = $class->count( $term, $arg );
+</pre>
+
 h2. オブジェクトの確認方法
+
+<pre>
+if ( isa($obj) = 'MT::Foo' ) {
+    # do something
+}
+</pre>
 
 h1. +MTオブジェクトの利用方法(PHP)+
 
