@@ -1,0 +1,34 @@
+h1. MTオブジェクトの利用方法
+
+h1. +MTオブジェクトとは？+
+
+h1. +MTオブジェクトの利用方法(perl)+
+
+h2. 新規作成
+
+h2. 読み込み
+
+h2. 保存
+
+h1. +MTオブジェクトの利用方法(PHP)+
+
+h2. 読み込み
+
+h1. +まとめ+
+
+h1. +プラグイン開発ガイド インデックス+
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# [[環境変数について|Japanese-plugin-dev-1-3]]
+# [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+# [[プラグインの設定方法|Japanese-plugin-dev-3-1]]
+# [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
+# [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
+# MTオブジェクトの利用方法
