@@ -62,13 +62,13 @@ while (my $obj = $iter->()) {
 h2. 値の設定
 
 <pre>
-$obj->hoge('hogehoge');
+$obj->bar('foobar');
 </pre>
 
 h2. 値の取得
 
 <pre>
-my $value = $obj->hoge();
+my $value = $obj->bar();
 </pre>
 
 h2. 保存
@@ -108,7 +108,7 @@ $count = $class->count( $term, $arg );
 h2. オブジェクトの確認方法
 
 <pre>
-if ( isa($obj) = 'MT::Foo' ) {
+if ( $obj->isa('MT::Foo') ) {
     # do something
 }
 </pre>
