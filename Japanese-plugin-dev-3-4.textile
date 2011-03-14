@@ -120,8 +120,8 @@ h1. +MTオブジェクトの利用方法(PHP)+
 h2. 読み込み
 
 <pre>
-my $mt = $ctx->mt;
-my $obj = $mt->db()->fetch_foo($foo_id);
+$mt = $ctx->mt;
+$obj = $mt->db()->fetch_foo($foo_id);
 </pre>
 
 h1. +まとめ+
