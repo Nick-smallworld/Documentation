@@ -101,17 +101,25 @@ while (my $obj = $iter->()) {
 
 h2. 値の設定
 
+オブジェクトの値を設定するのは簡単です。オブジェクトの @bar@ 要素に文字列 @foobar@ を設定する場合、以下の様に記述します。
+
 <pre>
 $obj->bar('foobar');
 </pre>
 
 h2. 値の取得
 
+値の取得も設定と同じく簡単です。オブジェクトの@bar@要素を以下の様に取得します。上記のように文字列を設定していた場合、 @$value@ には @foobar@ が設定されます。
+
 <pre>
 my $value = $obj->bar();
 </pre>
 
 h2. 保存
+
+オブジェクトを新規作成したり、値を設定した後、保存をしないと結果がデータベースに格納されません。以下の様に保存 @save()@ します。
+
+保存出来なかった場合（ @$obj->save()@ が失敗した場合）は異常系のエラーなので、エラーメッセージを出して @die@ します。
 
 <pre>
 $obj->save()
@@ -120,12 +128,20 @@ $obj->save()
 
 h2. 削除
 
+オブジェクトをデータベースから削除するには以下の様に @remove()@ を呼びます。
+
+削除出来なかった場合（ @$obj->remove()@ が失敗した場合）は異常系のエラーなので、エラーメッセージを出して @die@ します。
+
 <pre>
-$obj->remove
+$obj->remove()
     or die $obj->errstr;
 </pre>
 
 h2. 一括削除
+
+オブジェクトをデータベースから一括削除するには以下の様に @remove_all()@ を呼びます。
+
+削除出来なかった場合（ @$obj->remove_all()@ が失敗した場合）は異常系のエラーなので、エラーメッセージを出して @die@ します。
 
 <pre>
 $obj->remove_all
@@ -134,15 +150,23 @@ $obj->remove_all
 
 h2. 子オブジェクトの削除
 
+オブジェクトをデータベースから子オブジェクトも削除するには @remove@ を上書きをし、以下の様に @remove_children()@ を呼びます。
+
+その上で @SUPER::remove@ を呼ぶ事で親オブジェクトが削除されます。
+
 <pre>
-$obj->remove_children({ key => 'object_id' });
-$obj->SUPER::remove;
+sub remove {
+    $obj->remove_children({ key => 'object_id' });
+    $obj->SUPER::remove;
+}
 </pre>
 
 h2. オブジェクトのカウント
 
+
+
 <pre>
-$count = $class->count( $term, $arg );
+$count = $class->count( $term, $args );
 </pre>
 
 h2. オブジェクトの確認方法
