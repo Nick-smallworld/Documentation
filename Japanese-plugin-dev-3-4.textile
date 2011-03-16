@@ -1,14 +1,36 @@
 h1. MTオブジェクトの利用方法
 
+h1. +はじめに+
+
+MTのプラグインを開発するには、MTオブジェクトの利用が必須です。
+
+ここではMTオブジェクトの利用方法を解説します。
+
 h1. +MTオブジェクトとは？+
+
+MTオブジェクトとはMT::Objectクラスから派生されたMT::BlogやMT::Entryといったクラスの事を指します。派生されたクラスはMT::Objectクラスに独自の実装を加え、それぞれオブジェクト指向のクラスとして動作します。
+
+MTを拡張するには、このMTオブジェクトを操作し各クラスのインスタンスの新規作成や保存、修正、削除などを行います。MTオブジェクトの変更はデータベースと直結しており、SQL文を書く事無くこれらの操作が行えます。具体的にはMTに実装されているDatabase Object Driverがオブジェクトの操作とデータベースの操作の中継を行っています。
 
 h1. +MTオブジェクトの利用方法(perl)+
 
 h2. 従来の記述法とこれからの記述法
 
+従来の記述法はMTのクラス名を直接記載する物（ @MT::Foo@ ）でしたが、新しい記述方法（ @MT->model($class_name)@ ）を使う場面が増えていますので、ここでまとめます。また、今後の解説は新しい記述方法を使います。
+
+h3. 従来の記述法
+
+MTクラス名を直に記述し、それに対して操作を行います。
+
 <pre>
 my $obj = MT::Foo->new();
 </pre>
+
+h3. 新しい記述法
+
+クラス名を指定して @MT->model($class_name)@ でクラス @$class@ を取得し、それに対して操作を行います。
+
+このようにする事で、例えばコメントクラスとトラックバッククラスに同様の処理を行う際 @$class_name@ の変更だけで、１コードで処理できる場合あり、コードのメンテナンスが容易になります。
 
 <pre>
 my $class_name = 'foo';
@@ -16,16 +38,22 @@ my $class = MT->model($class_name);
 my $obj = $class->new();
 </pre>
 
+サブタイプを持ったMT::Assetのようなクラスの場合、 @MT->models('asset')@ とすることで、どのようなサブタイプが含まれるかがわかります。（'asset', 'asset.image', 'asset.video', etc.）
+
 <pre>
-my @classes = MT->models($class_name);
+my @types = MT->models('asset');
 </pre>
 
 h2. オブジェクトの新規作成
+
+オブジェクトの新規作成は以下のようにクラスに対して @new()@ を呼ぶ事で実行できます。
 
 <pre>
 my $class = MT->model($class_name);
 my $obj = $class->new();
 </pre>
+
+また、 @$class@ を明示的に取得せず、１ラインで以下のように記述することもできます。
 
 <pre>
 my $obj = MT->model($class_name)->new();
@@ -33,16 +61,20 @@ my $obj = MT->model($class_name)->new();
 
 h2. オブジェクトを一つ読み込む（id指定してのload）
 
+取得したいと考えているオブジェクトのidを指定して、オブジェクトを取得します。ここで帰って来るのはオブジェクト @$obj@ になります。
+
 <pre>
 my $obj = $class->load($id);
 </pre>
 
-h2. オブジェクトをすべて読み込む（$arg, $termを指定してのload）
+h2. オブジェクトをすべて読み込む（$terms, $argsを指定してのload）
+
+上記の @load($id)@ ではなく、 @load({ $terms, $args })@ と記述する事で、一致条件 @$terms@ 、出力条件 @$arg@ に合った形でオブジェクトを取得できます。ここで帰って来るのはオブジェクトの配列 @@obj@ になります。
 
 <pre>
-my $arg = { sort => 'created_on', direction => 'ascend', limit => 20 };
-my $term = { author_id => $author->id, blog_id => $blog->id };
-my @obj = $class->load({$term, $arg});
+my $terms = { author_id => $author->id, blog_id => $blog->id };
+my $args = { sort => 'created_on', direction => 'ascend', limit => 20 };
+my @obj = $class->load({ $terms, $args });
 for my $obj (@obj) {
     # do something
 }
