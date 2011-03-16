@@ -80,14 +80,20 @@ for my $obj (@obj) {
 }
 </pre>
 
-h3. $termについて
+h3. $termsについて
 
-h3. $argについて
+h3. $argsについて
 
 h2. オブジェクトを一つずつ読み込む（load_iter）
 
+前述の一致条件 @$terms@ と出力条件 @$args@ を用いて @load_iter({ $terms, $args })@ を利用すると、イテレータ（データベースのポインタのようなもの）が取得できます。
+
+上述の @load()@ での全件取得では、取得した分のオブジェクトのメモリが必要となりますが、イテレータの場合はそういった余分なメモリを必要としません。
+
+順繰りにイテレータからオブジェクトを取得するには @$obj = $iter->()@ とします。
+
 <pre>
-my $iter = $class->load_iter({$term, $arg});
+my $iter = $class->load_iter({ $terms, $args });
 while (my $obj = $iter->()) {
     # do something
 }
