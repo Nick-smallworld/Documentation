@@ -166,7 +166,7 @@ h2. オブジェクトのカウント
 データベース内にいくつのデータが保存されているかを確認します。 @$count@ にはデータ数が返ります。
 
 <pre>
-$count = $class->count( $term, $args );
+$count = $class->count( $term );
 </pre>
 
 h2. オブジェクトの確認方法
@@ -178,6 +178,13 @@ if ( $obj->isa('MT::Foo') ) {
     # do something
 }
 </pre>
+
+h2. その他のMTオブジェクトの操作方法
+
+各クラスの具体的な操作方法は、以下のドキュメントを参考にしてください。
+
+[[Movable Type オブジェクト・リファレンス（日本語）|http://www.sixapart.jp/movabletype/manual/object_reference/]]
+[[Movable Type Perl Documentation（英語）|http://www.movabletype.org/documentation/man/]]
 
 h1. +MTオブジェクトの利用方法(PHP)+
 
