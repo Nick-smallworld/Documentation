@@ -74,7 +74,7 @@ h2. オブジェクトをすべて読み込む（$terms, $argsを指定しての
 <pre>
 my $terms = { author_id => $author->id, blog_id => $blog->id };
 my $args = { sort => 'created_on', direction => 'ascend', limit => 20 };
-my @obj = $class->load({ $terms, $args });
+my @obj = $class->load( $terms, $args );
 for my $obj (@obj) {
     # do something
 }
@@ -86,14 +86,14 @@ h3. $argsについて
 
 h2. オブジェクトを一つずつ読み込む（load_iter）
 
-前述の一致条件 @$terms@ と出力条件 @$args@ を用いて @load_iter({ $terms, $args })@ を利用すると、イテレータ（データベースのポインタのようなもの）が取得できます。
+前述の一致条件 @$terms@ と出力条件 @$args@ を用いて @load_iter( $terms, $args )@ を利用すると、イテレータ（データベースのポインタのようなもの）が取得できます。
 
 上述の @load()@ での全件取得では、取得した分のオブジェクトのメモリが必要となりますが、イテレータの場合はそういった余分なメモリを必要としません。
 
 順繰りにイテレータからオブジェクトを取得するには @$obj = $iter->()@ とします。
 
 <pre>
-my $iter = $class->load_iter({ $terms, $args });
+my $iter = $class->load_iter( $terms, $args );
 while (my $obj = $iter->()) {
     # do something
 }
@@ -163,13 +163,15 @@ sub remove {
 
 h2. オブジェクトのカウント
 
-
+データベース内にいくつのデータが保存されているかを確認します。 @$count@ にはデータ数が返ります。
 
 <pre>
 $count = $class->count( $term, $args );
 </pre>
 
 h2. オブジェクトの確認方法
+
+
 
 <pre>
 if ( $obj->isa('MT::Foo') ) {
