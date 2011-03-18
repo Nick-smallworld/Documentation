@@ -137,6 +137,13 @@ $obj->remove()
     or die $obj->errstr;
 </pre>
 
+一致条件を指定して削除する場合は以下のように行います。
+
+<pre>
+$obj->remove( $terms )
+    or die $obj->errstr;
+</pre>
+
 h2. 一括削除
 
 オブジェクトをデータベースから一括削除するには以下の様に @remove_all()@ を呼びます。
@@ -156,6 +163,7 @@ h2. 子オブジェクトの削除
 
 <pre>
 sub remove {
+    my $obj = shift;
     $obj->remove_children({ key => 'object_id' });
     $obj->SUPER::remove;
 }
@@ -166,8 +174,16 @@ h2. オブジェクトのカウント
 データベース内にいくつのデータが保存されているかを確認します。 @$count@ にはデータ数が返ります。
 
 <pre>
-$count = $class->count( $term );
+$count = $class->count( $terms, $args );
 </pre>
+
+h2. オブジェクトが存在するかの確認
+
+データベース内にデータが保存されているかを確認します。存在する場合は1を、存在しない場合は0を返します。
+
+if ($foo->exists) {
+    print "Foo $foo already exists!";
+}
 
 h2. オブジェクトの確認方法
 
@@ -190,14 +206,37 @@ h1. +MTオブジェクトの利用方法(PHP)+
 
 PHPでMTオブジェクトを利用するのはダイナミックパブリッシングの際のWebページの作成になりますので、MTオブジェクトの利用は読み込みがメインとなります。
 
-h2. 読み込み
+h2. オブジェクトを読み込む
 
+MT::Fooオブジェクトを読み込むには以下のように記述します。このようにPHP版のオブジェクト読み込みには専用の関数が用意されており、その関数を利用してオブジェクトを読み込むようになっています。
 
+また、Perl版では公開しているかステータスを明示する必要がありましたが、PHP版では公開しているオブジェクトしか取得できません。
 
 <pre>
 $mt = $ctx->mt;
 $obj = $mt->db()->fetch_foo($foo_id);
 </pre>
+
+以下、主な関数です。
+
+|オブジェクト|関数|
+|MT::Website|fetch_website( $website_id )|
+|MT::Website（複数）|fetch_websites( $args )|
+|MT::Blog|fetch_blog( $blog_id )|
+|MT::Blog（複数）|fetch_blogs( $args )|
+|MT::Template（複数）|fetch_templates( $args )|
+|MT::Page|fetch_page( $page_id )|
+|MT::Page（複数）|fetch_pages( $args )|
+|MT::Entry|fetch_entry( $entry_id )|
+|MT::Entry（複数）|fetch_entries( $args, &$total_count )|
+|MT::Category|fetch_category( $cat_id )|
+|MT::Category（複数）|fetch_categories( $args )|
+|MT::Folder|fetch_folder( $folder_id )|
+|MT::Folder（複数）|fetch_folders( $args )|
+|MT::Author|fetch_author( $author_id )|
+|MT::Author（複数）|fetch_authors( $args )|
+|MT::Comment|fetch_comment( $comment_id )|
+|MT::Comment（複数）|fetch_comments( $args )|
 
 h1. +まとめ+
 
