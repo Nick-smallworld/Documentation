@@ -240,6 +240,10 @@ $obj = $mt->db()->fetch_foo($foo_id);
 
 h1. +まとめ+
 
+今回の解説で、MTのプログラミングではSQL文を書かずにオブジェクトがデータベースに出し入れされる事と、オブジェクトの利用が平易である事がわかっていただけたと思います。
+
+この解説や [[Movable Type オブジェクト・リファレンス（日本語）|http://www.sixapart.jp/movabletype/manual/object_reference/]] 、 [[Movable Type Perl Documentation（英語）|http://www.movabletype.org/documentation/man/]] を参考にプラグイン開発を楽しんで下さい。
+
 h1. +プラグイン開発ガイド インデックス+
 
 # [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
