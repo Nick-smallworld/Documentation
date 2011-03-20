@@ -225,7 +225,7 @@ $obj = $mt->db()->fetch_foo($foo_id);
 
 以下、主な関数です。
 
-|オブジェクト|関数|
+|クラス|関数|
 |MT::Website|fetch_website( $website_id )|
 |MT::Website（複数）|fetch_websites( $args )|
 |MT::Blog|fetch_blog( $blog_id )|
