@@ -377,3 +377,4 @@ h1. +プラグイン開発ガイド インデックス+
 # プラグインの設定方法
 # [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
 # [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
+# [[MTオブジェクトの利用方法|Japanese-plugin-dev-3-4]]
