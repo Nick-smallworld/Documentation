@@ -13,12 +13,12 @@ h2. Schedule
 | | 2/15 | *Release Beta 1*  |  | | |  "Publish beta post":http://www.movabletype.org/2011/02/movable_type_51_beta.html | Done |
 | m14 (Beta 2) | 2/14-2/25 |  | Clean up code | Regression test<br />Upgrade test<br />Security audit (1) | JA L10N (1) | | Done |
 | | 2/25 | *Review pull/patch requests (2)*<br />Review Beta feedback  | Review patches | Bug triage | | | |
-| m15 (Beta 3) | 2/28-3/11 | English string freeze | Fix release blockers | Regression test | English UI check (2) |  |  |
-| m16 (Beta 4)  | 3/14-3/25 | L10N string freeze | Fix release blockers | Regression test<br />Security audit (2) | JA L10N (2)<br />EMEA L10N | |  |
-| m17 (RC1) | 3/28-4/8 | *Code Freeze* | Complete development | Regression test |  | Prepare user guides |  |
-| m18 (RC2) | 4/11-4/15 |  | Prepare developer guide (2) |  |  | |  |
-| m19 (RC3) | 4/18-4/22 | Release Preparation | Publish developer guides (2)<br /> | Verify production builds |  | Update user guides |  |
-| m20 (Final) | 4/25-5/11 | *Ship it !!!* |  |  |  |  |  |
+| m15 (Beta 3) | 2/28-3/18 | English string freeze | Fix release blockers | Regression test | English UI check (2) |  |  |
+| m16 (Beta 4)  | 3/22-4/1 | L10N string freeze | Fix release blockers | Regression test<br />Security audit (2) | JA L10N (2)<br />EMEA L10N | |  |
+| m17 (RC1) | 4/4-4/15 | *Code Freeze* | Complete development | Regression test |  | Prepare user guides |  |
+| m18 (RC2) | 4/18-4/22 |  | Prepare developer guide (2) |  |  | |  |
+| m19 (RC3) | 4/25-4/28 | Release Preparation | Publish developer guides (2)<br /> | Verify production builds |  | Update user guides |  |
+| m20 (Final) | 5/9-5/11 | *Ship it !!!* |  |  |  |  |  |
 
 
 
