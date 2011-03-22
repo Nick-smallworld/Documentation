@@ -279,6 +279,15 @@ $mt = $ctx->mt;
 $obj = $mt->db()->fetch_foo($foo_id);
 </pre>
 
+<pre>
+$args['class']   = 'foo';
+$args['blog_id'] = $blog_id;
+$args['offset']  = 20;
+$args['limit']   = 10;
+$mt = $ctx->mt;
+$obj = $mt->db()->fetch_foos($args);
+</pre>
+
 以下、主な関数です。
 
 |クラス|関数|
