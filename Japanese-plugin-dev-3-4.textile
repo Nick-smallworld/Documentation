@@ -204,7 +204,7 @@ h2. 一括削除
 削除出来なかった場合（ @$obj->remove_all()@ が失敗した場合）は異常系のエラーなので、エラーメッセージを出して @die@ します。
 
 <pre>
-$class->remove_all
+$class->remove_all()
     or die $obj->errstr;
 </pre>
 
@@ -235,8 +235,8 @@ h2. オブジェクトが存在するかの確認
 データベース内にデータが保存されているかを確認します。存在する場合は1を、存在しない場合は0を返します。
 
 <pre>
-if ($foo->exists) {
-    print "Foo $foo already exists!";
+if ($foo->exists()) {
+    printf "Foo $foo already exists!";
 }
 </pre>
 
