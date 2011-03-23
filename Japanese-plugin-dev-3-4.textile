@@ -217,7 +217,7 @@ h2. 子オブジェクトの削除
 <pre>
 sub remove {
     my $obj = shift;
-    $obj->remove_children({ key => 'object_id' });
+    $obj->remove_children({ key => 'class_id' });
     $obj->SUPER::remove;
 }
 </pre>
