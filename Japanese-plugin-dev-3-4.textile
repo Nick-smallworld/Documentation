@@ -197,13 +197,6 @@ $obj->remove()
     or die $obj->errstr;
 </pre>
 
-一致条件を指定して削除する場合は以下のように行います。
-
-<pre>
-$obj->remove( $terms )
-    or die $obj->errstr;
-</pre>
-
 h2. 一括削除
 
 オブジェクトをデータベースから一括削除するには以下の様に @remove_all()@ を呼びます。
