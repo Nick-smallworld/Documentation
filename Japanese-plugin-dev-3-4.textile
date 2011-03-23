@@ -204,7 +204,7 @@ h2. 一括削除
 削除出来なかった場合（ @$obj->remove_all()@ が失敗した場合）は異常系のエラーなので、エラーメッセージを出して @die@ します。
 
 <pre>
-$obj->remove_all
+$class->remove_all
     or die $obj->errstr;
 </pre>
 
