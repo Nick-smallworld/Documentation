@@ -205,7 +205,7 @@ h2. 一括削除
 
 <pre>
 $class->remove_all()
-    or die $obj->errstr;
+    or die $class->errstr;
 </pre>
 
 h2. 子オブジェクトの削除
