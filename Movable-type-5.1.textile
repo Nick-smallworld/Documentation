@@ -19,10 +19,10 @@ h2. Schedule
 | m16 (Beta 4)  | 3/28-4/8 | L10N string freeze | Fix release blockers | Regression test<br />Security audit (2) | JA L10N (2)<br />EMEA L10N | |  |
 | | 3/24 | *Release Beta 3*  | Pushed one week due to the quake in Japan | | |   | Done |
 | m17 (RC1) | 4/11-4/22 | *Code Freeze* | Complete development | Regression test |  | Prepare user guides |  |
-| | April 4 | *Release Beta 3*  | Pushed one week due to the quake in Japan | | |   | Done |
+| | April 4 | *Release Beta 4*  |  | | |   | |
 | m18 (RC2) | 4/15-4/29 |  | Prepare developer guide (2) |  |  | |  |
 | m19 (RC3) | 4/5-5/13 | Release Preparation | Publish developer guides (2)<br /> | Verify production builds |  | Update user guides |  |
-| | April 20 | *Release Beta 3*  | Pushed one week due to the quake in Japan | | |   | Done |
+| | April 20 | *Release RC*  |  | | |   | |
 | m20 (Final) | 5/16-5/20 | *Ship it !!!* |  |  |  |  |  |
 
 
