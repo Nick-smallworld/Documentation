@@ -14,7 +14,7 @@ h2. Schedule
 | | 2/15 | *Release Beta 1*  |  | | |  "Publish beta post":http://www.movabletype.org/2011/02/movable_type_51_beta.html | Done |
 | m14 (Beta 2) | 2/14-2/25 |  | Clean up code | Regression test<br />Upgrade test<br />Security audit (1) | JA L10N (1) | | Done |
 | | 2/25 | *Review pull/patch requests (2)*<br />Review Beta feedback  | Review patches | Bug triage | | | |
-| m15 (Beta 3) | 2/28 - -3/18- 3/24 | English string freeze | Fix release blockers | Regression test | English UI check (2) |  | Done |
+| m15 (Beta 3) | 2/28 - 3/24 | English string freeze | Fix release blockers | Regression test | English UI check (2) |  | Done |
 | | March 24 | *Release Beta 3*  | Pushed one week due to the quake in Japan | | |   | Done |
 | m16 (Beta 4)  | 3/28-4/8 | L10N string freeze | Fix release blockers | Regression test<br />Security audit (2) | JA L10N (2)<br />EMEA L10N | |  |
 | | April 6  | *Release Beta 4*  |  | | |   | |
