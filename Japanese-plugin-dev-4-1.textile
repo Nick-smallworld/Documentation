@@ -21,13 +21,83 @@ h2. MT::Fooの仕様
 * @MT::Object@ を継承したクラス
 * モジュール名は @MT::Foo@
 * タイプ名は @foo@
-* 
+* カラム
+** id : オブジェクトID
+** blog_id : ブログID
+** title : タイトル（最大２５５文字）
+** bar : テキスト情報（サイズ限定なし）
+** created_on : 作成時間
+** modified_on : 修正時間
+* インデックス
+** blog_id
+** created_on
+** modified_on
+* データソース : mt_foo
+* プライマリキー : id
 
 h2. config.yaml
 
+<pre>
+id: MyPlugin11
+key: MyPlugin11
+name: <__trans phrase="Sample Plugin Uniquely Object">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin11::L10N
+
+schema_version: 0.01
+object_types:
+    foo: MT::Foo
+</pre>
+
 h2. MT/Foo.pm
 
+<pre>
+package MT::Foo;
+use strict;
+
+use base qw( MT::Object );
+
+__PACKAGE__->install_properties ({
+    column_defs => {
+        'id'      => 'integer not null auto_increment',
+        'blog_id' => 'integer not null',
+        'title'   => 'string(255) not null',
+        'bar'     => 'text',
+    },
+    indexes => {
+        blog_id => 1,
+        created_on => 1,
+        modified_on => 1,
+    },
+    audit => 1,
+    datasource  => 'foo',
+    primary_key => 'id',
+    class_type  => 'foo',
+});
+
+1;
+</pre>
+
 h2. ファイルの配置
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin11/
+      |__ config.yaml
+      |__ lib/
+         |＿ MyPlugin11/
+         |  |__ L10N.pm
+         |  |＿ L10N/
+         |     |＿ en_us.pm
+         |     |＿ ja.pm
+         |＿ MT
+            |__ Foo.pm
+</pre>
 
 h1. +MT::Fooの利用方法+
 
@@ -41,7 +111,7 @@ h2. インスタンスの削除
 
 h1. +プラグインダウンロード+
 
-[[MyPlugin11.zip(x.xxKB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin11.zip]]
+[[MyPlugin11.zip(2.39KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin11.zip]]
 
 h1. +まとめ+
 
