@@ -14,26 +14,26 @@ MT::Objectから派生させた、独自のMTオブジェクトの事をさし�
 
 h1. +独自オブジェクトの作成+
 
-独自オブジェクト（MT::Foo）の作成法を解説します。
+独自オブジェクト（MT::Foo）を例として作成法を解説します。
 
 h2. MT::Fooの仕様
 
 * @MT::Object@ を継承したクラス
 * モジュール名は @MT::Foo@
 * タイプ名は @foo@
-* カラム
+* @MT::Blog@ の子クラス
+* 指定カラム
 ** id : オブジェクトID
 ** blog_id : ブログID
 ** title : タイトル（最大２５５文字）
-** bar : テキスト情報（サイズ限定なし）
-** created_on : 作成時間
-** modified_on : 修正時間
+** bar : テキスト情報
 * インデックス
 ** blog_id
 ** created_on
 ** modified_on
 * データソース : mt_foo
 * プライマリキー : id
+* 作成日時、修正日時を自動記録
 
 h2. config.yaml
 
@@ -73,6 +73,7 @@ __PACKAGE__->install_properties ({
         created_on => 1,
         modified_on => 1,
     },
+    child_of => 'MT::Blog',
     audit => 1,
     datasource  => 'foo',
     primary_key => 'id',
@@ -111,7 +112,7 @@ h2. インスタンスの削除
 
 h1. +プラグインダウンロード+
 
-[[MyPlugin11.zip(2.39KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin11.zip]]
+[[MyPlugin11.zip(2.40KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin11.zip]]
 
 h1. +まとめ+
 
