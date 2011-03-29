@@ -15,6 +15,7 @@ h2. Product Backlog
 * [[System|Product Backlog for System]]
 * [[Entry / Page|Product Backlog for Entry and Page]]
 * [[Comment / Trackback|Product Backlog for Comment and Trackback]]
+* [[Theme / Template|Product Backlog for Theme and Template]]
 
 h2. Events
 
