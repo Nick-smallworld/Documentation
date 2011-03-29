@@ -18,10 +18,9 @@ h1. +独自オブジェクトの作成+
 
 h2. MT::Fooの仕様
 
-* @MT::Object@ を継承したクラス
-* モジュール名は @MT::Foo@
-* タイプ名は @foo@
-* @MT::Blog@ の子クラス
+* MT::Objectを継承したクラス
+* モジュール名はMT::Foo
+* タイプ名はfoo
 * 指定カラム
 ** id : オブジェクトID
 ** blog_id : ブログID
@@ -63,10 +62,12 @@ h3. 解説
 * object_types
 ** オブジェクトのタイプとクラス名を指定します。
 * foo: MT::Foo
-** タイプ : foo
+** タイプ名 : foo
 ** クラス名 : MT::Foo
 
 h2. MT/Foo.pm
+
+簡単な例としてMT::Fooを作成します。ここにデータベーステーブルの情報や組み込み関数などを記載します。
 
 <pre>
 package MT::Foo;
@@ -95,6 +96,35 @@ __PACKAGE__->install_properties ({
 
 1;
 </pre>
+
+h3. 解説
+
+* @package MT::Foo;@
+** パッケージ名をMT::Fooに指定しています。
+* @use base qw( MT::Object );@
+** MT::Objectクラスを継承している事を明記します。
+* @__PACKAGE__->install_properties ({});@
+** オブジェクトの色々な情報を指定し、MTアプリケーションに設定を知らせます。
+* @column_defs => {},@
+** 以下の４つのカラムを指定します。
+*** 'id' => 'integer not null auto_increment',
+*** 'blog_id' => 'integer not null',
+*** 'title' => 'string(255) not null',
+*** 'bar' => 'text',
+* @indexes => {},@
+** 以下の３つのカラムをデータベーステーブルのインデックスとして指定します。
+*** blog_id => 1,
+*** created_on => 1,
+*** modified_on => 1,
+* @audit => 1,@
+** オブジェクトの作成日時と変更日時を自動的に登録するようにします。
+** created_on, created_by, modified_on, modified_byの４つのカラムが自動的に追加されます。
+* @datasource  => 'foo',@
+** データベーステーブル名をmt_fooにします。
+* @primary_key => 'id',@
+** データベーステーブルのプライマリーキーをidにします。
+* @class_type  => 'foo',@
+** MT::Fooクラスのタイプ名をfooにします。
 
 h2. ファイルの配置
 
