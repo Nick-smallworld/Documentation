@@ -37,6 +37,8 @@ h2. MT::Fooの仕様
 
 h2. config.yaml
 
+config.yamlに記載する情報は少ないです。
+
 <pre>
 id: MyPlugin11
 key: MyPlugin11
@@ -52,6 +54,17 @@ schema_version: 0.01
 object_types:
     foo: MT::Foo
 </pre>
+
+h3. 解説
+
+* schema_version: 0.01
+** プラグインのスキーマのバージョンを記載します。
+** プラグインのインストール時と、スキーマバージョンのアップデート時にスキーマのアップデートが行われます。
+* object_types
+** オブジェクトのタイプとクラス名を指定します。
+* foo: MT::Foo
+** タイプ : foo
+** クラス名 : MT::Foo
 
 h2. MT/Foo.pm
 
