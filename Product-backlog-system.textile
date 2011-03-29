@@ -1,2 +1,0 @@
-
-* "FogBugz 105817: More comprehensible error massage for Bulk User Import":http://bugs.movabletype.org/default.asp?105817
