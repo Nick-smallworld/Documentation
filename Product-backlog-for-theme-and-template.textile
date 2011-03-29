@@ -1,0 +1,1 @@
+* "FogBugz 105772: Change Publish Settings in bulk by a list action on Manage Templates":http://bugs.movabletype.org/default.asp?105772
