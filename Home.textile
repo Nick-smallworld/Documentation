@@ -10,6 +10,11 @@ h2. Developer's guide
 * [[English|English developer guide]]
 * [[Japanese|Japanese developer guide]]
 
+h2. Product Backlog
+
+* [[System|Product Backlog System]]
+* [[Entry/Page|Product Backlog Entry Page]]
+
 h2. Events
 
 * [[Movable Type 5 Theme Contest  2010|Movable-Type-5-Theme-contest--in-japan-2010]]
