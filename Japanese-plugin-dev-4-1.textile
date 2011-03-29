@@ -145,6 +145,33 @@ h3. カラムのオプション
 |not null|必須項目です。空は許されません。|
 |auto_increment|新規オブジェクト作成時に自動的に整数値がカウントアップされます。|
 
+h2. 作成されたテーブル
+
+プラグインのインストール時に作成されたテーブルを確認してみます。
+
+<pre>
+mysql> show create table mt_foo \G
+*************************** 1. row ***************************
+       Table: mt_foo
+Create Table: CREATE TABLE `mt_foo` (
+  `foo_id` int(11) NOT NULL auto_increment,
+  `foo_bar` mediumtext,
+  `foo_blog_id` int(11) NOT NULL,
+  `foo_class` varchar(255) default 'foo',
+  `foo_created_by` int(11) default NULL,
+  `foo_created_on` datetime default NULL,
+  `foo_modified_by` int(11) default NULL,
+  `foo_modified_on` datetime default NULL,
+  `foo_title` varchar(255) NOT NULL,
+  PRIMARY KEY  (`foo_id`),
+  KEY `mt_foo_modified_on` (`foo_modified_on`),
+  KEY `mt_foo_created_on` (`foo_created_on`),
+  KEY `mt_foo_class` (`foo_class`),
+  KEY `mt_foo_blog_id` (`foo_blog_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)
+</pre>
+
 h2. ファイルの配置
 
 <pre>
@@ -164,19 +191,32 @@ $MT_DIR/
 
 h1. +MT::Fooの利用方法+
 
-h2. インスタンスの作成
+作成されたMT::Fooクラスは前章で上げた利用方法と同じです。ここでは復習として簡単にMT::Fooの利用方法を解説します。
 
-h2. 値の設定
+<pre>
+my $class_name = 'foo';
+my $class = MT->model($class_name);
+my $foo = $class->new();
+$foo->blog_id(1);
+$foo->title('MT::Foo test');
+$foo->bar('Hello, world!!');
+$foo->save()
+    or die $foo->errstr();
 
-h2. 値の取得
-
-h2. インスタンスの削除
+my $title = $foo->title();
+</pre>
 
 h1. +プラグインダウンロード+
 
-[[MyPlugin11.zip(2.40KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin11.zip]]
+[[MyPlugin11.zip(2.38KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin11.zip]]
 
 h1. +まとめ+
+
+今回は最低限の実装しかしていませんが、ここから多くの機能を搭載したクラスを作成することが可能です。
+
+自分でプラグインを作成する際、新規にオブジェクトを作成すると楽に機能が実装できる場合があります。
+
+しかし、MTのアップデート時などにプラグインを一緒にアップデートする必要が出てくるかもしれません。アップデート時はきちんとバックアップを取った上で、テスト用の環境でテストを行い、問題がないことを確認してから本番環境のアップデートをするようにしましょう。（もちろん、これはプラグインのアップデートに限った話ではありませんが）
 
 h1. +プラグイン開発ガイド インデックス+
 
