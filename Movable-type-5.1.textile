@@ -63,8 +63,3 @@ h2. Development
 % cd movabletype
 % make me</code></pre>
 
-h2. Resolved Issues
-
-* "104509":http://bugs.movabletype.org/default.asp?104509 Issues with mt:If after MT5 upgrade
-
-h2. Known Issues
