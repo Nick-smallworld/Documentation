@@ -126,6 +126,25 @@ h3. 解説
 * @class_type  => 'foo',@
 ** MT::Fooクラスのタイプ名をfooにします。
 
+h2. カラムの型とオプション
+
+h3. カラムの型
+
+|string|文字列。サイズを指定します（例：string(255)）|
+|text|テキスト|
+|boolean|真偽値|
+|smallint|16bitの整数|
+|integer|32bitの整数|
+|float|浮動小数点|
+|blob|バイナリデータ|
+|datetime|日時|
+|timestamp|日時。保存時に自動的にアップデートされます。|
+
+h3. カラムのオプション
+
+|not null|必須項目です。空は許されません。|
+|auto_increment|新規オブジェクト作成時に自動的に整数値がカウントアップされます。|
+
 h2. ファイルの配置
 
 <pre>
