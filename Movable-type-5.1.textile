@@ -63,12 +63,3 @@ h2. Development
 % cd movabletype
 % make me</code></pre>
 
-h2. Patches to be reviewed
-
-* "FogBugz 86679: Basenames with multiple hyphens confuse HTML comments in Firefox":http://bugs.movabletype.org/default.asp?86679
-
-h2. Resolved Issues
-
-* "104509":http://bugs.movabletype.org/default.asp?104509 Issues with mt:If after MT5 upgrade
-
-h2. Known Issues
