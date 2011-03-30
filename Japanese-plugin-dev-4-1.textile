@@ -197,7 +197,7 @@ h1. +MT::Fooの利用方法+
 my $class_name = 'foo';
 my $class = MT->model($class_name);
 my $foo = $class->new();
-$foo->blog_id(1);
+$foo->blog_id(2);
 $foo->title('MT::Foo test');
 $foo->bar('Hello, world!!');
 $foo->save()
