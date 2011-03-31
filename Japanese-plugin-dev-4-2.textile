@@ -220,6 +220,25 @@ h2. tmpl/new_foo.tmpl
 
 h1. +ファイルの配置+
 
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin12/
+      |__ config.yaml
+      |__ lib/
+      |  |＿ MyPlugin12/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |__ NewApp.pm
+      |__ newapp.cgi
+      |__ tmpl/
+         |＿ edit_foo.tmpl
+         |＿ new_foo.tmpl
+         |＿ view_foo.tmpl
+</pre>
+
 h1. +プラグインダウンロード+
 
 h1. +まとめ+
