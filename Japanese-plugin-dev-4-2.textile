@@ -8,6 +8,216 @@ h1. +アプリケーションとは？+
 
 h1. +新規アプリケーションの作成+
 
+h2. 仕様
+
+h2. config.yaml
+
+<pre>
+id: MyPlugin12
+key: MyPlugin12
+name: <__trans phrase="Sample Plugin New Application">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin12::L10N
+</pre>
+
+h2. newapp.cgi
+
+<pre>
+#!/usr/bin/perl -w
+use strict;
+
+use lib '../../lib';
+use lib '../../extlib';
+
+use MT::Bootstrap App => 'MyPlugin12::NewApp';
+</pre>
+
+h2. MtPlugin12/NewApp.pm
+
+<pre>
+package MyPlugin12::NewApp;
+use strict;
+
+use base qw( MT::App );
+
+sub init_request {
+    my $app = shift;
+    $app->SUPER::init_request(@_);
+    $app->add_methods( main => \&view,
+                       view => \&view,
+                       new  => \&foo_new,
+                       edit => \&edit,
+                       save => \&save,
+                     );
+    $app->{ default_mode }   = 'main';
+    $app->{ requires_login } = 1;
+}
+
+sub view {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id') || 2;
+    my $blog = MT->model('blog')->load($blog_id);
+    my $class = $app->model('foo');
+    my ( $terms, $args );
+    $terms = { blog_id => $blog_id };
+    $args  = { sort      => 'created_on',
+               direction => 'descend',
+               limit     => 10,
+             };
+    my @foos = $class->load( $terms, $args );
+    my $param;
+    $param = { blog_name   => $blog->name,
+               foos        => \@foos,
+               plugin_template_path => 'tmpl',
+             };
+    $app->build_page( 'view_foo.tmpl', $param );
+}
+
+sub edit {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $id = $q->param('id') || 1;
+    my $class = $app->model('foo');
+    my ( $terms, $args );
+    my $foo = $class->load( $id );
+    my $param;
+    $param = { blog_name   => $blog->name,
+               id      => $id,
+               blog_id => $blog_id,
+               title   => $foo->title(),
+               bar     => $foo->bar(),
+               plugin_template_path => 'tmpl',
+             };
+    $app->build_page( 'edit_foo.tmpl', $param );
+}
+
+sub save {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $class = $app->model('foo');
+    my $foo;
+    my $id;
+    if ( $id = $q->param('id') ) {
+        $foo = $class->load($id);
+    } else {
+        $foo = $class->new();
+        $foo->blog_id($blog_id);
+    }
+
+    $foo->title($q->param('title'));
+    $foo->bar($q->param('bar'));
+
+    $foo->save()
+        or die $foo->errstr;
+
+    $app->redirect( $app->return_uri );
+}
+
+sub foo_new {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+
+    my $param = { blog_name => $blog->name,
+                  blog_id   => $blog_id,
+                };
+
+    $app->build_page( 'new_foo.tmpl', $param );
+}
+
+1;
+</pre>
+
+h2. tmpl/view_foo.tmpl
+
+<pre>
+<html>
+<head>
+    <title>MT::Foo View</title>
+</head>
+<body>
+<h1><mt:var name="blog_name" /></h1>
+
+    <ul>
+<mt:loop name="foos">
+        <li><a href="<mt:GetVar name="script_url" />?__mode=edit&amp;id=<mt:GetVar name="id" />&amp;blog_id=<mt:GetVar name="blog_id" />"><mt:GetVar name="title" /></a></li>
+</mt:loop>
+    </ul>
+
+<p><a href="<mt:GetVar name="script_url" />?__mode=new&amp;blog_id=2">New</a></p>
+
+</body>
+</html>
+</pre>
+
+h2. tmpl/edit_foo.tmpl
+
+<pre>
+<html>
+<head>
+    <title>MT::Foo Edit</title>
+</head>
+<body>
+<h1><mt:var name="blog_name" /></h1>
+
+<form method="post" action="<mt:GetVar name="script_url" />">
+<input type="hidden" name="__mode" value="save">
+<input type="hidden" name="id" value="<mt:GetVar name="id">">
+<input type="hidden" name="blog_id" value="<mt:GetVar name="blog_id">">
+<table border="2">
+    <tr><td>id</td><td><mt:GetVar name="id"></td></tr>
+    <tr><td>blog_id</td><td><mt:GetVar name="blog_id"></td></tr>
+    <tr><td>title</td><td><input name="title" type="text" value="<mt:GetVar name="title">"></td></tr>
+    <tr><td>bar</td><td><textarea name="bar"><mt:GetVar name="bar"></textarea></td></tr>
+</table>
+<br />
+<input type="submit"><input type="reset">
+</form>
+
+<p><a href="<mt:GetVar name="script_url" />?__mode=main&amp;blog_id=2">Back</a></p>
+
+</body>
+</html>
+</pre>
+
+h2. tmpl/new_foo.tmpl
+
+<pre>
+<html>
+<head>
+    <title>MT::Foo New</title>
+</head>
+<body>
+<h1><mt:var name="blog_name" /></h1>
+
+<form method="post" action="<mt:GetVar name="script_url" />">
+<input type="hidden" name="__mode" value="save">
+<input type="hidden" name="blog_id" value="<mt:GetVar name="blog_id">">
+<table border="2">
+    <tr><td>blog_id</td><td><mt:GetVar name="blog_id"></td></tr>
+    <tr><td>title</td><td><input name="title" type="text" value="<mt:GetVar name="title">"></td></tr>
+    <tr><td>bar</td><td><textarea name="bar"><mt:GetVar name="bar"></textarea></td></tr>
+</table>
+<br />
+<input type="submit">
+</form>
+
+<p><a href="<mt:GetVar name="script_url" />?__mode=main&amp;blog_id=2">Back</a></p>
+
+</body>
+</html>
+</pre>
+
 h1. +ファイルの配置+
 
 h1. +プラグインダウンロード+
