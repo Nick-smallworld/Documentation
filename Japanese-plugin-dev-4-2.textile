@@ -2,15 +2,29 @@ h1. 新規アプリケーションの作成
 
 h1. +はじめに+
 
+今まで１５章に渡ってMTのプラグインの解説をしてきました。
 
+今回は管理画面の機能を増やす方法の１つ（新規アプリケーションの作成）を見ていきます。
 
 h1. +アプリケーションとは？+
 
+MTで言う所のアプリケーションとは、mt.cgiやmt-comments.cgiに代表されるようなWebブラウザからアクセスされる機能の事を指します。（○○.cgi）
+
+今回は前章で作成したMT::Fooオブジェクトのリスト表示、新規作成、修正ができるようなアプリケーション作成を解説します。
+
 h1. +新規アプリケーションの作成+
+
+MyPlugin11（MT::Fooクラスを追加）が既にインストール済みとして話を進めます。
 
 h2. 仕様
 
+* view画面、edit画面、new画面の３つを持ち、それぞれでMT::Fooの一覧表示、編集画面、新規作成画面とする。
+* 編集、新規作成されたものはsaveされデータベースに保存される。
+* 画面出力される値のうち、HTMLが混入しているものはグローバルモディファイア @encode_html=1@ をつけスクリプト等の混入を伏せぐ。
+
 h2. config.yaml
+
+単純なアプリケーションの追加に通常はconfig.yamlは必要ありませんが、機能が追加されているよう可視化するためにconfig.yamlをプラグインに置きます。
 
 <pre>
 id: MyPlugin12
@@ -26,6 +40,8 @@ l10n_class: MyPlugin12::L10N
 
 h2. newapp.cgi
 
+このCGIファイルはアクセスされると、他 @mt-○○.cgi@ 等とおなじく @MT::Bootstrap@ に @App => 'MyPlugin12::NewApp'@ という風に記載しMyPlugin12::NewAppというアプリケーションが起動します。
+
 <pre>
 #!/usr/bin/perl -w
 use strict;
@@ -37,6 +53,8 @@ use MT::Bootstrap App => 'MyPlugin12::NewApp';
 </pre>
 
 h2. MtPlugin12/NewApp.pm
+
+このアプリケーションの本体です。init_request{}でアプリケーションを初期化し、view, new, edit, save 関数でそれぞれの処理をします。
 
 <pre>
 package MyPlugin12::NewApp;
@@ -60,7 +78,7 @@ sub init_request {
 sub view {
     my $app = shift;
     my $q = $app->param;
-    my $blog_id = $q->param('blog_id') || 2;
+    my $blog_id = $q->param('blog_id');
     my $blog = MT->model('blog')->load($blog_id);
     my $class = $app->model('foo');
     my ( $terms, $args );
@@ -119,7 +137,7 @@ sub save {
     $foo->save()
         or die $foo->errstr;
 
-    $app->redirect( $app->return_uri );
+    $app->redirect( $app->return_uri . "blog_id=$blog_id" );
 }
 
 sub foo_new {
@@ -137,6 +155,77 @@ sub foo_new {
 
 1;
 </pre>
+
+h3. 解説
+
+<pre>
+package MyPlugin12::NewApp;
+use strict;
+
+use base qw( MT::App );
+</pre>
+
+* モジュールのパッケージ名 @MyPlugin12::NewApp@ を指定しています。
+* @MT::App@ クラスを継承します。
+
+<pre>
+sub init_request {
+    my $app = shift;
+    $app->SUPER::init_request(@_);
+    $app->add_methods( main => \&view,
+                       view => \&view,
+                       new  => \&foo_new,
+                       edit => \&edit,
+                       save => \&save,
+                     );
+    $app->{ default_mode } = 'main';
+    $app->{ requires_login } = 1;
+}
+</pre>
+
+* この関数はアプリケーションの初期化をする関数です。
+* @$app@ を取得します。
+* 親クラスの @init_request()@ を呼び初期化します。
+* @$app->add_meshods();@ このアプリケーションのモードと関数の紐づけを記載します。
+** @main => \&view@ , @view => \&view@ modeのmainとviewを関数viewに紐づけます。
+** @new => \&new@ modeのnewを関数newに紐づけます。
+** @new => \&edit@ modeのeditを関数editに紐づけます。
+** @new => \&save@ modeのsaveを関数saveに紐づけます。
+* @$app->{ default_mode }   = 'main';@ mode指定が無かった場合、modeをmainにします。
+* @$app->{ requires_login } = 1;@ ログインが必須かどうか指定します。
+** @1@ : ログイン中に処理ができます。ログインしていない場合、ログイン画面にジャンプします。
+** @0@ : ログインの有無に関係なく処理できます。
+
+<pre>
+sub view {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $class = $app->model('foo');
+    my ( $terms, $args );
+    $terms = { blog_id => $blog_id };
+    $args  = { sort      => 'created_on',
+               direction => 'descend',
+               limit     => 10,
+             };
+    my @foos = $class->load( $terms, $args );
+    my $param;
+    $param = { blog_name   => $blog->name,
+               foos        => \@foos,
+               plugin_template_path => 'tmpl',
+             };
+    $app->build_page( 'view_foo.tmpl', $param );
+}
+</pre>
+
+* この関数はMT::Fooの一覧を表示する関数です。
+* @$app@ を取得します。
+* @$q@ にパラメータを取得します。
+* パラメータから @$blog_id@ を取得します。
+* @$blog_id@ から、@blog@オブジェクトを取得します。
+* @foo@クラスを準備します。
+* @terms@ , @args@ を準備し、 @@foos@ を取得します。
 
 h2. tmpl/view_foo.tmpl
 
