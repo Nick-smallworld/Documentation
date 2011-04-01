@@ -52,6 +52,13 @@ use lib '../../extlib';
 use MT::Bootstrap App => 'MyPlugin12::NewApp';
 </pre>
 
+<p>LinuxやUNIXなどの場合、Zipファイルを展開した後、実行権限を与える必要がある場合があります。</p>
+
+<pre>
+$ cd $MT_DIR/plugins/MyPlugin12/
+$ sudo chmod +x newapp.cgi
+</pre>
+
 h2. MtPlugin12/NewApp.pm
 
 このアプリケーションの本体です。init_request{}でアプリケーションを初期化し、view, new, edit, save 関数でそれぞれの処理をします。
@@ -295,7 +302,31 @@ sub save {
 * @$foo@ をセーブし、エラーが起きればdieします。
 * セーブが終了したら @CGI@ の URLにジャンプします。
 
+<pre>
+sub foo_new {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+
+    my $param = { blog_name => $blog->name,
+                  blog_id   => $blog_id,
+                };
+
+    $app->build_page( 'new_foo.tmpl', $param );
+}
+</pre>
+
+* この関数はMT::Fooを新規作成する関数です。
+* @$app@ を取得します。
+* @$q@ にパラメータを取得します。
+* パラメータから @$blog_id@ を取得します。
+* @$blog_id@ から、 @blog@ オブジェクトを取得します。
+* @$param@ にパラメータをセットし、 @$app->build_page( 'new_foo.tmpl', $param );@ でページを出力します。テンプレートは @new_foo.tmpl@ を利用します。
+
 h2. tmpl/view_foo.tmpl
+
+MT::Fooオブジェクトの一覧画面用テンプレート。アクセスURLは @http://www.example.com/cgi-bin/mt504/plugins/MyPlugin12/newapp.cgi?blog_id=2@ などして、アクセスします。（blog_id必須）
 
 <pre>
 <html>
@@ -318,6 +349,8 @@ h2. tmpl/view_foo.tmpl
 </pre>
 
 h2. tmpl/edit_foo.tmpl
+
+既存のMT::Fooオブジェクトを修正する画面用テンプレート。
 
 <pre>
 <html>
@@ -348,6 +381,8 @@ h2. tmpl/edit_foo.tmpl
 </pre>
 
 h2. tmpl/new_foo.tmpl
+
+新規のMT::Fooオブジェクトを作成する画面用テンプレート。
 
 <pre>
 <html>
@@ -398,7 +433,13 @@ $MT_DIR/
 
 h1. +プラグインダウンロード+
 
+[[MyPlugin12.zip(4.35KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin12.zip]]
+
 h1. +まとめ+
+
+今回あつかった管理アプリケーションは極々簡単な物です。本来は入力されたデータの空白チェックであるとか、エラーのハンドリングなど必要ですが最小限の物しか使っていません。また、編集対象のクラスをMT::Fooとしましたが別のプラグインに分けずに一つにすることもできますし、対象となるクラスを既存の物にする事も可能です。
+
+日頃「こんな機能があればいいのに」と思っている方は、アプリケーションを自作してMTを拡張してみてはいかがでしょうか？
 
 h1. +プラグイン開発ガイド インデックス+
 
