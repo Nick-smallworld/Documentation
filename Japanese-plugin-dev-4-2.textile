@@ -223,8 +223,8 @@ sub view {
 * @$app@ を取得します。
 * @$q@ にパラメータを取得します。
 * パラメータから @$blog_id@ を取得します。
-* @$blog_id@ から、@blog@オブジェクトを取得します。
-* @foo@クラスを準備します。
+* @$blog_id@ から、 @blog@ オブジェクトを取得します。
+* @foo@ クラスを準備します。
 * @terms@ , @args@ を準備し、 @@foos@ を取得します。
 
 h2. tmpl/view_foo.tmpl
