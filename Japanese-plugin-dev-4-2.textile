@@ -101,9 +101,8 @@ sub edit {
     my $q = $app->param;
     my $blog_id = $q->param('blog_id');
     my $blog = MT->model('blog')->load($blog_id);
-    my $id = $q->param('id') || 1;
+    my $id = $q->param('id');
     my $class = $app->model('foo');
-    my ( $terms, $args );
     my $foo = $class->load( $id );
     my $param;
     $param = { blog_name   => $blog->name,
@@ -226,6 +225,38 @@ sub view {
 * @$blog_id@ から、 @blog@ オブジェクトを取得します。
 * @foo@ クラスを準備します。
 * @terms@ , @args@ を準備し、 @@foos@ を取得します。
+* @$param@ にパラメータをセットし、@$app->build_page( 'view_foo.tmpl', $param );@ でページを出力します。テンプレートは @view_foo.tmpl@ を利用します。
+
+<pre>
+sub edit {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $id = $q->param('id');
+    my $class = $app->model('foo');
+    my $foo = $class->load( $id );
+    my $param;
+    $param = { blog_name   => $blog->name,
+               id      => $id,
+               blog_id => $blog_id,
+               title   => $foo->title(),
+               bar     => $foo->bar(),
+               plugin_template_path => 'tmpl',
+             };
+    $app->build_page( 'edit_foo.tmpl', $param );
+}
+</pre>
+
+* この関数はMT::Fooを編集する関数です。
+* @$app@ を取得します。
+* @$q@ にパラメータを取得します。
+* パラメータから @$blog_id@ を取得します。
+* @$blog_id@ から、 @blog@ オブジェクトを取得します。
+* @$id@ に @MT::Foo@ のIDを取得します。
+* @foo@ クラスを準備します。
+* @$id@ を使って、 @$foo@ を取得します。
+* @$param@ にパラメータをセットし、@$app->build_page( 'edit_foo.tmpl', $param );@ でページを出力します。テンプレートは @edit_foo.tmpl@ を利用します。
 
 h2. tmpl/view_foo.tmpl
 
