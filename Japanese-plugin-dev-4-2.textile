@@ -21,6 +21,7 @@ h2. 仕様
 * view画面、edit画面、new画面の３つを持ち、それぞれでMT::Fooの一覧表示、編集画面、新規作成画面とする。
 * 編集、新規作成されたものはsaveされデータベースに保存される。
 * 画面出力される値のうち、HTMLが混入しているものはグローバルモディファイア @encode_html=1@ をつけスクリプト等の混入を伏せぐ。
+* @http://www.example.com/cgi-bin/mt504/plugins/MyPlugin12/newapp.cgi?blog_id=2@ といったURLにアクセスする。（blog_id必須）
 
 h2. config.yaml
 
@@ -326,7 +327,7 @@ sub foo_new {
 
 h2. tmpl/view_foo.tmpl
 
-MT::Fooオブジェクトの一覧画面用テンプレート。アクセスURLは @http://www.example.com/cgi-bin/mt504/plugins/MyPlugin12/newapp.cgi?blog_id=2@ などして、アクセスします。（blog_id必須）
+MT::Fooオブジェクトの一覧画面用テンプレート。
 
 <pre>
 <html>
