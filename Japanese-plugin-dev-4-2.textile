@@ -225,7 +225,7 @@ sub view {
 * @$blog_id@ から、 @blog@ オブジェクトを取得します。
 * @foo@ クラスを準備します。
 * @terms@ , @args@ を準備し、 @@foos@ を取得します。
-* @$param@ にパラメータをセットし、@$app->build_page( 'view_foo.tmpl', $param );@ でページを出力します。テンプレートは @view_foo.tmpl@ を利用します。
+* @$param@ にパラメータをセットし、 @$app->build_page( 'view_foo.tmpl', $param );@ でページを出力します。テンプレートは @view_foo.tmpl@ を利用します。
 
 <pre>
 sub edit {
@@ -256,7 +256,44 @@ sub edit {
 * @$id@ に @MT::Foo@ のIDを取得します。
 * @foo@ クラスを準備します。
 * @$id@ を使って、 @$foo@ を取得します。
-* @$param@ にパラメータをセットし、@$app->build_page( 'edit_foo.tmpl', $param );@ でページを出力します。テンプレートは @edit_foo.tmpl@ を利用します。
+* @$param@ にパラメータをセットし、 @$app->build_page( 'edit_foo.tmpl', $param );@ でページを出力します。テンプレートは @edit_foo.tmpl@ を利用します。
+
+<pre>
+sub save {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $class = $app->model('foo');
+    my $foo;
+    my $id;
+    if ( $id = $q->param('id') ) {
+        $foo = $class->load($id);
+    } else {
+        $foo = $class->new();
+        $foo->blog_id($blog_id);
+    }
+
+    $foo->title($q->param('title'));
+    $foo->bar($q->param('bar'));
+
+    $foo->save()
+        or die $foo->errstr;
+
+    $app->redirect( $app->return_uri . "blog_id=$blog_id" );
+}
+</pre>
+
+* この関数はMT::Fooを保存する関数です。
+* @$app@ を取得します。
+* @$q@ にパラメータを取得します。
+* パラメータから @$blog_id@ を取得します。
+* @$blog_id@ から、 @blog@ オブジェクトを取得します。
+* @$id@ がある場合は修正なので、 @id@ を使って @$foo@ をロードします。
+* @$id@ が無い場合は新規作成なので、クラスを @new()@ した上で、 @$foo->blog_id($blog_id)@ で @blog_id@ をセットします。
+* @title@ と @bar@ をセットします。
+* @$foo@ をセーブし、エラーが起きればdieします。
+* セーブが終了したら @CGI@ の URLにジャンプします。
 
 h2. tmpl/view_foo.tmpl
 
