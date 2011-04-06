@@ -47,7 +47,7 @@ config.yamlで注目するのはcallbacks以下の３行です。
 
 * MT::App::CMS::template_source.（テンプレート名）: $（プラグイン名）::（Perlモジュール名）::（ハンドラ関数）
 ** @template_source@ は処理前のテンプレートを変更するためフックポイントです。
-** テンプレート名は @$MT_DIR/tmpl/cms@ の中にあり、設定系は @conf_xxx@ 、 一覧系は @list_xxx@ 、新規・修正系は @edit_xxx@ のようになっています。今回はブログ記事（entry）の修正なので @edit_entry@ となります。
+** テンプレートは @$MT_DIR/tmpl/cms@ の中にあり、設定系は @conf_xxx.tmpl@ 、 一覧系は @list_xxx.tmpl@ 、新規・修正系は @edit_xxx.tmpl@ のようになっています。今回はブログ記事（entry）の修正なので @edit_entry.tmpl@ となりますが、拡張子を取った物（ @edit_entry@ ）がテンプレート名になります。
 
 * MT::App::CMS::template_output.（テンプレート名）: $（プラグイン名）::（Perlモジュール名）::（ハンドラ関数）
 ** @template_output@ は処理前のテンプレートを変更するためフックポイントです。
