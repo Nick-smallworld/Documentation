@@ -63,7 +63,7 @@ h2. MyPlugin13/Transformer.pm
 package MyPlugin13::Transformer;
 use strict;
 
-sub hdlr_template_source_delete_extended {
+sub hdlr_template_source_edit_entry {
     my ($cb, $app, $tmpl_ref) = @_;
     my $old = <<EOF;
                         <div class="tab" mt:command="set-editor-extended" mt:tab="extended">
@@ -83,7 +83,7 @@ sub hdlr_template_output_edit_entry {
     # do something
 }
 
-sub hdlr_template_param_dom {
+sub hdlr_template_param_edit_entry {
     my ($cb, $app, $param, $tmpl) = @_;
 
     my $host_node = $tmpl->getElementById('keywords');
@@ -106,6 +106,38 @@ sub hdlr_template_param_dom {
 
 1;
 </pre>
+
+h3. 解説
+
+<pre>
+package MyPlugin13::Transformer;
+use strict;
+</pre>
+
+* パッケージモジュール名を指定し @use strict@ します。
+
+<pre>
+sub hdlr_template_source_edit_entry {
+    my ($cb, $app, $tmpl_ref) = @_;
+    my $old = <<EOF;
+                        <div class="tab" mt:command="set-editor-extended" mt:tab="extended">
+                            <label><a href="javascript:void(0);"><__trans phrase="Extended"></a></label>
+                        </div>
+EOF
+    $old = quotemeta($old);
+
+    my $new = "";
+
+    $$tmpl_ref =~ s!$old!$new!;
+}
+</pre>
+
+* @$cb@ コールバック、 @app@ アプリケーション情報、 @tmp_ref@ テンプレートのリファレンスです。
+* @$old@ に修正したい文字列を代入します。今回は削除したい箇所（続きタブ）になります。
+* 後で利用する置換の文字列に'(', ')'が入っているため、 @quotemeta()@ に通します。
+* 今回削除なので置換する文字列（ @$new@ ）は空文字です。
+* テンプレートのリファレンスからテンプレートを引出し（ @$$tmpl_ref@ ）、置換を行います。
+* これを行うことで「本文」タブの横の「続き」タブが消えます。
 
 h1. +ファイルの配置+
 
