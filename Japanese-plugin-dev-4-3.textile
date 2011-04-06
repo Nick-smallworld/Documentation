@@ -2,15 +2,108 @@ h1. Transformerプラグインの開発
 
 h1. +はじめに+
 
+MT利用していると「管理画面のここを変更したい」「管理画面の使わない箇所を削除してしまいたい」などの欲求が出てくると思います。
+
+そこで今回はTransformerプラグインによる管理画面の表示内容変更について解説します。
+
 h1. +Transformerプラグインとは？+
+
+Transformerプラグインは名前のとおり「実際の管理画面をトランスフォーム（変身）させることで表示を変更する」ものです。
+
+Transformerようのフックポイントがあるので、コールバックを使って管理画面を変身させます。
 
 h1. +Transformerプラグインの開発+
 
+h2. 仕様
+
+h2. config.yaml
+
+<pre>
+id: MyPlugin13
+key: MyPlugin13
+name: <__trans phrase="Sample Plugin Transformer">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin13::L10N
+
+callbacks:
+    MT::App::CMS::template_source.edit_entry: $MyPlugin13::MyPlugin13::Transformer::hdlr_template_source_delete_extended
+    MT::App::CMS::template_output.edit_entry: $MyPlugin13::MyPlugin13::Transformer::hdlr_template_output_edit_entry
+    MT::App::CMS::template_param.edit_entry: $MyPlugin13::MyPlugin13::Transformer::hdlr_template_param_dom
+</pre>
+
+h2. MyPlugin13/Transformer.pm
+
+<pre>
+package MyPlugin13::Transformer;
+use strict;
+
+sub hdlr_template_source_delete_extended {
+    my ($cb, $app, $tmpl_ref) = @_;
+    my $old = <<EOF;
+                        <div class="tab" mt:command="set-editor-extended" mt:tab="extended">
+                            <label><a href="javascript:void(0);"><__trans phrase="Extended"></a></label>
+                        </div>
+EOF
+    $old = quotemeta($old);
+
+    my $new = "";
+
+    $$tmpl_ref =~ s!$old!$new!;
+}
+
+sub hdlr_template_output_edit_entry {
+    my ($cb, $app, $tmpl_str_ref, $param, $tmpl) = @_;
+
+    # do something
+}
+
+sub hdlr_template_param_dom {
+    my ($cb, $app, $param, $tmpl) = @_;
+
+    my $host_node = $tmpl->getElementById('keywords');
+    my $innerHTML = '<input type="text" name="url_field" id="url_field" class="full-width" mt:watch-change="1" value="<mt:var name="url_field" escape="html">" autocomplete="off" />';
+
+    my $block_node = $tmpl->createElement(
+        'app:setting',
+        {
+            id => 'url_field',
+            label => 'URL',
+            label_class => 'top-label',
+        }
+    );
+
+    $block_node->innerHTML( $innerHTML );
+    $tmpl->insertAfter($block_node, $host_node);
+
+    $param->{url_field} = "http://www.example.com/" if !$param->{url_field};
+}
+
+1;
+</pre>
+
 h1. +ファイルの配置+
 
-h1. プラグインダウンロード
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin13/
+      |__ config.yaml
+      |__ lib/
+         |＿ MyPlugin13/
+            |__ L10N.pm
+            |＿ L10N/
+            |  |＿ en_us.pm
+            |  |＿ ja.pm
+            |__ Transformer.pm
+</pre>
 
-h1. まとめ
+h1. +プラグインダウンロード+
+
+h1. +まとめ+
 
 h1. +プラグイン開発ガイド インデックス+
 
