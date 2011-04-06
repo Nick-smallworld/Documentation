@@ -16,6 +16,12 @@ h1. +Transformerプラグインの開発+
 
 h2. 仕様
 
+* ブログ記事、ウェブページともエディット画面で「続き」ボタンを消す
+** 「お客様から自分が必要無いな機能を外してほしい」と言われたと仮定
+* @ID=keywords@ の次にURLを記入できる欄を追加する
+** URL欄が空白の場合は"http://www.example.com/"を入力する
+** URL欄は表示だけで、保存、修正などできなくてよい（あくまで表示例）
+
 h2. config.yaml
 
 <pre>
@@ -30,10 +36,26 @@ doc_link: http://www.example.com/docs/
 l10n_class: MyPlugin13::L10N
 
 callbacks:
-    MT::App::CMS::template_source.edit_entry: $MyPlugin13::MyPlugin13::Transformer::hdlr_template_source_delete_extended
+    MT::App::CMS::template_source.edit_entry: $MyPlugin13::MyPlugin13::Transformer::hdlr_template_source_edit_entry
     MT::App::CMS::template_output.edit_entry: $MyPlugin13::MyPlugin13::Transformer::hdlr_template_output_edit_entry
-    MT::App::CMS::template_param.edit_entry: $MyPlugin13::MyPlugin13::Transformer::hdlr_template_param_dom
+    MT::App::CMS::template_param.edit_entry: $MyPlugin13::MyPlugin13::Transformer::hdlr_template_param_edit_entry
 </pre>
+
+h3. 解説
+
+config.yamlで注目するのはcallbacks以下の３行です。
+
+* MT::App::CMS::template_source.（テンプレート名）: $（プラグイン名）::（Perlモジュール名）::（ハンドラ関数）
+** @template_source@ は処理前のテンプレートを変更するためフックポイントです。
+** テンプレート名は @$MT_DIR/tmpl/cms@ の中にあり、設定系は @conf_xxx@ 、 一覧系は @list_xxx@ 、新規・修正系は @edit_xxx@ のようになっています。今回はブログ記事（entry）の修正なので @edit_entry@ となります。
+
+* MT::App::CMS::template_output.（テンプレート名）: $（プラグイン名）::（Perlモジュール名）::（ハンドラ関数）
+** @template_output@ は処理前のテンプレートを変更するためフックポイントです。
+** テンプレート名は 。上記と同じ理由で @edit_entry@ となります。
+
+* MT::App::CMS::template_param.（テンプレート名）: $（プラグイン名）::（Perlモジュール名）::（ハンドラ関数）
+** @template_param@ は値を代入したり、DOMベースでの文字列の挿入などを行うフックポイントです。
+** テンプレート名は 。上記と同じ理由で @edit_entry@ となります。
 
 h2. MyPlugin13/Transformer.pm
 
