@@ -185,6 +185,44 @@ sub hdlr_template_param_edit_entry {
 ** 条件としては @$param->{url_field}@ に値がセットされてい無い場合に値（http://www.example.com/）がセットされるように実装されています。
 ** このURLはブログ記事を保存してもデータベースに値が保存されません。ブログ記事クラスの拡張や、URLクラスを作成してブログ記事の @post_save@ で保存するなど実装方法が色々と考えられますが、今回は省略します。
 
+h3. DOM関連の関数
+
+DOM関連の関数は @MT::Template@ に実装されています。
+
+|sub getElementsByTagName {}|タグ名でDOMエレメントを検索|
+|sub getElementsByClassName {}|クラス名でDOMエレメントを検索|
+|sub getElementsByName {}|nameでDOMエレメントを検索|
+|sub getElementById {}|idでDOMエレメントを検索|
+|sub createElement {}|新規ノードを作成|
+|sub createTextNode {}|新規テキストノードの作成|
+|sub insertAfter {}|指定されたDOMエレメントの後にエレメントを挿入|
+|sub insertBefore {}|指定されたDOMエレメントの前にエレメントを挿入|
+|sub childNodes {}|指定された物の子ノードを取得|
+|sub hasChildNodes {}|子ノードの有無を確認|
+|sub appendChild {}|指定されたノードに子ノードを追加|
+
+取得したノードの操作のために、MT::Template::Nodeに関数が用意されています。
+
+|sub nodeValue {}||
+|sub childNodes {}||
+|sub childNodes {}||
+|sub attribute_list {}||
+|sub attribute_list {}||
+|sub setAttribute {}||
+|sub getAttribute {}||
+|sub firstChild {}||
+|sub lastChild {}||
+|sub nextSibling {}||
+|sub previousSibling {}||
+|sub ownerDocument {}||
+|sub hasChildNodes {}||
+|sub nodeType {}||
+|sub nodeName {}||
+|sub innerHTML {}||
+|sub appendChild {}||
+|sub removeChild {}||
+|sub upgrade {}||
+
 h1. +ファイルの配置+
 
 <pre>
