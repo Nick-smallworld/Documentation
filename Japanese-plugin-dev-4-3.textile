@@ -189,39 +189,39 @@ h3. DOM関連の関数
 
 DOM関連の関数は @MT::Template@ に実装されています。
 
-|sub getElementsByTagName {}|タグ名でDOMエレメントを検索|
-|sub getElementsByClassName {}|クラス名でDOMエレメントを検索|
-|sub getElementsByName {}|nameでDOMエレメントを検索|
-|sub getElementById {}|idでDOMエレメントを検索|
-|sub createElement {}|新規ノードを作成|
-|sub createTextNode {}|新規テキストノードの作成|
-|sub insertAfter {}|指定されたDOMエレメントの後にエレメントを挿入|
-|sub insertBefore {}|指定されたDOMエレメントの前にエレメントを挿入|
-|sub childNodes {}|指定された物の子ノードを取得|
-|sub hasChildNodes {}|子ノードの有無を確認|
-|sub appendChild {}|指定されたノードに子ノードを追加|
+|sub getElementsByTagName {}|タグ名でDOMエレメントを検索する|
+|sub getElementsByClassName {}|クラス名でDOMエレメントを検索する|
+|sub getElementsByName {}|nameでDOMエレメントを検索する|
+|sub getElementById {}|idでDOMエレメントを検索する|
+|sub createElement {}|新規ノードを作成する|
+|sub createTextNode {}|新規テキストノードを作成する|
+|sub insertAfter {}|指定されたDOMエレメントの後にエレメントを挿入する|
+|sub insertBefore {}|指定されたDOMエレメントの前にエレメントを挿入する|
+|sub childNodes {}|指定された物の子ノードを取得する|
+|sub hasChildNodes {}|子ノードの有無を確認する|
+|sub appendChild {}|指定されたノードに子ノードを追加する|
 
-取得したノードの操作のために、MT::Template::Nodeに関数が用意されています。
+取得したノードの操作のために、 @MT::Template::Node@ に関数が用意されています。
 
-|sub nodeValue {}||
-|sub childNodes {}||
-|sub childNodes {}||
-|sub attribute_list {}||
-|sub attribute_list {}||
-|sub setAttribute {}||
-|sub getAttribute {}||
-|sub firstChild {}||
-|sub lastChild {}||
-|sub nextSibling {}||
-|sub previousSibling {}||
-|sub ownerDocument {}||
-|sub hasChildNodes {}||
-|sub nodeType {}||
-|sub nodeName {}||
-|sub innerHTML {}||
-|sub appendChild {}||
-|sub removeChild {}||
-|sub upgrade {}||
+|sub nodeValue {}|与えられたノードの値を取得する|
+|sub childNodes {}|与えられたノードの子ノードを取得する|
+|sub attributes {}|ノードの属性を取得する|
+|sub attribute_list {}|ノードの属性リストを取得する|
+|sub tag {}|ノード名の設定と取得を行う|
+|sub setAttribute {}|ノードの属性を設定する|
+|sub getAttribute {}|ノードの属性を取得する|
+|sub firstChild {}|最初の子ノードを取得する|
+|sub lastChild {}|最期の子ノードを取得する|
+|sub nextSibling {}|次のノードを取得する|
+|sub previousSibling {}|前のノードを取得する|
+|sub ownerDocument {}|ノードのテンプレートオブジェクトを取得する|
+|sub hasChildNodes {}|子ノードの有無を確認する|
+|sub nodeType {}|ノードのタイプ名を取得する|
+|sub nodeName {}|ノード名を取得する|
+|sub innerHTML {}|HTML（もしくはXTML）を挿入する|
+|sub appendChild {}|子ノードを追加する|
+|sub removeChild {}|子ノードを削除する|
+|sub upgrade {}|ノードをUTF8にエンコードする|
 
 h1. +ファイルの配置+
 
