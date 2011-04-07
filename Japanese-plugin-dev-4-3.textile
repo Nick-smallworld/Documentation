@@ -10,7 +10,7 @@ h1. +Transformerプラグインとは？+
 
 Transformerプラグインは名前のとおり「実際の管理画面をトランスフォーム（変身）させることで表示を変更する」ものです。
 
-Transformer用のフックポイントがあるので、コールバックを使って管理画面を変身させます。
+Transformer用のフックポイントがあるので、コールバックを使って管理画面を変更させます。
 
 h1. +Transformerプラグインの開発+
 
@@ -202,7 +202,13 @@ $MT_DIR/
 
 h1. +プラグインダウンロード+
 
+[[MyPlugin13.zip(2.64KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin13.zip]]
+
 h1. +まとめ+
+
+とっかかりは難しそうですが、管理画面で困っている場合は今回解説した管理画面の修正をしてみてはいかがでしょうか？
+
+ただしTransformerプラグインは、MTのバージョンにより置換文字列などを修正する必要など出てくる場合がありますのでご注意ください。
 
 h1. +プラグイン開発ガイド インデックス+
 
