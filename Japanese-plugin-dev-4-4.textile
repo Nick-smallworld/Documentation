@@ -173,7 +173,7 @@ $MT_DIR/
 
 h1. +プラグインダウンロード+
 
-[[MyPlugin14.zip(2.02KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin14.zip]]
+[[MyPlugin14.zip(2.01KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin14.zip]]
 
 h1. +まとめ+
 
