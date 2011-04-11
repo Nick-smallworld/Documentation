@@ -460,3 +460,5 @@ h1. +プラグイン開発ガイド インデックス+
 # [[MTオブジェクトの利用方法|Japanese-plugin-dev-3-4]]
 # [[独自オブジェクトの作成|Japanese-plugin-dev-3-4]]
 # 新規アプリケーションの作成
+# [[Transformerプラグインの開発|Japanese-plugin-dev-4-3]]
+# [[管理画面のメニュー修正|Japanese-plugin-dev-4-4]]
