@@ -18,7 +18,23 @@ h1. +管理画面のメニュー修正プラグインの開発+
 
 h1. +ファイルの配置+
 
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin14/
+      |__ config.yaml
+      |__ lib/
+         |＿ MyPlugin14/
+            |__ L10N.pm
+            |＿ L10N/
+               |＿ en_us.pm
+               |＿ ja.pm
+
+</pre>
+
 h1. +プラグインダウンロード+
+
+[[MyPlugin14.zip(2.02KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin14.zip]]
 
 h1. +まとめ+
 
