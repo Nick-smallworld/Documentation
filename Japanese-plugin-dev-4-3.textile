@@ -148,8 +148,9 @@ sub hdlr_template_output_edit_entry {
 }
 </pre>
 
-* この関数も @template_source@ と同じくテンプレートの修正をしますが、 @template_source@ が手を入れる前のテンプレートに大して行うのと違い、テンプレートの構築処理が終わった後の出力（ @$tmpl_str_ref@ ）に大して修正を行います。
-* それ以外の説明は @template_source@ と同じなので省略します。
+* @sub hdlr_template_output_edit_entry {}@
+** この関数も @template_source@ と同じくテンプレートの修正をしますが、 @template_source@ が手を入れる前のテンプレートに大して行うのと違い、テンプレートの構築処理が終わった後の出力（ @$tmpl_str_ref@ ）に大して修正を行います。
+** それ以外の説明は @template_source@ と同じなので省略します。
 
 <pre>
 sub hdlr_template_param_edit_entry {
@@ -174,16 +175,17 @@ sub hdlr_template_param_edit_entry {
 }
 </pre>
 
-* @$cb@ コールバック、 @$app@ アプリケーション情報、 @$param@ テンプレートの構築時に渡されるパラメータ、 @$tmpl@ テンプレートオブジェクトです。
-* @getElementById@ を使ってDOMの'keywords'のノードを検索します。
-* @$innerHTML@ に、挿入したい文字列をセットします。
-* @createElement@ を使って新規のノードをセットします。
-* 新規ノードに @$innerHTML@ をセットします。
-* @insertAfter($block_node, $host_node)@ を使って @$host_node@ の後に @$block_node@を挿入します。
-* 最後の @$param@ はDOMの説明とは関係ありませんが @template_param@ の本来の使い方で、構築時のパラメータとして任意のものを渡す事ができます。
-** 例えば今回の場合、新規に追加した行に @<mt:var name="url_field">@ がありますので、そちらに値（http://www.example.com/）が設定されます。
-** 条件としては @$param->{url_field}@ に値がセットされてい無い場合に値（http://www.example.com/）がセットされるように実装されています。
-** このURLはブログ記事を保存してもデータベースに値が保存されません。ブログ記事クラスの拡張や、URLクラスを作成してブログ記事の @post_save@ で保存するなど実装方法が色々と考えられますが、今回は省略します。
+* @sub hdlr_template_param_edit_entry {}@
+** @$cb@ コールバック、 @$app@ アプリケーション情報、 @$param@ テンプレートの構築時に渡されるパラメータ、 @$tmpl@ テンプレートオブジェクトです。
+** @getElementById@ を使ってDOMの'keywords'のノードを検索します。
+** @$innerHTML@ に、挿入したい文字列をセットします。
+** @createElement@ を使って新規のノードをセットします。
+** 新規ノードに @$innerHTML@ をセットします。
+** @insertAfter($block_node, $host_node)@ を使って @$host_node@ の後に @$block_node@を挿入します。
+** 最後の @$param@ はDOMの説明とは関係ありませんが @template_param@ の本来の使い方で、構築時のパラメータとして任意のものを渡す事ができます。
+*** 例えば今回の場合、新規に追加した行に @<mt:var name="url_field">@ がありますので、そちらに値（http://www.example.com/）が設定されます。
+*** 条件としては @$param->{url_field}@ に値がセットされてい無い場合に値（http://www.example.com/）がセットされるように実装されています。
+*** このURLはブログ記事を保存してもデータベースに値が保存されません。ブログ記事クラスの拡張や、URLクラスを作成してブログ記事の @post_save@ で保存するなど実装方法が色々と考えられますが、今回は省略します。
 
 h3. DOM関連の関数
 
