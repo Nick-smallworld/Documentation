@@ -92,9 +92,10 @@ applications:
                 system_permission: administer
 </pre>
 
+* @tools@ は、「ツール」メニューを指します
 * @permission@ はサイトメニュー、ブログメニューでの権限
 * @system_permission@ はシステムメニューでの権限
-* それぞれ必要な権限をコンマ区切りで列挙する事が出来る
+* それぞれ必要な権限をコンマ区切りで列挙する事が出来ます
 * 今回の例では「ツール」メニューが管理者でのみ表示されるようになり、管理者で無い人がログインしても「ツール」メニューは表示されません
 
 <pre>
@@ -102,7 +103,7 @@ applications:
                 view: blog
 </pre>
 
-* この設定により @entry@ の @view@ を @blog@ だけで表示します
+* この設定により @entry@ 「ブログ記事」の @view@ を @blog@ だけで表示します
 ** このためサイトメニューから「ブログ記事」メニューが消えます
 
 <pre>
@@ -138,7 +139,7 @@ applications:
 ** 返ってきた値が負の場合、このメニューは表示されません
 ** perlコードを別に移すのであれば @condition: $MyPlugin14::MyPlugin14::Menues::hndr_get_condition@ などとハンドラを呼ぶことも出来ます
 
-以下、追加の説明文です。
+以下のように指定する事も可能です。
 
 <pre>
                 args:
