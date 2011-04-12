@@ -22,6 +22,10 @@ h2(#tutorial-plugin). プラグイン開発ガイド
 # [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
 # [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
 # [[MTオブジェクトの利用方法|Japanese-plugin-dev-3-4]]
+# [[独自オブジェクトの作成|Japanese-plugin-dev-4-1]]
+# [[新規アプリケーションの作成|Japanese-plugin-dev-4-2]]
+# [[Transformerプラグインの開発|Japanese-plugin-dev-4-3]]
+# [[管理画面のメニュー修正|Japanese-plugin-dev-4-4]]
 
 h2(#mt51). Movable Type 5.1 の新機能
 
