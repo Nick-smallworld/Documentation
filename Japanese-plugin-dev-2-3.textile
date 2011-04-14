@@ -335,7 +335,7 @@ h1. +まとめ+
 
 h1. +プラグインダウンロード+
 
-[[MyPlugin07.zip(6.11KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin07.zip]]
+[[MyPlugin07.zip(5.98KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin07.zip]]
 
 h1. +プラグイン開発ガイド インデックス+
 
