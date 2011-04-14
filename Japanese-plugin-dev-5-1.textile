@@ -236,7 +236,15 @@ $MT_DIR/
 
 h1. +プラグインダウンロード+
 
+[[MyPlugin15.zip(2.57KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin15.zip]]
+
 h1. +まとめ+
+
+簡単にリストアクションが追加できる事を分かっていただけたでしょうか？
+
+従来一つずつ設定を行っていた物を、リストアクションの追加で選択して処理を一度に行う事が出きるようになります。
+
+ご自分の要求に合ったリストアクションを追加して、業務の省力化を試してみて下さい。
 
 h1. +プラグイン開発ガイド インデックス+
 
