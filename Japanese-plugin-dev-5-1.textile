@@ -8,7 +8,207 @@ h1. +はじめに+
 
 h1. +リストアクションとは？+
 
-h1. +リストアクションの追加+
+リストアクションとはオブジェクトの一覧ページで「アクション...」と書かれているプルダウンメニューに追加される「プラグインアクション」を指します。
+
+利用できる一覧ページは以下の管理画面になります。
+
+* ブログ記事一覧
+* ウェブページ一覧
+* アイテム一覧
+* トラックバック一覧
+* コメント一覧
+* コメントユーザー一覧
+* ユーザー一覧
+* ブログ一覧
+* サイト一覧
+* テンプレート一覧
+
+今回は「ユーザー一覧」に新しいリストアクションを追加します。
+
+h1. +リストアクションの追加プラグインの開発+
+
+h2. 仕様
+
+* 「システムメニュー」＞「ユーザー一覧（ユーザーの管理）」ページのリストアクションに「プラグインアクション」を追加する
+* 選択したユーザーの使用言語を変更できる
+* 対応言語はMTが対応している物
+** 日本語、英語、ドイツ語、スペイン語、フランス語、オランダ語
+
+h2. config.yaml
+
+<pre>
+id: MyPlugin15
+key: MyPlugin15
+name: <__trans phrase="Sample Plugin Add Action">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin15::L10N
+
+applications:
+    cms:
+        list_actions:
+            author:
+                author_language_ja:
+                    label: Language Japanese
+                    order: 100
+                    permit_action: administers
+                    handler: $MyPlugin15::MyPlugin15::Actions::hndl_author_language_ja
+                author_language_en_US:
+                    label: Language English
+                    order: 200
+                    permit_action: administers
+                    handler: $MyPlugin15::MyPlugin15::Actions::hndl_author_language_en_US
+                author_language_de:
+                    label: Language Deutsch
+                    order: 300
+                    permit_action: administers
+                    handler: $MyPlugin15::MyPlugin15::Actions::hndl_author_language_de
+                author_language_es:
+                    label: Language Español
+                    order: 400
+                    permit_action: administers
+                    handler: $MyPlugin15::MyPlugin15::Actions::hndl_author_language_es
+                author_language_fr:
+                    label: Language Français
+                    order: 500
+                    permit_action: administers
+                    handler: $MyPlugin15::MyPlugin15::Actions::hndl_author_language_fr
+                author_language_nl:
+                    label: Language Nederlands
+                    order: 600
+                    permit_action: administers
+                    handler: $MyPlugin15::MyPlugin15::Actions::hndl_author_language_nl
+</pre>
+
+h3. 解説
+
+<pre>
+id: MyPlugin15
+key: MyPlugin15
+name: <__trans phrase="Sample Plugin Add Action">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin15::L10N
+</pre>
+
+* 通常のプラグイン設定
+
+<pre>
+applications:
+    cms:
+        list_actions:
+            author:
+</pre>
+
+* ユーザー一覧のリストアクションのレジストリトップ
+
+<pre>
+                author_language_ja:
+                    label: Language Japanese
+                    order: 100
+                    permit_action: administers
+                    handler: $MyPlugin15::MyPlugin15::Actions::hndl_author_language_ja
+</pre>
+
+* @author_language_ja@ ：リストアクション
+** @label: Language Japanese@ ：リストのラベル
+** @order: 100@ ：リストのオーダー（並び順）
+** @permit_action: administers@ ：管理者のみ表示
+** @handler: $MyPlugin15::MyPlugin15::Actions::hndl_author_language_ja@ ：ハンドラの設定
+
+これ以降、言語（英語、ドイツ語、スペイン語、フランス語、オランダ語）別の実装のため省略します。
+
+h2. MyPlugin15/Action.pm
+
+<pre>
+package MyPlugin15::Actions;
+use strict;
+
+sub hndl_author_language_ja {
+    my $app = shift;
+    _set_author_language($app, 'ja');
+}
+
+sub hndl_author_language_en_US {
+    my $app = shift;
+    _set_author_language($app, 'en_US');
+}
+
+sub hndl_author_language_de {
+    my $app = shift;
+    _set_author_language($app, 'de');
+}
+
+sub hndl_author_language_es {
+    my $app = shift;
+    _set_author_language($app, 'es');
+}
+
+sub hndl_author_language_fr {
+    my $app = shift;
+    _set_author_language($app, 'fr');
+}
+
+sub hndl_author_language_nl {
+    my $app = shift;
+    _set_author_language($app, 'nl');
+}
+
+sub _set_author_language {
+    my ($app, $language) = @_;
+    require MT::Author;
+    my @author_ids = $app->param('id');
+    for my $author_id (@author_ids) {
+        my $author = MT::Author->load($author_id);
+        $author->preferred_language($language);
+        $author->save;
+    }
+    $app->redirect( $app->return_uri );
+}
+
+1;
+</pre>
+
+h3. 解説
+
+<pre>
+package MyPlugin15::Actions;
+use strict;
+</pre>
+
+* パッケージ名の宣言と @use strict;@ しています。
+
+<pre>
+sub hndl_author_language_ja {
+    my $app = shift;
+    _set_author_language($app, 'ja');
+}
+</pre>
+
+* @sub hndl_author_language_ja {}@ 日本語用のハンドラ関数です。
+** 内部関数 @_set_author_language();@ に @$app@ と @'ja'@ を渡しています。
+
+以下、多言語用のハンドラ関数のため省略します。
+
+<pre>
+sub _set_author_language {
+    my ($app, $language) = @_;
+    require MT::Author;
+    my @author_ids = $app->param('id');
+    for my $author_id (@author_ids) {
+        my $author = MT::Author->load($author_id);
+        $author->preferred_language($language);
+        $author->save;
+    }
+    $app->redirect( $app->return_uri );
+}
+</pre>
 
 h1. +ファイルの配置+
 
