@@ -210,6 +210,14 @@ sub _set_author_language {
 }
 </pre>
 
+* @sub _set_author_language {}@ 内部関数
+** @$app@ と @$language@ を受け取ります。
+** @$app->param('id')@ に選択したユーザーのIDが配列で渡されるので@author_idsに格納します。
+** 配列を回し @$author_id@ をキーに処理を行います。
+** @$author@ をロードし、言語（ @preferred_language@ ）を設定します。
+** @$author@ をセーブします。
+** すべてのユーザーを処理した後、元の画面に戻ります。
+
 h1. +ファイルの配置+
 
 <pre>
