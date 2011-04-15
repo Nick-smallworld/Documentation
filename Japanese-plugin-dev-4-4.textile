@@ -150,10 +150,10 @@ applications:
 ** 今回の例 @http://www.example.com/cgi-bin/mt.cgi?__mode=dashboard&_type=foo&blog_id=1@
 
 <pre>
-                dialog: bar
+                dialog: 1
 </pre>
 
-* @mode@ 指定をせず、 @dialog@ 指定をした場合モーダルウィンドウ型のダイアログが表示されます
+* @mode@ 指定し、 @dialog: 1@ 指定をした場合モーダルウィンドウ型のダイアログが表示されます
 ** モーダルウィンドウの説明について、ここでは省略します。
 
 h1. +ファイルの配置+
