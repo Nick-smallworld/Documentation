@@ -201,7 +201,7 @@ $MT_DIR/
 
 h1. +プラグインダウンロード+
 
-[[MyPlugin16.zip(0.00KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin16.zip]]
+[[MyPlugin16.zip(2.95KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin16.zip]]
 
 h1. +まとめ+
 
