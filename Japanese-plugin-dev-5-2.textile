@@ -61,7 +61,7 @@ applications:
                 dialog: 1
 </pre>
 
-以前紹介したメニュー追加と同じです。ここでは @mode@ に @modal_window_test@ を指定し、@dialog: 1@ としているためクリックするとモーダルウィンドウが表示されます。
+以前紹介したメニュー追加と同じです。ここでは @mode@ に @modal_window_test@ を指定し、 @dialog: 1@ としているためクリックするとモーダルウィンドウが表示されます。
 
 この状態では、モード（modal_window_test）を追加していないので、メニューをクリックするとモーダルウィンドウ内でエラー（不明なアクション: modal_window_test ）が発生します。
 
@@ -86,12 +86,12 @@ applications:
 
 上記のように、 @methods:@ に @modal_window_test@ を新規モードとして追加します。
 
-この状態でクリックしても @MyPlugin16::ModalWindow::hndl_modal_window@ の実装が終わっていないため、やはりエラーになります。
+この状態でクリックしても @$MyPlugin16::ModalWindow::hndl_modal_window@ の実装が終わっていないため、やはりエラーになります。
 
 
 h2. +モーダルウィンドウ内の表示+
 
-@MyPlugin16::ModalWindow::hndl_modal_window@ の実装を始めます。
+@$MyPlugin16::ModalWindow::hndl_modal_window@ の実装を始めます。
 
 h3. MyPlugin/ModalWindow.pm（１）
 
@@ -125,7 +125,7 @@ sub hndl_modal_window {
     $param{blog_id} = $blog_id;
     $param{blog_name} = $blog->name();
     $param{entry_count} = MT::Entry->count({ blog_id => $blog_id,
-                                             status => MT::Entry::RELEASE()
+                                             status => MT::Entry::RELEASE(),
                                            });
 
     $app->load_tmpl('modal_window.tmpl', \%param);
@@ -136,7 +136,7 @@ sub hndl_modal_window {
 
 * @$app@ を取得します
 * @$blog_id@ を取得し、そこから @$blog@ を取得します。
-* @%param@ に、ブログのID： @$blog_id@ とブログ名： @$blog->name()@ 、公開済みブログ記事：@MT::Entry->count()@ をセットします。
+* @%param@ に、ブログのID： @$blog_id@ とブログ名： @$blog->name()@ 、公開済みブログ記事： @MT::Entry->count()@ をセットします。
 * テンプレート（modal_window.tmpl）と @%param@ からページを生成します。
 
 h3. tmpl/modal_window.tmpl（１）
@@ -191,12 +191,14 @@ $MT_DIR/
    |__ MyPlugin16/
       |__ config.yaml
       |__ lib/
-         |＿ MyPlugin16/
-            |__ L10N.pm
-            |＿ L10N/
-            |  |＿ en_us.pm
-            |  |＿ ja.pm
-            |__ ModalWindow.pm
+      |  |＿ MyPlugin16/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |__ ModalWindow.pm
+      |__ tmpl/
+         |＿ modal_window.tmpl
 </pre>
 
 h1. +プラグインダウンロード+
@@ -205,7 +207,7 @@ h1. +プラグインダウンロード+
 
 h1. +まとめ+
 
-今回は動作モードをモーダルウィンドウで表示する事を前提に実装しましたが、 @dialog: 1@ をセットせずに通常のウィンドウを表示させることも可能です。その場合、それぞれ合った外部テンプレートをインクルードしてページを作りましょう。@$MT_HOME/tmpl/cms/@ 内にテンプレートがありますのでチェックしてください。
+今回は動作モードをモーダルウィンドウで表示する事を前提に実装しましたが、 @dialog: 1@ をセットせずに通常のウィンドウを表示させることも可能です。その場合、それぞれ合った外部テンプレートをインクルードしてページを作りましょう。 @$MT_HOME/tmpl/cms/@ 内にテンプレートがありますのでチェックしてください。
 
 今回で管理画面のUIの修正方法の解説は終りです。思ったより簡単だったのではないでしょうか？本ドキュメントと既存のプラグインを参考に管理画面を自分流にカスタマイズしてみましょう。
 
