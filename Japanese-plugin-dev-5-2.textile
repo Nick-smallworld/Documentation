@@ -24,9 +24,164 @@ h1. +モーダルウィンドウとは？+
 
 今回は、 @modal_window_test@ モードに対応したモーダルウィンドウを作成します。
 
-h1. +動作モードの追加+
+h1. +仕様+
 
-h1. +モーダルウィンドウの表示+
+* ブログメニュー＞ツール に「モーダルウィンドウ」メニューを追加
+** 管理者のみ閲覧、操作可能
+** 「モーダルウィンドウ」メニューをクリックすると @__mode=modal_window_test@ の状態でモーダルウィンドウが表示
+* モーダルウィンドウには、ブログID、ブログ名、公開済みブログ記事の一覧と「閉じる」ボタンを表示
+** 「閉じる」ボタンをクリックするとモーダルウィンドウが閉じ、元の画面に戻る。
+
+h1. +実装方法+
+
+h2. メニューの追加とモーダルウィンドウの表示
+
+以下のようにレジストリを書き換える事でブログメニューに「モーダルウィンドウ」メニューが表示されます。
+
+<pre>
+id: MyPlugin16
+key: MyPlugin16
+name: <__trans phrase="Sample Plugin Modal Window">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin16::L10N
+
+applications:
+    cms:
+        menus:
+            tools:modal_window:
+                label: Modal Window
+                order: 1000
+                view: blog
+                permission: administer
+                mode: modal_window_test
+                dialog: 1
+</pre>
+
+以前紹介したメニュー追加と同じです。ここでは @mode@ に @modal_window_test@ を指定し、@dialog: 1@ としているためクリックするとモーダルウィンドウが表示されます。
+
+この状態では、モード（modal_window_test）を追加していないので、メニューをクリックするとモーダルウィンドウ内でエラー（不明なアクション: modal_window_test ）が発生します。
+
+そこで、モードを追加します。
+
+<pre>
+（前略）
+
+applications:
+    cms:
+        menus:
+            tools:modal_window:
+                label: Modal Window
+                order: 1000
+                view: blog
+                permission: administer
+                mode: modal_window_test
+                dialog: 1
+        methods:
+            modal_window_test: $MyPlugin16::MyPlugin16::ModalWindow::hndl_modal_window
+</pre>
+
+上記のように、 @methods:@ に @modal_window_test@ を新規モードとして追加します。
+
+この状態でクリックしても @MyPlugin16::ModalWindow::hndl_modal_window@ の実装が終わっていないため、やはりエラーになります。
+
+
+h2. +モーダルウィンドウ内の表示+
+
+@MyPlugin16::ModalWindow::hndl_modal_window@ の実装を始めます。
+
+h3. MyPlugin/ModalWindow.pm（１）
+
+<pre>
+package MyPlugin16::ModalWindow;
+use strict;
+
+sub hndl_modal_window {
+    return 1;
+}
+1;
+</pre>
+
+この例はモーダルウィンドウに「1」と表示させるだけの例です。
+
+テンプレートを用意して、それにブログID、ブログ名、公開済みブログ記事の一覧を表示させます。
+
+h3. MyPlugin/ModalWindow.pm（２）
+
+<pre>
+package MyPlugin16::ModalWindow;
+use strict;
+
+sub hndl_modal_window {
+    my $app = shift;
+    my $blog_id = $app->param('blog_id');
+    my $class = MT->model('blog');
+    my $blog = $class->load($blog_id);
+
+    my %param;
+    $param{blog_id} = $blog_id;
+    $param{blog_name} = $blog->name();
+    $param{entry_count} = MT::Entry->count({ blog_id => $blog_id,
+                                             status => MT::Entry::RELEASE()
+                                           });
+
+    $app->load_tmpl('modal_window.tmpl', \%param);
+}
+
+1;
+</pre>
+
+* @$app@ を取得します
+* @$blog_id@ を取得し、そこから @$blog@ を取得します。
+* @%param@ に、ブログのID： @$blog_id@ とブログ名： @$blog->name()@ 、公開済みブログ記事：@MT::Entry->count()@ をセットします。
+* テンプレート（modal_window.tmpl）と @%param@ からページを生成します。
+
+h3. tmpl/modal_window.tmpl（１）
+
+<pre>
+<mt:include name="dialog/header.tmpl" page_title="<__trans phrase="Modal Window">">
+
+blog_id : <mt:var name="blog_id" encode_html="1"><br />
+blog_name : <mt:var name="blog_name" encode_html="1"><br />
+entry_count : <mt:var name="entry_count" encode_html="1"><br />
+
+<mt:include name="dialog/footer.tmpl">
+</pre>
+
+* モーダルウィンドウのテンプレートファイルです。
+* ヘッダーとフッターのテンプレートを @<mt:include name="dialog/xxx.tmpl">@ でインクルードしています。
+* blog_id, blog_name, entry_count を @%param@ で渡されたものをセットします。
+
+これでモーダルウィンドウにブログの情報が表示されるようになりましたが、まだ「閉じる」ボタンがありません。
+
+「閉じる」ボタンは以下の様に追加します。
+
+<pre>
+<mt:include name="dialog/header.tmpl" page_title="<__trans phrase="Modal Window">">
+
+blog_id : <mt:var name="blog_id" encode_html="1"><br />
+blog_name : <mt:var name="blog_name" encode_html="1"><br />
+entry_count : <mt:var name="entry_count" encode_html="1"><br />
+
+<div class="actions-bar">
+    <div class="actions-bar-inner pkg actions">
+        <form action="" method="get" onsubmit="return false">
+            <button
+                type="submit"
+                class="action button primary primary-button mt-close-dialog"
+                title="<__trans phrase="Close">"
+                ><__trans phrase="Close"></button>
+        </form>
+    </div>
+</div>
+
+<mt:include name="dialog/footer.tmpl">
+</pre>
+
+これで仕様通りに「モーダルウィンドウ」メニューをクリックすると、モーダルウィンドウにブログ情報が表示され、「閉じる」ボタンをクリックするとモーダルウィンドウが閉じて元の画面に戻るという実装が完了しました。
 
 h1. +ファイルの配置+
 
@@ -47,6 +202,12 @@ $MT_DIR/
 h1. +プラグインダウンロード+
 
 [[MyPlugin16.zip(0.00KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin16.zip]]
+
+h1. +まとめ+
+
+今回は動作モードをモーダルウィンドウで表示する事を前提に実装しましたが、 @dialog: 1@ をセットせずに通常のウィンドウを表示させることも可能です。その場合、それぞれ合った外部テンプレートをインクルードしてページを作って下さい。
+
+今回で管理画面のUIの修正方法の解説は終りです。思ったより簡単だったのではないでしょうか？
 
 h1. +プラグイン開発ガイド インデックス+
 
