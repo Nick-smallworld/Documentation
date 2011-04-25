@@ -3,15 +3,6 @@
 = Overview =
 
 This page serves as the home page for the set of projects aimed at improving the resources made available to the Movable Type Developer community.
-
-= Active Projects =
-
-* [[Documentation:Developer Guide|Developer Guide 2.0]] - a project is already underway to complete rewrite Movable Type's developer docs. Project Owner: [[User:byrnereese]]
-
-= Feedback = 
-
-* [[Developer docs requests]] - Underdocumented API features or application code
-
 = Archives = 
 
 The following projects are complete or have stalled.
