@@ -26,44 +26,44 @@ Absolutely essential references:
 **[[Custom Category Sorting]]
 
 *D
-**Date-Based Stylesheets
-**Displaying CustomField Images Instead of Links
+**[[Date-Based Stylesheets]]
+**[[Displaying CustomField Images Instead of Links]]
 
 *E
-**Email List Of All Authors On A System
+**[[Email List Of All Authors On A System]]
 
 *G
-**Generating an alphabetized list of entries with headings
-**Google Charts
+**[[Generating an alphabetized list of entries with headings]]
+**[[Google Charts]]
 
 *I
-**Including Modules
-**Iterate Over a Hand Selected List of Entries
+**[[Including Modules]]
+**[[Iterate Over a Hand Selected List of Entries]]
 
 *L
-**Linking Category and Category-Yearly templates
-**Listing Archives on Index Templates
-**Listing pages and folders
+**[[Linking Category and Category-Yearly templates]]
+**[[Listing Archives on Index Templates]]
+**[[Listing pages and folders]]
 
 *M
-**Multiple Page Templates
+**[[Multiple Page Templates]]
 
 *N
-**Navigation
+**[[Navigation]]
 
 *R
-**Recent entries, per author
-**Related Entries
+**[[Recent entries, per author]]
+**[[Related Entries]]
 
 *S
-**Search Results: Adding Blog Link to Each Result
-**Sharing Content Between Pages
-**Sticky Entries
-**Styling the comments left by the author of a post differently
+**[[Search Results: Adding Blog Link to Each Result]]
+**[[Sharing Content Between Pages]]
+**[[Sticky Entries]]
+**[[Styling the comments left by the author of a post differently]]
 
 *T
-**Threaded Comments
+**[[Threaded Comments]]
 
 *U
-**Uniquely styling blogs, categories, or other sections of your site
-**Using local and Gravatar userpics
+**[[Uniquely styling blogs, categories, or other sections of your site]]
+**[[Using local and Gravatar userpics]]
