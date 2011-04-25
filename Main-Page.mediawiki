@@ -3,7 +3,7 @@
 * [http://www.movabletype.org/opensource/mailing-lists.html Movable Type Mailing LIsts]
 * '''[http://www.movabletype.com/support/ Official Movable Type Support]''' - [https://secure.sixapart.com/t/account Support Account Login]
 * [http://forums.movabletype.org/ Movable Type Community Forums]
-* [[MT_IRC|The MT IRC channel]]
+* [[MT-IRC|The MT IRC channel]]
 * [[Movable Type Consulting Companies]]
 
 == Community Projects ==
@@ -12,16 +12,16 @@
 * '''[http://www.thinkjam.org/zoptuno/projects/zh-movable-type.html Movable Type zh project]''' An Chinese translation and localization for Movable Type and MTOS by [http://www.thinkjam.org/zoptuno/ Ã¥Â¹Â³Ã§ÂÂÃ¤Â¸ÂÃ§Â¬Â]
 
 * [http://www.movabletype.org/opensource/contributions.html Contributing to Movable Type] - proposing, requesting, and submitting new features
-* [[Documentation:Contributing_to_Movable_Type| Documentation: Contributing to Movable Type]]
-* [[:Category:MTOS_Proposals|MTOS Proposals]]
+* [[Documentation:Contributing-to-Movable-Type| Documentation: Contributing to Movable Type]]
+* [[Category:MTOS-Proposals|MTOS Proposals]]
 * [[Improving MT Community Forums]] - Now that we've standardized on the MT.org Community Forums, let's make a list of the changes and improvements we'd like to see.
 
 
-* [[:Category:Template_Tag_Recipes|Template Tag Recipes]]
+* [[Category:Template-Tag-Recipes|Template Tag Recipes]]
 * [[Plugin Directory]] is a list of projects to improve and clean up the directory
 
 * [[Packaging Project|Debian and RPM Packages]]
-* [[Japan_Hackathon|Japan MTOS Hackathon 2008]]
+* [[Japan-Hackathon|Japan MTOS Hackathon 2008]]
 
 * [[Reducing Memory Footprints]]: A survey for reducing memory footprints of MT applications
 * [[Developer Documentation Project]]

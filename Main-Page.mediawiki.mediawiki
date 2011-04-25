@@ -13,11 +13,11 @@
 
 * [http://www.movabletype.org/opensource/contributions.html Contributing to Movable Type] - proposing, requesting, and submitting new features
 * [[Documentation:Contributing-to-Movable-Type| Documentation: Contributing to Movable Type]]
-* [[:Category:MTOS-Proposals|MTOS Proposals]]
+* [[Category:MTOS-Proposals|MTOS Proposals]]
 * [[Improving MT Community Forums]] - Now that we've standardized on the MT.org Community Forums, let's make a list of the changes and improvements we'd like to see.
 
 
-* [[:Category:Template-Tag-Recipes|Template Tag Recipes]]
+* [[Category:Template-Tag-Recipes|Template Tag Recipes]]
 * [[Plugin Directory]] is a list of projects to improve and clean up the directory
 
 * [[Packaging Project|Debian and RPM Packages]]

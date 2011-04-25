@@ -1,4 +1,4 @@
-This '''Code of Conduct''' covers your behavior as a '''member of the Movable Type Open Source community''', in any forum, mailing list, wiki, web site, IRC channel, install-fest, public meeting or private correspondence.  If you have any questions or are just interested in previous discussion of the Code, please see the [[Talk:Code_of_Conduct|Talk page]].
+This '''Code of Conduct''' covers your behavior as a '''member of the Movable Type Open Source community''', in any forum, mailing list, wiki, web site, IRC channel, install-fest, public meeting or private correspondence.  If you have any questions or are just interested in previous discussion of the Code, please see the [[Talk:Code-of-Conduct|Talk page]].
 
 = Use and attribution =
 
@@ -75,7 +75,7 @@ The following guidelines are specific to the bug tracking system at [http://bugs
 
 == The MTOS wiki ==
 
-The following guidelines are specific to the [[Main_Page|Movable Type wiki]].
+The following guidelines are specific to the [[Main-Page|Movable Type wiki]].
 
 ''To be added''
 
