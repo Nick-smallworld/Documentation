@@ -1,59 +1,19 @@
-skip to content
- Movable Type.org
- 
+Plugin Developers can hook into Movable Type's "Upgrade" system, which can perform "one-time" functions when a new (or upgraded) plugin is installed.  This goal of this page is to describe how you can use the system, and provides guidelines to help plugin developers define appropriate schema versions and upgrade task "version limits".
 
-    * Blog
-    * Plugins
-    * Documentation
-    * Wiki
-    * Open Source
-    * Download
+== Triggering an Upgrade ==
 
-Movable Type Wiki
-Editing Plugin Schemas, Versions, Upgrade Tasks
-From Movable Type
-Plugin Developers can hook into Movable Type's "Upgrade" system, which can perform "one-time" functions when a new (or upgraded) plugin is installed. This goal of this page is to describe how you can use the system, and provides guidelines to help plugin developers define appropriate schema versions and upgrade task "version limits". == Triggering an Upgrade == Upgrades are triggered by the "schema_version" defined by the plugin. Every time a page is loaded by MT, it will check to see if their are any plugins with a higher schema_version (compared to what was previously stored in the database). If it finds a higher (or brand new) schema_version number, the Upgrade manager is triggered (the "Time to Upgrade!" screen. Note that adding or incrementing a plugin's schema_version will ''only'' trigger the Upgrade screen. It will not, by itself, run any function or operation as part of the upgrade. In the simplest form, the Upgrade screen appears, and the schema_version is updated, and the user is thereby informed that the plugin has been upgraded. == Updating Database Schemas During an Upgrade == Probably the most common functions performed during an upgrade are changes to database schemas, either changes to existing tables or the creation of new ones. For clarity, we are not talking about adding/manipulating data stored in the database here, but rather the schemas: the tables, fields, field types defined in the database. One example is when a plugin ''extends'' an existing MT object by defining a new field for that object. Another example is when a plugin defines an entirely new MT object, thereby creating a new table in the database. When a plugin registers "object_types", the appropriate database update functions will be performed when an Upgrade is triggered. The Upgrade system checks to see if the schema changes have already been made, and if not, it will update the database accordingly. == Defining Upgrade Functions == If you want to perform other functions when a plugin is installed or upgraded, you can register "upgrade_functions" for this purpose. In most cases, these functions will modify some of the data already stored in the database, such as populating a new field/column for an existing object, or migrating data from one table/format to another. A key aspect of registering an upgrade function is setting the "version_limit" attribute. The version_limit defines when the function should be run. The version limit will be compared to the plugin's ''schema_version'' described above, and the function will fire ''only'' if the current schema_version is '''less than or equal to''' the version_limit. This important, because you may want to make sure that the upgrade function does not fire again in future.
+Upgrades are triggered by the "schema_version" defined by the plugin.  Every time a page is loaded by MT, it will check to see if their are any plugins with a higher schema_version (compared to what was previously stored in the database).  If it finds a higher (or brand new) schema_version number, the Upgrade manager is triggered (the "Time to Upgrade!" screen.
 
-Please note that all contributions to Movable Type may be edited, altered, or removed by other contributors. If you don't want your writing to be edited mercilessly, then don't submit it here.
-You are also promising us that you wrote this yourself, or copied it from a public domain or similar free resource (see Movable_Type:Copyrights for details). DO NOT SUBMIT COPYRIGHTED WORK WITHOUT PERMISSION!
-Summary:
+Note that adding or incrementing a plugin's schema_version will ''only'' trigger the Upgrade screen.  It will not, by itself, run any function or operation as part of the upgrade. In the simplest form, the Upgrade screen appears, and the schema_version is updated, and the user is thereby informed that the plugin has been upgraded.
 
- This is a minor edit  Watch this page
-Cancel | Editing help (opens in new window)
-Retrieved from "http://wiki.movabletype.org/Plugin_Schemas%2C_Versions%2C_Upgrade_Tasks"
-Views
+== Updating Database Schemas During an Upgrade ==
 
-    * Page
-    * Discussion
-    * Edit
-    * History
-    * Move
-    * Watch
+Probably the most common functions performed during an upgrade are changes to database schemas, either changes to existing tables or the creation of new ones. For clarity, we are not talking about adding/manipulating data stored in the database here, but rather the schemas:  the tables, fields, field types defined in the database.
 
-    * Nick smallworld
-    * My talk
-    * My preferences
-    * My watchlist
-    * My contributions
-    * Log out
+One example is when a plugin ''extends'' an existing MT object by defining a new field for that object.  Another example is when a plugin defines an entirely new MT object, thereby creating a new table in the database.  When a plugin registers "object_types", the appropriate database update functions will be performed when an Upgrade is triggered.  The Upgrade system checks to see if the schema changes have already been made, and if not, it will update the database accordingly.
 
-Navigation
+== Defining Upgrade Functions ==
 
-    * Main Page
-    * Community portal
-    * Current events
-    * Recent changes
-    * Random page
-    * Help
-    * Donations
+If you want to perform other functions when a plugin is installed or upgraded, you can register "upgrade_functions" for this purpose.  In most cases, these functions will modify some of the data already stored in the database, such as populating a new field/column for an existing object, or migrating data from one table/format to another.
 
-Search
- 
-Toolbox
-
-    * What links here
-    * Related changes
-    * Upload file
-    * Special pages
-
-Copyright 2007 - 2009 Six Apart Ltd. Some Rights Reserved
+A key aspect of registering an upgrade function is setting the "version_limit" attribute.  The version_limit defines  when the function should be run.  The version limit will be compared to the plugin's ''schema_version'' described above, and the function will fire ''only'' if the current schema_version is '''less than or equal to''' the version_limit.  This important, because you may want to make sure that the upgrade function does not fire again in future.
