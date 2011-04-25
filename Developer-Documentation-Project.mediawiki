@@ -1,3 +1,5 @@
+*Attention: This documentation has been migrated from old wiki.movabletype.com, so there might be an different points from th present.
+
 = Overview =
 
 This page serves as the home page for the set of projects aimed at improving the resources made available to the Movable Type Developer community.
