@@ -17,3 +17,4 @@ Place this in a Category archive template to generate links to Category-Yearly a
    <li><a href="http://example.com/my-category/2005/">2005</a></li>
  </ul>
 </pre>
+

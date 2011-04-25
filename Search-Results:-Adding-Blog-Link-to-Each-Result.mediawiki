@@ -48,3 +48,4 @@ Replace with this (adding conditional if show_blog is true):
   </span>
 
 [[Category: Template Tag Recipes]]
+

@@ -13,3 +13,4 @@ Transformation, or Transformer, callbacks are those you can use to control the M
 Of course, these callbacks are not new having been introduced originally in Kevin Shay's BigPAPI plugin a number of years ago and included in MT 3.3.  However, in MT 4 they have gotten a serious boost of power and precision thanks to methods which mimic the Javascript DOM methods and functionality.
 
 Please see the [[Transformer DOM methods]] page for details as they evolve...
+

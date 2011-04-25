@@ -34,3 +34,4 @@ Finally, when a user edits a template that contains a tag that is deprecated, a 
 * [http://bugs.movabletype.org/default.asp?81750 Bug 81750]
 
 [[Category:MTOS Proposals]]
+

@@ -15,3 +15,4 @@
 <li><p>Create a page with and enter &#8220;Lance Arthur&#8221; as the value of the &#8220;Partner Name&#8221; custom field.</p></li>
 <li>Publish and View!</li>
 </ol>
+

@@ -5,3 +5,4 @@ I don't have any substantive discussion about this because Javascript is not my 
 If documentation of that Javascript would be improved by this proposal as well, I doubly support it. 
 
 [[User:Jayallen|Jayallen]] 14:28, 29 April 2008 (PDT)
+

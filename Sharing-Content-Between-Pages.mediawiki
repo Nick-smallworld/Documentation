@@ -44,3 +44,4 @@ http://domain.com/partners/homer_simpson.html
 <li><p>Save the Partner page</p></li>
 <li>Rebuild the Industry page</li>
 </ol>
+

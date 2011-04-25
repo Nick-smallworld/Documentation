@@ -35,3 +35,4 @@ If your stylesheets are consistently changing every year, you can simplify all o
 </pre>
 
 But you will need to have a "stylesheet-2007.css", "stylesheet-2006.css", etc., for each year you have published entries.
+

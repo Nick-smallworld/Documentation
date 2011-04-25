@@ -106,3 +106,4 @@ With these guidelines, we hope to shape and nurture our growing community into a
 If there is anything that is not expressly covered in the Code of Conduct, you should use your better judgement (as in: hopefully better than the last time you used it) in order to decide whether something is truly representative of the spirit of the Project.
 
 As your contributions (whether they be emails, FogBugz cases or chatter on IRC) are usually archived for perpetuity, and read by far more people than will be actively involved in any one thread, a comment made in anger can have far-reaching consequences that you might not have thought about at the time. It is most important to remember that the moment you participate in a public discussion on an MTOS medium, you have made yourself a representative of the MTOS community. We hope that you will not take this responsibility lightly, and will prove to be a positive force in it.
+

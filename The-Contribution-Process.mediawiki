@@ -56,3 +56,4 @@ You now have a working prototype, or plugin that implements your proposed idea. 
 == Related Reading ==
 
 * [[The Lifecycle of a Feature Request]]
+

@@ -21,3 +21,4 @@ Enables user icon pictures from the Gravatar service.
     </mt:IfNonEmpty>
 
 [[Category: Template Tag Recipes]]
+

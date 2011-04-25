@@ -10,3 +10,4 @@ Which works fine, but what I really wanted was to apply Smartypants to get prope
 Which does exactly what I want. It also means I could do things like add asterisks around words in a title to make them bold or italic.
 
 [[Category: Template Tag Recipes]]
+

@@ -80,3 +80,4 @@ To use this recipe for Pages, simply convert the following:
 * EntryPermalink => PagePermalink
 
 [[Category: Template Tag Recipes]]
+

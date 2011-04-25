@@ -292,3 +292,4 @@ One point that I think has been left out is that HTML doesn't need white space r
 An alternative possibility is to make MT templates default to remove "unnecessary" whitespace.  And develop a way to preserve whitespace.
 
 [[User:BradChoate|Brad Choate]] 00:51, 21 November 2008 (UTC): This last suggestion is a red herring. If we were to make a template-level control that controlled how whitespace was handled, we'd still need some syntax to either selectively remove or preserve it when the user wants to override that default; you'd have the same need basically (in which case, I would recommend using a "+", like &lt;mt:Entries +&gt;).
+

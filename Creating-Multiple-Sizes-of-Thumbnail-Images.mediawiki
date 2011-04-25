@@ -7,3 +7,4 @@ You can generate different-sized thumbnails of images in MT4 using the AssetThum
      <a href="<mt:AssetURL>">full size</a>
 
 [[Category: Template Tag Recipes]]
+

@@ -58,3 +58,4 @@ There's a discussion page here for discussion.  Please use it or, preferably, ju
 == include_private="1" fails (for me) ==
 
 This modifier is poorly (or not at all) documented, but after failing to extract the @private tags to a variable, I eventually tested the <mt:EntryTags include_private="1"> method if it would return any @private tags and it didn't. (MT Pro 4.25, same with developer's version of MT 4.25). I use dynamic publishing for archive entries. I've seen this modifier quoted numerous times, but is it properly implemented?
+

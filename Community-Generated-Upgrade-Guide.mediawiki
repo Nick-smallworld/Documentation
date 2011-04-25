@@ -83,3 +83,4 @@ Once your upgrade is complete you may be interested in the following additional 
 *[http://www.movabletype.org/documentation/upgrade/updating-publishing-paths-and.html Updating Publishing Paths and URL Structures] 
 *[http://www.movabletype.org/documentation/upgrade/upgrading-movable-type-to-publ.html Upgrading Movable Type to Publish Pages] 
 *[http://www.movabletype.org/2007/08/reports_from_the_upgradeathon.html Reports from the MT4 Upgrade-a-thon]
+

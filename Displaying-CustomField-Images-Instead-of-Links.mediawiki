@@ -9,3 +9,4 @@ The default loop to display the values of custom fields for entries displays ima
 
 ==A better approach: use the <code>&lt;mt:EntryCustomFieldsAsset&gt;</code> tag==
 As outlined at [http://www.movabletweak.com/templates/image_customfields_in_movable.php Image CustomFields in Movable Type 4.1].
+

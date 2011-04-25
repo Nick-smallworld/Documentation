@@ -20,3 +20,4 @@ And the <a href="http://www.movabletype.org/documentation/appendices/tags/author
 --[[User:Plasticmind|Plasticmind]] 10:41, 13 March 2008 (PDT)
 
 [[Category: Template Tag Recipes]]
+
