@@ -43,7 +43,6 @@ Absolutely essential references:
 *L
 **[[Linking Category and Category-Yearly templates]]
 **[[Listing Archives on Index Templates]]
-**[[Listing pages and folders]]
 
 *M
 **[[Multiple Page Templates]]
@@ -52,7 +51,6 @@ Absolutely essential references:
 **[[Navigation]]
 
 *R
-**[[Recent entries, per author]]
 **[[Related Entries]]
 
 *S
