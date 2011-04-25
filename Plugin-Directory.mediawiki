@@ -1,7 +1,7 @@
 == Shortcuts ==
 
 * [http://plugins.movabletype.org Plugin Directory Homepage]
-* [http://plugins.movabletype.org/login Login/Register/Dashboard]
+* [http://www.movabletype.org/cgi-bin/mt/mt-cp.cgi?__mode=register&blog_id=32&return_to=http%3A%2F%2Fplugins.movabletype.org%2F Login/Register/Dashboard]
 
 == Reported Issues ==
 
