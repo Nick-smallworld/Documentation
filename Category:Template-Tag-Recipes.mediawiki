@@ -8,9 +8,9 @@ Absolutely essential references:
 * [http://movabletype.org/documentation/appendices/modifiers/ Template Tag Modifiers]
 
 
-=== A===
-* Applying Filters to Titles
-* Auto-expire entries
+* A
+  * Applying Filters to Titles
+  *Auto-expire entries
 
 === B ===
 * Breadcrumbs
