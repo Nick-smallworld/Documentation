@@ -9,61 +9,61 @@ Absolutely essential references:
 
 
 * A
-** Applying Filters to Titles
+**Applying Filters to Titles
 **Auto-expire entries
 
-=== B ===
-* Breadcrumbs
+*B
+**Breadcrumbs
 
-=== C ===
-* Commenter List
-* Cookbook
-* Cookbook:Category Archive Listing
-* Create a List of Authors in a Category
-* Creating Breadcrumb Trails
-* Creating Multiple Sizes of Thumbnail Images
-* Creating a Pages Change Log
-* Custom Category Sorting
+*C
+**Commenter List
+**Cookbook
+**Cookbook:Category Archive Listing
+**Create a List of Authors in a Category
+**Creating Breadcrumb Trails
+**Creating Multiple Sizes of Thumbnail Images
+**Creating a Pages Change Log
+**Custom Category Sorting
 
-=== D ===
-* Date-Based Stylesheets
-* Displaying CustomField Images Instead of Links
+*D
+**Date-Based Stylesheets
+**Displaying CustomField Images Instead of Links
 
-=== E ===
- * Email List Of All Authors On A System
+*E
+**Email List Of All Authors On A System
 
-=== G ===
-* Generating an alphabetized list of entries with headings
-* Google Charts
+*G
+**Generating an alphabetized list of entries with headings
+**Google Charts
 
-=== I ===
-* Including Modules
-* Iterate Over a Hand Selected List of Entries
+*I
+**Including Modules
+**Iterate Over a Hand Selected List of Entries
 
-=== L ===
-* Linking Category and Category-Yearly templates
-* Listing Archives on Index Templates
-* Listing pages and folders
+*L
+**Linking Category and Category-Yearly templates
+**Listing Archives on Index Templates
+**Listing pages and folders
 
-=== M ===
-* Multiple Page Templates
+*M
+**Multiple Page Templates
 
-=== N ===
-* Navigation
+*N
+**Navigation
 
-=== R ===
-* Recent entries, per author
-* Related Entries
+*R
+**Recent entries, per author
+**Related Entries
 
-=== S ===
-* Search Results: Adding Blog Link to Each Result
-* Sharing Content Between Pages
-* Sticky Entries
-* Styling the comments left by the author of a post differently
+*S
+**Search Results: Adding Blog Link to Each Result
+**Sharing Content Between Pages
+**Sticky Entries
+**Styling the comments left by the author of a post differently
 
-=== T ===
-* Threaded Comments
+*T
+**Threaded Comments
 
-=== U ===
-* Uniquely styling blogs, categories, or other sections of your site
-* Using local and Gravatar userpics
+*U
+**Uniquely styling blogs, categories, or other sections of your site
+**Using local and Gravatar userpics
