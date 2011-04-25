@@ -14,5 +14,4 @@ The following projects are complete or have stalled.
 '''Stalled'''
 
 * [[Plugin Schemas, Versions, Upgrade Tasks]] - Guidelines for how and when to trigger the "Upgrade" system, including changes to database schemas and upgrade functions.
-* [[Developer Guide TOC]]
 
