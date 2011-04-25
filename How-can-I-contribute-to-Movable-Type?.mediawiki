@@ -1,6 +1,6 @@
 __NOTOC__
 
-Movable Type and MTOS is open to everyone. Contributions are ''not'' restricted to developers alone. Literally anyone can contribute according to their knowledge, means and time.
+Movable Type and MTOS are open to everyone. Contributions are ''not'' restricted to developers alone. Literally anyone can contribute according to their knowledge, means and time.
 
 Every aspect of Movable Type can benefit from another person loaning their time to the project. If you are looking to participate in some way here are just some of the many ways you can help:
 
