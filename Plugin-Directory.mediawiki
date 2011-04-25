@@ -8,59 +8,6 @@
 
 Have you encountered an issue using the plugin directory? Please log a change request or bug report below:
 
-=== Bugs ===
-
-* Even logged in, I have no option to comment. --DW
-* Any recommendations on what tags to attach to an author's profile? --DW
-* It looks like more than one plugin author has documentation on the same page as the plugin home page. Should we enter the same URI for both fields? --DW
-** Yep go ahead, I'd rather both links point to the same page than not having one of the links! --[[User:Arvind|Arvind]] 00:06, 8 August 2007 (PDT)
-* When browsing by tag or category, plugins with star ratings have double/ghosted stars in EI7 - Doug Schaefer
-* Typekey login is offered but not enabled. Loggin into Typeky gives me the "feature not enabled" message - Doug Schaefer
-* MT sign in is broken - It doesn't recognize my username and password.  Is this login different from the MT.org login? It won't let me create a new account with my MT.org account name, says it's already taken. - Doug Schaefer
-* Password recovery is flawed.  I need to remember a 'password recovery phrase' in order to recover my 'password'.  Seems silly to think if I can't remember one I'll be able remember the other. - Doug Schaefer
-* The footer of [http://plugins.movabletype.org/cgi-bin/mt4community/plugins/ProNet/pronet.cgi this page] is an old list that includes "Known Issues" and "Changelog", both of which are broken links.  --[[User:JayLevitt|JayLevitt]]
-* On the profile page, group article titles under the particular blog it was posted to.  (For example, Learning Movable Type with a list of articles posted to it instead of a LMT - Article name, LMT - Article name, etc.) -- JG
-* On the profile page, plugin descriptions are getting cut off... this is fine, so long as we end with an ellipses that links to the actual plugin page.
-* On the profile page, the LinkedIn badge is causing some kind of security certificate warning on FF/PC. -- JG
-* Maybe we could paginate entry article list? (Elise!) -- JG
-* Reviews don't work because there's no place to login. -- JG
-
-=== Fixed Bugs ===
-
-* <strike>the plugin directory appears to require a home page for the plugin, but it isn't indicated as a required field on the form</strike> (brad choate)
-* <strike>Tag cloud is broken in IE7 (single line, gives a hor. scrollbar)</strike>  (Doug Schaefer)
-* <strike>Featured Plugins box is broken in IE7</strike> (Doug Schaefer)
-* <strike>Star rating on main page doesn't match rating on plugin page</strike> (Doug Schaefer)
-* <strike>the "Plugins" link (in the top, black header area) and the "Plugin Directory" link (in the blue below the black) go to different places.</strike> --Dan Wolfgang
-* <strike>Ratings: If I've already rated a plugin, I'm told that, followed by an "undefined" error. On plugins.movabletype.org, that shows off some CSS trouble: the rating text appears layered below the stars.</strike> --DW
-* <strike>The "View Profile" links is busted. But I'm also left wondering if there are even going to be profiles? I would think the plugin's byline would take me to the profile, not the author's website.</strike> --DW
-** The View Profile link has been hidden temporarily. It'll be back when we launch the ProNet Member Directory (and plugin author links will point to a member profile) --[[User:Arvind|Arvind]] 00:06, 8 August 2007 (PDT)
-* <strike>Speaking of which, how can I set/change the URI associated with my name? The weblog field in my profile doesn't seem to do it--my profile link goes to eatdrinksleepmovabletype.com, but the URI attached to my name is danandsherree.com...</strike> --DW
-** Website URL field added --[[User:Arvind|Arvind]] 00:06, 8 August 2007 (PDT)
-* <strike>If the plugin's author field is blank, there's just a "by" printed on the outputted page; can we fill this in?</strike> --DW
-** A double bug! Fixed this on the plugin directory. For those volunteering to help clean out the plugin directory, 3 new fields will appear whilst editing the plugin to enter the plugin author's details. --[[User:Arvind|Arvind]] 00:33, 8 August 2007 (PDT)
-* <strike>HTML entities don't seem to work well in the Description field. On save, for example, "&amp;lt;" gets replaced with "<."</strike> --DW
-* <strike>There's some sort of weirdness with HTML and the editing interface. Example: [http://plugins.movabletype.org/allconsuming/](All Consuming plugin) shows a bunch of HTML, but none of it appears on the editing interface.</strike>
-** Fixed, the entire description that appears on a plugin profile should be editable by volunteers --[[User:Arvind|Arvind]] 00:46, 8 August 2007 (PDT)
-
-=== Feature Requests ===
-
-* shorter and friendly url for .../pronet.cgi
-* Define what makes a plugin 'Featured' or 'Recommended'. (Doug Schaefer)
-* Have a standard set of items (Version, compatibility, License, Homepage, Documentation, Support, ??) in the 'Plugin Information' section on the right.  Those should be listed for every plugin, with something like 'Not Available' or 'Not supplied' if the information wasn't given.  Would help me as a user see how 'fleshed out' if you will the plug in is.  Leaving the item off doesn't communicate as well as having it there and shown as 'Not Supplied'(Doug Schaefer)
-* Show a number next to the stars indicated how many have rated it.  (Doug Schaefer)
-* I'd like to see another Specializations option: Movable Type Deployment. --Dan Wolfgang
-* -> Seconded!  I do more and more deployments/implementations/integrations lately and less programming. -- Chad Everett
-* <strike>when my plugin is unapproved, I think it should show up on my List Your Plugins screen, probably with a red "x" rather than a green check... just so I know they're in there.</strike> --DW
-** Unapproved plugins should display the clock/pending icon from MT. If this isn't what you're seeing, please update this page! --[[User:Arvind|Arvind]] 00:06, 8 August 2007 (PDT)
-* <strike>Some info about the icon and screenshot fields should be displayed: format and size. Obviously, they're being resized as necessary, but if I'm going to the trouble of creating them, I will create them in the correct size if you tell me.</strike> --DW
-** Added a hint to the plugin icon field. With screenshots pretty much ''anything'' goes because we resize them to 100px high for the plugin profiles and 100px wide for the ProNet CP. --[[User:Arvind|Arvind]] 00:06, 8 August 2007 (PDT)
-* <strike>I think the plugin icon should be 16 x 16 pixels (not resized to 25 x 25) because, well, that's the icon size for the plugin.</strike> --DW
-* There should ba a link to create an account from the individual plugin pages. There's only a login link - Doug Schaefer
-* When creating an account the page says 'Become a Registered Plugin Developer'.  What if I'm just a user that wants to leave a comment?  There should be more clarity that more than just developers are welcome to create an account. - Doug Schaefer
-* Clarify a review vs. a star rating.  I see plugins with star ratings but '0 reviews'.  That's confusing.  Also, show me how many folks rated it.  One rating at 5 stars is less valuable than 50 ratings that average to 4.5 stars. - Doug Schaefer
-* Plugin information / compatibility should also include if it works with dynamic publishing or not. A lot of plugins don't support dynamic publishing and it's really frustrating to download them, install them and then find out nothing works. A filter on static/dynamic publishing for plugins would also be handy around search. - Adrian Sevitz
-
 == Plugins to Remove ==
 
 If you feel there is a plugin that should be removed, please nominate it below.
