@@ -1,5 +1,4 @@
 http://www.textletoorlatar.com 
-[[Category: Template Tag Recipes]]
 
 <pre>
  <mt:Multiblog include_blogs="1,2,3">
