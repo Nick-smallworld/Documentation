@@ -20,7 +20,6 @@ Movable Type is available in many languages.
 
 == Movable Type Open Source ==
 
-* [[LocalizedPackages/MTOS-4.1]]  A list of (Unofficial) Localized Packages
 * '''[http://www.thinkjam.org/zoptuno/projects/zh-movable-type.html Movable Type zh project]''' An Chinese translation and localization for Movable Type and MTOS by [http://www.thinkjam.org/zoptuno/ 平生一笑]
 
 == Movable Type 3.x ==
