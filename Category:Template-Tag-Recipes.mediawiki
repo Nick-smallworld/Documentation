@@ -18,7 +18,6 @@ Absolutely essential references:
 
 *C
 **[[Commenter List]]
-**[[Cookbook]]
 **[[Cookbook:Category Archive Listing]]
 **[[Create a List of Authors in a Category]]
 **[[Creating Breadcrumb Trails]]
