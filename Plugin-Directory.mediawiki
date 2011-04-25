@@ -12,13 +12,10 @@ Have you encountered an issue using the plugin directory? Please log a change re
 
 If you feel there is a plugin that should be removed, please nominate it below.
 
-* <enter name here>
 
 == Plugins to Add ==
 
 If you know of a plugin that should be added to the directory, please nominate it below.
-
-* <enter name here>
 
 == Open Source Plugins ==
 
