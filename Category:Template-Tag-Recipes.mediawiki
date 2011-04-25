@@ -9,8 +9,8 @@ Absolutely essential references:
 
 
 * A
-  * Applying Filters to Titles
-  *Auto-expire entries
+** Applying Filters to Titles
+**Auto-expire entries
 
 === B ===
 * Breadcrumbs
