@@ -7,80 +7,63 @@ Absolutely essential references:
 * [http://movabletype.org/documentation/appendices/tags/ Movable Type Template Tag Reference]
 * [http://movabletype.org/documentation/appendices/modifiers/ Template Tag Modifiers]
 
-A
+
+=== A===
 * Applying Filters to Titles
 * Auto-expire entries
 
-B
+=== B ===
+* Breadcrumbs
 
-    * Breadcrumbs
+=== C ===
+* Commenter List
+* Cookbook
+* Cookbook:Category Archive Listing
+* Create a List of Authors in a Category
+* Creating Breadcrumb Trails
+* Creating Multiple Sizes of Thumbnail Images
+* Creating a Pages Change Log
+* Custom Category Sorting
 
-C
+=== D ===
+* Date-Based Stylesheets
+* Displaying CustomField Images Instead of Links
 
-    * Commenter List
-    * Cookbook
-    * Cookbook:Category Archive Listing
-    * Create a List of Authors in a Category
-    * Creating Breadcrumb Trails
-    * Creating Multiple Sizes of Thumbnail Images
-    * Creating a Pages Change Log
+=== E ===
+ * Email List Of All Authors On A System
 
-	
-C cont.
+=== G ===
+* Generating an alphabetized list of entries with headings
+* Google Charts
 
-    * Custom Category Sorting
+=== I ===
+* Including Modules
+* Iterate Over a Hand Selected List of Entries
 
-D
+=== L ===
+* Linking Category and Category-Yearly templates
+* Listing Archives on Index Templates
+* Listing pages and folders
 
-    * Date-Based Stylesheets
-    * Displaying CustomField Images Instead of Links
+=== M ===
+* Multiple Page Templates
 
-E
+=== N ===
+* Navigation
 
-    * Email List Of All Authors On A System
+=== R ===
+* Recent entries, per author
+* Related Entries
 
-G
+=== S ===
+* Search Results: Adding Blog Link to Each Result
+* Sharing Content Between Pages
+* Sticky Entries
+* Styling the comments left by the author of a post differently
 
-    * Generating an alphabetized list of entries with headings
-    * Google Charts
+=== T ===
+* Threaded Comments
 
-I
-
-    * Including Modules
-    * Iterate Over a Hand Selected List of Entries
-
-L
-
-    * Linking Category and Category-Yearly templates
-    * Listing Archives on Index Templates
-    * Listing pages and folders
-
-	
-M
-
-    * Multiple Page Templates
-
-N
-
-    * Navigation
-
-R
-
-    * Recent entries, per author
-    * Related Entries
-
-S
-
-    * Search Results: Adding Blog Link to Each Result
-    * Sharing Content Between Pages
-    * Sticky Entries
-    * Styling the comments left by the author of a post differently
-
-T
-
-    * Threaded Comments
-
-U
-
-    * Uniquely styling blogs, categories, or other sections of your site
-    * Using local and Gravatar userpics
+=== U ===
+* Uniquely styling blogs, categories, or other sections of your site
+* Using local and Gravatar userpics
