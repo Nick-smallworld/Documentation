@@ -9,5 +9,3 @@ Those are just some of the question people wanting to contribute ask themselves.
 * [[How can I contribute to Movable Type?]]
 * [[The Contribution Process]]
 * [[Coding Guidelines]]
-[[Category:Process]]
-
