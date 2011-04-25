@@ -1,3 +1,5 @@
+*Attention: This documentation has been migrated from old wiki.movabletype.org, so there might be a different point from a present process.
+
 The following document outlines the basic process of idea, from conception to implementation to release. 
 
 == The Process ==
@@ -53,7 +55,4 @@ Iterate.
 
 You now have a working prototype, or plugin that implements your proposed idea. At this point a decision can more easily be made as to whether your idea can or should be folded into the core. Suffice it to say that the higher the quality of the plugin, the more likely it will be folded into the core (if that is your end game).
 
-== Related Reading ==
-
-* [[The Lifecycle of a Feature Request]]
 
