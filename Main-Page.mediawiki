@@ -8,7 +8,7 @@
 == Community Projects ==
 
 * [[Translation and Localization]]
-* '''[http://www.thinkjam.org/zoptuno/projects/zh-movable-type.html Movable Type zh project]''' An Chinese translation and localization for Movable Type and MTOS by [http://www.thinkjam.org/zoptuno/ Ã¥Â¹Â³Ã§ÂÂÃ¤Â¸ÂÃ§Â¬Â]
+* '''[http://www.thinkjam.org/zoptuno/projects/zh-movable-type.html Movable Type zh project]''' An Chinese translation and localization for Movable Type and MTOS by [http://www.thinkjam.org/zoptuno/ 平生一笑]
 
 * [http://www.movabletype.org/opensource/contributions.html Contributing to Movable Type] - proposing, requesting, and submitting new features
 * [[Documentation:Contributing-to-Movable-Type| Documentation: Contributing to Movable Type]]
