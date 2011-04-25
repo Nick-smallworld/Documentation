@@ -2,7 +2,6 @@
 
 * [http://plugins.movabletype.org Plugin Directory Homepage]
 * [http://plugins.movabletype.org/login Login/Register/Dashboard]
-* [http://www.sixapart.com/pronet/plugins/ Old Directory]
 
 == Reported Issues ==
 
