@@ -11,3 +11,4 @@ Display a list of the 10 most recent posts from each author.
     </ul>
 </mt:Authors>
 </pre>
+[[Category: Template Tag Recipes]]
