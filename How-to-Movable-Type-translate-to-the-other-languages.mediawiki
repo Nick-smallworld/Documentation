@@ -1,0 +1,28 @@
+All the phrases MT4 is using and needs translation can be found in MT_DIR/lib/MT/L10N/LANG.pm. You can start by picking up a file from fr, nl, de, es or ja.pm, and replace all the right hand side phrases which are translated into your language. We are not using translation specific tool to do this, so you only need a good editor to start. 
+
+There are bracketed parameter placeholders here and there. They are replaced with certain values at runtime. I believe you can assume how they will be replaced many of those parameters by guessing from the phrases, but if you can't, you can find the phrase in the file which is commented out in the translation files. So for example, you see this:
+ 
+<code><nowiki>  'By [_1] on [_2]' => '[_2] [_1]',</nowiki></code >
+
+In the translation file, you can find in which file the phrase is: 
+
+<code>   ## default_templates/entry_metadata.mtml<br>
+<nowiki>  'By [_1] on [_2]' => '[_2] [_1]',
+</nowiki></code>
+
+
+When you look at the file, you find this: 
+
+<code><nowiki>  <__trans phrase="By [_1] on [_2]" params="<$MTEntryAuthorLink show_email="0"$>%%<$MTEntryDate format="%x %X"$>">
+</nowiki></code>
+
+That means that [_1] will be replaced by author name (anchored to author's profile), and [_2] will be replaced by the date entry was authored on. 
+
+There are a few phrase which starts with an underscore and all capital letters. You can find what phrase is that in MT_DIR/lib/MT/L10N/en_us.pm. For example, translation files have this: 
+
+<code>  '_NOTIFY_REQUIRE_CONFIRMATION' => 'translated phrase here',</code>
+You can find this in en_us.pm: 
+<code>   '_NOTIFY_REQUIRE_CONFIRMATION' => 'An email has been sent to [_1]. To complete your subscription,
+please follow the link contained in that email. This will verify that the address you provided is correct and belongs to you.', </code>
+
+This is the English phrase to show up when you are using English language in MT.

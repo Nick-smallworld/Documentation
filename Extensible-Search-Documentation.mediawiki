@@ -1,0 +1,540 @@
+= TagSearch =
+== Description ==
+TagSearch extension to mt-search allows Movable Type to search for entries by tags.
+
+TagSearh extension to mt-search is included in the distribution.
+
+== Setting Up ==
+Nothing.  Movable Type uses it to search by tags by default.
+
+== Search Syntax ==
+TagSearch allows the following syntax in url-encoded "tag" parameter.  
+
+"MovableType,TypePad,Vox" matches objects which has either MovableType, TypePad, or Vox tag.
+
+"MovableType+TypePad+Vox" matches objects which has all three tags.
+
+"TypePad OR Vox AND "Movable Type"" matches objects which has either TypePad or Vox tag *and* "Movable Type" tag.
+
+== Technical Description ==
+TagSearch leverages Movable Type's standard extension method to MT::App which is registry based addition of "mode".  In MT::App::Search::core_methods, the mode "tag" redirects to MT::App::Search::TagSearch::process.  When the request such as "mt_search.cgi?__mode=tag&search=Tag1" comes in, MT::App::Search redirects the request to MT::App::Search::TagSearch::process.
+
+In the process method the flow is mostly the same as in the default search, but is different when it comes to creating search terms and args, to populate entries based on tags.
+
+TagSearch is therefore an example of how to extend mt-search by adding another "mode" to it so your plugin can add a behavior to MT::App::Search.
+
+= FreeTextSearch =
+== Description ==
+FreeText extension to mt-search allows Movable Type installation to leverage MySQL's freetext index.  Mt-search can find search results faster when using freetext index than when using the default query which uses LIKE search in SQL queries.
+ 
+FreeText extension to mt-search is included in the distribution.  
+
+== Sytem Requirements ==
+FreeText extension requires MySQL 4.1 or newer.  Note freetext index is supported in MySQL 4.0, but Movable Type uses BOOLEAN MODE syntax to search for in the database, which was added to MySQL 4.1.
+
+== Setting Up ==
+# Add configuration to use mt-ftsearch.cgi in place of mt-search.cgi.
+## Add the following configuration to mt-config.cgi
+  SearchScript mt-ftsearch.cgi
+# Create fulltext index on your MySQL database
+## By default, Movable Type searches for the query in keywords, text, text_more and title columns in the table mt_entry.  Therefore, you have to create a fulltext index that covers all of the columns.  Syntax will be like below.
+  CREATE FULLTEXT INDEX mt_entry_fulltext_index ON mt_entry (entry_keywords, entry_text,entry_text_more, entry_title);
+# Republish index templates
+## Or more specifically, rebuild all the templates that refers to <MTSearchScript>, because the name was changed to mt-ftsearch.cgi.
+# You are all set!
+
+== Search Syntax ==
+In the fulltext search, you can use the syntax that is supported by MySQL's Boolean Mode search syntax.  For exampl, specify '"Movable Type" -WordPress' to search for entries which contain Movable Type but do not contain WordPress.  For more information, please consult to MySQL documentation [1].
+
+[1] http://dev.mysql.com/doc/refman/5.0/en/fulltext-boolean.html
+
+== Technical Description ==
+FullText search leverages template method pattern offered in the new search framework.  As you can see, MT::App::Search::FullText consisuts of one method, query_parse.  The method set up "args" parameter in a hash which contains which columns should be included in the fulltext search.
+All of the other heavy lifting, including caching, loading of search results template, rendering and the actual searching and fetching of result entries, are done in MT::App::Search, the parent class of MT::App::Search::FullText.
+
+Because MT::App::Search::FullText inherits from MT::App::Search (thus it is another type of MT::App that must be instantiated to work), mt-ftsearch.cgi passes MT::App::Search::FullText class to Bootstrap, which instantiates the class.
+
+FreeText is therefore an example of how to extend mt-search by creating a new class and inherting from MT::App::Search to leverage the most out of it but changes its behavior a little.
+
+= Throttling =
+== Description ==
+By default, mt-search throttles search requests that takes more than five seconds to complete[1].  You can increase or decrease the number of seconds before throttling occurs by specifying the number in SearchThrottleSeconds directive in mt-config.cgi.
+
+In addition, you as a plugin developer can add other methods to throttle requests, or can completely replace it.
+
+[1] This uses SIGALRM and doesn't work on Windows.
+
+== How Throttling Works ==
+MT::App::Search::process method which is the starting point of the search request, calls throttle_control method before processing the request.  MT::App::Search::throttle_control method simply calls prepare_throttle callback and returns the result of it.  So, if one of the callbacks registered to prepare_throttle sets "0" in the "result" argument, the request is immediately throttled in this phase.  You can specify error messages in the callback to return to the client.
+
+By default, MT::App::Search registers a method to prepare_throttle callback.  The method, _default_throttle, verifies the request so it won't throttle the request if it's from a user already loggedin, or the IP address is registered in the whitelist.  If none of these criteria meets, the method sets up SIGALARM in five seconds, in which the process simply dies.
+
+_default_throttle does not touch the "result" argument so it won't stop request from being processed.  However, if any of the processing before search results are rendered to the client takes five seconds, SIGALARM kicks off and the process dies.
+
+== Creating your own throttling methods ==
+Plugins can register their methods to "prepare_throttle" callback to have chance to add their own mechanism of throttling.  For example, you can add a throttling mechanism that checks uptime of the server to see if the server is in heavy load recently.  If it is, the plugin can return "0" to the result to stop further processing of mt-search.
+
+The default callback (_default_throttle) is registered in priority 5.  Therefore, your plugin can add another throttling mechanism and take precedence if you add it in priority 4.  In this case, if you add the "uptime throttle" in priority 4, your plugin will be called before the default throttle method.  If your plugin returns 0, no further processing occurs and it saves load on the server.
+
+== Example Plugin ==
+ package MT::Plugin::SearchThrottle1;
+ 
+ use strict;
+ use MT 4;
+ use base 'MT::Plugin';
+ our $VERSION = '1.0';
+ 
+ my $plugin = MT::Plugin::SearchThrottle1->new({
+     name        => "SearchThrottle1",
+     version     => $VERSION,
+     registry => {
+         callbacks => {
+             'cb1' => {
+                 callback => 'MT::App::Search::prepare_throttle',
+                 handler => \&throttle_by_uptime,
+                 priority => 3,
+             },
+         },
+     },
+ });
+ 
+ MT->add_plugin($plugin);
+ 
+ sub throttle_by_uptime {
+     my ( $cb, $app, $result, $messages ) = @_;
+     # Don't bother if a callback proiritized higher
+     # set up its throttle already
+     return 1 if defined $$result;
+     my $uptime = `uptime`;
+     my @uptime = split ',', $uptime;
+     my $up5 = $uptime[3];
+     chomp $up5;
+ 
+     if ( $up5 > 0.1 ) {
+         push @$messages, $app->translate('Under heavy load');
+         $$result = 0;
+     }
+     1;
+ }
+ 1;
+
+= Safe MultiBlog Search =
+== Description ==
+Mt-search by default searches for entries from multiple blogs, based on IDs specified in IncludeBlogs query parameter.  However, it can't be used to protect private blogs from being searched for because blog readers can easily modify URL to add blog id that is not included in the original query.  You can use ExcludeBlogs and NoOverride directives wisely to prevent it from happnening, but it will often be too restrictive so even administrators can't search in private blogs, let alone tag based entry listing which uses mt-search.
+
+== How the new search may be used to solve the issue ==
+MT::App::Search now calls a callback called "create_blog_list".  No method is registered to the callback by default.
+
+MT::App::Search executes the callback before processing IncludeBlogs et al.  If there is no evidence that a plugin created the list of blogs to search for, MT::App::Search falls back to the default behavior which is the same as in the legacy mt-search, by looking at IncludeBlogs, ExcludeBlogs and NoOverride.
+
+A plugin can register its method to the callback to create the list of blogs.  Callback has to return the result in $list argument that is a reference to a hash which is sturctrued like the following, where 1 and 3 are the IDs of the blogs.
+
+ $list = {
+   '1' => 1,
+   '3' => 1,
+ };
+
+== Example Plugin - SearchKey ==
+SearchKey plugin consists of a template tag (SearchKey) and a callback method to create_blog_list.  SearchKey plugin works as follows.
+# Add SearchKey template tag to the HTML form that has IncludeBlogs, with include_blogs argument in it.  IncludeBlogs and include_blogs must have the same IDs.
+ &lt;div id="gamma"&gt;
+   &lt;div id="gamma-inner"&gt;
+   &lt;div class="widget-search widget"&gt;
+   &lt;h3 class="widget-header"&gt;Search&lt;/h3&gt;
+   &lt;div class="widget-content"&gt;
+       &lt;form method="get" action="&lt;MTCGIPath&gt;&lt;MTSearchScript&gt;"&gt;
+           &lt;input type="text" id="search" class="ti" name="search" value="" /&gt;
+ 
+           &lt;input type="hidden" name="IncludeBlogs" value="1,2,3" /&gt;
+           '''&lt;input type="hidden" name="SearchKey" value="&lt;MTSearchKey include_blogs="1,2,3&gt;" /&gt;'''
+           &lt;input type="hidden" name="limit" value="20" /&gt;
+ 
+           &lt;input type="submit" accesskey="4" value="Search" /&gt;
+       &lt;/form&gt;
+   &lt;/div&gt;
+ &lt;/div&gt;
+# Upon rebuilding, MTSearchKey template tag is evaluated and generate a sequence of numbers.  It is a SHA-1 hash salted with the value of SecretToken that is automatically generated in Movable Type.
+# When a request comes in, create_blog_list callback is executed and the plugin's own method runs.  In the method, the value from IncludeBlogs are used to create another SHA-1 hash and compared to the value of SearchKey parameter.  If they match, IncludeBlogs is not modified from the original, thus it is okay to proceed.  If they don't match, it means IncludeBlogs was modified to something else from the original.  The plugin returns 0 to stop processing of the request.
+
+=== Code ===
+==== config.yaml ====
+ name: SearchKey
+ id: searchkey
+ version: 1.0
+ callbacks:
+     search_blog_list: $searchkey::SearchKey::create_blog_list
+ tags:
+     function:
+         SearchKey: $searchkey::SearchKey::hdlr_searchkey
+ 
+==== lib/SearchKey.pm ====
+ package SearchKey;
+ 
+ use strict;
+ use MT::Util qw( perl_sha1_digest_hex );
+ 
+ sub hdlr_searchkey {
+     my ( $ctx, $args, $cond ) = @_;
+ 
+     my $include_blogs = $args->{include_blogs};
+     return q() unless $include_blogs;
+ 
+     my @blogs = split ',', $include_blogs;
+     @blogs = sort { $a <=> $b } @blogs;
+     my $key = perl_sha1_digest_hex(
+         join(',', @blogs) . $ctx->{config}->SecretToken
+     );
+     $key;
+ }
+ 
+ sub create_blog_list {
+     my ( $cb, $app, $list, $processed ) = @_;
+ 
+     my $include_blogs = $app->param('IncludeBlogs');
+     my $searchkey     = $app->param('SearchKey');
+     return 0 unless $include_blogs && $searchkey;
+ 
+     my @blogs = split ',', $include_blogs;
+     @blogs = sort { $a <=> $b } @blogs;
+     my $key = perl_sha1_digest_hex(
+         join(',', @blogs) . $app->config->SecretToken
+     );
+     return 0 if $key ne $searchkey;
+ 
+     $list->{ $_ } = 1 foreach @blogs;
+     $$processed = 1;
+     1;
+ }
+ 
+ 1;
+
+= Search for Authors =
+== Description ==
+Mt-search searches for entries and pages by default.  However, a plugin can easily add what to search without any Perl code to write.
+
+== Adding search types ==
+If you want to add author search to mt-search, your plugin should have the following registry settings:
+ id: authorsearch
+ name: Author Search
+ version: 1.0
+ 
+ applications:
+     new_search:
+         default:
+             types:
+                 author:
+                     columns:
+                         name: like
+                         nickname: like
+                         email: 1
+                         url: 1
+                     sort: created_on
+                     terms:
+                         status: 1
+
+* "new_search" is the application id of the mt-search.
+* "default" is the mode of the application in which the search is executed.
+* "types" is the key to the registry in which you can add a search type.
+* "author" is what to search for.  This corresponds to the key of the object types registry.
+* "columns" is where in the database table to search for the keyword.
+** you can specify either "like" or "1" to the name of the column.  In this example, name and nickname columns are searched using LIKE query, while email and url columns are searched in exact match.  For example, the query keyword "Melody" yields the following query:
+
+  SELECT ... FROM mt_author 
+  WHERE author_status = 1
+  AND ( author_name LIKE '%Melody%'
+   OR author_nickname LIKE '%Melody%'
+   OR author_email = 'Melody'
+   OR author_url = 'Melody' )
+   
+
+* "sort" is to specify what column to sort by default.
+* "terms" is to specify the default query terms.  Note it has "status: 1" in the above example, thus the query example above has "author_status = 1" in it.
+
+== Add search template ==
+In order to render search results the way you want, a search template is also required.  For example, you can prepare a template like below and save it in MT_DIR/search_templates directory to show author name and his/her entries.
+
+ &lt;MTSearchResults&gt;
+    &lt;MTAuthorName setvar="author"&gt;
+      &lt;p&gt;&lt;MTAuthorDisplayName&gt;:&lt;/p&gt;
+      &lt;MTEntries author="$author" lastn="10" include_blogs="all"&gt;
+          &lt;MTEntryTitle&gt;&lt;br /&gt;
+      &lt;/MTEntries&gt;
+    &lt;hr /&gt;
+ &lt;/MTSearchResults&gt;
+
+== Define new template in mt-config.cgi ==
+In order to put nickname to the template above, you have to add two lines in mt-config.cgi like below.  In this case, it is assumed that the template above is saved in search_templates directory with the name "author_listing.tmpl".
+
+ SearchAltTemplate feed results_feed.tmpl
+ SearchAltTemplate authors author_listing.tmpl
+
+Note that "feed" is also added.  This is to avoid the default value to the [http://www.movabletype.org/documentation/appendices/config-directives/searchalttemplate.html SearchAltTemplate] config directive not be overwritten.
+
+== Constructing search query ==
+With these settings, you can construct search query like below to search for authors.
+
+ <MTCGIPath><MTSearchScript>?search=Melody&limit=20&type=author&Template=authors
+
+Note these two parameters: type=author and Template=authors.
+
+= Comment Pagination by mt-search =
+MT::App::Search's ability to add what to search for can be leveraged further to allow pagination of comments in the entry archive template.
+
+== Modify Comments template module ==
+To support Ajax based comment pagination, Comments module has to be modified.  Open default_templates/comments.mtml in an editor and find <MTIfCommentsActive> which is on the fourth line.
+
+Start selecting lines immediately below the line (iow, from the fifth line), all the way down to the closing </MTComments> tag and remove all the selected lines.
+
+Add the following template snippet to the place where you just removed, that is, below <MTIfCommentsActive> and up above the <mt:ignore>.
+
+ &lt;div id="comments" class="comments"&gt;
+     &lt;script type="text/javascript"&gt;
+     /* &lt;![CDATA[ */
+     var offset = 5;
+     function getComments(page) {
+         var url = '&lt;MTCGIPath&gt;&lt;MTSearchScript&gt;?search=&lt;MTEntryID&gt;&IncludeBlogs=&lt;MTEntryBlogID&gt;&limit=5&type=comment&Template=comments&format=jsc';
+ if ( page != undefined ) {
+   this_offset = (page - 1) * offset;
+   if ( offset &gt; 0 )
+     url += '&offset=' + this_offset;
+ }
+ 
+         var xh = mtGetXmlHttp();
+         if (!xh) return false;
+ 
+         xh.open('GET', url, true);
+         xh.onreadystatechange = function() {
+             if ( xh.readyState == 4 ) {
+                 if ( xh.status && ( xh.status != 200 ) ) {
+                     // error - ignore
+                 } else {
+                     try {
+                         var page_results = eval("(" + xh.responseText + ")");
+                         if ( page_results['error'] == null ) {
+ var div = document.getElementById('comments_content');
+ if ( div )
+   div.innerHTML = page_results['result']['content'];
+                         }
+                     } catch (e) {
+                     }
+                 }
+             }
+         };
+         xh.send(null);
+     }
+     getComments(1);
+     /* ]]&gt; */
+     &lt;/script&gt;
+ 
+     &lt;h2 class="comments-header"&gt;&lt;$MTEntryCommentCount singular="&lt;__trans phrase="1 Comment"&gt;" plural="&lt;__trans phrase="# Comments"&gt;" none="&lt;__trans phrase="No Comments"&gt;"$&gt;&lt;/h2&gt;
+     &lt;div class="comments-content"&gt;
+                 &lt;div class="comment-content" id="comments_content"&gt;
+ 
+                 &lt;/div&gt;
+     &lt;/div&gt;
+
+Save the file.  Go to MT's template listing screen and refresh the template so the changes above will be loaded to the system.
+
+== Add comment to the search type ==
+"config.yaml" file can be written like below to add comment search.  Note the setting is to seaerch for entry_id in exact match.
+
+ name: ajc
+ version: 1.0
+ id: ajc
+ 
+ applications:
+     new_search:
+         default:
+             types:
+                 comment:
+                     columns:
+                         entry_id: 1
+                     sort: created_on
+                     terms:
+                         visible: 1
+
+== Add rendering method to the new app ==
+The example plugin adds new class which derives from MT::App::Search (just like FreeText search).  It only adds renderjsc method which is called during rendering the search results.  Note in the above JavaScript block, the url has "format=jsc" parameter in the end.  When MT::App::Search sees "format" parameter, it tries to call "renderFORMAT" method where FORMAT is replaced to the value of the parameter.  Thus, in this case, renderjsc method of the app is called.
+
+renderjsc method calls superclass's render method to render search results in HTML and put the result in the JSON result, that is later rendered by embedding all of the content to innerHTML of the element.
+
+=== CODE (lib/ajc.pm) ===
+ use strict;
+ 
+ package ajc;
+ 
+ use base qw( MT::App::Search );
+ 
+ sub renderjsc {
+     my $app = shift;
+     my $out = $app->SUPER::render( @_ );
+     my $result;
+     if (ref($out) && ($out->isa('MT::Template'))) {
+         defined( $result = $app->build_page($out) )
+             or return $app->error($out->errstr);
+     }
+     else {
+         $result = $out;
+     }
+ 
+     return $app->json_result({ content => $result });
+ }
+ 
+ 1;
+
+== Create mt-csearch.cgi ==
+Because lib/ajc.pm is a new MT::App application, you should create a new cgi file to instantiate it.  The content is simple, mostly copied from mt-search.cgi.  The difference is to add plugin's lib directory in the search path.  Save the file to MT_DIR.
+
+=== CODE (mt-csearch.cgi) ===
+ #!/usr/bin/perl -w
+ 
+ # Movable Type (r) Open Source (C) 2001-2008 Six Apart, Ltd.
+ # This program is distributed under the terms of the
+ # GNU General Public License, version 2.
+ #
+ # $Id: mt-csearch.cgi 1493 2008-03-07 11:32:52Z fumiakiy $
+ 
+ use strict;
+ use lib $ENV{MT_HOME} ? "$ENV{MT_HOME}/lib" : 'lib';
+ use lib $ENV{MT_HOME} ? "$ENV{MT_HOME}/plugins/ajc/lib" : 'plugins/ajc/lib';
+ use MT::Bootstrap App => 'ajc';
+
+=== Add configuration ===
+Just like FreeText, you have to add the following configuration to mt-config.cgi.
+  SearchScript mt-csearch.cgi
+
+== Add search template to render comments ==
+In order to make comment listing look exactly like the default template, first copy a part of the template snippet from default_templates/comments.mtml and wrap it inside the MTSearchResults tag:
+
+ &lt;MTSearchResults&gt;
+        &lt;div id="comment-&lt;$MTCommentID$&gt;" class="comment&lt;mt:IfCommentParent&gt; comment-reply&lt;/mt:IfCommentParent&gt;"&gt;
+            &lt;div class="inner"&gt;
+                &lt;div class="comment-header"&gt;
+                    &lt;div class="asset-meta"&gt;
+                        &lt;span class="byline"&gt;
+                            &lt;$MTCommentAuthorIdentity$&gt;
+        &lt;mt:IfCommentParent&gt;
+                            &lt;__trans phrase="[_1] replied to &lt;a href="[_2]"&gt;comment from [_3]&lt;/a&gt;" params="&lt;span class="vcard author"&gt;&lt;$MTCommentAuthorLink$&gt;&lt;/span&gt;%%&lt;mt:CommentParent&gt;&lt;$mt:CommentLink$&gt;&lt;/mt:CommentParent&gt;%%&lt;mt:CommentParent&gt;&lt;$MTCommentAuthor$&gt;&lt;/mt:CommentParent&gt;"&gt;
+        &lt;mt:else&gt;
+                            &lt;span class="vcard author"&gt;&lt;$MTCommentAuthorLink$&gt;&lt;/span&gt;
+        &lt;/mt:IfCommentParent&gt;
+                            | &lt;a href="&lt;$mt:CommentLink$&gt;"&gt;&lt;abbr class="published" title="&lt;$MTCommentDate format_name="iso8601"$&gt;"&gt;&lt;$MTCommentDate$&gt;&lt;/abbr&gt;&lt;/a&gt;
+        &lt;MTIfCommentsAccepted&gt;
+                            | &lt;$MTCommentReplyLink$&gt;
+        &lt;/MTIfCommentsAccepted&gt;
+                        &lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class="comment-content"&gt;
+                    &lt;$MTCommentBody$&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+ &lt;/MTSearchResults&gt;
+
+And add the following snippet below the closing MTSearchResults tag to add pager block.
+
+ &lt;MTCurrentPage setvar="current_page"&gt;
+                                &lt;div class="content-nav"&gt;
+                                    &lt;MTIfPreviousResults&gt;&lt;a href="javascript:void(0)" rel="prev" onclick="getComments(&lt;MTGetVar name="current_page" op="-" value="1"&gt;)"&gt;&lt; &lt;__trans phrase="Previous"&gt;&lt;/a&gt;&nbsp;&nbsp;&lt;/MTIfPreviousResults&gt;&lt;MTPagerBlock&gt;&lt;MTIfCurrentPage&gt;&lt;MTVar name="__value__"&gt;&lt;MTElse&gt;&lt;a href="javascript:void(0)" onclick="getComments(&lt;MTVar name="__value__"&gt;)"&gt;&lt;MTVar name="__value__"&gt;&lt;/a&gt;&lt;/MTIfCurrentPage&gt;&lt;mt:unless name="__last__"&gt;&nbsp;&lt;/mt:unless&gt;&lt;/MTPagerBlock&gt;&lt;MTIfMoreResults&gt;&nbsp;&nbsp;&lt;a href="javascript:void(0)" rel="next" onclick="getComments(&lt;MTGetVar name="current_page" op="+" value="1"&gt;)"&gt;&lt;__trans phrase="Next"&gt; &gt;&lt;/a&gt;&lt;/MTIfMoreResults&gt;
+                                &lt;/div&gt;
+
+
+Save the file in search_templates with the name "comment_listing.tmpl".
+
+== Republish entry archive template ==
+Republish entry archive template and go to an entry.  Voila! comments are paginated.
+
+= Add new filter to search syntax =
+== Description ==
+By default, MT::App::Search supports category and author filter.  You can for example query like ["Movable Type" category:'printing technology'] to narrow search results based on the category of the entries.
+
+You as a plugin developer can add the filter by registering your own filtering condition to the registry.
+
+== Example Plugin - add commenter filter ==
+The plugin described below adds "comment_by" filter to mt-search, so you can search entries and narrow results by who commented to the entries.
+
+After this plugin is installed, you can search for entries by the following syntax.
+
+ "Movable Type" comment_by:Melody
+
+=== CODE ( commenter_filter.pl ) ===
+ package MT::Plugin::CommenterFilter;
+ 
+ use strict;
+ use base 'MT::Plugin';
+ our $VERSION = '1.0';
+ 
+ my $plugin;
+ $plugin = MT::Plugin::CommenterFilter->new({
+     id => 'CommenterFilter',
+     name => "CommenterFilter",
+     version => $VERSION,
+     registry => {
+         applications => {
+             new_search => {
+                 default => {
+                     types => {
+                         entry => {
+                             filter_types => {
+                                 comment_by => \&_join_commenter
+                             }
+                         }
+                     }
+                 }
+             }
+         }
+     }
+ });
+ MT->add_plugin($plugin);
+ 
+ sub _join_commenter {
+     my ( $app, $term ) = @_;
+ 
+     my $query = $term->{term};
+     if ( 'PHRASE' eq $term->{query} ) {
+         $query =~ s/'/"/g;
+     }
+ 
+     my $lucene_struct = Lucene::QueryParser::parse_query( $query );
+     if ( 'PROHIBITED' eq $term->{type} ) {
+         $_->{type} = 'PROHIBITED' foreach @$lucene_struct;
+     }
+ 
+     my ( $terms ) = $app->_query_parse_core( $lucene_struct, { nickname => 'like' }, {} );
+     return unless $terms && @$terms;
+     push @$terms, '-and', {
+         id => \'= comment_commenter_id',
+     };
+ 
+     require MT::Comment;
+     require MT::Author;
+     return MT::Comment->join_on( undef,
+         { entry_id => \'= entry_id', blog_id => \'= entry_blog_id', visible => 1 },
+         { join => MT::Author->join_on( undef, $terms, {} ),
+           unique => 1 }
+     );
+ }
+ 
+ 1;
+
+The plugin first registers itself to the registry, so the method can be called when MT::App::Search processes "comment_by" filter.  When comment_by filter is encountered, MT::App::Search calls _join_commenter method.  The method must return either undef or arguments for $args, which will later be used as the second argument to load or load_iter method.
+
+_join_commenter method constructs a nested join clause, so, mt_entry joins to mt_comment joins to mt_author and search for author_nickname to match the specified keyword.  The resulting SQL query will be like this:
+
+ SELECT ... FROM mt_entry, mt_comment, mt_author
+ WHERE (...)
+ AND comment_entry_id = entry_id
+ AND comment_blog_id = entry_blog_id
+ AND comment_visible = 1
+ AND author_nickname LIKE '%Melody%'
+ AND author_id = comment_commenter_id
+
+== NOTE ==
+Note this mechanism currently only allows to manipulate join clause.  Therefore, filters that can't be experessed in a single SQL query by using structures supported in MT::ObjectDriver, can't be created.  One such example filter that can't be created is the one to narrow down the results based on new metadata system (iow Custom Fields).
+
+==Related Links==
+
+[http://cargames.com.au/ '''car games''']
+
+[http://www.unbeatable.co.uk/pages/Electronics/TV-and-Video/Flat-Panel-Televisions/ '''lcd tv''']

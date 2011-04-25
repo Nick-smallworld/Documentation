@@ -1,0 +1,19 @@
+<div style="float:left; border:thin solid green; padding: 5px; margin-right: 15px;">
+{{Template:Callback Types}}
+</div>
+
+= Object-level Callbacks =
+
+* post_inflate
+* post_insert
+* post_load
+* post_remove
+* post_save
+* post_update
+* pre_insert
+* pre_remove
+* pre_save
+* pre_search
+* pre_update
+* MT::Blog::post_clone
+* MT::Blog::post_create_default_templates

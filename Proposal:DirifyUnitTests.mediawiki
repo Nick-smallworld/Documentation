@@ -1,0 +1,60 @@
+== Abstract ==
+
+Dirify is a critical MT utility that is used to determine URLs for posts. Its behavior should rarely, rarely change. And if it does, someone should know. This proposal will put that mechanism in place.
+
+== Problem Statements ==
+
+* Changes to the results of dirify can result in an unexpected change to URLs, which can adversely impact SEO.
+* Basenames have apparently been known to change from underscores to hyphens simply by upgrading. This can break URLs and negatively impact SEO.
+
+== Description ==
+
+Create the necessary unit tests against a known set of entry titles and an
+expected set of resulting basenames. Raise an error if they ever change.
+
+Permuations based on [http://en.wikipedia.org/wiki/Percent-encoding#Types_of_URI_characters Percent-encoding:Types_of_URI_characters]:
+
+* I love Movable Type
+* I love-Movable Type
+* I love_Movable Type
+* I love.Movable Type
+* I love~Movable Type
+* I love!Movable Type
+* I love*Movable Type
+* I love'Movable Type
+* I love(Movable Type
+* I love)Movable Type
+* I love;Movable Type
+* I love:Movable Type
+* I love@Movable Type
+* I love&Movable Type
+* I love=Movable Type
+* I love+Movable Type
+* I love$Movable Type
+* I love,Movable Type
+* I love/Movable Type
+* I love?Movable Type
+* I love%Movable Type
+* I love#Movable Type
+* I love[Movable Type
+* I love]Movable Type
+
+Other permuations to test:
+
+* I love<Movable Type
+* I love>Movable Type
+* I love/Movable=Type
+* I love\Movable=Type
+* I love"Movable Type
+* I love--Movable Type
+* I love -- Movable Type
+* I love&#151;Movable Type
+* I love &#151; Movable Type
+* I love&mdash;Movable Type
+* I love &mdash; Movable Type
+
+== Open Issues ==
+
+What other permutations need to be tested?
+
+[[Category:MTOS Proposals]]

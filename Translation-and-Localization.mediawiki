@@ -1,0 +1,39 @@
+Movable Type is available in many languages. 
+
+== Movable Type 5==
+
+* '''[http://github.com/downloads/mmacrelli/movable-type-italian-translation/movable-type-5.01-italian-translation.zip Italian]''' An Italian translation file is available on Github.  The [http://github.com/mmacrelli/movable-type-italian-translation/ MTOS Italian Translation Project] also currently has translations for MT 4.32 and MT 3.35.
+
+== Movable Type 4 ==
+
+* '''[http://www.movabletype.com/download/ English, French, German, Dutch, and Spanish]''' translations of Movable Type 4 can be downloaded directly from Six Apart. 
+
+* '''[http://movabletype.jp/ Japanese]'''  Movable Type 4 is available in Japanese at http://movabletype.jp
+
+* '''[http://github.com/downloads/mmacrelli/movable-type-italian-translation/movable-type-4.32-italian-translation.zip Italian]''' An Italian translation file is available on Github.  The [http://github.com/mmacrelli/movable-type-italian-translation/ MTOS Italian Translation Project] also currently has translations for MT 5.01 and MT 3.35.
+
+* '''[http://movable-type.ru/ Russian]''' See http://movable-type.ru for information on Movable Type in Russian.
+
+* '''[http://www.thinkjam.org/zoptuno/projects/zh-movable-type.html Movable Type zh project]''':  An Chinese translation and localization for Movable Type and MTOS by [http://www.thinkjam.org/zoptuno/ 平生一笑]
+
+* '''[http://groups.google.com/group/mtchinauser/files Chinese]''': UTF8 Chinese language files for Movable Type are available on Google Groups.
+
+== Movable Type Open Source ==
+
+* [[LocalizedPackages/MTOS-4.1]]  A list of (Unofficial) Localized Packages
+* '''[http://www.thinkjam.org/zoptuno/projects/zh-movable-type.html Movable Type zh project]''' An Chinese translation and localization for Movable Type and MTOS by [http://www.thinkjam.org/zoptuno/ 平生一笑]
+
+== Movable Type 3.x ==
+
+* Plugin to support [http://movabletype.ir/ Farsi]
+* '''[http://github.com/downloads/mmacrelli/movable-type-italian-translation/movable-type-3.35-italian-translation.zip Italian]''' An Italian translation file is available on Github.  The [http://github.com/mmacrelli/movable-type-italian-translation/ MTOS Italian Translation Project] also currently has translations for MT 5.01 and MT 4.32.
+
+
+== Translating Movable Type ==
+
+* [[Steps for the creation of a translation file]]
+
+* [[How to Movable Type translate to the other languages]]
+
+* [http://www.designerevaluation.com/logo-design/ logo design]
+* [http://www.designerevaluation.com/ website design]

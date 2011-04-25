@@ -1,0 +1,33 @@
+This is in use on mt.org for the [http://www.movabletype.org/documentation/changes.xml Documentation Change Log Atom Feed]. This could easily be adopted to produce HTML as well.
+
+    <$MTHTTPContentType type="application/atom+xml"$><?xml version="1.0" encoding="<$MTPublishCharset$>"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+    <title><$MTBlogName remove_html="1" encode_xml="1"$></title>
+    <link rel="alternate" type="text/html" href="<$MTBlogURL encode_xml="1"$>" />
+    <link rel="self" type="application/atom+xml" href="<$MTLink template="Atom"$>" />
+    <id>tag:<$MTBlogHost exclude_port="1" encode_xml="1"$>,<$MTTemplateCreatedOn format="%Y-%m-%d"$>:<$MTBlogRelativeURL encode_xml="1"$>/<$MTBlogID$></id>
+    <updated><MTPages lastn="1"><$MTPageModifiedDate utc="1" format="%Y-%m-%dT%H:%M:%SZ"$></MTPages></updated>
+    <MTIfNonEmpty tag="MTBlogDescription"><subtitle><$MTBlogDescription remove_html="1" encode_xml="1"$></subtitle></MTIfNonEmpty>
+    <generator uri="http://www.sixapart.com/movabletype/"><$MTProductName version="1"$></generator>
+    <MTPages lastn="15" sort_by="modified_on" sort_order="descend">
+    <mt:SetVarBlock name="created_date"><$MTPageDate utc="1" format="%Y-%m-%dT%H:%M:%SZ"$></mt:SetVarBlock>
+    <mt:SetVarBlock name="modified_date"><$MTPageModifiedDate utc="1" format="%Y-%m-%dT%H:%M:%SZ"$></mt:SetVarBlock>
+    <entry>
+    <title><$MTEntryTitle remove_html="1" encode_xml="1"$></title>
+    <link rel="alternate" type="text/html" href="<$MTEntryPermalink encode_xml="1"$>" />
+    <id><$MTEntryAtomID$></id>
+    <published><$MTPageDate utc="1" format="%Y-%m-%dT%H:%M:%SZ"$></published>
+    <updated><$MTPageModifiedDate utc="1" format="%Y-%m-%dT%H:%M:%SZ"$></updated>
+    <summary><$MTPageTitle encode_xml="1" convert_breaks="0"$> was <mt:If name="created_date" eq="$modified_date">created<mt:else>modified</mt:if> on <$MTPageModifiedDate utc="1" format="%x at %X"$> by <$MTPageAuthorDisplayName encode_xml="1"$></summary>
+    <author>
+    <name><$MTPageAuthorDisplayName encode_xml="1"$></name>
+    </author>
+    <content type="html" xml:lang="<$MTBlogLanguage ietf="1"$>" xml:base="<$MTBlogURL encode_xml="1"$>">
+    <$MTPageExcerpt remove_html="1" encode_xml="1"$>
+    <a href="<$MTPagePermalink encode_xml="1"$>">Read full document</a>
+    </content>
+    </entry>
+    </MTPages>
+    </feed>
+
+[[Category: Template Tag Recipes]]

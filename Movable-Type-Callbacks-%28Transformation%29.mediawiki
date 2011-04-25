@@ -1,0 +1,15 @@
+<div style="float:left; border:thin solid green; padding: 5px; margin-right: 15px;">
+{{Template:Callback Types}}
+</div>
+
+= Transformation callbacks =
+
+Transformation, or Transformer, callbacks are those you can use to control the Movable Type interface on both  input and output.  The application gives you three main callbacks that are called in this order show below and via which you have different capabilities based on the process flow.
+
+* '''template_source'''
+* '''template_param'''
+* '''template_output'''
+
+Of course, these callbacks are not new having been introduced originally in Kevin Shay's BigPAPI plugin a number of years ago and included in MT 3.3.  However, in MT 4 they have gotten a serious boost of power and precision thanks to methods which mimic the Javascript DOM methods and functionality.
+
+Please see the [[Transformer DOM methods]] page for details as they evolve...

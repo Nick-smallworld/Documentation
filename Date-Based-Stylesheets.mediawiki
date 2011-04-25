@@ -1,0 +1,37 @@
+[[Category: Template Tag Recipes]]
+
+You can use simple date comparisons to condition the load of a special stylesheet based on the date of the entry.
+
+First, create a variable, storing the date of the entry in a numerical form (ie, January 15, 2007 would be represented as '20070115'):
+
+<pre>
+<mt:setvarblock name="date"><mt:entrydate format="%Y%m%d"></mt:setvarblock>
+</pre>
+
+This stores the date in a form we can use to do numerical comparisons using Movable Type's "If" and "Else" tags.
+
+<pre>
+<mt:setvarblock name="stylesheet"><mt:if name="date" gt="20070510" strip_linefeeds="1" trim="1">
+    stylesheet.css
+<mt:else>
+    <mt:if name="date" gt="20060409">
+        stylesheet-old.css
+    <mt:else>
+        stylesheet-really-old.css
+    </mt:if>
+</mt:if></mt:setvarblock>
+</pre>
+
+Then, just reference your stylesheet file:
+
+<pre>
+<link href="<$MTBlogURL$><mt:var name="stylesheet">" type="text/css" rel="stylesheet" />
+</pre>
+
+If your stylesheets are consistently changing every year, you can simplify all of this to simply:
+
+<pre>
+<link href="<$MTBlogURL$>stylesheet-<mt:entrydate format="%Y">.css" type="text/css" rel="stylesheet" />
+</pre>
+
+But you will need to have a "stylesheet-2007.css", "stylesheet-2006.css", etc., for each year you have published entries.

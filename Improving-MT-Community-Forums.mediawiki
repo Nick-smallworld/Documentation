@@ -1,0 +1,94 @@
+We've now standardized on the community forums at forums.movabletype.org, but since the site is still rough around the edges, we should capture our complaints, suggestions and requests so that they can be prioritized and fixed.
+
+== Priority 1 ==
+These are issues that impact on the intended use of the forums
+
+* Install ForgotPassword plugin so that password recovery uses a sane email-me-a-reset-link process instead of asking for a phrase I've forgotten.
+** '''Fixed''': A sane, email-based password recovery system should now be in place.
+
+* Improve posting interface to make it easy to post and display code snippets. 
+** '''Partial-Fix''': Markdown is no longer posting default for posts or comments. Some html tags are still being chewed. To test try posting a copy of the Banner Header Module template in as a comment. Very little is visible.
+*** The challenge here is making it easy to encode HTML for display since you certainly don't want to allow all tags in the comments.  Markdown would have had this same problem with the sanitization routine, except that the indentation of code tells Markdown to do the escaping for you.
+
+* Edit posts (including initial topic). One suggestion made on IRC is that there is a period of grace during which you can edit your post (e.g. 15 minutes) most editing needs come directly after pressing submit. Clarifications or expanding on an issue can go into the normal comments flow.
+** '''Tabled''': Would require a plugin or significant changes; If we can enable preview through template changes, that may be enough to fix this.
+
+* Preview initial topic. [This will likely be done through a javascript/ajax preview.]
+
+* BUG: Unless your movable type forum username is the same with the ‘dirify’ version of your profile name, the member profile URL behind that photo thumb is broken.
+** '''Fixed''': Links to profiles work the same for names and for photos.
+
+* Order to Topics in need of an answer by date DESC.
+** '''Fixed'''
+
+* Update speed of index pages, sometimes after posting new topic or response you have to refresh index page multiple times for change to appear. This has resulted in same topic being posted multiple times by the user.
+** '''Fixed''': Posting should be immediate, except for any caching taking place.
+
+* '''Bonus''': The [http://www.movabletype.org/ Movable Type homepage] on MT.org now shows the most recent Forum Contributor's profile picture, name, and site URL, along with an excerpt from their last comment/contribution. A little reward for participation.
+
+== Priority 2 ==
+These are issues that can improve the user experience but do not have a direct impact on day to day use.
+
+* New and updated topics since last visit.
+
+* Add a Topic Answered tag / flag. This will allow a change so that questions in need of an answer makes sense, at the moment it is only topics with no comments. Also we could the allow the option to restrict searches to topics that have been successfully resolved.
+
+* Add a trust metric. See Slashdot karama and Stackoverflow Reputation.
+
+* Improve OpenID & Typekey integration. You cannot login to the MT forums via OpenID because one must have a local username and password in order to submit topics.
+
+* The ability to subscribe to topics.
+** '''Fixed''': Topic feeds now in place.
+*** Is email notification of new replies possible in addition to RSS feeds?
+
+* Improve layout, may be similar to Vanilla or StackOverflow
+
+* Admins able to mark topics as sticky (private tags?)
+** Private tags supported by this install:
+*** @sink - keep off of front door
+** For @sticky - how would this ideally work? would sticky posts be placed above all other topics, or would each section (recent, questions in need of..., recently active) have its own stickies?
+Following traditional forums, Stickies should appear at the top of each section.
+
+* Replace current search with Google Custom Search
+
+* Users links need to be consistent:
+** Topic creator gets a link to movabletype.org/members/username
+** Any replies get a link to profile URL
+** "Thanks for singing in," under "Add a Reply" heading gets a link to edit user profile
+
+== Priority 3 ==
+These are nice to have features, but do not impact on the day to usage of the forums.
+
+* Signatures.
+
+== Use Cases ==
+These are used to describe the typical user to the site and the type of activity they perform while visiting.
+
+* One time visitor looking for a solution to a problem
+** User registers with forums
+** User posts problem + sample code if needed
+** User waits for response to problem receiving notification was answers have been posted.
+** User disables notification as problem has been solved.
+
+* Regular visitor that provides support to other visitors and occasionally asking questions.
+** User registers with forums
+** User browses forums and answers questions posting code if needed
+** User subscribes to topics, either to respond to later or to keep track of responses
+*** User visits forums and views new topics / replies since last visit
+*** User visits forums and views a list of subscribed topics
+** User manages subscriptions.
+
+== Supporting References ==
+
+Broken Profile Pics http://forums.movabletype.org/2009/01/error-on-the-movable-type-forum-facility-to-be-fixed-asap.html
+
+OpenId support http://twitter.com/byrnereese/status/1139883882
+
+Vanilla http://lussumo.com/community/
+StackOverflow http://stackoverflow.com
+
+General suggestions http://forums.movabletype.org/2008/09/changes-to-forum-home.html
+
+Universal Movable Type Reference Search http://endevver.com/mtsearch
+
+Stackoverflow FAQ http://stackoverflow.com/faq

@@ -1,0 +1,440 @@
+<div style="float:left; border:thin solid green; padding: 5px; margin-right: 15px;">
+{{Template:Callback Types}}
+</div>
+
+=Deprecated Callbacks and their Aliases=
+
+The Movable Type 4 API contained a significant number of changes from its predecessor as an effort to streamline the [[Movable Type Callbacks|callback names]] in order to be more consistent across the board.  To do so, a large number of callbacks were renamed via aliasing and deprecation.  That is to say that the old names work but are not guaranteed to do so in the future.
+
+== Callback Transformations ==
+
+To illustrate some of the guiding priniciples of the change, I've taken one of the CMS application callbacks through the transformation steps below detailing each change.
+
+{| border="1" cellspacing="0" cellpadding="5" align="center"
+! Callback name
+! Modification
+|-
+| CMSSavePermissionFilter_blog
+| Original MT 3.x/MTE callback name
+|-
+| CMSSavePermissionFilter.blog
+| Change underscores to periods
+|-
+| cmssavepermissionfilter.blog
+| Lowercase the name
+|-
+| savepermissionfilter.blog
+| Remove 'cms' from the beginning
+|-
+| save_permission_filter.blog
+| Separate the smashed together elements by an underscore.
+|-
+| MT::App::CMS::save_permission_filter.blog
+| Prepend with package name
+|-
+| MT::App::CMS::save_permission_filter.blog
+| MT 4.1 callback name
+|}
+
+== Deprecated Callbacks ==
+
+The following is a full listing of those callbacks that have been deprecated in Movable Type (Open Source) v4.1 along with the new callback that takes its place.  For now, they are aliased and equivalent but you should start migrating any plugins that use the old names and only use the new ones in new plugins.
+
+{| border="1" cellspacing="0" cellpadding="5" align="center"
+|-
+! Deprecated callbacks
+! Supported aliases
+|-
+| APIPostSave.entry
+| api_post_save.entry
+|-
+| APIPreSave.entry
+| api_pre_save.entry
+|-
+| APIUploadFile
+| api_upload_file
+|-
+| APIUploadImage
+| api_upload_image
+|-
+| AppPostEntrySave
+| cms_post_save.entry
+|-
+| BuildFile
+| build_file
+|-
+| BuildFileFilter
+| build_file_filter
+|-
+| BuildPage
+| build_page
+|-
+| CMSDeletePermissionFilter
+| cms_delete_permission_filter
+|-
+| CMSDeletePermissionFilter.author
+| MT::App::CMS::delete_permission_filter.author
+|-
+| CMSDeletePermissionFilter.blog
+| MT::App::CMS::delete_permission_filter.blog
+|-
+| CMSDeletePermissionFilter.category
+| MT::App::CMS::delete_permission_filter.category
+|-
+| CMSDeletePermissionFilter.comment
+| MT::App::CMS::delete_permission_filter.comment
+|-
+| CMSDeletePermissionFilter.commenter
+| MT::App::CMS::delete_permission_filter.commenter
+|-
+| CMSDeletePermissionFilter.entry
+| MT::App::CMS::delete_permission_filter.entry
+|-
+| CMSDeletePermissionFilter.ping
+| MT::App::CMS::delete_permission_filter.ping
+|-
+| CMSDeletePermissionFilter.template
+| MT::App::CMS::delete_permission_filter.template
+|-
+| CMSDeletePermissionFilter_author
+| MT::App::CMS::delete_permission_filter.author
+|-
+| CMSDeletePermissionFilter_blog
+| MT::App::CMS::delete_permission_filter.blog
+|-
+| CMSDeletePermissionFilter_category
+| MT::App::CMS::delete_permission_filter.category
+|-
+| CMSDeletePermissionFilter_comment
+| MT::App::CMS::delete_permission_filter.comment
+|-
+| CMSDeletePermissionFilter_commenter
+| MT::App::CMS::delete_permission_filter.commenter
+|-
+| CMSDeletePermissionFilter_entry
+| MT::App::CMS::delete_permission_filter.entry
+|-
+| CMSDeletePermissionFilter_ping
+| MT::App::CMS::delete_permission_filter.ping
+|-
+| CMSDeletePermissionFilter_template
+| MT::App::CMS::delete_permission_filter.template
+|-
+| CMSPostDelete
+| cms_post_delete
+|-
+| CMSPostDelete.asset
+| MT::App::CMS::post_delete.asset
+|-
+| CMSPostDelete.author
+| MT::App::CMS::post_delete.author
+|-
+| CMSPostDelete.blog
+| MT::App::CMS::post_delete.blog
+|-
+| CMSPostDelete.category
+| MT::App::CMS::post_delete.category
+|-
+| CMSPostDelete.comment
+| MT::App::CMS::post_delete.comment
+|-
+| CMSPostDelete.entry
+| MT::App::CMS::post_delete.entry
+|-
+| CMSPostDelete.notification
+| MT::App::CMS::post_delete.notification
+|-
+| CMSPostDelete.ping
+| MT::App::CMS::post_delete.ping
+|-
+| CMSPostDelete.tag
+| MT::App::CMS::post_delete.tag
+|-
+| CMSPostDelete.template
+| MT::App::CMS::post_delete.template
+|-
+| CMSPostDelete_asset
+| MT::App::CMS::post_delete.asset
+|-
+| CMSPostDelete_author
+| MT::App::CMS::post_delete.author
+|-
+| CMSPostDelete_blog
+| MT::App::CMS::post_delete.blog
+|-
+| CMSPostDelete_category
+| MT::App::CMS::post_delete.category
+|-
+| CMSPostDelete_comment
+| MT::App::CMS::post_delete.comment
+|-
+| CMSPostDelete_entry
+| MT::App::CMS::post_delete.entry
+|-
+| CMSPostDelete_notification
+| MT::App::CMS::post_delete.notification
+|-
+| CMSPostDelete_ping
+| MT::App::CMS::post_delete.ping
+|-
+| CMSPostDelete_tag
+| MT::App::CMS::post_delete.tag
+|-
+| CMSPostDelete_template
+| MT::App::CMS::post_delete.template
+|-
+| CMSPostEntrySave
+| cms_post_save.entry
+|-
+| CMSPostSave
+| cms_post_save
+|-
+| CMSPostSave.asset
+| MT::App::CMS::post_save.asset
+|-
+| CMSPostSave.author
+| MT::App::CMS::post_save.author
+|-
+| CMSPostSave.blog
+| MT::App::CMS::post_save.blog
+|-
+| CMSPostSave.category
+| MT::App::CMS::post_save.category
+|-
+| CMSPostSave.comment
+| MT::App::CMS::post_save.comment
+|-
+| CMSPostSave.entry
+| cms_post_save.entry
+|-
+| CMSPostSave.ping
+| MT::App::CMS::post_save.ping
+|-
+| CMSPostSave.template
+| MT::App::CMS::post_save.template
+|-
+| CMSPostSave_asset
+| MT::App::CMS::post_save.asset
+|-
+| CMSPostSave_author
+| MT::App::CMS::post_save.author
+|-
+| CMSPostSave_blog
+| MT::App::CMS::post_save.blog
+|-
+| CMSPostSave_category
+| MT::App::CMS::post_save.category
+|-
+| CMSPostSave_comment
+| MT::App::CMS::post_save.comment
+|-
+| CMSPostSave_ping
+| MT::App::CMS::post_save.ping
+|-
+| CMSPostSave_template
+| MT::App::CMS::post_save.template
+|-
+| CMSPreSave
+| cms_pre_save
+|-
+| CMSPreSave.author
+| MT::App::CMS::pre_save.author
+|-
+| CMSPreSave.blog
+| MT::App::CMS::pre_save.blog
+|-
+| CMSPreSave.category
+| MT::App::CMS::pre_save.category
+|-
+| CMSPreSave.comment
+| MT::App::CMS::pre_save.comment
+|-
+| CMSPreSave.entry
+| MT::App::CMS::pre_save.entry
+|-
+| CMSPreSave.ping
+| MT::App::CMS::pre_save.ping
+|-
+| CMSPreSave.template
+| MT::App::CMS::pre_save.template
+|-
+| CMSPreSave_author
+| MT::App::CMS::pre_save.author
+|-
+| CMSPreSave_blog
+| MT::App::CMS::pre_save.blog
+|-
+| CMSPreSave_category
+| MT::App::CMS::pre_save.category
+|-
+| CMSPreSave_comment
+| MT::App::CMS::pre_save.comment
+|-
+| CMSPreSave_entry
+| MT::App::CMS::pre_save.entry
+|-
+| CMSPreSave_ping
+| MT::App::CMS::pre_save.ping
+|-
+| CMSPreSave_template
+| MT::App::CMS::pre_save.template
+|-
+| CMSSaveFilter.author
+| MT::App::CMS::save_filter.author
+|-
+| CMSSaveFilter.banlist
+| MT::App::CMS::save_filter.banlist
+|-
+| CMSSaveFilter.blog
+| MT::App::CMS::save_filter.blog
+|-
+| CMSSaveFilter.category
+| MT::App::CMS::save_filter.category
+|-
+| CMSSaveFilter.notification
+| MT::App::CMS::save_filter.notification
+|-
+| CMSSaveFilter_author
+| MT::App::CMS::save_filter.author
+|-
+| CMSSaveFilter_banlist
+| MT::App::CMS::save_filter.banlist
+|-
+| CMSSaveFilter_blog
+| MT::App::CMS::save_filter.blog
+|-
+| CMSSaveFilter_category
+| MT::App::CMS::save_filter.category
+|-
+| CMSSaveFilter_notification
+| MT::App::CMS::save_filter.notification
+|-
+| CMSSavePermissionFilter
+| cms_save_permission_filter
+|-
+| CMSSavePermissionFilter.author
+| MT::App::CMS::save_permission_filter.author
+|-
+| CMSSavePermissionFilter.banlist
+| MT::App::CMS::save_permission_filter.banlist
+|-
+| CMSSavePermissionFilter.blog
+| MT::App::CMS::save_permission_filter.blog
+|-
+| CMSSavePermissionFilter.category
+| MT::App::CMS::save_permission_filter.category
+|-
+| CMSSavePermissionFilter.comment
+| MT::App::CMS::save_permission_filter.comment
+|-
+| CMSSavePermissionFilter.notification
+| MT::App::CMS::save_permission_filter.notification
+|-
+| CMSSavePermissionFilter.ping
+| MT::App::CMS::save_permission_filter.ping
+|-
+| CMSSavePermissionFilter.template
+| MT::App::CMS::save_permission_filter.template
+|-
+| CMSSavePermissionFilter_author
+| MT::App::CMS::save_permission_filter.author
+|-
+| CMSSavePermissionFilter_banlist
+| MT::App::CMS::save_permission_filter.banlist
+|-
+| CMSSavePermissionFilter_blog
+| MT::App::CMS::save_permission_filter.blog
+|-
+| CMSSavePermissionFilter_category
+| MT::App::CMS::save_permission_filter.category
+|-
+| CMSSavePermissionFilter_comment
+| MT::App::CMS::save_permission_filter.comment
+|-
+| CMSSavePermissionFilter_notification
+| MT::App::CMS::save_permission_filter.notification
+|-
+| CMSSavePermissionFilter_ping
+| MT::App::CMS::save_permission_filter.ping
+|-
+| CMSSavePermissionFilter_template
+| MT::App::CMS::save_permission_filter.template
+|-
+| CMSUploadFile
+| cms_upload_file
+|-
+| CMSUploadImage
+| cms_upload_image
+|-
+| CMSViewPermissionFilter
+| cms_view_permission_filter
+|-
+| CMSViewPermissionFilter.author
+| MT::App::CMS::view_permission_filter.author
+|-
+| CMSViewPermissionFilter.blog
+| MT::App::CMS::view_permission_filter.blog
+|-
+| CMSViewPermissionFilter.category
+| MT::App::CMS::view_permission_filter.category
+|-
+| CMSViewPermissionFilter.comment
+| MT::App::CMS::view_permission_filter.comment
+|-
+| CMSViewPermissionFilter.commenter
+| MT::App::CMS::view_permission_filter.commenter
+|-
+| CMSViewPermissionFilter.entry
+| MT::App::CMS::view_permission_filter.entry
+|-
+| CMSViewPermissionFilter.ping
+| MT::App::CMS::view_permission_filter.ping
+|-
+| CMSViewPermissionFilter.template
+| MT::App::CMS::view_permission_filter.template
+|-
+| CMSViewPermissionFilter_author
+| MT::App::CMS::view_permission_filter.author
+|-
+| CMSViewPermissionFilter_blog
+| MT::App::CMS::view_permission_filter.blog
+|-
+| CMSViewPermissionFilter_category
+| MT::App::CMS::view_permission_filter.category
+|-
+| CMSViewPermissionFilter_comment
+| MT::App::CMS::view_permission_filter.comment
+|-
+| CMSViewPermissionFilter_commenter
+| MT::App::CMS::view_permission_filter.commenter
+|-
+| CMSViewPermissionFilter_entry
+| MT::App::CMS::view_permission_filter.entry
+|-
+| CMSViewPermissionFilter_ping
+| MT::App::CMS::view_permission_filter.ping
+|-
+| CMSViewPermissionFilter_template
+| MT::App::CMS::view_permission_filter.template
+|-
+| HandleJunk
+| handle_spam
+|-
+| HandleNotJunk
+| handle_ham
+|-
+| NewUserProvisioning
+| new_user_provisioning
+|-
+| PreCommentSave
+| MT::Comment::pre_save
+|-
+| PreEntrySave
+| MT::Entry::pre_save
+|-
+| RebuildOptions
+| rebuild_options
+|-
+| TakeDown
+| take_down
+|}

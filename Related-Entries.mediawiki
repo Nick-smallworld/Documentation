@@ -1,0 +1,82 @@
+== Simplified example ==
+
+  <mt:SetVarBlock name="tags"><mt:EntryTags glue=" OR "><mt:TagName></mt:EntryTags></mt:SetVarBlock>
+  &lt;ul>
+    <mt:Entries tags="$tags">
+        &lt;li><a href="<mt:EntryPermalink>"><mt:EntryTitle></a>&lt;/li>
+    </mt:Entries>
+  &lt;/ul>
+
+In MT4, the above code (used in an entry context) would output a list of entries with the same tags as the current entries. Note that there is no "weighting" happening here, meaning that an entry that has 5 tags in common is not scored higher than an entry with only one tag in common, and entries will be sorted by date, not by "related-ness".
+
+== More complex but refined example ==
+
+The version below includes a few tweaks, commentary and is formatted for readability:
+
+ <mt:Ignore> If the entry isn't tagged, we display nothing </mt:Ignore>
+ <mt:EntryIfTagged>
+    <mt:Ignore>
+        Store ID of the entry in context into the "current_entry" MT variable
+    </mt:Ignore>
+    <mt:EntryID setvar="current_entry">
+    
+    <mt:Ignore>
+        Compile the current entry's tags into a boolean "OR" statement
+        suitable for use in an mt:Entries "tag" attribute and store it in
+        the related_tags MT variable.
+        
+        Private tags are also being output here in order to ensure all
+        similarly tagged entries are retrieved but they are immediately
+        stored in the variable and not displayed on the blog.
+    </mt:Ignore>
+    <mt:SetVarBlock name="related_tags">
+        <mt:EntryTags include_private="1" glue=" OR ">
+            <mt:Ignore>
+                We use normalize here in case of tags with spaces
+                or other problematic characters
+            </mt:Ignore>
+            <mt:TagName normalize="1">
+        </mt:EntryTags>
+    </mt:SetVarBlock>
+    
+    <mt:Ignore>
+        Here we clean up the value of related_tags in order to get rid of
+        all of the whitespace and make the boolean statement syntactically
+        correct.
+    </mt:Ignore>
+    <mt:Var name="related_tags" strip_linefeeds="1" setvar="related_tags">
+    
+    <mt:SetVarBlock name="list_items">
+        <mt:Ignore>
+            Here we use our stored boolean statement containing
+            of related tags
+        </mt:Ignore>
+       <mt:Entries tags="$related_tags" unique="1">
+          <mt:Ignore> Skip listing the current entry </mt:Ignore>
+          <mt:Unless tag="EntryID" eq="$current_entry">
+             &lt;li>&lt;a href="<mt:EntryPermalink />"><mt:EntryTitle />&lt;/a>&lt;/li>
+             <$mt:Var name="items_found" value="1"$>
+          </mt:Unless>
+       </mt:Entries>
+    </mt:SetVarBlock>
+    
+    <mt:If name="items_found">
+       &lt;h3>Related Blog Entries&lt;/h3>
+       &lt;ul>
+          <$mt:Var name="list_items"$>
+       &lt;/ul>
+    </mt:If>
+ </mt:EntryIfTagged>
+
+== Using this recipe for Pages ==
+
+To use this recipe for Pages, simply convert the following:
+
+* Entries => Pages
+* EntryIfTagged => PageIfTagged
+* EntryID => PageID
+* EntryTags => PageTags
+* EntryTitle => PageTitle
+* EntryPermalink => PagePermalink
+
+[[Category: Template Tag Recipes]]

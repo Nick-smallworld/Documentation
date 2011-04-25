@@ -1,0 +1,11 @@
+<div style="float:left; border:thin solid green; padding: 5px; margin-right: 15px;">
+{{Template:Callback Types}}
+</div>
+
+= New User Provisioning =
+
+* new_user_provisioning
+
+This callback relates to the auto-creation of blogs when new authors are created.  Note that this plugin is *only* triggered when the config directive NewUserAutoProvisioning and/or the system setting  "Automatically create a new blog for each new user".  As such, this callback is not suitable for performing arbitrary functions when any author gets created.  While it is called "new_user_provisioning", it deals more specifically with "new user *blog* provisioning.
+
+There is one core new_user_provisioning callback registered, which auto-creates blogs for new users when the above settings are enabled.

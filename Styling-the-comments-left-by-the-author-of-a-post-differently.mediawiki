@@ -1,0 +1,24 @@
+[[Category: Template Tag Recipes]]
+
+This is the code used on MovableType.org. It achieves two things:
+
+* it alternates the CSS class for odd and even comments
+* it applies an additional class to comments left by the author of the post
+
+ &lt;div class="comment pkg 
+     comment-<mt:if name="__odd__">odd<mt:else>even</mt:if>
+     <MTIfCommenterIsEntryAuthor> comment-author</MTIfCommenterIsEntryAuthor>"
+     <MTIfArchiveTypeEnabled archive_type="Individual"> id="comment-<$MTCommentID$>"</MTIfArchiveTypeEnabled>>
+   &lt;div class="inner">
+     &lt;div class="comment-meta">
+       &lt;h4 class="commenter-name">
+         <$MTCommentAuthorLink default_name="Anonymous" show_email="0"$> 
+         <MTIfNonEmpty tag="CommentAuthorIdentity"><$MTCommentAuthorIdentity$></MTIfNonEmpty>
+       &lt;/h4>
+       &lt;p class="byline"><a href="#comment-<$MTCommentID$>" title="Permalink to this comment"><$MTCommentDate format="%x %X"$></a> | <MTCommentReplyLink></p>
+     &lt;/div>
+     &lt;div class="comment-body"> 
+       <$MTCommentBody$>
+     &lt;/div>
+   &lt;/div>
+ &lt;/div>

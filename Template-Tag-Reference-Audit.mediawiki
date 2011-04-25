@@ -1,0 +1,1615 @@
+<h3 id="A" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">A</h3>
+<!-- 
+    New's checked
+    Emptys noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/admincgipath.html AdminCGIPath]
+    <ul>
+        <li><b>Suggestion: </b> <s>Fix the basename for this entry, so the URL remains hackable</s> fixed</li>
+        <li>Reviewed</li>
+        <li>Added note regarding handling of domain-less CGI paths</li>
+        <li>Added note regarding forced '/' suffix</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/adminscript.html AdminScript]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li><b>Suggestion: </b> <s>Fix the basename for this entry, so the URL remains hackable</s> fixed</li>
+        <li>Reviewed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivecategory.html ArchiveCategory]
+    <ul>
+        <li><s><b>Error?:</b> Docs say for use in cat archives only. This isn't strictly true(see case 58777), but ultimately it's probably a code and not documentation matter.</s></li>
+        <li>Reviewed and fixed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivecount.html ArchiveCount]
+    <ul>
+        <li>Reviewed and amended</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivedate.html ArchiveDate]
+    <ul>
+      <li>Clarified 'utc' attribute</li>
+      <li>Documented relative attribute</li>
+      <li>Fixed link to Date Format documentation</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivedateend.html ArchiveDateEnd]
+    <ul>
+      <li>Clarified 'utc' attribute</li>
+      <li>Documented relative attribute</li>
+      <li>Fixed link to Date Format documentation</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivefile.html ArchiveFile]
+    <ul>
+      <li>Documented extension, separator attributes</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivelabel.html ArchiveLabel]
+    <ul>
+        <li><b>Suggestion:</b> <s>Link ArchiveType related tag.</s> fixed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivelink.html ArchiveLink]
+    <ul>
+      <li>Fixed link to 'IndexBasename' documentation</li>
+      <li>Clarified description</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivelist.html ArchiveList]
+    <ul>
+        <li><b>Suggestion:</b> <s>Integrate Skot Nelson's comment, along with the other available archive types</s> fixed</li>
+        <li>Updated description for 'sort_order' attribute</li>
+        <li>Extended example</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivelistfooter.html ArchiveListFooter]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivelistheader.html ArchiveListHeader]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivenext.html ArchiveNext]
+    <ul>
+        <li><b>Suggestion:</b> <s>Integrate Skot Nelson's comment. Also, I think this does apply even to plain cat archives.</s> fixed</li>
+        <li>Updated description and example</li>
+        <li>Added note about support for 'else' tag</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archiveprevious.html ArchivePrevious]
+    <ul>
+        <li><b>Suggestion:</b> <s>Same as ArchiveNext</s> fixed</li>
+        <li>Updated description and example</li>
+        <li>Added note about support for 'else' tag</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivetitle.html ArchiveTitle]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archivetype.html ArchiveType]
+    <ul>
+        <li><b>Suggestion: </b> <s>Link ArchiveLabel related tag</s> fixed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/archives.html Archives]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/asset.html Asset]
+    <ul>
+        <li><s>No description</s> fixed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetaddedby.html AssetAddedBy]
+    <ul>
+        <li><s>No description</s> fixed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetcount.html AssetCount]
+    <ul>
+        <li><s>No description</s> fixed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetdateadded.html AssetDateAdded]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetfileext.html AssetFileExt]
+    <ul>
+        <li><s>No description</s> fixed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetfilename.html AssetFileName]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetfilepath.html AssetFilePath]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetid.html AssetID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetiftagged.html AssetIfTagged]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetisfirstinrow.html AssetIsFirstInRow]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetislastinrow.html AssetIsLastInRow]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetlabel.html AssetLabel]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetlink.html AssetLink]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetmimetype.html AssetMimeType]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetproperty.html AssetProperty]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetrank.html AssetRank]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetscore.html AssetScore]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetscoreavg.html AssetScoreAvg]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetscorecount.html AssetScoreCount]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetscorehigh.html AssetScoreHigh]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetscorelow.html AssetScoreLow]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assettags.html AssetTags]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetthumbnaillink.html AssetThumbnailLink]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetthumbnailurl.html AssetThumbnailURL]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assettype.html AssetType]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/asseturl.html AssetURL]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assets.html Assets]
+    <ul>
+        <li><b><s>No description</s></b> fixed</li>
+        <li>Documented supported attributes</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetsfooter.html AssetsFooter]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/assetsheader.html AssetsHeader]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/atomscript.html AtomScript]
+    <ul>
+        <li><b><s>No description</s></b> fixed</li>
+        <li><b>Suggestion: </b> <s>Fix the basename for this entry, so the URL remains hackable</s> fixed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorauthiconurl.html AuthorAuthIconURL]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorauthtype.html AuthorAuthType]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authordisplayname.html AuthorDisplayName]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authoremail.html AuthorEmail]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorid.html AuthorID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorname.html AuthorName]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authornext.html AuthorNext]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorprevious.html AuthorPrevious]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorrank.html AuthorRank]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorscore.html AuthorScore]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorscoreavg.html AuthorScoreAvg]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorscorecount.html AuthorScoreCount]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorscorehigh.html AuthorScoreHigh]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorscorelow.html AuthorScoreLow]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authorurl.html AuthorURL]</li>
+    <ul>
+        <li>updated a little about what context the author comes from.</li>
+        <li>In review</li>
+    </ul>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/authors.html Authors]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="B" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">B</h3>
+<!--
+    New's checked
+    Empties noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogarchiveurl.html BlogArchiveURL]
+    <ul>
+        <li>Reviewed and updated.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogcclicenseimage.html BlogCCLicenseImage]
+    <ul>
+        <li><s>No description</s> - fixed</li>
+        <li>Reviewed and updated.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogcclicenseurl.html BlogCCLicenseURL]
+    <ul>
+        <li>Reviewed and updated with see also links.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogcategorycount.html BlogCategoryCount]
+    <ul>
+        <li>Reviewed and updated.</li>
+        <li>Added: [http://www.movabletype.org/documentation/designer/multiblog-template-tags.html MultiBlog Template Tag Syntax Guide]</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogcommentcount.html BlogCommentCount]
+    <ul>
+        <li>Reviewed and updated.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogdescription.html BlogDescription]
+    <ul>
+        <li>Reviewed. No update necessary.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogentrycount.html BlogEntryCount]
+    <ul>
+        <li>Reviewed and updated.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogfileextension.html BlogFileExtension]
+    <ul>
+        <li>Reviewed and updated.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/bloghost.html BlogHost]
+    <ul>
+        <li>Reviewed and updated.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogid.html BlogID]
+    <ul>
+        <li>Reviewed. No update necessary.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogifcclicense.html BlogIfCCLicense]
+    <ul>
+        <li>Reviewed and updated with see also links.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogifcommentsopen.html BlogIfCommentsOpen]
+    <ul>
+        <li>Reviewed and updated with see also links.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/bloglanguage.html BlogLanguage]
+    <ul>
+        <li><strike><b>Error:</b> Date Language is now specified under the <b>Entry</b> settings in prefs.</strike></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogname.html BlogName]
+    <ul>
+        <li>Reviewed. No update necessary.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogpagecount.html BlogPageCount]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogpingcount.html BlogPingCount]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogrelativeurl.html BlogRelativeURL]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogresultfooter.html BlogResultFooter]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogresultheader.html BlogResultHeader]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogsitepath.html BlogSitePath]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogtimezone.html BlogTimezone]
+    <ul>
+        <li><strike><b>Suggestion:</b> Most other tags that refer to pref settings specify what page. This should mention it's under General.</strike></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogurl.html BlogURL]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/blogs.html Blogs]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/buildtemplateid.html BuildTemplateID]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="C" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">C</h3>
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/cclicenserdf.html CCLicenseRDF]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/cgihost.html CGIHost]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/cgipath.html CGIPath]
+    <ul>
+        <li><s><b>Error:</b> The CGIPath link points at 3.3 docs.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/cgirelativeurl.html CGIRelativeURL]
+    <ul>
+        <li><s><b>Error:</b> The CGIPath link points at 3.3 docs.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/cgiserverpath.html CGIServerPath]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/calendar.html Calendar]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/calendarcellnumber.html CalendarCellNumber]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/calendardate.html CalendarDate]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/calendarday.html CalendarDay]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/calendarifblank.html CalendarIfBlank]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/calendarifentries.html CalendarIfEntries]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/calendarifnoentries.html CalendarIfNoEntries]
+    <ul>
+        <li><s><b>Error:</b> All the links in this description points at 3.2 docs.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/calendariftoday.html CalendarIfToday]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/calendarweekfooter.html CalendarWeekFooter]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/calendarweekheader.html CalendarWeekHeader]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/captchafields.html CaptchaFields]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categories.html Categories]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categoryarchivelink.html CategoryArchiveLink]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categorybasename.html CategoryBasename]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categorycount.html CategoryCount]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categorydescription.html CategoryDescription]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categoryid.html CategoryID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categoryifallowpings.html CategoryIfAllowPings]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categorylabel.html CategoryLabel] - reviewed</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categorynext.html CategoryNext]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categoryprevious.html CategoryPrevious]
+    <ul>
+        <li><s><b>Error: </b>Example code is broken, displaying only a closing bracket.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categorytrackbackcount.html CategoryTrackbackCount]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/categorytrackbacklink.html CategoryTrackbackLink]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentauthor.html CommentAuthor]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentauthoridentity.html CommentAuthorIdentity]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentauthorlink.html CommentAuthorLink]
+    <ul>
+        <li><b>Missing:</b> The <code>no_redirect</code> attribute</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentblogid.html CommentBlogID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentbody.html CommentBody]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentdate.html CommentDate]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentemail.html CommentEmail]
+    <ul>
+        <li><s><b>Suggestion: </b>Link spam_protect</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commententry.html CommentEntry]
+    <ul>
+        <li><s><b>Error: </b> Two "Example" headings. First has some broken code it in that isn't rendering at all.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commententryid.html CommentEntryID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentfields.html CommentFields]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentid.html CommentID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentip.html CommentIP]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentifmoderated.html CommentIfModerated]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentname.html CommentName]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentordernumber.html CommentOrderNumber]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentparent.html CommentParent]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentpreviewauthor.html CommentPreviewAuthor]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentpreviewauthorlink.html CommentPreviewAuthorLink]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentpreviewbody.html CommentPreviewBody]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentpreviewdate.html CommentPreviewDate]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentpreviewemail.html CommentPreviewEmail]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentpreviewip.html CommentPreviewIP]
+    <ul>
+        <li><b>Error: </b>Description says is deprecated, then links to itself for alternate tag to use.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentpreviewisstatic.html CommentPreviewIsStatic]
+    <ul>
+        <li><b>Error: </b>Link to preferred tag is bad. CommentIsStatic doesn't seem to exist at all, in code or docs.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentpreviewstate.html CommentPreviewState]
+    <ul>
+        <li><b>Error: </b>Link to preferred tag CommentState is bad. CommentState doesn't seem to exist, either.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentpreviewurl.html CommentPreviewURL]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentrank.html CommentRank]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentreplies.html CommentReplies]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentrepliesrecurse.html CommentRepliesRecurse]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentscore.html CommentScore]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentscoreavg.html CommentScoreAvg]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentscorecount.html CommentScoreCount]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentscorehigh.html CommentScoreHigh]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentscorelow.html CommentScoreLow]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentscript.html CommentScript]
+    <ul>
+        <li><s><b>Suggestion: </b> Fix the basename for this entry, so the URL remains hackable</s></li>
+        <li><s><b>Suggestion: </b> Link to CommentScript config directive for explanation of why filename may be different.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commenturl.html CommentURL]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commenterauthiconurl.html CommenterAuthIconURL]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commenterauthtype.html CommenterAuthType]
+    <ul>
+        <li><s>No description</s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commenteremail.html CommenterEmail]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commenteriftrusted.html CommenterIfTrusted]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentername.html CommenterName]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commenternamethunk.html CommenterNameThunk]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/comments.html Comments]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentsfooter.html CommentsFooter]
+    <ul>
+        <li><s><b>Error: </b>Description says contents are applied at first entry. Should be '''last'''</s></li>
+        <li><s><b>Error: </b>MTComments link is bad</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/commentsheader.html CommentsHeader]
+    <ul>
+        <li><s><b>Error: </b>MTComments link is bad</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/configfile.html ConfigFile]</li>
+</ol>
+
+<h3 id="D" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">D</h3>
+<!-- 
+No "new" items
+No emptys
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/date.html Date]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/datefooter.html DateFooter]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/dateheader.html DateHeader]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/defaultlanguage-1.html DefaultLanguage]
+    <ul>
+        <li><s><b>Suggestion: </b> Fix the basename for this entry, so the URL remains hackable</s></li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="E" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">E</h3>
+<!--
+    New's checked
+    Empties noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/else.html Else]
+    <ul>
+        <li><b>Question:</b> "Tag can be used as a block or to divide a block." Huh?</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entries.html Entries]
+    <ul>
+        <li><s><b>Error:</b> The explanation for offset goes from referring to its value as M in one sentence, to N in the next.</s></li>
+        <li><b>Error:</b> The blog_ids attribute is still indicated as Enterprise-only. This is no longer true.</li>
+        <li><s><b>Suggestion:</b> There's an explanation from Byrne in comments of valid values for the "unique" attribute. They should be added to the actual documentation rather than left down there to be found.</s></li>
+        <li><s><b>Suggestion:</b> Add authored_on as possible value for sort_by. It's the default, but can't hurt anything.</s></li>
+        <li><b>Suggestion:</b> The order of these attributes seems a bit odd.</li>
+        <li><b>Question:</b> It looks like "score" might also a valid value for sort_by? (Per ContextHandlers.pm in 4.01RC2 line 2618) </li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entriescount.html EntriesCount]
+    <ul>
+        <li><b>Error:</b> This is completely wrong. EntriesCount outputs the number of items MTEntries would return in the current context("would" because it doesn't even need to be inside an MTEntries block).<br />The published definition describes [http://www.movabletype.org/documentation/appendices/tags/blogentrycount.html BlogEntryCount]</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entriesfooter.html EntriesFooter]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entriesheader.html EntriesHeader]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrieswithsubcategories.html EntriesWithSubCategories]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryadditionalcategories.html EntryAdditionalCategories]
+    <ul>
+        <li><b>Not new:</b> Undocumented in 3.3x</li>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryassets.html EntryAssets]
+    <ul>
+        <li><b>Question:</b> It looks like this tag should have a bunch of attributes available to it in ContextHandlers.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryatomid.html EntryAtomID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryauthor.html EntryAuthor]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryauthordisplayname.html EntryAuthorDisplayName]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryauthoremail.html EntryAuthorEmail]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryauthorid.html EntryAuthorID]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryauthorlink.html EntryAuthorLink]
+    <ul>
+        <li><b>Error:</b> The description for this tag contradicts itself, saying if no URL is available the name is unlinked, then immediately saying that the e-mail address is used.</li>
+        <li><b>Question:</b> This tag appears to have a "type" attribute in ContextHandlers.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryauthornickname.html EntryAuthorNickname]
+    <ul>
+        <li><s><b>Error:</b> The link to MTEntryAuthorDisplayName is broken.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryauthorurl.html EntryAuthorURL]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryauthorusername.html EntryAuthorUsername]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrybasename.html EntryBasename]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryblogdescription.html EntryBlogDescription]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryblogid.html EntryBlogID]
+    <ul>
+        <li><b>No description</b>, also has "pad" attribute.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryblogname.html EntryBlogName]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryblogurl.html EntryBlogURL]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrybody.html EntryBody]
+    <ul>
+        <li><s><b>Question:</b> The Context section seems to suggest this tag is limited to use within MTPages.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrycategories.html EntryCategories]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrycategory.html EntryCategory]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryclass.html EntryClass]
+    <ul>
+        <li><s><b>Typo:</b> "returns on'''e''' of two values"</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrycommentcount.html EntryCommentCount]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrycreateddate.html EntryCreatedDate]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrydate.html EntryDate]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryeditlink.html EntryEditLink]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryexcerpt.html EntryExcerpt]
+    <ul>
+        <li><s><b>Error:</b> The link to MTEntryBody is broken.</s></li>
+        <li><b>Suggestion:</b> There should be some explanation of what happens when an excerpt is auto-generated. People often seem confused their HTML gets stripped.</li>
+        <li><s><b>Question:</b> Any particular reason the link to the config directive points at the listing rather than to the permalink for that specific directive?</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryflag.html EntryFlag]
+    <ul>
+        <li><b>Error:</b> The flag attribute will also accept "allow_pings"</li>
+        <li><s><b>Error:</b> The link to MTIfCommentsAccepted tag is broken.</s></li>
+        <li><s><b>Error:</b> The example code is broken and renders as just an apostrophe</s></li>
+        <li><b>Question:</b> The second example of just "<mt:EntryFlag />" doesn't do anything, and actually throws an error.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryid.html EntryID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryifallowcomments.html EntryIfAllowComments]
+    <ul>
+        <li><s><b>Error:</b> Link to IfCommentsAccepted is broken.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryifallowpings.html EntryIfAllowPings]
+    <ul>
+        <li><s><b>Error:</b> Link to IfPingsAccepted is broken.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryifcategory.html EntryIfCategory]
+    <ul>
+        <li><s><b>Suggestion:</b> Deprecation note should link to IfCategory.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryifcommentsopen.html EntryIfCommentsOpen]
+    <ul>
+        <li><s><b>Error:</b> Link to IfCommentsActive is broken.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryifextended.html EntryIfExtended]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryiftagged.html EntryIfTagged]
+    <ul>
+        <li><b>Suggestion:</b> The description for this is a bit backwards. The base behavior of EntryIfTagged is defined on the assumption of the tag attribute being present, even though it's optional. This then requires that the tag attribute's behavior be described in the negative("if not assigned"), which is kind of weird and confusing, considering "tag" is already being used in two contexts.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrykeywords.html EntryKeywords]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrylink.html EntryLink]
+    <ul>
+        <li><s><b>Error:</b> Link to EntryPermalink is broken.</s></li>
+        <li><b>Question:</b> Defintion of archive_type doesn't include the new author(-monthly) and category-monthly options. Are these not possible?</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrymodifieddate.html EntryModifiedDate]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrymore.html EntryMore]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrynext.html EntryNext]
+    <ul>
+        <li><b>Suggestion:</b> "the next entry after the one in context" sort of describes an entry <em>two</em> over from the current. Drop "next" for clarity.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrypermalink.html EntryPermalink]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryprevious.html EntryPrevious]
+    <ul>
+        <li><b>Suggestion:</b> "the previous entry before the one in context" describes an entry <em>two</em> over from the current. Drop "previous" for clarity.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryrank.html EntryRank]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryscore.html EntryScore]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryscoreavg.html EntryScoreAvg]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryscorecount.html EntryScoreCount]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryscorehigh.html EntryScoreHigh]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entryscorelow.html EntryScoreLow]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrystatus.html EntryStatus]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrytags.html EntryTags]
+    <ul>
+        <li><b>Question:</b> Does the glue att here have the same limitation (no single or double quotes) as EntryCategories?</li>
+        <li><s><b>Suggestion:</b> Fix content. The LI in Optional Attributes is actually inside a P tag, and there's weird spacing in the code sample.</s></li>
+        <li><s><b>Suggestion:</b> Remove references to the Administrator Manual, or link directly, as this content hasn't been duplicated under the 4.0 doc structure(yet?)</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrytitle.html EntryTitle]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrytrackbackcount.html EntryTrackbackCount]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrytrackbackdata.html EntryTrackbackData]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrytrackbackid.html EntryTrackbackID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/entrytrackbacklink.html EntryTrackbackLink]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/errormessage.html ErrorMessage]</li>
+</ol>
+
+<h3 id="F" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">F</h3>
+<!-- 
+    New's reviewed
+    Empties noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/feed.html Feed]
+    <ul>
+        <li><b>No description</b></li>
+        <li>See http://appnel.com/kb/feedsapp_lite/feedsapp-lite-manual-10x</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/feedentries.html FeedEntries]
+    <ul>
+        <li><b>No description</b></li>
+        <li>See http://appnel.com/kb/feedsapp_lite/feedsapp-lite-manual-10x</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/feedentrylink.html FeedEntryLink]
+    <ul>
+        <li><b>No description</b></li>
+        <li>See http://appnel.com/kb/feedsapp_lite/feedsapp-lite-manual-10x</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/feedentrytitle.html FeedEntryTitle]
+    <ul>
+        <li><b>No description</b></li>
+        <li>See http://appnel.com/kb/feedsapp_lite/feedsapp-lite-manual-10x</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/feedinclude.html FeedInclude]
+    <ul>
+        <li><b>No description</b></li>
+        <li>See http://appnel.com/kb/feedsapp_lite/feedsapp-lite-manual-10x</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/feedlink.html FeedLink]
+    <ul>
+        <li><b>No description</b></li>
+        <li>See http://appnel.com/kb/feedsapp_lite/feedsapp-lite-manual-10x</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/feedtitle.html FeedTitle]
+    <ul>
+        <li><b>No description</b></li>
+        <li>See http://appnel.com/kb/feedsapp_lite/feedsapp-lite-manual-10x</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/feedbackscore.html FeedbackScore]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/filetemplate.html FileTemplate]
+    <ul>
+        <li><s><b>Error:</b> Path specifiers link points at 3.3 docs, not current</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/folderbasename.html FolderBasename]
+    <ul>
+        <li><s><b>Question:</b> What does "category" in the default att definition refer to? Should that be "folder?"</s></li>
+        <li><b>Question:</b> I could just be confusing myself, but... Does separator actually have a default value(dash)? It's an optional argument. Which means default behavior is actually dirify, which defaults to underscores, not dashes.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/foldercount.html FolderCount]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/folderdescription.html FolderDescription]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/folderfooter.html FolderFooter]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/folderheader.html FolderHeader]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/folderid.html FolderID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/folderlabel.html FolderLabel]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/foldernext.html FolderNext]
+    <ul>
+        <li><b>Error:</b> show_empty references categories</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/folderpath.html FolderPath]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/folderprevious.html FolderPrevious]
+    <ul>
+        <li><s><b>Error:</b> show_empty references categories</s></li>
+        <li><s><b>Error:</b> Example code is broken</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/folders.html Folders]
+     <ul>
+     <li>This entry is missing all of the filter attributes that can be applied such as sort, direction and glue.</li>
+     </ul>
+  </li>
+</ol>
+
+<h3 id="G" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">G</h3>
+<!-- 
+No "new" items
+No emptys
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/getvar.html GetVar]
+     <ul>
+         <li><s><b>Related tag:</b> <mt:SetVarBlock /> should be <mt:SetVarBlock></s></li>
+         <li><s><b>Related tag:</b> <mt:SetVarTemplate name="foo" /> should be <mt:SetVarTemplate name="foo"></s></li>
+     </ul>
+  </li>
+</ol>
+
+<h3 id="H" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">H</h3>
+<!-- 
+No "new" items
+No emptys
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/httpcontenttype.html HTTPContentType]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li><s><b>Not new:</b> available in 3.3x</s> fixed</li>
+        <li>Reviewed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/hasnoparentcategory.html HasNoParentCategory]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>Reviewed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/hasnosubcategories.html HasNoSubCategories]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>Reviewed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/hasparentcategory.html HasParentCategory]
+    <ul>
+        <li>Reviewed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/hasparentfolder.html HasParentFolder]
+    <ul>
+        <li>Reviewed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/hassubcategories.html HasSubCategories]
+    <ul>
+        <li>Reviewed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/hassubfolders.html HasSubFolders]
+    <ul>
+        <li>Reviewed</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="I" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">I</h3>
+<!--
+    New's checked
+    Empties noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/if.html If]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifallowcommenthtml.html IfAllowCommentHTML]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifarchivetype.html IfArchiveType]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifarchivetypeenabled.html IfArchiveTypeEnabled]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifcategory.html IfCategory]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifcommentparent.html IfCommentParent]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifcommentreplies.html IfCommentReplies]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifcommenterisauthor.html IfCommenterIsAuthor]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifcommenterisentryauthor.html IfCommenterIsEntryAuthor]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifcommentertrusted.html IfCommenterTrusted]
+    <ul>
+        <li><s><b>Typo:</b> Should read "if the commenter in context has be<strong>en</strong> marked..."</s></li>
+        <li><b>Question:</b> There seem to be some internal notes exposed on this page. "What's the diference...?" etc.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifcommentsaccepted.html IfCommentsAccepted]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifcommentsactive.html IfCommentsActive]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifcommentsallowed.html IfCommentsAllowed]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifcommentsmoderated.html IfCommentsModerated]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifdynamic.html IfDynamic]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/iffolder.html IfFolder]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifisancestor.html IfIsAncestor]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifisdescendant.html IfIsDescendant]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifmaxresultscutoff.html IfMaxResultsCutoff]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifneedemail.html IfNeedEmail]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifnonempty.html IfNonEmpty]
+    <ul>
+        <li><s><b>Error: </b> Link to IfNonZero is broken</s></li>
+        <li><s><b>Error: </b> The example code is munged and not rendering properly in-browser.</s></li>
+        <li><s><b>Error: </b> Links to related tags both broken</s></s></li>
+        <li><s><b>Question: </b> Description for the tag att says with or without the MT prefix. Does this also include the namespaced "mt:" format?</s></li>
+        <li><b>Question: </b> This tag seems to also allow for "name" and "var" attributes.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifnonzero.html IfNonZero]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifpingsaccepted.html IfPingsAccepted]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifpingsactive.html IfPingsActive]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifpingsallowed.html IfPingsAllowed]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifpingsmoderated.html IfPingsModerated]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifregistrationallowed.html IfRegistrationAllowed]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifregistrationnotrequired.html IfRegistrationNotRequired]
+    <ul>
+        <li><s><b>Error: </b>Links to Else and IfRegistrationRequired are broken.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifregistrationrequired.html IfRegistrationRequired]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifrequirecommentemails.html IfRequireCommentEmails]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifstatic.html IfStatic]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ifstraightsearch.html IfStraightSearch]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/iftagsearch.html IfTagSearch]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/iftypekeytoken.html IfTypeKeyToken]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/ignore.html Ignore]
+    <ul>
+        <li><s><b>Suggestion:</b> The contents of the second snippet should maybe be changed to something that doesn't imply they'd be processed. Or it could be removed altogether, since the one above is more explicit.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/imageheight.html ImageHeight]
+    <ul>
+        <li><b>Suggestion:</b> Change "Images tags." to "Image* tags..."</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/imageurl.html ImageURL]
+    <ul>
+        <li><b>Suggestion:</b> Change "Images tags." to "Image* tags..."</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/imagewidth.html ImageWidth]
+    <ul>
+        <li><b>Suggestion:</b> Change "Images tags." to "Image* tags..."</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/include.html Include]
+    <ul>
+        <li><b>Suggestion:</b> The module att should specify exact match required.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/indexbasename-1.html IndexBasename]
+    <ul>
+        <li><b>Error:</b> Link to IndexList is broken</li>
+        <li><s><b>Suggestion: </b> (Irony!) Fix the basename for this entry, so the URL remains hackable along with all the others</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/indexlink.html IndexLink]
+    <ul>
+        <li><s><b>Error:</b> Link to IndexList is broken</s></li>
+        <li><s><b>Typo: </b> Remove meaningless(?) double-asterisk from "Example" heading.</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/indexlist.html IndexList]
+    <ul>
+        <li><s><b>Error?:</b> The context of this tag is itself?</s> (Removed the context heading. Made no sense.)</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/indexname.html IndexName]
+    <ul>
+        <li><s><b>Error:</b> Link to IndexList is broken</s></li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="L" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">L</h3>
+<!-- 
+"New" items checked
+Emptys noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/link.html Link]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/loop.html Loop]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+</ol>
+
+
+<h3 id="M" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">M</h3>
+<!-- 
+"New" items checked
+Emptys noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/markdownoptions.html MarkdownOptions]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/maxresults-1.html MaxResults]
+    <ul>
+        <li><b>No description</b></li>
+        <li><s><b>Suggestion: </b> Fix the basename for this entry, so the URL remains hackable</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/multiblog.html MultiBlog]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/multiblogiflocalblog.html MultiBlogIfLocalBlog]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/multibloglocalblog.html MultiBlogLocalBlog]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+</ol>
+
+
+<h3 id="N" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">N</h3>
+<!-- 
+No "new" items
+No emptys
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/nosearch.html NoSearch]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/nosearchresults.html NoSearchResults]</li>
+</ol>
+
+<h3 id="O" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">O</h3>
+<!-- 
+"New" items checked
+Emptys noted
+-->
+<ol>
+    <li>[http://www.movabletype.org/documentation/appendices/tags/otherblog.html OtherBlog]
+        <ul>
+            <li><b>No description</b></li>
+        </ul>
+    </li>
+</ol>
+
+
+<h3 id="P" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">P</h3>
+<!-- 
+    New's
+    Emptys
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pageassets.html PageAssets]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pageauthordisplayname.html PageAuthorDisplayName]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pageauthoremail.html PageAuthorEmail]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pageauthorlink.html PageAuthorLink]
+    <ul>
+        <li><b>Error?: </b> Contradicts itself as EntryAuthorLink</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pageauthorurl.html PageAuthorURL]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagebasename.html PageBasename]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagebody.html PageBody]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagedate.html PageDate]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pageexcerpt.html PageExcerpt]
+    <ul>
+        <li><s><b>Error: </b> Link to PageBody is broken</s></li>
+        <li><s><b>Suggestion: </b> MTPages under Context should link to relevant tag page.</s></li>
+        <li><s><b>Suggestion: </b> Link directly to ExcerptWords config directive page rather than listing.</s></li>
+        <li><b>Suggestion: </b> Explain processing applied to auto-generated excerpts(stripping HTML).</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagefolder.html PageFolder]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pageid.html PageID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pageiftagged.html PageIfTagged]
+    <ul>
+        <li><b>Suggestion: </b> Same backwards explanation as EntryIfTagged; correct.</li>
+        <li><b>Suggestion: </b> Link items under Context.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagekeywords.html PageKeywords]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagemodifieddate.html PageModifiedDate]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagemore.html PageMore]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagenext.html PageNext]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagepermalink.html PagePermalink]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pageprevious.html PagePrevious]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagetags.html PageTags]
+    <ul>
+        <li><b>Suggestion: </b> Odd phrasing: "A container tag which create a context about the assigned tags."</li>
+        <li><b>Suggestion: </b> Define the glue attribute.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagetitle.html PageTitle]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pages.html Pages]</li>
+<ul>
+<li><b>Suggestion:</b> Explain the <tt>no_folder="1"</tt> attribute. Found a reference [http://wiki.movabletype.org/Pages_list_%28nested%29 here]. --[[User:Gspatel|Gautam Patel]] 21:08, 15 December 2007 (PST) </li></ul>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagesfooter.html PagesFooter]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pagesheader.html PagesHeader]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/parentcategories.html ParentCategories]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/parentcategory.html ParentCategory]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/parentfolder.html ParentFolder]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/parentfolders.html ParentFolders]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingblogname.html PingBlogName]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingdate.html PingDate]
+    <ul>
+        <li><s><b>Error: </b> References "when the comment was submitted." Should be "ping."</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingentry.html PingEntry]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingexcerpt.html PingExcerpt]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingid.html PingID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingip.html PingIP]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingrank.html PingRank]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingscore.html PingScore]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingscoreavg.html PingScoreAvg]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingscorecount.html PingScoreCount]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingscorehigh.html PingScoreHigh]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingscorelow.html PingScoreLow]
+    <ul>
+        <li><s><b>No description</b></s> fixed</li>
+        <li>In review</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingtitle.html PingTitle]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingurl.html PingURL]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pings.html Pings]
+    <ul>
+        <li><b>Error:</b> Internal notes about similarity to MTComments exposed.</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingsfooter.html PingsFooter]
+    <ul>
+        <li><s><b>Error: </b> Link to MTPings broken</s></li>
+        <li><s><b>Error: </b> References entries; should be pings</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingsheader.html PingsHeader]
+    <ul>
+        <li><s><b>Error: </b> Link to MTPings broken</s></li>
+        <li><s><b>Error: </b> References entries; should be pings</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingssent.html PingsSent]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/pingssenturl.html PingsSentURL]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/productname.html ProductName]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/publishcharset.html PublishCharset]
+    <ul>
+        <li><s><b>Error: </b> PublishCharset link goes to 3.3 docs</s></li>
+        <li><s><b>Suggestion: </b> Fix the basename for this entry, so the URL remains hackable</s></li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="R" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">R</h3>
+<!-- 
+No "new" items
+No emptys
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/remotesigninlink.html RemoteSignInLink]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/remotesignoutlink.html RemoteSignOutLink]</li>
+</ol>
+
+
+<h3 id="S" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">S</h3>
+<!--
+    New's checked
+    Empties noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/searchincludeblogs.html SearchIncludeBlogs]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/searchresultcount.html SearchResultCount]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/searchresults.html SearchResults]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/searchscript-1.html SearchScript]
+    <ul>
+        <li><s><b>Suggestion: </b> Fix the basename for this entry, so the URL remains hackable</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/searchstring.html SearchString]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/searchtemplateid.html SearchTemplateID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/section.html Section]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/setvar.html SetVar]
+    <ul>
+        <li><b>Not new:</b> At least as old as 2.661</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/setvarblock.html SetVarBlock]
+    <ul>
+        <li><b>Not new:</b> Introduced in 3.3x</li>
+        <li><s><b>Related tag:</b> <mt:SetVarTemplate name="foo" /> should be <mt:SetVarTemplate name="foo"></s></li>  
+        <li><s><b>Suggestion:</b> Explicitly state that the block function <b>preserves linefeeds</b>. To avoid linefeeds, put the entire block in one line. To strip linefeeds, use the <b>strip_linefeeds</b> modifier. --[[User:Gspatel|Gautam Patel]] 20:52, 15 December 2007 (PST)</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/setvartemplate.html SetVarTemplate]
+    <ul>
+        <li><s><b>Container tag:</b> <mt:SetVarTemplate name="foo" /> should be <mt:SetVarTemplate name="foo"></s></li>
+        <li><s><b>Related tag:</b> <mt:SetVarBlock /> should be <mt:SetVarBlock></s></li>
+    </ul>
+</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/signonurl.html SignOnURL]
+    <ul>
+        <li><s><b>Suggestion: </b> Fix the basename for this entry, so the URL remains hackable</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/smartypantsversion.html SmartyPantsVersion]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/staticfilepath.html StaticFilePath]
+    <ul>
+        <li><s><b>Suggestion: </b> Fix the basename for this entry, so the URL remains hackable</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/staticwebpath.html StaticWebPath]
+    <ul>
+        <li><s><b>Suggestion: </b> Fix the basename for this entry, so the URL remains hackable</s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/subcatisfirst.html SubCatIsFirst]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/subcatislast.html SubCatIsLast]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/subcategories.html SubCategories]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/subcategorypath.html SubCategoryPath]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/subcatsrecurse.html SubCatsRecurse]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/subfolderrecurse.html SubFolderRecurse]</li>
+         <ul>
+            <li><b>Error</b>: The example code is wrong. There are no &lt;$MTFolderArchiveLink$&gt; &lt;MTSubFolderIsFirst&gt; or &lt;MTSubFolderIsLast&gt; tags!
+--[[User:Gspatel|Gautam Patel]] 20:46, 15 December 2007 (PST)
+</li>
+         </ul>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/subfolders.html SubFolders]</li>
+</ol>
+
+<h3 id="T" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">T</h3>
+<!-- 
+"New" items checked
+Emptys noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/tagcount.html TagCount]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/tagid.html TagID]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/taglabel.html TagLabel]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/tagname.html TagName]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/tagrank.html TagRank]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/tagsearchlink.html TagSearchLink]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/tags.html Tags]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/templatecreatedon.html TemplateCreatedOn]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/templatenote.html TemplateNote]
+    <ul>
+        <li><s>No description</s> fixed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/textile.html Textile]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/textileheadoffset.html TextileHeadOffset]
+    <ul>
+        <li><s>No description</s> fixed</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/textileoptions.html TextileOptions]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/toplevelcategories.html TopLevelCategories]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/toplevelfolder.html TopLevelFolder]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/toplevelfolders.html TopLevelFolders]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/toplevelparent.html TopLevelParent]</li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/trackbackscript-1.html TrackbackScript]
+    <ul>
+        <li><b>Suggestion: </b> <s>Fix the basename for this entry, so the URL remains hackable</s> fixed</li>
+        <li>Linked to TrackbackScript config directive</li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/typekeytoken.html TypeKeyToken]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="U" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">U</h3>
+<!-- 
+"New" items checked
+No emptys
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/unless.html Unless]</li>
+</ol>
+
+
+<h3 id="V" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">V</h3>
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/var.html Var]
+    <ul>
+        <li><b>Question:</b> If this tag has output capabilities, should GetVar be deprecated? Is there a purpose to the redundancy? Simultaneously, is there any reason not to use it for declaration and also deprecate SetVar?</li>
+        <li><s><b>Related tag:</b> <mt:SetVarBlock /> should be <mt:SetVarBlock></s></li>
+        <li><s><b>Related tag:</b> <mt:SetVarTemplate name="foo" /> should be <mt:SetVarTemplate name="foo"></s></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/version.html Version]</li></ol>
+
+<h3 id="W" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">W</h3>
+<!-- 
+"New" items checked
+Emptys noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/widgetmanager.html WidgetManager]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/widgetset.html WidgetSet]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+</ol>
+
+  
+<h3 id="X" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">X</h3>
+<!-- 
+No "new" items
+No emptys
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/xmlrpcscript-1.html XMLRPCScript]
+    <ul>
+        <li><s><b>Suggestion: </b> Fix the basename for this entry, so the URL remains hackable</s></li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="app" style="border-bottom: 1px solid black; margin: 0 0 5px 0;">App Tags</h3>
+<!-- 
+    New's checked
+    Emptys noted
+-->
+<ol>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/appactionbar.html App:ActionBar]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/appform.html App:Form]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/applink.html App:Link]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/applistfilters.html App:ListFilters]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/applisting.html App:Listing]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/apppageactions.html App:PageActions]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/appsetting.html App:Setting]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/appsettinggroup.html App:SettingGroup]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/appstatusmsg.html App:StatusMsg]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+  <li>[http://www.movabletype.org/documentation/appendices/tags/appwidget.html App:Widget]
+    <ul>
+        <li><b>No description</b></li>
+    </ul>
+  </li>
+</ol>

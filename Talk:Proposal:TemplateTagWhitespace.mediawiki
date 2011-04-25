@@ -1,0 +1,294 @@
+== Polling ==
+
+I appreciate all the valuable feedback and recommendations. I'd now like to ask that we rate these alternatives. While our process is not democratic, this will provide further feedback and will inform our decision.
+
+=== Brad's proposal ===
+
+Removing whitespace following a block tag:
+
+<pre><mt:Entries -></pre>
+
+Removing whitespace following a function tag:
+
+<pre><$mt:EntryTitle -> (and this works also: <mt:EntryTitle$->)</pre>
+
+* In favor
+** [[User:BradChoate|Brad Choate]] 00:51, 21 November 2008 (UTC)
+* Neutral/Abstain
+** [[User:Tima|Timothy Appnel]] 16:13, 1 December 2008 (UTC) - I don't totally disagree with this proposal to not be in favor, but I favor the proposal I made for the reasons I stated. 
+* Not in favor
+
+<hr />
+
+=== Reed's first proposal ===
+
+Removing whitespace following a block tag:
+
+<pre><mt:Entries><mt:dnl/></pre>
+
+Removing whitespace following a function tag:
+
+<pre><$mt:EntryTitle$><mt:dnl/></pre>
+
+* In favor
+* Not in favor
+** [[User:BradChoate|Brad Choate]] 00:51, 21 November 2008 (UTC) - See notes below for my objections for this syntax.
+** [[User:Tima|Timothy Appnel]] 16:03, 1 December 2008 (UTC) - This seems to confusing to the average user.
+
+<hr />
+
+=== Reed's second proposal ===
+
+Removing whitespace following a block tag:
+
+<pre><mt:Entries></></pre>
+
+Removing whitespace following a function tag:
+
+<pre><$mt:EntryTitle$></></pre>
+
+* In favor
+* Not in favor
+** [[User:BradChoate|Brad Choate]] 00:51, 21 November 2008 (UTC) - &lt;/&gt; is unpalatable for me (as is &lt;%&gt;, etc).
+** [[User:Tima|Timothy Appnel]] 16:08, 1 December 2008 (UTC) - This is better then Reed's first proposal, but I think it will still require designers to think to much and that they are likely to  get confused. The more literal approach is clearer and worth the extra characters.
+
+<hr />
+
+=== Ogawa-san's proposal ===
+
+Use Template Toolkit when you want more flexible whitespace control.
+
+* In favor
+* Not in favor
+** [[User:BradChoate|Brad Choate]] 00:51, 21 November 2008 (UTC) - This seems a little overreaching.
+** [[User:Tima|Timothy Appnel]] 16:08, 1 December 2008 (UTC) - I agree with Brad. Seems a bit excessive for better whitespace control.
+
+<hr />
+
+Oops, the above is not what I've really intended to do.
+
+PROPOSAL:
+
+Instead of extending tags, provide an interface to replace MT::Template parser and implement whatever you like.
+
+RATIONALE:
+
+* It's hard for ordinary people to control their templates with properly using "-" tags and non-"-" tags.    For example, when you want to see the following result:
+    --start of file
+        "Title of Second Entry","November  2, 2008  9:45 PM"
+        "Title of First Entry","November  2, 2008  9:26 PM"
+    --end of file
+Can you instantly explain how to compose a new template with using "-" tags?  Actually I can do it, but everybody can?
+* Plus, adding "-" tags may *not" be a perfect solution, because it may not always be fitted to everybody's needs.
+
+
+* In favor
+* Not in favor
+
+<hr />
+
+=== Tim's proposal ===
+
+Removing whitespace following a block tag:
+
+<pre><mt:Entries -></pre>
+
+Removing whitespace following a function tag:
+
+<pre><$mt:EntryTitle-$> (also works, I presume: <$mt:EntryTitle -$>)</pre>
+
+* In favor
+** [[User:BradChoate|Brad Choate]] 00:51, 21 November 2008 (UTC) - I can go either way here; I have a preference towards having only one symbol at the end of the tag, either being - or $ (or none at all, which is also valid), but if you prefer to have both, we can probably support either style: $-&gt; or -$&gt; or -&gt; as far as parsing goes.
+** [[User:Tima|Timothy Appnel]] 16:12, 1 December 2008 (UTC) - For obvious reasons.
+* Not in favor
+
+
+<hr />
+
+== Brilliant! +1 ==
+
+[[User:Jayallen|Jayallen]] 01:05, 4 November 2008 (UTC)
+
+An elegant solution to a long time problem. Now, to be clear, the following
+
+    --start
+    <mt:Entries ->
+        <mt:EntryTitle ->
+    </mt:Entries ->
+    --end
+
+Would produce this, correct?:
+
+    --start
+    
+      EntryOne Title
+    EntryTwo Title
+    EntryThree Title
+    EntryN Title--end
+
+[[User:BradChoate|BradChoate]] 18:56, 4 November 2008 (UTC)
+
+No, the above example would produce this:
+
+    EntryOne TitleEntryTwo TitleEntryThree TitleEntryN Title
+
+The '-' at the end of the EntryTitle tag would eat the newline following it. To preserve that newline, just do this:
+
+    --start
+    <mt:Entries ->
+        <mt:EntryTitle>
+    </mt:Entries ->
+    --end
+
+Which would output:
+
+    --start
+    EntryOne Title
+    EntryTwo Title
+    EntryThree Title
+    EntryN Title
+    --end
+
+Which is what you want, right? The first '-' winds up removing the newline plus indention after the Entries block. The last one just removes any newline + whitespace following it after the loop.
+
+To put it another way, this block:
+
+    --start
+    <mt:Entries ->
+        <mt:EntryTitle>
+    </mt:Entries ->
+    --end
+
+is equivalent to this:
+
+    --start
+    <mt:Entries><mt:EntryTitle>
+    </mt:Entries>--end
+
+[[User:Ogawa|Ogawa]] 02:24, 7 November 2008 (UTC)
+
+Isn't it too complicated? For variable tags, why the '-' eats the newline following them? And for block tags, why the latter '-' removes newlines following them?
+
+I think, tags should be responsible just for the contents inside of them.
+
+-- [[User:BradChoate|Brad Choate]]
+
+It's not a change in behavior of the tags themselves. It's a change in behavior of how the template is parsed. I don't think it's complicated. It is similar enough to other template languages (Template Toolkit, for one), and it serves a purpose, while being optional at the same time. If we take the stance that tags should only be responsible for what is inside them, then we have to devise a solution that is only applicable to block tags, which doesn't help the situation where you have a bunch of function tags appearing in a template, one right after the other (ie, several MTVar tags placed at the top).
+
+[[User:Ogawa|Ogawa]] 05:55, 13 November 2008 (UTC)
+
+Oops! I've totally misunderstood what this proposal will really want to do.
+
+So, I have another question. Instead of permitting mixed use of "-" and non-"-" tags, why don't you allow users to select a parser from two versions? I mean, default parser, and a TT-like parser which always removes insignificant whitespaces from MT templates.
+
+== Clean Readability ==
+
+Ending a tag with a " ->" looks too much like an arrow... or the end of a html comment. I'd prefer to simply add the minus:
+
+* Block tags: <pre>&lt;mt:Entries-&gt; ... &lt;/mt:Entries-&gt;</pre>
+* Function tags: <pre>&lt;$mt:EntryTitle$-&gt;</pre>
+* Variables: <pre>&lt;$mt:Var name="foo"$-&gt;</pre>
+
+Is there a drawback to this format? [[User:Beausmith|Beau]] 05:49, 4 November 2008 (UTC)
+----
+[[User:Jayallen|Jayallen]] 16:37, 4 November 2008 (UTC) — 
+I'm confused.  What's the difference? Are you saying just eliminate the space?  <mt:EntryTitle-> vs <mt:EntryTitle ->?  Doesn't the fomer break backward compatibility?
+
+[[User:BradChoate|BradChoate]] 18:59, 4 November 2008 (UTC)
+The space would be optional, but leaving it out does affect backward compatibility, if that's important to you.
+
+[[User:Tima|TimothyAppnel]] 07:09, 6 November 2008 (UTC)
+I like this idea and I like that this is based on relatively popular prior art (template toolkit), but then shouldn't &lt;$mt:EntryTitle$-&gt; be &lt;$mt:EntryTitle-$&gt;?  The latter looks more like the current MT syntax at a glance. Relatedly I agree with Beau that just -&gt; looks too much like an arrow and will make MT template tags harder for the eye to pick out. Giving readability conscience coders the option of breaking that up in addition to no retraining the eye would be a really good idea.
+
+[[User:BradChoate|Brad Choate]] 00:59, 13 November 2008 (UTC)
+The arrow was cited as a mnemonic device, and as such, a feature rather than a flaw. The syntax you offer (-$&gt; instead of $-&gt;) is only applicable to function tags. The "$" is not even recommended (in the proposal) for the right side of the tag. You don't write Perl variables as "$foo$", for instance.
+
+[[User:Tima|TimothyAppnel]] 04:30, 13 November 2008 (UTC)
+The reason for my suggestion was to follow the same conventions set by the template toolkit and not be cowboys going our own way. Its a small thing, but its the principle of the matter. In my suggestion the dash is still there making it memorable without retraining the eye when scanning  template markup created prior to this feature (everything up to this point) or where mixed use -- some cutting whitespace, some not -- gets used. (I tried it out on myself. Feel free to test it on others.) I suggest that the recommendation to not use the "$" be struck. I and many other users have been using the $ bookends in our templates for years. I like using and have suggested to others of taught that they use them because it makes it easier to tell what is a function tag and what is a block tag when scanning a large complex template which may have tag (via plugins) you aren't familiar with. (Requiring their use would have made parsing much easier and eliminated all that tag type lookup nonsense that in the compile method now, but that is the topic of another recommendation for another day.) Suggesting that their use is not a good (recommended) practice now to support one sense of a mnemonic device when other alternatives exist closer to current conventions seems unnecessary and arbitrary. The analogy to the Perl variables is irrelevant. Perl is a programming language not a template markup language. MT's templates should not turn into a programming language others we might as well adopt PHP and use WordPress.
+
+== Single line Comment ==
+
+[[User:Reed|Reed]] 22:28, 4 November 2008 (UTC)
+
+I believe that it would be better to add a new "to-end-of-line" comment code to the MT template language.  This would work like M4's dnl or Latex's %.  I would need to be simple, say like an empty tag: </>, <$>, and <$$>.
+
+Example:
+
+<pre>
+<MTEntries><$$>
+foo
+</MTEntries></>
+</pre>
+
+The following regexp could be applied to template source code before it is tokenized to remove the comments:
+
+<pre>
+s!<(?:/|$|$$)>.*\n?!!g;
+</pre>
+
+[[User:BradChoate|BradChoate]] 00:36, 5 November 2008 (UTC)
+
+Personally, I'm not in favor of this syntax.
+
+* It doesn't really relate to MT template language. &lt;$$&gt; has a vague association, but without the "MT" in there I'm blind to it (and besides, the "$" is in MT template tags is supposed to signal a variable tag, something that produces content, not consumes it).
+* Can't be backwards-compatible (these tokens would be published for older versions of MT -- without publishing errors from MT).
+* It's more verbose -- an extra two or three characters than what is proposed.
+* As I understand it, it would remove any content following itself, appearing on that same line. This is different from the proposal where only whitespace is removed, and whitespace is removed even on following lines, up to the next non-whitespace character.
+
+[[User:Reed|Reed]] 18:42, 5 November 2008 (UTC)
+
+The syntax is flexible, so that shouldn't be a knock against it.  We can have a longer one for backwards compatibility:
+
+<pre>
+<mt:dnl/>
+</pre>
+
+And a shorter one for efficient usage:
+
+<pre>
+<%>
+</pre>
+
+If it is important to remove leading whitespace on lines then I think "trim" should be extended, such that trim="2" or trim="lines" will remove leading and lagging white space on each line as well as in the block itself.
+
+[[User:BradChoate|Brad Choate]] 20:29, 7 November 2008 (UTC)
+
+Neither of these are backward compatible either. You'd have to install a plugin on older versions to ignore this tag, which is even more verbose.
+
+[[User:Reed|Reed]] 18:53, 12 November 2008 (UTC)
+
+But it is consistent with the current template language and doesn't add a new variation.  MT already has too many ways of specifying tags, adding the minus is just going to confuse more people than it should.
+
+As far as backwards compatibility: many of the features of the template system are not backwards compatible.  If someone is concerned about their templates being backwards compatible, they can simply not use the tags.  Alternatively, their users can install a dnl plugin to make it a null tag.
+
+[[User:BradChoate|Brad Choate]] 00:55, 13 November 2008 (UTC)
+
+I submit that the proposed syntax is less confusing than your alternative. Having a special tag adds a lot of visual clutter and weight:
+
+<pre>
+    <$mt:Var name="foo" value="bar"$><mt:dnl/>
+    <$mt:Var name="foo2" value="bar2"$><mt:dnl/>
+    <$mt:Var name="foo3" value="bar3"$><mt:dnl/>
+    <$mt:Var name="foo4" value="bar4"$><mt:dnl/>
+    <$mt:Var name="foo5" value="bar5"$><mt:dnl/>
+    <$mt:Var name="foo6" value="bar6"$><mt:dnl/>
+    <mt:Entries lastn="5"><mt:dnl/>
+        <mt:EntriesHeader><mt:dnl/>
+        <ul>
+        </mt:EntriesHeader><mt:dnl/>
+            <li><$mt:EntryTitle$></li>
+        <mt:EntriesFooter><mt:dnl/>
+        </ul>
+        </mt:EntriesFooter><mt:dnl/>
+    </mt:Entries><mt:dnl/>
+</pre>
+
+You don't think the above is confusing? "&lt;%&gt;" would also be noisy and is a new templating syntax, even though you argue against adding new syntax.
+
+[[User:Reed|Reed]] 00:00, 21 November 2008 (UTC)  It's clear to me.  Adding a "->" would just complication MT's already complicated tag system.  Having a special tag eliminates that increase in complexity.  As I point out a simple regex can recognize <%> and remove it.  I'm up for other ideas, maybe <-> or </>.
+
+One point that I think has been left out is that HTML doesn't need white space removed.  As such, the only people who will be removing whitespace are power users/template designers, and then it will be needed only sparringly.  Those people can handle <mt:dnl/> and <%>.
+
+An alternative possibility is to make MT templates default to remove "unnecessary" whitespace.  And develop a way to preserve whitespace.
+
+[[User:BradChoate|Brad Choate]] 00:51, 21 November 2008 (UTC): This last suggestion is a red herring. If we were to make a template-level control that controlled how whitespace was handled, we'd still need some syntax to either selectively remove or preserve it when the user wants to override that default; you'd have the same need basically (in which case, I would recommend using a "+", like &lt;mt:Entries +&gt;).

@@ -1,0 +1,29 @@
+== Overview ==
+
+This proposal is for creating a plugin that both interacts with and takes advantage of the unique features of the [http://defensio.com/ Defensio Anti-Spam Service].
+
+== Requirements ==
+
+* The plugin should fully utilize the Defensio API in regards to:
+** Announcing posts
+** Auditing comments
+** Training comments
+
+== Implementation Notes ==
+
+* One challenge that was identified was the fact that MT does not support sorting of tables in the core. It was raised that the plugin could override the default Manage Comments functionality to sort the comment listing by "spaminess". One could also simply add another view the comment listing via a page action or quick filter, to sort by spaminess.
+
+== Resources ==
+
+Previous development effort:
+
+* [http://code.google.com/p/mt-defensio/ mt-defensio] - A partially implemented plugin by Tim Appnel
+* [http://search.cpan.org/~bchoate/Net-Defensio-0.02/ Net::Defensio] - A library that speaks to the Defensio API by Brad Choate
+
+For help feel free to contact:
+
+* [User:byrnereese]
+* [mailto:info@defensio.com Carl Mercier], Defensio
+
+
+[[Category:MTOS Proposals]]

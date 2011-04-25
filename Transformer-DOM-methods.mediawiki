@@ -1,0 +1,202 @@
+== '''IN PROGRESS''' ==
+
+This article catalogs all of Movable Type 4.x's transformer DOM methods. These methods are used in conjunction with Movable Type's Transformer Callbacks which allow a plugin to modify the content of a page without having to override the entire HTML. These methods are perfect for:
+
+* adding a link to a page
+* adding a widget to the sidebar
+* adding a new configuration option
+* and much, much more.
+
+The transformer DOM methods specifically are the methods used to access a specific element on the page in order to modify it or insert additional HTML.
+
+=== Understanding Transformer Callbacks ===
+
+Transformer callbacks are callbacks that are triggered at different points in the template compilation process.  They allow you to dynamically modify:
+
+* The template source before being processed by the application
+* The template source after being tokenized by the application
+* The parameters that are to be used in combination with the template source to create the final HTML output
+* The final HTML output of the page, before it is sent to the client
+
+By using Transformer callbacks, your plugin can control every single aspect of the Movable Type user interface and seamlessly integrate its functionality into the application.
+
+=== Which Transformer Callback should I use ===
+
+There are three hookpoints for Transformer callbacks in the template building process listed below in order of their execution:
+
+* '''template_source''' - This callback is triggered immediately after load of the target template from the filesystem, but before any tokenization or compilation has occurred.
+* '''template_param''' - This callback is triggered immediately after tokenization of the template source and compilation of the template parameters and immediately before the template is compiled into output HTML using those parameters.
+* '''template_output''' - This callback is called immediately after the template parameters are merged with the template source to create the compiled page output.
+
+Of the three above callbacks, you usually want to use the '''template_param callback''' for the following reasons:
+
+* It provides you with the complete set of template output parameters, allowing you to modify/add/delete them as needed by your plugin
+* It also provides you with a ''tokenized'' template object with which you can use the new (in MT 4.x) DOM methods described below.  In comparison, modifying anything in the template_source callback requires regular expression matching which is more prone to breaking upon upgrade.
+* The compiled HTML provided by the template_output callback is highly variable due to conditional display (e.g. due to different permissions or blog/system scope) and string localization.  Hence, although there are some valid use cases, they are far more limited to the plugin developer.
+
+Reasons you might want to use the '''template_source callback''':
+
+* You need to operate on the pristine template source before tokenization happens ''(Anyone have a specific example?)''
+* ''Others?''
+
+Reasons you might want to use the '''template_output callback''':
+
+* You need to do global replacement for a string that may be contained in a number of different sub-templates which make up the current template and it's more convenient to do on the final output
+* Changes that you need to make to the application are dependent on the final HTML output ''(Examples?)''
+* ''Others?''
+
+
+=== Registering a Transformer callback ===
+
+The following code snippet shows an example of registration for all three for the edit_entry.tmpl file:
+
+  sub init_registry {
+    my $plugin = shift;
+    $plugin->registry({
+        callbacks => {
+            'MT::App::CMS::template_source.edit_entry' => \&xform_edit_entry_source,
+            'MT::App::CMS::template_param.edit_entry' => \&xform_edit_entry_params,
+            'MT::App::CMS::template_output.edit_entry' => \&xform_edit_entry_output,
+        }
+    });
+  }
+
+A few things to note about the above example:
+
+* The basic syntax of the registry 'callbacks' element is: <code>'APP_CLASS::CALLBACK_TYPE::TEMPLATE_BASENAME' => CODEREF,</code>
+
+* Because we've specified MT::App::CMS for the APP_CLASS, each of the above will only be triggered if that is the running application.  If you wanted to target another application (e.g. MT::App::Comments or MT::App::WidgetManager) you can specify that instead.  If you wanted to trigger the callback for ''any running application'' or filter it dynamically inside of your callback handler, you can replace the APP_CLASS with the '*' wildcard (i.e. '<code>*::CALLBACK_TYPE::TEMPLATE_BASENAME</code>').
+
+* Because we specified edit_entry for the TEMPLATE_BASENAME, the callbacks will only be triggered for the template edit_entry.tmpl.  The wildcard syntax described above is also supported here.
+
+Again, to use the DOM transformer methods described below, you must use a '''template_param''' callback.
+
+=== Creating Transformer callback handlers ===
+
+The following is a prototype for a '''template_source''' callback handler:
+
+    sub cb_template_source_hdlr {
+        my ($cb, $app, $str_ref) = @_;
+        
+        # $cb - The generic Callback object which contains information
+        #       about the callback and can be used for reporting errors
+        #       if necessary
+        #
+        # $app - The instance of the currently running application
+        #
+        # $str_ref - A scalar reference to the variable containing the
+        #            template source
+    }
+
+The following is a prototype for a '''template_param''' callback handler:
+
+    sub cb_template_param_hdlr {
+        my ($cb, $app, $param, $tmpl) = @_;
+        
+        # $param - A hash reference containing all of the template
+        #          parameters keys and values
+        #
+        # $tmpl - An MT::Template object of the template in question
+    }
+
+The following is a prototype for a '''template_output''' callback handler:
+
+    sub cb_template_output_hdlr {
+        my ($cb, $app, $str_ref, $param, $tmpl) = @_;
+        
+        # $str_ref - Scalar reference of the string containing the compiled
+        #            HTML output
+    }
+
+== List of All Transformer DOM Methods ==
+
+== MT::Template ==
+
+In the <code>template_param</code> callbacks, you are always starting with an MT::Template object so your first DOM method call will almost always be one of the following.  '''Important note:''' All of these methods operate on MT tag nodes not HTML tag nodes.  That means that if you need to select an HTML tag node, you must first select the containing MT tag node and then use innerHTML to get to the HTML node.
+
+* '''getElementsByTagName()'''  <!-- 567 -->
+** Given an MT tag name (e.g. var, include, appsetting, etc), returns an '''array reference''' of MT::Template::Node objects which match the tag or <code>undef</code> if not found.  Forwards to MT::Template::Tokens::getElementsByTagName.
+
+* '''getElementsByClassName(''class'')''' <!-- 572 -->
+** Given a class name, returns an array (not an array reference, oddly) of elements (tokens? nodes?) with the specified class.
+
+* '''getElementsByName(''name'')''' <!-- 584 -->
+** Given a name attribute, this function returns an array reference of MT::Template::Node objects that have a matching name attribute.  Returns undef if none are found.  Forwards to MT::Template::Tokens::getElementsByName.
+
+* '''getElementById(''id'')''' <!-- 589 -->
+** Returns the MT::Template::Node object whose ID attribute matches the specified argument.
+
+* '''createElement(''tag'', ''attr'')''' <!-- 598 -->
+** $tmpl->createElement('setvarblock', { name => 'html_head', append => 1 });
+** Creates a new DOM element in memory
+** ''attr'' argument is optional; attributes can be set separately, eg. $tmpl->setAttribute('otherattr', 'value');
+
+* '''createTextNode(''text'')''' <!-- 604 -->
+** Creates a new text node in memory
+
+* '''insertAfter(''node1'', ''node2'')''' <!-- 510 -->
+** Inserts ''node1'' after ''node2'' within node2's parent element
+
+* '''insertBefore(''node1'', ''node2'')''' <!-- 633 -->
+** Inserts ''node1'' before ''node2'' within node2's parent element
+
+* '''childNodes''' <!-- 656 -->
+
+* '''hasChildNodes(element)''' <!-- 661 -->
+** Boolean
+
+* '''appendChild''' <!-- 667 -->
+** $foo->appendChild($bar)
+
+== MT::Template::Tokens ==
+* '''getElementsByTagName(''name'')''' <!-- 690 -->
+** Returns an array of matching nodes
+* '''getElementsByName(''name'')''' <!-- 706 -->
+
+
+
+== MT::Template::Node ==
+* '''setAttribute(''attr'', ''val'')''' <!-- 726 -->
+** If ''attr'' equals "id" and the element already has an id set, the existing one will be replaced
+** If ''attr'' equals "class" and the element already has a class attribute, then ''val'' is appended to any existing classes
+* '''template [?]''' <!-- 752 -->
+** Think this might be internal; is referenced by ownerDocument
+* '''getAttribute(''attr'')''' <!-- 757 -->
+* '''attributes''' <!-- 763 -->
+** [commented out]
+* '''nextSibling''' <!-- 768 -->
+* '''lastChild''' <!-- 782 -->
+* '''firstChild''' <!-- 788 -->
+** Returns the first child of the specified node
+* '''previousSibling''' <!-- 794 -->
+* '''parentNode''' <!-- 805 -->
+* '''childNodes''' <!-- 811 -->
+* '''ownerDocument''' <!-- 817 -->
+* '''hasChildNodes''' <!-- 822 -->
+** Boolean
+* '''nodeType(''node'')''' <!-- 827 -->
+** Returns:
+*** '1' if node is of type "text" (HTML?)
+*** '2' if node is of type "block" (Container tags?)
+*** '3' if node is of type "function"
+* '''nodeName(''node'')''' <!-- 838 -->
+** Returns undef if node is of type "text" (HTML/plaintext?)
+** Otherwise appears to return the MT tag name, normalized to lower-case
+* '''nodeValue(''node'')''' <!-- 855 -->
+** Returns the text of a text node; inner text for a block tag, or undef for a function tag
+* '''innerHTML''' <!-- 867 -->
+* '''appendChild''' <!-- 885 -->
+* '''removeChild''' <!-- 896 -->
+* '''inner_html''' <!-- 900 -->
+** [aliases innerHTML]
+* '''append_child''' <!-- 901 -->
+** [aliases appendChild]
+* '''insert_before''' <!-- 902 -->
+** [aliases insertBefore]
+* '''remove_child''' <!-- 903 -->
+** [aliases removeChild]
+
+== Links ==
+
+* Movable Type documentation - [http://www.movabletype.org/documentation/developer/plugins/transformer-callbacks.html Transformation callbacks]
+* Movalog - [http://blog.movalog.com/a/transformer-dom/ Using the new Transformer DOM Methods]

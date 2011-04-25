@@ -1,0 +1,71 @@
+== Top Level Categories, Subcategories, and Sub-Category-Monthly Archives ==
+
+* Option 1 below used on the Archive Index template of the MTCS Forums template set, Option 2 was previous solution.
+* Assumes there are no entries in the top-level categories, only second-level categories.
+
+=== Option 1 ===
+
+==== Pseudo Code ====
+
+For each top level category, output:
+* Category Label
+* Secondary level categories, if category contains entries. For each category, output:
+** Category Label linked to the Category Archive.
+** list and link to each Category-Monthly archive, and display category archive counts.
+
+==== Code ====
+
+<code><pre>
+<mt:TopLevelCategories>
+<div class="archive">
+    <h2 class="primary-category"><$mt:CategoryLabel$></h2>
+    <mt:SubCategories>
+        <mt:if tag="CategoryCount">
+    <h3 class="archive-header"><a href="<$mt:CategoryArchiveLink$>"><$mt:CategoryLabel$></a></h3>
+    <div class="archive-content">
+        <mt:ArchiveList archive_type="Category-Monthly" sort_order="descend">
+            <mt:ArchiveListHeader>
+        <ul>
+            </mt:ArchiveListHeader>
+            <li><a href="<$mt:ArchiveLink$>"><$mt:ArchiveDate format="%B %Y"$> (<$mt:ArchiveCount$>)</a></li>
+            <mt:ArchiveListFooter>
+        </ul>
+            </mt:ArchiveListFooter>
+        </mt:ArchiveList>
+    </div>
+        </mt:if>
+    </mt:SubCategories>
+</div>
+</mt:TopLevelCategories>
+</pre></code>
+
+=== Option 2 ===
+
+==== Pseudo Code ====
+
+For each Category containing entries:
+* Parent Category Label and archive title (in this case, Category Label)
+* List and link to Category-Monthly archives, and display category archive counts.
+
+==== Code ====
+
+<code><pre>
+<mt:ArchiveList archive_type="Category">
+<div class="archive">
+    <h2 class="archive-header"><mt:ParentCategory><$mt:CategoryLabel$>: </mt:ParentCategory><$mt:ArchiveTitle$></h2>
+    <div class="archive-content">
+    <mt:ArchiveList archive_type="Category-Monthly" sort_order="descend">
+    <mt:ArchiveListHeader>
+        <ul class="archive-list">
+    </mt:ArchiveListHeader>
+            <li class="archive-list-item"><a href="<$mt:ArchiveLink$>"><$mt:ArchiveDate format="%B %Y"$> (<$mt:ArchiveCount$>)</a></li>
+    <mt:ArchiveListFooter>
+        </ul>
+    </mt:ArchiveListFooter>
+    </mt:ArchiveList>
+    </div>
+</div>
+</mt:ArchiveList>
+</pre></code>
+
+[[Category: Template Tag Recipes]]

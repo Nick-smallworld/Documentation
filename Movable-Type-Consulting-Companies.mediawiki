@@ -1,0 +1,59 @@
+'''Please Note:''' The following companies and service providers have created their own listings on this page and are not endorsed by Six Apart.
+
+= North America =
+
+* [http://601am.com '''601am'''] - Full-service Movable Type and Typepad consulting, design and development focused on the needs of publishers (blog networks, magazines and newspapers).
+* [http://after6services.com/ '''After6 Services'''] - After6 Services provides technical support and strategic consulting services for the Movable Type social publishing system and related platforms.  After6 Services works directly with Six Apart to provide technical support, installation, and upgrade services to Movable Type Pro customers.
+* [http://appnel.com/ '''Appnel Solutions'''] - Movable Type, Typepad, Perl, system architecture, plugins, training, technical writing.
+* [http://www.blogconsulting.com/ '''BlogConsulting.com'''] - Need assistance with your Movable Type? Well, we are pretty darn good at it.
+* [http://www.bkdesign.ca/ '''BKDesign'''] - Website design based on Web Standards with strong photo gallery, media, podcasting, ajax, php, RSS and XML skills.
+* [http://www.blogcorp.com/ '''BlogCorp'''] - A full service consultancy helping corporations understand blogs.
+* [http://www.blueflavor.com/ '''Blue Flavor'''] -  Experienced design, development and consulting firm with loads of Movable Type, blogging, CMS and community experience.
+* [http://www.cerado.com/ '''Cerado'''] - Cerado provides business blog consulting and implementation for sales and marketing teams.
+* [http://cmscritic.com/ '''CMS Critic'''] - Full Movable Type consulting, news and reviews.
+* [http://www.cylogy.com/ '''Cylogy, Inc.'''] - (San Francisco and Paris, France) Our consulting services focus on Web Content Management / Publishing Systems (Web CMS) and custom (bespoke) application development and maintenance. For teams currently developing a solution roadmap, we offer a focused ''Needs Analysis and Solution Recommendation'' service. Our client list includes Gawker Media, The United Nations, The Federal Reserve Bank, SX2 Media, Macromedia, IBM, The California Chamber of Commerce and others. We publish [http://www.cmswire.com/ CMSWire.com].  
+* [http://www.design4results.com '''Design4Results'''] - Movable Type, PHP, MySQL, Ruby on Rails. Designer and developer for [http://www.marketingvox.com marketingvox.com], [http://www.adrants.com adrants.com], [http://www.upyourbudget.com upyourbudget.com].
+* [http://www.edit-x.com '''Edit-X'''] - Movable Type and Word Press Integration Services, Specializing in SEO, PHP and MySQL.
+* [http://endevver.com '''Endevver Consulting'''] - A full service development and hosting firm owned by [[Jay Allen]], specializing in high-octane Movable Type customization and integration.
+* [http://www.everitz.com '''Everitz Consulting'''] - Movable Type and Typepad Integration Services, Specializing in Perl, PHP and MySQL.
+* [http://www.heideldesign.com '''Heideldesign'''] - Movable Type consulting, installation and customization services for small businesses, government and education. [http://www.heideldesign.com/web View our portfolio] | [http://www.heideldesign.com/articles Read our articles]
+* [http://www.hopstudios.com/ '''Hop Studios'''] - Movable Type (and other blog tools), general XHTML/AJAX/CSS design and development. We specialize in projects that are media-related with high volumes of content. Gold-standard service at a reasonable price.
+* [http://www.lonestarproductions.com '''Lone Star Productions'''] - Full-function multimedia and marketing services developer. Concentration on website and blog development, online advertising and email marketing services. Movable Type, TypePad, CSS, MySQL, RSS, SEO (search-engine optimization), XHTML.
+* [http://monkeydo.biz '''Monkey Do'''] - Movable Type, Typepad, EE, CSS, XHTML, all that good stuff
+* [http://www.muledesign.com/ '''Mule Design'''] - We are a design studio. With words, images, interaction, and that ole Mule magic (good thinking), we deliver the goods in your media of choice.
+* [http://www.onapathmedia.com/ '''On a path media'''] - Movable Type, Website Production, Front End Coding (XHTML, CSS, PHP). We work with designers, small businesses and bloggers to build attractive, functional blogs and websites. We also write tutorials and documentation. We like helping people learn and use web tools effectively. 
+* [http://www.plasticmind.com '''Plasticmind//Design'''] - Movable Type, CSS, Graphic Design, Image Branding.  One-on-one web solutions.  ''We're fluent in development, design and plain language.''  Imagine that.  [http://plasticmind.com/portfolio/ See our work] or [http://plasticmind.com/contact/ drop us a line].
+* [http://www.quarg.com/ '''Quarg Studio'''] - We are a small design firm based in Richmond, Va. that exclusively works with small businesses to implement Movable Type based Web sites. We also have a highly skilled copy writer (former reporter) on staff.
+* [http://www.dtschmitz.com/ '''Dietrich T. Schmitz and Associates'''] - Full-service Movable Type and Typepad consulting, design and development focused on the needs of publishers (blog networks, magazines and newspapers).
+* [http://schneiderdigital.com/ '''Schneider Digital'''] - Schneider Digital provides web, print, and video design services, including Movable Type implementation.
+* [http://www.strangecode.com/ '''Strangecode Internet Consultancy'''] - Movable Type friendly web hosting, dedicated server administration, large-scale web applications development and consulting.
+* [http://texturadesign.com/ '''Textura Design'''] - We blog, evangelize, design, develop, consult, and write. We’d be happy to talk with you more about business blogging and also suggest you read our [http://www.blogbusinessbook.com/ book] about business blogging.
+* [http://uinnovations.com/ '''uiNNOVATIONS'''] - Movable Type consultants focused on the user interface and user experience.
+* [http://www.weblogimprovement.com/ '''Weblog Improvement'''] - Movable Type and TypePad consulting services focusing on complex system integration, infrastructure management including server migrations and emergency repair and reconstruction, PHP, Perl, and MySQL programming.
+* [http://www.wishingline.com/ '''Wishingline Design Studio, Inc.'''] - Toronto-based design studio specializing in strategic design for the web and with 4+ years of experience using and developing around MovableType.
+
+= South East Asia =
+
+* [http://www.vikingkarwur.com '''Viking KARWUR'''] - ''vikingkarwur.com'' : Jakarta, Bali, Manado, Indonesia-based Freelance Web Designer (Content Management System Specialist : MovableType & TextPattern). Portfolio available. Member/Founder of [http://groups.yahoo.com/group/webpm/ WebPM] - ''Indonesian Web Project Managers Network''.
+
+= Europe =
+
+* [http://www.chopstixmedia.com/ '''Chopstix Media'''] - Movable Type and podcast specialist with 10 years experience of web production. Consulting on Movable Type since original release in 2001. Clients in both the UK and USA include [http://blog.btbroadbandoffice.com/ BT plc], [http://www.searchenginewatch.com/ Search Engine Watch], [http://www.searchengineland.com/ Search Engine Land], [http://www.60secondscience.com/ Scientific American], [http://www.seatwave.com/ Seatwave] and others.
+* [http://www.cylogy.com/ '''Cylogy, Inc.'''] - (Paris, France and San Francisco, California) Our consulting services focus on Web Content Management / Publishing Systems (Web CMS) and custom (bespoke) application development and maintenance. For teams currently developing a solution roadmap, we offer a focused ''Needs Analysis and Solution Recommendation'' service. Our client list includes Gawker Media, The United Nations, The Federal Reserve Bank, SX2 Media, Macromedia, IBM, The California Chamber of Commerce and others. We publish [http://www.cmswire.com/ CMSWire.com]. 
+* [http://www.digitalquery.com/ '''digitalquery''']. Based in London, Social media and blog consulting. Expert in large scale (and scaling up) MT installations and migrating to MT4, but also work on much smaller projects. 
+* [http://www.eigenzinnig.com/ '''EigenZinnig''']: Dutch Movable Type specialist since 2002. MT experience: using MT as a CMS since version 2. Do’s: building MT-based websites and blogs, MT Q&A consultancy and helpdesk, MT hands-on training and writing quality content (Dutch) as an old ‘habit’ that never really died. Clients & projects: visit eigenzinnig.com for an up-to-date list. Motto: ‘Anything can be done in MT’. And: yeah, we do regular html-stuff too.
+* [http://www.einfach-persoenlich.de/ '''einfach-persoenlich'''] – ''web design with personality'' - ''the german movable type specialist'' for professional and stategic xhtml/css web design, blog design based on web standards, information design, powerful hosting solutions & concepts - consulting, development, design, search engine optimization, markting of  clean, speedy, searchengine friendly, future proof and easy to manage, complex websites and blog systems. [http://www.einfach-persoenlich.de/kontakt/ 'what can we do for'] you with Movable Type and Typepad as a blog and website cms system?
+* [http://www.headshift.com/ '''Headshift'''] - Headshift take the best ideas and innovative web 2.0 tools and apply them to solving the real world needs of organisations. But that's only half the story. We also work with our clients to help engage people and stimulate networks, creating the conditions for new ways of working.
+* [http://www.namics.com '''namics ag'''] - Swiss company providing also MovableType 4 consulting and development mostly in Switzerland and Germany, specialized in building applications for customer needs. 
+* [http://www.studiolift.com '''Lift'''] - Information/communication design, Movabletype 3 and 4 design and build -- we use Movabletype as a CMS too.  We have designed and built Movabletype sites for many clients including [http://betting.betfair.com/ "Betfair], Reed Publishing, [http://www.liftfest.org.uk/ "London International Festival of Theatre"] and many more. You can [http://www.studiolift.com/work/ "see examples of our work"] and read about [http://www.studiolift.com/about/ "us"] and our approach on our [http://www.studiolift.com "website"].
+* [http://www.pro-it-service.com/ '''PRO IT Service'''] - Movable Type and TypePad Consulting and Development, XHTML/CSS tableless layout hand coding, search engine optimization and marketing, top quality hosting and free assistance. [http://www.pro-it-service.com/en/portfolio.html See who was happy working with us]. Would you like to see if we are online? Click [http://www.pro-it-service.com/en/contact.html here and contact us now].
+* [http://www.salted.com/ '''Salted'''] - UK company providing Movable Type and Typepad design work. Clients in both the UK and US. Lots of examples of our previous work on our web site.
+* [http://www.yesitcan.be/ '''YesItCan.be'''] - Belgian Movable Type Services company, helping clients all over the world with their Movable Type websites (templating, plugins, server setup, configuration, optimization, support, training...).  Founded by ex-Six Apart employee Maarten Schenk. Also maintains the weblog [http://www.movabletips.com Movable Tips]
+
+= Australia =
+
+* [http://www.metisinternet.com/ '''Metis Internet Partners'''] - a boutique consulting firm and creative hub specialising in online strategy, communication and culture. We provide strategic consulting and web development services across Australia to business and start-up and established online ventures using Movable Type.
+
+* [http://www.horologe.com.au/ '''Horologe'''] - site builds and consulting. We've been building sites with Movable Type since 2004.
+
+[[Category:Professional Services]]

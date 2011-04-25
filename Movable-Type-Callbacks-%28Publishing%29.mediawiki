@@ -1,0 +1,12 @@
+<div style="float:left; border:thin solid green; padding: 5px; margin-right: 15px;">
+{{Template:Callback Types}}
+</div>
+
+= Publishing =
+
+* build_file
+* build_file_filter
+* build_page
+* post_delete_archive_file
+* pre_delete_archive_file
+* rebuild_options

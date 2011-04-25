@@ -1,0 +1,45 @@
+== Background ==
+
+This template tag recipe emerged from a desire to manually select a hand full of entries, and then to iterate over them to display them in a list.
+
+To accomplish this, I start with a list of entry IDs. I then place those into an array that I manually construct using mt:var.
+
+Finally, using a for loop, I loop over each of the entries, pulling each one from the database using an "mt:entries id='foo'" tag.
+
+== Example ==
+
+<source lang="xml">
+
+<mt:var name="best" index="0" value="2541">
+<mt:var name="best" index="1" value="2674">
+<mt:var name="best" index="2" value="2567">
+
+<mt:Ignore> 
+    Or, using the push() syntax which handles 
+    auto-incrementing of the index automatically
+</mt:Ignore>
+<mt:var name="push(best)" value="2245">
+<mt:var name="push(best)" value="1835">
+<mt:var name="push(best)" value="2629">
+<mt:var name="push(best)" value="2251">
+
+<h1 class="archive-title" id="page-title">Most Popular</h1>
+<div class="entry-listing">
+    <ul>
+<mt:for var="i" from="0" to="6" increment="1">
+<mt:setvarblock name="id"><mt:var name="best" function="pop"></mt:setvarblock>
+<MTEntries id="$id">
+    <li>
+    <a href="<$MTEntryPermalink$>"><span class="entry-listing-date">
+    <mt:EntryDate format="%b %e %Y" /></span>
+    <span class="entry-listing-title"><mt:EntryTitle /></span>
+    <span class="entry-listing-comments"><mt:EntryCommentCount /></span></a>
+    </li>
+</MTEntries>
+</mt:for>
+    </ul>
+</div>
+
+</source>
+
+[[Category: Template Tag Recipes]]

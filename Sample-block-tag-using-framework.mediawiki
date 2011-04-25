@@ -1,0 +1,46 @@
+Here's an example of a block tag (mt:Blogs) using the common iterator method described in [[Proposal:Iterator template tag consistency]]:
+
+<pre>
+sub _hdlr_blogs {
+    my($ctx, $args, $cond) = @_;
+    my (%terms, %args);
+
+    $ctx->set_blog_load_context($args, \%terms, \%args, 'id')
+        or return $ctx->error($ctx->errstr);
+
+    my $builder = $ctx->stash('builder');
+    my $tokens = $ctx->stash('tokens');
+
+    local $ctx->{__stash}{entries} = undef
+        if $args->{ignore_archive_context};
+    local $ctx->{current_timestamp} = undef
+        if $args->{ignore_archive_context};
+    local $ctx->{current_timestamp_end} = undef
+        if $args->{ignore_archive_context};
+    local $ctx->{__stash}{category} = undef
+        if $args->{ignore_archive_context};
+    local $ctx->{__stash}{archive_category} = undef
+        if $args->{ignore_archive_context};
+
+    require MT::Blog;
+    $args{'sort'} = 'name';
+    $args{direction} = 'ascend';
+
+    my $iter = MT::Blog->load_iter(\%terms, \%args);
+    my $vars = $ctx->{__stash}{vars} ||= {};
+
+    return $ctx->block_tag_iterator({
+        iterator   => $iter,
+        attributes => $args,
+        condition  => $cond,
+        prerun     => sub {
+            my ($ctx, $args, $obj, $next) = @_;
+            $ctx->{__stash}{blog}    = $obj;
+            $ctx->{__stash}{blog_id} = $obj->id;
+            $ctx;
+        },
+        postrun    => sub { },
+        skip       => sub { },
+    });
+}
+</pre>

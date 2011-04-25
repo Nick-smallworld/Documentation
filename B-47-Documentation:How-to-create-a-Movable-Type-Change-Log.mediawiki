@@ -1,0 +1,1 @@
+#REDIRECT [[Documentation:How to create Movable Type Release Notes]]

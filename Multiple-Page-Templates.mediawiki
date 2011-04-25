@@ -1,0 +1,43 @@
+[[Category: Template Tag Recipes]]
+
+== Page Template per Folder ==
+
+<p>Here&#8217;s a solution to use a different page template based upon the &#8220;Folder&#8221; each page is in.</p>
+
+<ol>
+<li>Copy the contents of the Page archive template into a template module called &#8220;Default Page&#8221;.</li>
+<li>Create additional template modules for each page template as necessary: News Page, Industry Page, Product/Service Page etc.  (assuming that the same page template is used for Product and Service pages in this example)</li>
+<li>Create a folder corresponding to each Page template: News, Industry, Products, Services, etc.</li>
+<li><p>Update the Page archive template to use the following code:</p>
+
+<pre><mt:setvarblock name="page_folder"><mt:PageFolder><$mt:FolderLabel$></mt:PageFolder></mt:setvarblock>
+<mt:if name="page_folder" eq="News">
+   <$mt:include module="News Page"$>
+<mt:else name="page_folder" eq="Industry">
+   <$mt:include module="Industry Page"$>
+<mt:else name="page_folder" like="(Products|Services)">
+   <$mt:include module="Products/Services Page"$>
+<mt:else>
+   <$mt:include module="Default Page"$>
+</mt:if>
+</pre></li>
+<li><p>Publish and View!</p></li>
+</ol>
+
+
+Here's another example from Lanre Pedro based upon the folder names he created:
+
+<code><pre>
+<mt:setvarblock name="PageFolder"><mt:PageFolder><$mt:FolderLabel$></mt:PageFolder></mt:setvarblock>
+<mt:ifFolder name="about">
+<$mt:include module="About Page"$>
+<mt:else name="PageFolder" eq="products">
+<$mt:include module="Products Page"$>
+<mt:else name="PageFolder" eq="blog">
+<$mt:include module="Blog Page"$>
+<mt:else name="PageFolder" eq="contact">
+<$mt:include module="Contact Page"$>
+<mt:else>
+<$mt:include module="Default Page"$>
+</mt:ifFolder>
+</pre></code>

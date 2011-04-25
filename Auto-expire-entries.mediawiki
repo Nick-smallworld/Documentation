@@ -1,0 +1,86 @@
+This recipe provides a way to '''auto-expire''' entries on a given date. 
+
+== The Problem ==
+
+How to have an entry automatically not display (moved to archives) on a given day, or a specified number of days after it was first published.
+
+== Typical uses ==
+
+To display notices with a limited 'shelf-life', those that are relevant for a few days. For instance, a notice about an upcoming event that ceases to be relevant once the date of that event has passed.
+
+== The logic ==
+
+#	Note the expiry date of the to-be-expired post, as a variable in a custom-field
+#	Compare the post expiry date to the current-date;
+#	If the current date is the post-expiry date of the post, don't show the post;
+#	Alternatively, expire the post X days after its published date.
+
+== Alternatives == 
+
+There are two ways to do this.
+
+1.	Use MT's native &lt;mt:if&gt; logic function. Convert the dates into numerical strings and compare them.
+2.	Use a plugin.
+
+== Methods ==
+
+=== Method 1: Using MT's native &lt;mt:if&gt; logic function ===
+
+#	Set up a custom field called '''noticeexpirydate''' and set its format to date only.
+#	Use the following code
+
+<pre>
+	<mt:entries category="Notices" lastn="1">
+	<mt:setvarblock name="todaydate"><mt:date format="%Y%m%d" strip_linefeeds="1"$></mt:setvarblock>
+	<mt:setvarblock name="noticeexpdate"><mt:noticeexpirydate format="%Y%m%d" strip_linefeeds="1"$></mt:setvarblock>
+	<mt:if name="todaydate" le="$noticeexpdate">
+		<!-- do something -->
+	</mt:if>
+	</mt:entries>
+</pre>
+
+==== Explanation ====
+
+#	The entries are those limited to the category "Notices".
+#	You can limit them further to [http://wiki.movabletype.org/Sticky_Entries "sticky"]notices using [http://www.movabletype.org/documentation/administrator/managing-blogs/managing-tags.html private tags].
+#	Get today's date and convert it into a YYYYMMDD format
+#	Convert the custom field expiry date into the YYYYMMDD format
+#	If today's date is <i>less than</i> the current date, then and only then, show the post.
+
+=== Method 2: Use a plugin ===
+
+#	Get and install the [http://www.staggernation.com/mtplugins/DateTags/ DateTags plugin] from [http://www.staggernation.com/ staggernation];
+#	Set up a custom field called '''noticeexpirydate''' and set its format to date only.
+#	Use a code along these lines
+
+<pre>
+        <MTentries category="Notices" lastn="8" tag="@sticky">
+        <mt:setvarblock name="expdt"><MTNoticeExpiryDate format="%m/%d/%y" strip_linefeeds="1"></mt:setvarblock>
+		<!-- if expiry date has been explicitly set -->
+		<mt:ifnonempty tag="NoticeExpiryDate">
+		<!-- if expiry date has not yet passed-->
+		<MTIfDateBeforeOrEqual date="[MTDate format='%m/%d/%y']" target="[MTNoticeExpiryDate format='%m/%d/%y']">
+			<!-- do something -->
+		</MTIfDateBeforeOrEqual>
+		<mt:else>
+		<!-- if no expiry date is explicitly set -->
+		<MTIfDateWithin date="[MTDate format='%m/%d/%y']" start="[MTEntryDate format='%m/%d/%y']" end="[MTEntryDate format='%m/%d/%y']" end_adjust="10">
+			<!-- do something -->
+		</MTIfDateWithin>
+		</mt:ifnonempty>
+        </MTPages>
+</pre>
+
+==== Explanation ====
+
+This showcases the many powerful features of DateTags. If an expiry date has <i>not</i> been explicitly set, then it takes a range of dates (entry date, and entry date adjusted forward by N, in this case 10, days) and checks to see if today falls within that range. 
+
+This works beautifully even on MT4, though designed for earlier versions. <i>It does not work with dynamic publishing.</i> To get it to work with dynamic publishing, you might push out the code as a separate static file and then include it with SSI or a PHP include function into a dynamic page. 
+
+== Archiving ==
+
+Coupled with a Cron job for rebuilding nightly, this ensures that notices expire when scheduled.
+
+[[User:Gspatel|Gautam Patel]] 07:26, 20 September 2009 (UTC)
+
+[[Category: Template Tag Recipes]]

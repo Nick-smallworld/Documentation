@@ -1,0 +1,17 @@
+[[Category: Template Tag Recipes]]
+
+== Including Modules Defined via Custom Field ==
+
+<ol>
+<li>Create a single-line text custom field called &#8220;Partner Name&#8221; and name the template tag &#8220;PageDataPartnerName&#8221;</li>
+<li>Create a template module for each partner  &#8220;Partner - Lance Arthur&#8221;</li>
+<li><p>Add the following code to your Page archive template (or module, if combining with the above multiple page template solution):</p>
+
+<pre>&lt;mt:if tag="PageDataPartnerName"&gt;
+   &lt;mt:setvarblock name="partner_module"&gt;Partner - &lt;$mt:PageDataPartnerName$&gt;&lt;/mt:setvarblock&gt;
+   &lt;$mt:include module="$partner_module"$&gt;
+&lt;/mt:if&gt;
+</pre></li>
+<li><p>Create a page with and enter &#8220;Lance Arthur&#8221; as the value of the &#8220;Partner Name&#8221; custom field.</p></li>
+<li>Publish and View!</li>
+</ol>

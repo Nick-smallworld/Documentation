@@ -1,0 +1,75 @@
+Below is a list of web sites run by the Movable Type Community, for the community.  Feel free to add any that are missing or edit what's here for clarity.
+
+== Forum ==
+
+* [http://forums.sixapart.com/ MT Support forums]<br>Community for asking questions, posting tips and getting advice on running MT on your site.  Best place for users to access the knowledge of other users and the community as a whole.
+
+* [http://forums.movabletype.org/ New MT support forums]<br />New forums, powered by the Movable Type Community Solution. Community support should eventually move to this location.
+
+== Mailing Lists ==
+
+* [http://www.sixapart.com/pronet/overview ProNET]<br>A community of professionals using MT to develop web sites and hobbyists who just love to play with MT.  
+
+* [http://tech.groups.yahoo.com/group/mt-dev/ MT Development Mailing List]<br>From the home page "[A] mailing list is for developers of Movable Type plugins and hacks to coordinate efforts, share tips and best practices, and discuss ideas."
+
+* [http://www.sixapart.com/mailman/listinfo/mtos-announce MTOS-Announce]<br>"A low traffic mailing list for outbound emails only announcing new developments about the Movable Type Open Source Project."
+
+* [http://www.sixapart.com/mailman/listinfo/mtos-dev MTOS-dev]<br>"This list is for the discussion of the Movable Type Open Source Project's development."
+
+* [http://www.sixapart.com/mailman/listinfo/mtos-commits MTOS-commits]<br />"Broadcasts any commit to the Movable Type source code repository"
+
+== IRC ==
+
+See [[MT IRC]] for details
+
+== Twitter ==
+
+* [http://twitter.com/sixapart Twitter/sixapart]
+
+* [http://twitter.com/movabletype Twitter/movabletype]
+
+* [http://plasticmind.com/hashmt/ HashMT]<br>‘The Pulse of the Movable Type Community’, syndicates MT related twits.
+
+== Wiki ==
+
+* [http://wiki.movabletype.org/Main_Page Wiki]
+
+== MT Blogs==
+
+These blogs ought to be primarily, if not exclusively, MT focused.  They ought to offer tips, tricks, tutorials, themes, templates, etc for the use and betterment of the community.  
+
+* [http://www.sixapart.com/pronet/weblog/ ProNet Blog]
+
+* [http://www.learningmovabletype.com/ Learning Movable Type]<br>''Sarah Hughes, Elise Bauer, Neil Turner, Jesse Gardner, Christian Watson, Chris Vannoy, Chad Everett, Arvind Satyanarayan, Maarten Schenk, Byrne Reese, Stacy Tabb''<br>"Learning Movable Type (LMT) is a growing set of tutorials, presented in blog format, aimed at helping beginning and intermediate users of the Movable Type (MT) web publishing platform. These tutorials are geared for those with a good understanding of HTML, a fair understanding of CSS, but who are not necessarily programmers or web designers."
+
+* [http://www.movabletweak.com/ Movable Tweak]<br>''Jesse Gardner''<br>"Getting things done with Movable Type"
+
+* [http://www.movalog.com/ Movalog]<br>''Arvind Satyanarayan''<br>"Making Movable Type Jump through hoops."
+
+* [http://www.eatdrinksleepmovabletype.com/ Eat Drink Sleep Movable Type]<br>''Dan Wolfgang''<br>"Do you Eat, Drink, and Sleep Movable Type?  I know I do."
+
+* [http://mt-hacks.com/ MT Hacks]<br>''Mark Carey''<br>"Movable Type Hacks, Plugins, and Tips"
+
+* [http://www.staggernation.com/mtplugins/ Staggernation]<br>''Kevin Shay''<br>Plugins for MT and more.
+
+* [http://everitz.com/ Everitz Consulting]<br>''Chad Everett''
+
+* [http://www.movabletype4.eu/ Movable Type 4]<br>''Michele Neylon''<br>Experiments and tips using Movable Type 4
+
+* [http://movable-type.ru/ Movable Type in Russia]<br>''Andrey Serebryakov'', ''Vladimir Yashnikov'', ''Phil Ahnazarov''<br>Russian Movable Type Community — tutorials, tips, MT news, forums.
+
+* [http://movablelove.com/ MovableLove],<br>''Aaron Bailey''<br>We love Movable Type, "a professional publishing platform." This is a place to show off interesting and beautiful sites built with MT.
+
+== Other Sites ==
+
+* [http://planet.movalog.com/ Planet Movable Type]<br>Aggregator of various MT feeds. (Is this still working?  The posts are all over a month old and many of the feed sites are inactive.)
+
+* [http://www.thestylearchive.com/ The Style Archive]<br>Styles to use with MT's Style catcher
+
+* [http://plugins.movabletype.org/ Plugin Directory]<br>Enhance your installation of MT with plugins.
+
+== Six Apart Team Members ==
+
+* [http://www.majordojo.com/ Byrne Reese, Product Manager]
+
+* [http://www.bradchoate.com/ Brad Choate, Lead Engineer]
