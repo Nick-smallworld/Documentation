@@ -1,0 +1,90 @@
+The following are common terms and abbreviations associated with Movable Type:
+
+{| border="1" class="dl"
+|-
+! 6A
+| Six Apart
+|-
+! CF
+|  The [http://movabletype.org/documentation/professional/custom-fields.html CustomFields] plugin
+|-
+! HMT
+|  [http://hacking.movabletype.org/ Hacking Movable Type]
+|-
+! L10N
+|  [http://en.wikipedia.org/wiki/Language_localisation Localization] (Wikipedia article)
+|-
+! LBT
+|  The [http://movabletype.org/documentation/appendices/config-directives/launchbackgroundtasks.html LaunchBackgroundTasks] config directive
+|-
+! LMT
+|  [http://learning.movabletype.org/ Learning Movable Type]
+|-
+! mtcom
+|  [http://movabletype.com/ movabletype.com]
+|-
+! mtorg
+|  [http://movabletype.org/ movabletype.org]
+|-
+! MTCS
+|  MT with [http://movabletype.com/products/community-solution.html Community Solution] pack
+|-
+! MTE, MTES
+|  MT with [http://movabletype.com/products/enterprise-solution.html Enterprise Solution] pack
+|-
+! MTOS
+|  [http://movabletype.org/opensource/ Movable Type Open Source]
+|-
+! mtorg
+|  [http://movabletype.org/ movabletype.org]
+|-
+! MTP
+|  MT  with [http://movabletype.org/documentation/professional/ Professional Solution] pack
+|-
+! Meta Widget
+| A widget that includes other widgets.
+|-
+! Module
+|
+* block of code that when combined with other blocks of code creates a full script.
+* ie. The "footer" module is useful in every html script, but not useful on it's own.
+* ie. The "Entry Summary" module may be used in entry listings on an index template or on an archive template.
+|-
+! PQ, PubQueue
+|  [http://movabletype.org/documentation/administrator/publishing/publish-queue.html Publishing Queue]
+|-
+! RPT
+|  MT_DIR/tools/[http://www.google.com/cse?ie=UTF-8&cx=004652769748257924943%3Abizx1-k1zvm&q=run-periodic-tasks&sa=Search run-periodic-tasks]
+|-
+! RQ
+|  Rebuild Queue, former name of Publishing Queue
+|-
+! SSIA
+|  Subject Says It All<sup>1</sup>
+|-
+! TB
+|  [http://movabletype.org/documentation/trackback/beginners/ TrackBack]
+|-
+! TC
+|  TypeCore
+|-
+! TK
+|  [http://typekey.com/ TypeKey]
+|-
+! UTS
+|  [http://movabletype.org/documentation/professional/universal-template-set.html Universal Template Set]
+|-
+! Widget
+|  A widget is a piece of content or functionality that is usually placed in the sidebar of a blog, but is often used in the header or footer as well. Technically, it's a snippet of HTML and/or JavaScript that you can manage like any other content on your blog. The snippet of code and it's label are typically wrapped in a block of code that all widgets share.<br />
+ &lt;div class="widget-&lt;!-- WIDGET BASENAME HERE --> widget">
+     &lt;h3>&lt;!-- WIDGET LABEL HERE -->&lt;/h3>
+     &lt;div class="widget-content">
+         &lt;!-- WIDGET CONTENT HERE -->
+     &lt;/div>
+ &lt;/div>
+|-
+! WM
+|  Widget Manager
+|}
+
+<sup>1</sup> - ''You will see "SSIA" used most frequently as the only text entered in the body of a bug report.  Unfortunately, it's demonstrably false and demonstrates nothing more than the writer's laziness and a lack of respect for other people's time.  When filing a bug, you should '''always''' assume that the reader will have no clue what you're talking about.  The more information, screenshots and links you include in a case, the less work the reader will have to do to understand what the case is about.''

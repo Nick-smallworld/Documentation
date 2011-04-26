@@ -1,0 +1,97 @@
+[[Category: Template Tag Recipes]]
+
+Here are some recipes for creating navigation within Movable Type templates.
+
+All the recipes should produce an html formatted list of linked items. The current item should be marked.
+
+Here is a sample of the code formatting which a recipe should output (the content is fictitious):
+
+<pre>
+<div id="navigation">
+    <ul>
+        <li><a href="/">Blog</a></li>
+        <li class="selected"><a href="/blog">Blog</a></li>
+        <li><a href="/photos">Photos</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+</div>
+</pre>
+
+
+== Folder and Pages ==
+
+This example lists all pages and folders recursively. It assumes that there is a page with the basename of `index` in every folder that is created. This code snippet is from the Sandbox Template set.
+
+<pre>
+<mt:IfArchiveTypeEnabled archive_type="Page">
+<div id="navigation">
+    <ul>
+    <mt:Pages no_folder="1" sort_by="title" sort_order="ascend">
+        <li class="page_item page-item-<$mt:PageID$><mt:If tag="PageID" eq="$page_id"> current_page_item</mt:If>"><a href="<$mt:PagePermalink$>"><$mt:PageTitle$></a></li>
+    </mt:Pages>
+    <mt:TopLevelFolders>
+        <li class="page_item folder_item folder-item-<$mt:FolderID$><mt:If tag="FolderID" eq="$top_level_folder_id"> current_page_parent</mt:If>"><a href="<$mt:BlogURL$><$mt:FolderPath$>/"><$mt:FolderLabel$></a>
+        <mt:Pages sort_by="title" sort_order="ascend">
+            <mt:PagesHeader>
+            <ul>
+            </mt:PagesHeader>
+                <li class="page_item page-item-<$mt:PageID$><mt:If tag="PageID" eq="$page_id"> current_page_item</mt:If>"><a href="<$mt:PagePermalink$>"><$mt:PageTitle$></a></li>
+            <mt:PagesFooter>
+            </ul>
+            </mt:PagesFooter>
+        </mt:Pages>
+        <$mt:SubFolderRecurse$>
+        </li>
+    </mt:TopLevelFolders>
+    </ul>
+</div>
+</mt:IfArchiveTypeEnabled>
+</pre>
+
+
+
+== Folder-based Navigation ==
+
+Place this into the template producing the page which will display the navigation, most-likely archive and index templates. It must come before the header code below.
+
+    <mt:var name="folder_basename" value="">
+    <mt:toplevelparent><mt:categorybasename setvar="folder_basename"></mt:toplevelparent>
+
+This code assigns the basename of the topmost category/folder of the entry/page in context to a variable named folder_basename; assigning an empty string first in case there is no category/folder assignment (will match to the 'Home' link).
+
+Place this code into the header where you want the navigation.
+
+<pre>
+<mt:section regex_replace="/^\/(\S*)\s+(.+)$/gm",'<li<mt:if name="folder_basename" eq="$1"> class="selected"</mt:if>><a href="/$1">$2</a></li>' mteval="1" setvar="nav">
+/          Home
+/blog      Blog
+/photos    Photos
+/about     About
+/contact   Contact
+</mt:section>
+
+<div id="navigation">
+    <ul>
+        <mt:var name="nav">
+    </ul>
+</div>
+</pre>
+
+This is complicated looking, but is basically doing to things:
+
+# replacing the block inside the section tag with a list-item tag
+# wrapping the word or phrase after the path with an 'a' tag.
+
+The cool part which isn't obvious is that this expression is actually creating a new MT template first.
+
+# The regex_replace populates an 'if' tag for each line.
+# The 'mteval' attribute then evaluates it all, which causes it to assign the 'class="selected"' bit on the appropriate list item.
+# Finally, the resulting value is stored to the 'nav' variable.
+
+Note: you could use a mtinclude tag instead of a 'section' tag for this. Pulling the navigation from another MT template module.
+
+The url and folder labels can be output with MT tags instead of using plain text
+
+''(based upon recipe from Brad Choate)''
+

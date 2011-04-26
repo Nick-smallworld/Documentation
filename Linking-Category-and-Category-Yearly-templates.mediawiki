@@ -1,0 +1,20 @@
+[[Category: Template Tag Recipes]]
+
+<pre>
+ <ul>
+   <mt:ArchiveList archive_type="Category-Yearly">
+   <li><a href="<mt:ArchiveLink>"><mt:ArchiveTitle></a></li>
+   </mt:ArchiveList>
+ </ul>
+</pre>
+
+Place this in a Category archive template to generate links to Category-Yearly archives. It will output something like this:
+
+<pre>
+ <ul>
+   <li><a href="http://example.com/my-category/2007/">2007</a></li>
+   <li><a href="http://example.com/my-category/2006/">2006</a></li>
+   <li><a href="http://example.com/my-category/2005/">2005</a></li>
+ </ul>
+</pre>
+

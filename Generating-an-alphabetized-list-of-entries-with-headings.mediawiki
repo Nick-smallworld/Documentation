@@ -1,0 +1,58 @@
+This is the code used on movabletype.org to generate the list of template tags in the system, divided upon into an alphabetized list, with anchor tags at the top to the section for each letter.
+<pre>
+
+<mt:setvar name="current_letter" value="" />
+<MTPages lastn="1000" sort_by="title" 
+    folder="Appendix: Template Tags" tags="NOT modifier">
+<mt:setvarblock name="first_letter"><mt:EntryTitle regex_replace="/(?<=^.).*$/",""></mt:setvarblock>
+<mt:if name="current_letter" ne="$first_letter">
+<mt:if name="current_letter" ne=""></ul></mt:if>
+<h3 id="<mt:getvar name="first_letter">" 
+  style="border-bottom: 1px solid black; margin: 0 0 5px 0;">
+    <mt:getvar name="first_letter"></h3>
+<ul>
+<mt:setvarblock name="current_letter"><mt:getvar name="first_letter" /></mt:setvarblock>
+</mt:if>
+<li><a href="<$MTEntryLink$>"><$MTEntryTitle$></a>
+  <mt:EntryIfTagged tag="new in mt4"> 
+    <img src="/images/new_icon.gif" alt="New" width="28" height="11" />
+  </mt:EntryIfTagged></li>
+</MTPages>
+</ul>
+
+</pre>
+[[Category: Template Tag Recipes]]
+
+
+== Small mod ==
+
+Beautiful. You can actually use this to generate a full fledged listing of pages or entries across the system, in the manner of a book index.
+
+The code above will generate a list in '''reverse''' order (Z at the top, A at the bottom). You need to use the <code>sort_order="ascend"</code> attribute to the <code>&lt;MTPages&gt;</code> tag.
+
+
+== Code for a list of '''pages''' (not entries) ==
+
+The following generates a list of pages. I have removed the "new to MT4" and other embellishments. This list is folder-independent (it will list ALL pages in ALL folders):
+
+<pre>
+&lt;mt:setvar name="current_letter" value="" /&gt;
+&lt;MTPages sort_by="title" sort_order="ascend"&gt;
+&lt;mt:setvarblock name="first_letter"&gt;&lt;mt:PageTitle regex_replace="/(?&lt;=^.).*$/",""&gt;&lt;/mt:setvarblock&gt;
+&lt;mt:if name="current_letter" ne="$first_letter"&gt;
+&lt;mt:if name="current_letter" ne=""&gt;&lt;/ul&gt;&lt;/mt:if&gt;
+&lt;h3 id="&lt;mt:getvar name="first_letter"&gt;" 
+  style="border-bottom: 1px solid black; margin: 0 0 5px 0;"&gt;
+    &lt;mt:getvar name="first_letter"&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;mt:setvarblock name="current_letter"&gt;&lt;mt:getvar name="first_letter" /&gt;&lt;/mt:setvarblock&gt;
+&lt;/mt:if&gt;
+&lt;li&gt;&lt;a href="&lt;$MTPagePermalink$&gt;"&gt;&lt;$MTPageTitle$&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/MTPages&gt;
+&lt;/ul&gt;
+</pre>
+
+--[[User:Gspatel|Gautam Patel]] 21:26, 15 December 2007 (PST)
+
+[[Category: Template Tag Recipes]]
+

@@ -1,0 +1,50 @@
+Note: this is copied from the internal 6a wiki.
+
+''Post 4.2 we are going to tweak our organization of Fogbugz to make it easier to know where cases should be. 
+
+= Overview =
+
+Since we launched the open-source project with MT 4.1, we've had two projects that have held current MT cases, MT Internal and MT Open Source. MT Internal corresponds to the packs and any other proprietary non-OS code, while the MTOS project holds cases that involve the code that is GPL'ed. The MTOS project is visible to anyone with an account in fbz, while only Six Apart employees can see MT Internal. 
+
+The problem with this approach is that there are some MTOS cases that we don't want to be public (because, for example, they might have a user's email address or other sensitive information.) There are also many cases that are MT Internal that we would like non-6a people to see, like bugs and patches that impact enterprise consultant and developers.
+
+So we are proposing that instead of MT Internal and MTOS, that we instead have two projects, one public and one private. Naming TBD, but something like MT Internal and MT Public. With these projects would be parallel areas, and fix-fors for each release.
+
+= Organization =
+
+== Projects ==
+
+* Movable Type Internal
+** Visible to only 6a employees
+* Movable Type Public
+** Visible to anyone with a fbz account
+* MTPublic Case Submissions
+** Visible to only 6a employees (need to double-check)
+
+== Areas ==
+
+''Both the MT Internal and Public projects would have the following areas.
+
+* Core
+* Commercial
+* Community
+* Enterprise
+* Developer
+* Plugins
+* Docs
+* Patches
+* Website
+
+== Fix-fors ==
+
+''Both the MT Internal and MT Public projects would have the same fix-fors. 
+
+* Release 42 (G-release m1)
+* Release 43 (G-release m2)
+* Release 44 (G-release b1)
+* etc. (as new releases are planned)
+* TheNextRelease
+* AFutureRelease
+* Non-release bound
+* Product feedback
+* Community Chest

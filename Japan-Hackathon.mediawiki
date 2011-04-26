@@ -1,0 +1,24 @@
+= What =
+Movable Type Hackathon at Six Apart K.K. Office, Akasaka, Tokyo.
+
+= When =
+September 4th, starting 1000 until around 1800.
+
+2011年2月26日土曜日。10時開場、18時くらいまで。
+
+= Where =
+Six Apart K.K. office.
+
+シックス・アパート株式会社のオフィス（[http://www.sixapart.jp/about/contact.html#map 地図], RouteMapをつかった案内図は[http://www.doevery.com/RouteMap/ZavgcwFT.htm こちら]）
+
+= How =
+We hack.  You hack.  All of the hackers will have the opportunity to present their project at the end of the day.
+
+Snacks and drinks will be served (details TBD).
+
+ただただハックするイベントです。一日の終わりに、ハックの成果を発表する場を設けます。
+
+軽食と飲み物を提供します（予定）。あとの飲み会はその場しだいで。
+
+= Hackathon Project Submissions =
+こちらにハックするテーマを投稿してください。自分でやるものでもかまいませんし、ほかの人にやってほしいアイデアでもかまいません。

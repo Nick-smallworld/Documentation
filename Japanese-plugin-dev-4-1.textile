@@ -1,0 +1,240 @@
+h1. 独自オブジェクトの作成
+
+h1. +はじめに+
+
+前章でMTオブジェクトの利用方法について解説しましたが、既存の物だけではなく自分でもMTオブジェクトを作成する事ができます。
+
+今回は、こういった独自オブジェクトの作成について解説します。
+
+h1. +独自オブジェクトとは？+
+
+MT::Objectから派生させた、独自のMTオブジェクトの事をさします。MT::Entryなどの派生オブジェクトを作成し拡張する事も可能です。
+
+プラグインでMTオブジェクトを追加する場合は、config.yamlでのオブジェクト情報の記載と、MTオブジェクトのPerlモジュールが必要となります。
+
+h1. +独自オブジェクトの作成+
+
+独自オブジェクト（MT::Foo）を例として作成法を解説します。
+
+h2. MT::Fooの仕様
+
+* MT::Objectを継承したクラス
+* モジュール名はMT::Foo
+* タイプ名はfoo
+* 指定カラム
+** id : オブジェクトID
+** blog_id : ブログID
+** title : タイトル（最大２５５文字）
+** bar : テキスト情報
+* インデックス
+** blog_id
+** created_on
+** modified_on
+* データソース : mt_foo
+* プライマリキー : id
+* 作成日時、修正日時を自動記録
+
+h2. config.yaml
+
+config.yamlに記載する情報は少ないです。
+
+<pre>
+id: MyPlugin11
+key: MyPlugin11
+name: <__trans phrase="Sample Plugin Uniquely Object">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin11::L10N
+
+schema_version: 0.01
+object_types:
+    foo: MT::Foo
+</pre>
+
+h3. 解説
+
+* schema_version: 0.01
+** プラグインのスキーマのバージョンを記載します。
+** プラグインのインストール時と、スキーマバージョンのアップデート時にスキーマのアップデートが行われます。
+* object_types
+** オブジェクトのタイプとクラス名を指定します。
+* foo: MT::Foo
+** タイプ名 : foo
+** クラス名 : MT::Foo
+
+h2. MT/Foo.pm
+
+簡単な例としてMT::Fooを作成します。ここにデータベーステーブルの情報や組み込み関数などを記載します。
+
+<pre>
+package MT::Foo;
+use strict;
+
+use base qw( MT::Object );
+
+__PACKAGE__->install_properties ({
+    column_defs => {
+        'id'      => 'integer not null auto_increment',
+        'blog_id' => 'integer not null',
+        'title'   => 'string(255) not null',
+        'bar'     => 'text',
+    },
+    indexes => {
+        blog_id => 1,
+        created_on => 1,
+        modified_on => 1,
+    },
+    child_of => 'MT::Blog',
+    audit => 1,
+    datasource  => 'foo',
+    primary_key => 'id',
+    class_type  => 'foo',
+});
+
+1;
+</pre>
+
+h3. 解説
+
+* @package MT::Foo;@
+** パッケージ名をMT::Fooに指定しています。
+* @use base qw( MT::Object );@
+** MT::Objectクラスを継承している事を明記します。
+* @__PACKAGE__->install_properties ({});@
+** オブジェクトの色々な情報を指定し、MTアプリケーションに設定を知らせます。
+* @column_defs => {},@
+** 以下の４つのカラムを指定します。
+*** 'id' => 'integer not null auto_increment',
+*** 'blog_id' => 'integer not null',
+*** 'title' => 'string(255) not null',
+*** 'bar' => 'text',
+* @indexes => {},@
+** 以下の３つのカラムをデータベーステーブルのインデックスとして指定します。
+*** blog_id => 1,
+*** created_on => 1,
+*** modified_on => 1,
+* @audit => 1,@
+** オブジェクトの作成日時と変更日時を自動的に登録するようにします。
+** created_on, created_by, modified_on, modified_byの４つのカラムが自動的に追加されます。
+* @datasource  => 'foo',@
+** データベーステーブル名をmt_fooにします。
+* @primary_key => 'id',@
+** データベーステーブルのプライマリーキーをidにします。
+* @class_type  => 'foo',@
+** MT::Fooクラスのタイプ名をfooにします。
+
+h2. カラムの型とオプション
+
+h3. カラムの型
+
+|string|文字列。サイズを指定します（例：string(255)）|
+|text|テキスト|
+|boolean|真偽値|
+|smallint|16bitの整数|
+|integer|32bitの整数|
+|float|浮動小数点|
+|blob|バイナリデータ|
+|datetime|日時|
+|timestamp|日時。保存時に自動的にアップデートされます。|
+
+h3. カラムのオプション
+
+|not null|必須項目です。空は許されません。|
+|auto_increment|新規オブジェクト作成時に自動的に整数値がカウントアップされます。|
+
+h2. 作成されたテーブル
+
+プラグインのインストール時に作成されたテーブルを確認してみます。
+
+<pre>
+mysql> show create table mt_foo \G
+*************************** 1. row ***************************
+       Table: mt_foo
+Create Table: CREATE TABLE `mt_foo` (
+  `foo_id` int(11) NOT NULL auto_increment,
+  `foo_bar` mediumtext,
+  `foo_blog_id` int(11) NOT NULL,
+  `foo_class` varchar(255) default 'foo',
+  `foo_created_by` int(11) default NULL,
+  `foo_created_on` datetime default NULL,
+  `foo_modified_by` int(11) default NULL,
+  `foo_modified_on` datetime default NULL,
+  `foo_title` varchar(255) NOT NULL,
+  PRIMARY KEY  (`foo_id`),
+  KEY `mt_foo_modified_on` (`foo_modified_on`),
+  KEY `mt_foo_created_on` (`foo_created_on`),
+  KEY `mt_foo_class` (`foo_class`),
+  KEY `mt_foo_blog_id` (`foo_blog_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)
+</pre>
+
+h2. ファイルの配置
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin11/
+      |__ config.yaml
+      |__ lib/
+         |＿ MyPlugin11/
+         |  |__ L10N.pm
+         |  |＿ L10N/
+         |     |＿ en_us.pm
+         |     |＿ ja.pm
+         |＿ MT
+            |__ Foo.pm
+</pre>
+
+h1. +MT::Fooの利用方法+
+
+作成されたMT::Fooクラスは前章で上げた利用方法と同じです。ここでは復習として簡単にMT::Fooの利用方法を解説します。
+
+<pre>
+my $class_name = 'foo';
+my $class = MT->model($class_name);
+my $foo = $class->new();
+$foo->blog_id(2);
+$foo->title('MT::Foo test');
+$foo->bar('Hello, world!!');
+$foo->save()
+    or die $foo->errstr();
+
+my $title = $foo->title();
+</pre>
+
+h1. +プラグインダウンロード+
+
+[[MyPlugin11.zip(2.38KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin11.zip]]
+
+h1. +まとめ+
+
+今回は最低限の実装しかしていませんが、ここから多くの機能を搭載したクラスを作成することが可能です。
+
+自分でプラグインを作成する際、新規にオブジェクトを作成すると楽に機能が実装できる場面が多くあります。
+
+しかし、MTのアップデート時などにプラグインを一緒にアップデートする必要が出てくるかもしれません。アップデート時はきちんとバックアップを取った上で、テスト用の環境でテストを行い、問題がないことを確認してから本番環境のアップデートをするようにしましょう。（もちろん、これはプラグインのアップデートに限った話ではありませんが）
+
+h1. +プラグイン開発ガイド インデックス+
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# [[環境変数について|Japanese-plugin-dev-1-3]]
+# [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+# [[プラグインの設定方法|Japanese-plugin-dev-3-1]]
+# [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
+# [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
+# [[MTオブジェクトの利用方法|Japanese-plugin-dev-3-4]]
+# 独自オブジェクトの作成
+# [[新規アプリケーションの作成|Japanese-plugin-dev-4-2]]
+# [[Transformerプラグインの開発|Japanese-plugin-dev-4-3]]
+# [[管理画面のメニュー修正|Japanese-plugin-dev-4-4]]

@@ -1,0 +1,11 @@
+Taken from [http://www.movabletweak.com/ MovableTweak] ([http://www.movabletweak.com/categories/creative_subcategories.php original article])
+
+ <mt:HasParentCategory>
+    <mt:ParentCategories exclude_current="1">
+        <a href="<mt:CategoryArchiveLink/>"><mt:CategoryLabel /></a>
+    </mt:ParentCategories>  »
+ </mt:HasParentCategory>
+ <mt:ArchiveTitle />
+
+[[Category: Template Tag Recipes]]
+

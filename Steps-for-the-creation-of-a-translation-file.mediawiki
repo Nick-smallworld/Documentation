@@ -1,0 +1,39 @@
+Say you wanted to create a new translation in Chinese.
+
+The steps for the creation of a translation file are this:
+
+1. Goto MT_ROOT
+
+2. Edit a new file called lib/MT/L10N/cn.pm
+
+3. Copy this code:
+
+<pre><nowiki>
+---
+# Movable Type (r) Open Source (C) 2001-2007 Six Apart, Ltd.
+# This program is distributed under the terms of the
+# GNU General Public License, version 2.
+
+package MT::L10N::cn;
+use strict;
+use MT::L10N;
+use MT::L10N::en_us;
+use vars qw( @ISA %Lexicon );
+@ISA = qw( MT::L10N::en_us );
+
+## The following is the translation table.
+
+%Lexicon = (
+
+
+);
+
+1;
+---
+</nowiki></pre>
+
+4. Execute build/make-l10n cn
+
+5. The file is placed in /tmp/cn.pm
+
+Now the file will contain an hash of strings. The keys of the hash are the original English strings. Their value must be the translations. There are special strings, "_UPPER_CASE_STRINGS", whose original values must be checked in en_US.pm in order to be translated, i.e.: '_USER_DISABLE' => 'Disable',

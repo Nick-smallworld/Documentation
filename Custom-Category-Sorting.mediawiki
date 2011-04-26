@@ -1,0 +1,84 @@
+==With the Order Plugin==
+
+'''Note: This recipe requires the [http://markpasc.org/code/mt/order/ Order plugin] and Custom fields which can be found in the Professional pack'''
+
+The advent of custom fields held great promise for finally allowing us to sort categories.  Unfortunately, only <code>mt:Entries</code> [http://bugs.movabletype.org/?82251 currently supports] the use of custom fields as either attributes (e.g. <code><mt:Entries field:neato="1"></code>) or as a permitted value for the sort/sort_by attribute (e.g. <code><mt:Entries sort_by="field:hotness"></code>)
+
+So, in the meantime, here's what you can do today to sort your categories.
+
+# Create a Category custom field called sort priority ([http://skitch.com/jayallen/3yfk/category-sort-priority-custom-field screenshot]).  Take note of the field's template tag.
+# Go to category editing page for each category and put in priority order value ([http://skitch.com/jayallen/3yfc/individual-category-sort-priority screenshot]). I recommend specifying values that are factors of 10 to start with (10, 20, 30, etc).  This will allow you plenty of room for shifting things around without having to renumber the other categories
+# Install Mark Paschal's wonderful [http://markpasc.org/code/mt/order/ Order plugin].
+#  Use the following  template code methoology (which assumes that the lowest priority given is 10 since the __first__ loop variable doesn't work with Order):
+
+<pre>
+    <mt:CategoryBasename setvar="current_cat"> <!-- Assumes you're in a category context -->
+    <mt:Var name="default_priority" value="999999">
+
+    <mt:Order sort_order="ascend">
+
+        <mt:OrderHeader>
+            <ul>
+        </mt:OrderHeader>
+
+        <mt:TopLevelCategories sort_by="label" show_empty="0">
+
+            <mt:OrderItem>
+                <mt:CategoryDataSortPriority _default="$default_priority" setvar="order_by">
+                <li<mt:If tag="CategoryDataSortPriority" eq="10"> class="first"</mt:If>>
+                    <a href="<mt:CategoryArchiveLink />"
+                        <mt:If tag="CategoryBasename" eq="$current_cat"> class="current"</mt:If>>
+                        <mt:CategoryLabel>
+                    </a>
+                </li>
+            </mt:OrderItem>
+
+        </mt:TopLevelCategories>
+
+        <mt:OrderFooter>
+            </ul>
+        </mt:OrderFooter>
+
+    </mt:Order>
+</pre>
+
+
+
+==By Handling Parent and Subcategories Differently==
+
+The use case was specifically this: the parent categories were years (2009, 2008, 2007, etc), and the sub categories were locations. Years should be sorted in descending order, while locations are alphabetic in ascending order. By sorting the top-level categories (years) one way, then subcategories (locations) another way, I get the desired result
+
+<pre>
+<mt:IfArchiveTypeEnabled archive_type="Category">
+<div class="module-list module">
+    <h2 class="module-header">Category Archives</h2>
+    <div class="module-content">
+        <mt:TopLevelCategories sort_order="descend">
+            <mt:SubCatIsFirst><ul class="module-list"></mt:SubCatIsFirst>
+            <mt:IfNonZero tag="MTCategoryCount">
+                <li class="module-list-item-2"><a href="<$MTCategoryArchiveLink$>" title="<$MTCategoryDescription$>"><mt:CategoryLabel></a>
+            <mt:Else>
+                <li class="module-list-item"><strong><mt:CategoryLabel></strong>
+            </mt:IfNonZero>
+            <mt:SetVarBlock name="curcat"><mt:CategoryLabel></mt:SetVarBlock>
+            <mt:SubCategories category="$curcat" sort_order="ascend">
+                <mt:SubCatIsFirst><ul clas="module-list"></mt:SubCatIsFirst>
+                <mt:IfNonZero tag="CategoryCount">
+                    <li class="module-list-item-2"><a href="<mtCategoryArchiveLink>" title="<mt:CategoryDescription>"><mt:CategoryLabel></a>
+                <mt:Else>
+                    <li class="module-list-item"><strong><mt:CategoryLabel></strong>
+                </mt:IfNonZero>
+                    <mt:SubCatsRecurse>
+                <mt:SubCatIsLast></ul></mt:SubCatIsLast>
+            </mt:SubCategories>
+                </li>
+            <mt:SubCatIsLast></ul></mt:SubCatIsLast>
+        </mt:TopLevelCategories>
+    </div> <!-- end module-content -->
+</div> <!-- end module-categories module -->
+</mt:IfArchiveTypeEnabled>
+</pre>
+
+
+[[Category: Template Tag Recipes]]
+

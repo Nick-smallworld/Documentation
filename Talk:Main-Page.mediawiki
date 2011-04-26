@@ -1,0 +1,16 @@
+The wiki needs a logo! --[[User:Imabug|Imabug]] 15:53, 13 July 2007 (PDT)
+
+----
+
+I'm really confused about the purpose of this wiki, and the state of MT documentation in general.  MT3 had the online knowledgebase (though it was hard to navigate, easy to search) and the excellent forums.  Now that MT4 has been released, the MT.org site has a small amount of very general documentation and says that user contributed notes make the documentation better.  I've tried to comment on the MT.org site several times to ask about further topics for documentation and have never seen any of my comments published.  It's as if MT is discouraging the MT.org site as a place for users to discuss the software and provide further documentation.
+
+I think this wiki would be a great location for user-contributed documentation and could also be the new home of the MT Knowledge Base (currently at MT.com and not containing information specific to MT4).  However, the main page of the wiki contains information about plugins and MT performance.  This doesn't make it seem like this wiki is meant to be the go-to site for user documentation.  What is its purpose?  If it's here for us to fill with documentation, could it be advertised more widely on MT.org?
+
+What about the role of the forums that were so incredibly useful during my time with MT3?  Do the forums still exist?  Why aren't they linked from the MT.org documentation pages?
+
+I've been using MT for about four years.  I'm not a novice, but I'm certainly not an expert, and the new template structure of MT4 has me confused.  I'd like a place where I can find more information not just about what the tags are, but about why they're in their current locations in the templates, and how the templates interrelate.  What's the most logical place for this information to exist?
+
+[[User:Kelly|Kelly]] 21:08, 24 August 2007 (PDT)
+
+----
+

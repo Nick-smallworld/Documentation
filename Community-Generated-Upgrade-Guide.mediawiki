@@ -1,0 +1,86 @@
+==Movable Type 4 Upgrade Guide==
+
+Thank you for choosing Movable Type 4 for your publishing needs.  Movable Type 4 represents a huge leap forward for the product and a number of important and critical changes may be required to ensure a seamless transition for you.  Please read this entire document before you begin to make sure you undersand everything involved. 
+
+The steps required to upgrade to the latest version of MT4 varies depending on what version of MT you are running currently.
+
+==Getting Ready==
+
+The following steps are necessary regardless of what version of MT you're upgrading from
+
+#'''Make a backup of your database''' - Whenever you are making a change to your system such as this, it is always considered wise to make a backup of your data just in case you need to undo anything you might have done.  (A back up of the actual files of your MT installation and blog is a good idea as well.)
+##[http://www.sixapart.com/movabletype/docs/3.2/01_installation_and_upgrade/mysql_backup_restore.html MT 3.2 Documentation - MySQL Database Backup]
+##[http://www.movabletype.org/documentation/administrator/maintenance/backup-and-restore.html MT 4.0 Documentation - Backing Up and Restoring Blogs]
+##[http://www.learningmovabletype.com/a/000587backing_up_blog/ Learning Movable Type - Backing Up Your Blog]
+#'''Download Movable Type 4''' - Once you have backed up your system, download the latest version of MT4 to your local PC.
+##[http://www.movabletype.org/download.html Download MTOS Stable]
+##[http://www.movabletype.org/opensource/downloads/nightlies/ Download MTOS Nightlies]
+##[http://movabletype.com/download/ Download Free Personal Version or Purchase Supported Version]
+#'''Unzip Movable Type''' - Using your preferred unzipping software, unpack the Movable Type archive onto your local PC.
+[http://www.ny-liability-insurance.com/ liability insurance ny]
+
+==Upgrading From an Earlier Build of MT4==
+
+(''Note: Upgrades from one of the MT4 Betas should follow the Recomended method in the MT3 section.'')
+
+Uppgrading from an earlier version of MT4 is easy.  Once you've completed the steps above, there are only two additional steps:
+
+#'''Copy Movable Type's Files Over Your Old Installation''' - Copy all of Movable Type 4's files over your old installation of Movable Type on your server. 
+#'''Login to Movable Type''' - The first time you access Movable Type, the system will detect the new version of MT installed on your system and take you through the automated process of upgrading your database. When this process is complete, you will be able to begin using Movable Type immediately.
+
+==Upgrading From Any Version of MT3==
+
+There are two general ways to upgrade your Movable Type 3 installation, the recommended way and the fast way.  Either way you choose, the first few steps are the same:
+
+#'''Review Changes in MT4''' - You should review the following resources to see if there are any other actions you need to take prior to your upgrade:
+##[http://www.movabletype.org/documentation/upgrade/changes-to-the-list-of-support.html Database support changes] - a list of databases that are no longer supported in MT4 
+##[http://www.movabletype.org/documentation/upgrade/deleting-mts-deprecated-config.html Deleting or renaming mt.cfg]
+##[http://www.movabletype.org/documentation/upgrade/plugins-rendered-obsolete-by-m.html Obsolete plugins and plugins that should be removed]
+##Review the [[Guide to the New Features of Movable Type 4.2]] that you may want to take advantage of.
+#'''Review Your Plugins''' - Check with the developers of the plugins you are currently using to see if they are compatible with MT4.  Download any new versions if necessary.
+##[http://plugins.movabletype.org/ Plugin Directory]
+##[http://wiki.movabletype.org/Works_with_MT4 Works With MT4]  A listing of plugins that work with MT4.  (May be out of date.)
+
+====The Recommended Way====
+
+Movable Type 4 is for all intents and purposes a totally new and different piece of software relative to its predecessors. When making this upgrade, take this opportunity to do a little Spring cleaning by creating a fresh install of Movable Type.
+
+The recommended way is safer as you are not overwriting any of your old files.  Returning to to the old version is easier.
+
+#'''Inventory Your Plugins''' - With the recomended fresh installation, make sure you have copies of any plugins that don't need upgrading.  You will need to reinstal them as well.
+#'''Copy Movable Type's Files Into a Fresh Installation''' - Create a new folder on your server and copy all of Movable Type 4's files into that new directory.  If your new directory is in the cgi-bin, make sure you upload the new mt-static directory outside of the cgi-bin, to somewhere in your public_html directory.  Upload the images in the mt-static directory as binary files. Upload all other files as text.
+#'''Login to Movable Type''' - The first time you access Movable Type, the system will detect the new version of MT installed on your system and take you through the automated process of upgrading your database. When this process is complete, you will be able to begin using Movable Type immediately.
+#'''Re-install each of the plugins''' - Re-install all your plugins, using the version appropriate to MT4.
+
+====The Fast Way====
+
+The fast way does not require re-installing all of your plugins, you only install the new versions of plugins that require an update.  Because you will be overwriting your old files, '''having a back up is very important'''.
+
+#'''Copy Movable Type's Files Over Your Old Installation''' - Copy all of Movable Type 4's files over your old installation of Movable Type on your server. 
+#'''Login to Movable Type''' - The first time you access Movable Type, the system will detect the new version of MT installed on your system and take you through the automated process of upgrading your database. When this process is complete, you will be able to begin using Movable Type immediately.
+#'''Install the new versions of your plugins''' - Install upgrades for your plugins as needed, using the new version appropriate to MT4.
+
+''The first time you access the application, you may need to "shift-reload" your browser in order to clear the cache for your css, javascript and images. Doing so will fix any display abnormalities you may experience upon first logging in.''
+
+==Upgrading from MT 2.6 and earlier==
+
+See this page for important information regarding upgrading from older versions of MT.
+
+*[http://www.movabletype.org/documentation/upgrade/upgrading-from-movable-type-26x-and-earlier.html Upgrading from Movable Type 2.6x and earlier]
+
+==Additional Information==
+
+Some users may find the following links helpful for their upgrade:
+
+*[http://www.movabletype.org/documentation/appendices/release-notes.html Movable Type Release Notes]
+*[http://www.movabletype.org/documentation/upgrade/upgrading-a-really-large-database.html Upgrading a Really Large Database]
+*[http://www.staggernation.com/mtplugins/blog/2007/07/installing_movable_type.php Kevin Shay's instructions for unzipping MT on your server.]
+* Archived upgrade articles for [http://www.learningmovabletype.com/a/00156633_safe_upgrading/ MT 3.3] and [http://www.learningmovabletype.com/archives/001367a_safe_way_to_upgrade_to_mt_32.php MT3.2] at [http://www.learningmovabletype.com/ Learning Movable Type (LMT)].  Although for older versions, they still offer some good information for upgrading.
+
+Once your upgrade is complete you may be interested in the following additional resources:
+
+*[http://www.movabletype.org/documentation/upgrade/upgrading-templates.html How to Upgrade Your MT3 Templates]
+*[http://www.movabletype.org/documentation/upgrade/updating-publishing-paths-and.html Updating Publishing Paths and URL Structures] 
+*[http://www.movabletype.org/documentation/upgrade/upgrading-movable-type-to-publ.html Upgrading Movable Type to Publish Pages] 
+*[http://www.movabletype.org/2007/08/reports_from_the_upgradeathon.html Reports from the MT4 Upgrade-a-thon]
+

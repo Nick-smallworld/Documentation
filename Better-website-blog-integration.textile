@@ -1,0 +1,55 @@
+
+h2. Issues
+
+From various feedback for Movable Type 5.0x , we are aware of the following issues
+
+for upgraded users, it is important
+* not to generate websites/pemissions automatically
+
+for beginners, it is important
+* to reduce steps to install and publish a first entry
+* not to separate URL/Path settings into two places (website and blog)
+* to minimize the knowledge required to modify design
+* to start with a single blog then manage multi blogs later
+
+for advanced users, it is important
+* to maximize the flexibility of URL/Path settings
+
+h2. Feedback
+
+http://bugs.movabletype.org/default.asp?102631
+http://bugs.movabletype.org/default.asp?102368
+http://bugs.movabletype.org/default.asp?102644
+http://bugs.movabletype.org/default.asp?104064
+http://bugs.movabletype.org/default.asp?102787
+
+http://forums.movabletype.org/2010/02/bad-blog-url-editor-in-mt501.html
+http://forums.movabletype.org/2010/02/changing-a-page-from-a-weblog-to-a-website.html
+http://forums.movabletype.org/2010/02/moving-entries-from-one-blog-to-another-1.html
+http://forums.movabletype.org/2010/03/url-problems.html
+http://forums.movabletype.org/2010/03/website-and-blog-synchronized-failure.html
+http://forums.movabletype.org/2010/03/how-to-set-home-page-and-disable-feed-in-mt5-beginner-question.html
+http://forums.movabletype.org/2010/04/mt5---dont-want-a-website-just-a-blog--.html
+http://forums.movabletype.org/2010/04/start-a-blog-but-cant-view-the-content-on-my-website.html
+http://forums.movabletype.org/2010/04/share-templates-between-websiteblog.html
+http://forums.movabletype.org/2010/04/how-do-you-get-the-url-of-a-specific-blogwebsitepage-etc.html
+http://forums.movabletype.org/2010/06/where-is-pico-website-theme-in-mt5.html
+http://forums.movabletype.org/2010/06/orphaned-blog-after-upgrade-to-mt-v502.html
+http://forums.movabletype.org/2010/07/new-website-on-different-domain.html
+http://forums.movabletype.org/2010/07/how-to-edit-the-website-name-and-description-in-mt5.html
+http://forums.movabletype.org/2010/07/how-to-change-the-top-page-of-my-website.html
+http://forums.movabletype.org/2010/07/1-web-with-blogs-and-users.html
+http://forums.movabletype.org/2010/07/sharing-templates-between-blogswebsites-in-mt5.html
+http://forums.movabletype.org/2010/08/website-root-publishing-path.html
+http://forums.movabletype.org/2010/08/domain-name-as-the-website.html
+http://forums.movabletype.org/2010/08/help-not-publishing-entries.html
+http://forums.movabletype.org/2010/08/publish-child-blogs-along-with-parent-website.html
+http://forums.movabletype.org/2010/09/is-moveabletype-for-me.html
+http://forums.movabletype.org/2010/09/blog-as-main-page.html
+http://forums.movabletype.org/2010/09/how-to-add-a-website-logo.html
+
+http://communities.movabletype.jp/2010/06/post-80.html
+http://communities.movabletype.jp/2010/06/mt51-1.html
+http://communities.movabletype.jp/2010/06/-.html
+
+http://www.h-fj.com/blog/archives/2010/07/22-085126.php

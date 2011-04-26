@@ -1,0 +1,17 @@
+''[This page represents a beginning to what will hopefully be a '''comprehensive''' callback reference for Movable Type.  Over time, I would hope that this document exceeds the usefulness and freshness of Callback.pod.  Many mistakes have certainly been made in the fashioning of this document.  Please feel free to edit and/or create new content for it. - [http://wiki.movabletype.org/User:Jayallen Jay]]''
+
+<div style="float:left; border:thin solid green; padding: 5px; margin-right: 15px;">
+{{Template:Callback Types}}
+</div>
+
+= Movable Type 4.1 (open source) Callback Reference =
+
+The callback system in Movable Type is easy to use and is invoked at key areas throughout the application. This document is a reference of all available callbacks in Movable Type itself.
+
+Below we will generally describe the Movable Type callback framework and give examples of usage.  To the left is an index of the different categories of callbacks with more detailed information about each. ''[Note: This is a work in progress...]''
+
+== About the callback listings ==
+
+The callbacks listed on the category pages to the left differ in their specificity.  Some callbacks only exist in a single package and hence are prepended with the package prefix.  Others contain variables which are placeholders for string (e.g. pre_save.$type where $type might be 'entry').  Other yet have neither a package or a variable placeholder.  These either don't take any further specification (e.g. BuildFileFilter) or are callbacks that can be used with a number of different packages (e.g. *::pre_save, *::pre_load) and/or limited to particular scope (e.g. template_source.*, template_param.* and template_output.*).  For reasons of brevity, these callbacks are listed without any package name or an limiters on their scope.
+
+All in all, there are more than likely over 300 distinct callbacks including all of their variations which we can use to plug into Movable Type.  Those of you who were around for Movable Type v2.4 or even v3.2 already know what an incredible achievement this is.

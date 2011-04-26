@@ -1,0 +1,44 @@
+h1. Registry: listing_screens
+
+リスト画面の全体の振る舞いを設定します。
+
+h2. 設定可能な値
+
+- condition := 現在のコンテキストでこのリスト画面を表示するか判定するサブルーチンを指定します。
+- contents_label := このリスト画面で扱うオブジェクトが子要素をもつ場合、子要素の表示名を指定します。
+- contents_label_plural := このリスト画面で扱うオブジェクトが子要素をもつ場合、子要素の表示名の複数形を指定します。
+- default_sort_key := リスト画面を開いたときの初期ソートを行うプロパティの @property_id@ を指定します。
+- feed_label := リスト画面が出力するフィードのラベルを指定します。
+- feed_link := リスト画面と関連付けられるフィードのリンクを指定します。
+- object_label := リスト画面に表示するオブジェクトの表示名を指定します。
+- object_label_plural := リスト画面に表示するオブジェクトの表示名の複数形を指定します。
+- object_type := リスト画面に表示するオブジェクトの @class_type@ を指定します。省略した場合、このリスト画面のIDが使用されます。
+- permission := リスト画面にアクセスするために必要なpermit_actionを指定します。複数の値をカンマ区切りで指定できます。
+- primary := プライマリ表示[1]を行うカラムの @property_id@ を指定します。
+- scope_mode :=
+
+ ListingFrameworkでは、基本的にオブジェクトのblog_idカラムに対する条件を付与します。scope_modeを指定すると、現在のscopeに応じてどのようにblog_idの条件を設定するかを変更できます。
+
+- wide := 現在のスコープと、下位のスコープを含めたblog_idを検索対象とします。
+- this := 常に現在のスコープのblog_idのみを検索対象とします。
+- none := blog_idを検索条件に含めません。
+
+=:
+- screen_label := 画面の表示名を指定します。
+- search_label := クイック検索の表示名を指定します。
+- search_type := クイック検索の対象となるオブジェクトを指定します。
+- template := デフォルトのテンプレート @list_common.tmpl@ と異なるテンプレートを使ってリストのレンダリングを行う場合に、テンプレートのパスを指定します。
+- view := リスト画面を表示するスコープを指定します。
+
+
+h2. See Also
+
+* [[Lising Framework Overview|Ja-dev-listing-framework-overview]]
+* [[Registry: list_properties|Ja-dev-registry-list-properties]]
+* [[Registry: system_filters|Ja-dev-registry-system-filters]]
+* [[Registry: list_actions|Ja-dev-registry-list-actions]]
+* [[Registry: content_actions|Ja-dev-registry-content-actions]]
+
+h2. Foot notes
+
+fn1. プライマリ表示が指定されたカラムは、表示幅の最大値が設定されず、他のカラムが非表示になった場合にテーブルを埋める役割を果たします。

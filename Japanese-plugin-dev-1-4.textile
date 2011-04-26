@@ -1,0 +1,208 @@
+h1. プラグインのローカライゼーションについて
+
+h1. +はじめに+
+
+今回はローカライズによる多言語対応について、その仕組みとプラグインでの利用についてを解説します。
+
+h1. +ローカライズ技術+
+
+一般的にローカライズとは、使用する言語環境に合わせてプログラムを動作させるようにすることを指します。
+
+ローカライズは英語で"Localization"といいますが長いため"L（１０文字）n"、すなわち"L10N"と略表記されます。
+
+Movable Typeの場合、以下の言語について利用できるようにローカライズされています。
+
+* 日本語
+* 英語
+* フランス語
+* ドイツ語
+* スペイン語
+* オランダ語
+
+Movable Typeの管理画面にログインし、自分のユーザー情報の編集で使用言語を変更すると各言語のインターフェースで管理画面が表示されるのが確認できます。これは、各言語ごとに辞書ファイルが用意されていて、それぞれ表示を切り替えているために可能になっています。
+
+辞書にひもづけるためのフレーズ（キーワード）はテンプレートファイルに書かれています。例えば"$MT_DIR/tmpl/cms/error.tmpl"を見ると以下のように書かれている場所があります。
+
+<pre>
+<__trans phrase="Close">
+</pre>
+
+これは「"Close"というフレーズに対応した文言を辞書ファイルから読み込み、&lt;&#95;&#95;trans&gt; タグごと書き換えなさい」という指示になります。この"&lt;&#95;&#95;trans&gt;"タグは以前は"&lt;MT&#95;TRANS phrase="Close"&gt;"のように書いていました。"&lt;MT&#95;TRANS&gt;"タグも使えますが、MT5のお作法として"&lt;&#95;&#95;trans&gt;"を使って行きましょう。
+
+各言語用の辞書ファイルは"$MT_DIR/lib/MT/L10N"以下に配置されます。
+
+|_. 言語|_. 辞書ファイル名|
+|日本語|ja.pm|
+|英語|en&#95;us.pm|
+|フランス語|fr.pm|
+|ドイツ語|de.pm|
+|スペイン語|es.pm|
+|オランダ語|nl.pm|
+
+辞書の定義は、=&gt; の *左側に対象の文字列（フレーズ）* を、 *右側に変換結果* を定義するというシンプルなフォーマットです。たとえば、前述のフレーズ +Close+ について、 +閉じる+ と表示するには、日本語を表示する辞書ファイルja.pm内に、次のように定義します。
+
+<pre>
+'Close' => '閉じる',
+</pre>
+
+また、機能の解説のように、変換対象の文字列が単文でない場合、"&#95;"から始まるキーワードを利用することもできます。
+
+Movable Typeの管理画面は、HTMLファイルのようなテンプレートファイル（TMPLファイル）を用意して、そこに表示する内容を定義します。（実際先ほど例に挙げた"$MT_DIR/tmpl/cms/error.tmpl"を見るとHTMLファイルに似た記述になっている事が分かります。）そして表示する際、テンプレートエンジンがTMPLファイルを解析し"<&#95;&#95;trans>"タグがあれば辞書ファイルを参照して置き換えます。この際、指定されている言語の辞書ファイルに対応するフレーズが無い場合はデフォルトの英語の文言に置き換わります。また、指定した言語にも、英語辞書にも無い時はフレーズであればそのまま置き換え、"&#95;"で始まるキーワードの場合はエラーとなります。
+
+整理すると以下の様になります。
+
+# 指定した辞書ファイルを最初に参照します。たとえば、日本語の場合、 *ja.pm* の内容を最初に参照します。
+# 最初の参照でフレーズがみつからない場合、英語の辞書ファイル *en_us.pm* の内容を参照します。
+# 英語の辞書ファイルにもみつからない場合は、変換する対象が文字列ならば文字列を、キーワード（&#95;から始まる文字列）の場合はエラーを表示します。
+
+ページ数などを含んだフレーズの場合、文字列が可変なため違った指定をする必要があります。可変する場所を *"[&#95;1]"* といった形でまとめます。
+
+<pre>
+'Pages: from [_1] to [_2]' => '[_1]～[_2]ページ',
+</pre>
+
+この指定で以下のような記述が可能になります。
+
+<pre>
+<__trans phrase="Pages: from [_1] to [_2]" params='32%%64' >
+</pre>
+
+これで表示は「32～64ページ」となります。 *"params"* に可変値を記載し、可変項目が複数ある場合は *"[&#95;1]"* , *"[&#95;2]"* と指定していき、 *"params"* のセパレータは +"%%"+ になります。（今回は32と64は固定値ですが、他のページや管理画面内での利用など用途が広く考えられます。）
+
+これらの辞書機能を、テンプレート・ファイルだけではなく、スクリプト内で利用するための関数（メソッド）として、 *translate関数* が用意されています。この関数を利用することで、エラーメッセージやログなどのスクリプトの処理結果を言語にあわせて出力できます。
+
+h1. +言語別に処理する仕組みをプラグインにも適用する+
+
+上で説明した内容はプラグインでも利用できます。プラグインに関連する項目について辞書ファイルを用意し、config.yamlに辞書ファイルの設定（"l10n_class: MyPlugin02::L10N"）を記載します。
+
+h2. 編集前のconfig.yaml
+
+<pre>
+id: MyPlugin02
+name: Sample plugin L10N
+version: 1.0
+description: Sample plugin L10N
+author_name: Plugin author
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+</pre>
+
+h2. 編集後のconfig.yaml
+
+<pre>
+id: MyPlugin02
+name: <__trans phrase="Sample plugin L10N">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin02::L10N
+</pre>
+
+h2. L10N.pm の作成
+
+辞書ファイルの雛形を作ります。'MT::Plugin::L10N'の継承クラスとして作成することで、細かい実装について気にする必要がなくなります。
+
+<pre>
+package MyPlugin02::L10N;
+use strict;
+use base 'MT::Plugin::L10N';
+
+1;
+</pre>
+
+h2. en_us.pmの作成
+
+英語の辞書ファイルを作成します。'MyPlugin02::L10N'の継承クラスとして作成します。
+
+<pre>
+package MyPlugin02::L10N::en_us;
+
+use strict;
+use base 'MyPlugin02::L10N';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    '_PLUGIN_DESCRIPTION' => 'Sample plugin L10N',
+    '_PLUGIN_AUTHOR' => 'Plugin author',
+);
+
+1;
+</pre>
+
+h2. ja.pmの作成
+
+日本語の辞書ファイルを作成します。'MyPlugin02::L10N::en_us'の継承クラスとして作成します。
+
+<pre>
+# Sample Plugin: Plugin L10N
+
+package MyPlugin02::L10N::ja;
+
+use strict;
+use base 'MyPlugin02::L10N::en_us';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    'Sample plugin L10N' => 'サンプルプラグイン L10N',
+    '_PLUGIN_DESCRIPTION' => 'サンプルプラグイン L10N',
+    '_PLUGIN_AUTHOR' => 'プラグイン作者',
+);
+
+1;
+</pre>
+
+h2. ファイルの配置
+
+作成した辞書ファイルを配置します。
+
+<pre>
+MT_DIR/
+|__ plugins/
+   |__ MyPlugin02/
+      |__ config.yaml
+      |__ lib/
+         |＿ MyPlugin02/
+            |__ L10N.pm
+            |＿ L10N/
+               |＿ en_us.pm
+               |＿ ja.pm
+</pre>
+
+h2. プラグインの表示結果
+
+ファイルを正しく配置した上で、管理画面のプラグイン設定を開くと以下の様に表示され正しく動作していることが分かります。
+
+!http://www.movabletype.jp/documentation/developer/plugins/images/l10n_01.png!
+
+h1. +まとめ+
+
+今回はMovable Typeの中でローカライズの挙動と、プラグインでの利用方法を解説しました。
+
+ローカライズはMovable Typeの動作の中で、とても重要なものの中の一つです。今回きっちりと覚えて、英語文言を用意し海外の人にも使ってもらえるプラグインを作成しましょう！！もちろんドイツ語など他の言語辞書も用意できたら、すばらしいですね！！
+
+h1. +プラグインダウンロード+
+
+[[MyPlugin02.zip(1.86KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin02.zip]]
+
+h1. +プラグイン開発ガイド インデックス+
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# [[環境変数について|Japanese-plugin-dev-1-3]]
+# プラグインのローカライゼーションについて
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+# [[プラグインの設定方法|Japanese-plugin-dev-3-1]]
+# [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
+# [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
+# [[MTオブジェクトの利用方法|Japanese-plugin-dev-3-4]]
+# [[独自オブジェクトの作成|Japanese-plugin-dev-4-1]]
+# [[新規アプリケーションの作成|Japanese-plugin-dev-4-2]]
+# [[Transformerプラグインの開発|Japanese-plugin-dev-4-3]]
+# [[管理画面のメニュー修正|Japanese-plugin-dev-4-4]]

@@ -1,0 +1,15 @@
+[[Category: Template Tag Recipes]]
+
+There are some great visualizations you can create using the [http://code.google.com/apis/chart/ Google Charts API] and Movable Type's template language.
+
+For example, using the following template tag on one of our company's internal blogs, it was possible to create a pie chart with proportional slices showing the relative frequency with which entries were placed in different categories.
+
+<pre>
+
+<img width="500" height="200" src='http://chart.apis.google.com/chart?cht=p3&chd=t:
+<MTCategories glue=","><$MTArchiveCount$></MTCategories>&chs=500x200&chl=
+<MTCategories url_encode="1" glue="|"><$MTCategoryLabel$></MTCategories>&chco=003377' />
+
+</pre>
+
+<strong>Note:</strong> There should be no line breaks before the <code><MTCategories></code> tags in this example when you use it in your own templates.

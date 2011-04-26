@@ -1,0 +1,63 @@
+==Disclaimer==
+In case someone happens to stumble across this...<br />
+This is a collection of preliminary notes on how to get the [http://code.sixapart.com/trac/mtplugins/browser/trunk/PostOffice PostOffice] plugin working, and what it does. It is '''not''' intended to be final end-user documentation yet, or possibly ever in this form.
+
+<!-- ahem -->
+
+==Additional Requirements==
+
+PostOffice needs the following Perl modules:
+
+* [http://search.cpan.org/~rjbs/Email-Address-1.889/lib/Email/Address.pm Email::Address]
+* [http://search.cpan.org/~rjbs/Email-MIME-1.861/lib/Email/MIME.pm Email::MIME]
+* [http://search.cpan.org/~rjbs/Email-MIME-ContentType-1.014/lib/Email/MIME/ContentType.pm Email::MIME::ContentType]
+* [http://search.cpan.org/~rjbs/Email-MIME-Encodings-1.311/lib/Email/MIME/Encodings.pm Email::MIME::Encodings]
+* [http://search.cpan.org/~sullr/IO-Socket-SSL-1.13/SSL.pm IO::Socket::SSL] (for IMAP w/SSL)
+* [http://search.cpan.org/~sdowd/Mail-POP3Client-2.18/POP3Client.pm Mail::POP3Client]
+* [http://search.cpan.org/~markov/Mail-IMAPClient-3.13/lib/Mail/IMAPClient.pod Mail::IMAPClient]
+
+...which are not currently (1.0) included with the plugin. I'm not sure if they're standard or not(the only list I could find was very out of date), but they were missing from my test server, so FYI. Be sure to check for them first, or you'll get random annoying errors in the activity log while wondering why nothing's happening.
+
+The source for these can just be added to the 'PostOffice/lib/' directory, eg.:
+
+<pre>
+lib/Email/Address.pm
+lib/Email/MIME.pm
+lib/Email/MIME/ContentType.pm
+lib/Email/MIME/Encodings.pm
+</pre>
+
+==Usage==
+
+The plugin settings are pretty self-explanatory. Reading and filling them out will give you a basic idea what needs to happen in terms of initial preparation.<br />
+I've only so far tested with setting up a single blog, not the system-level config.
+
+* PostOffice defines a scheduled task for pulling messages, which will be triggered in the usual ways.
+* If a message from a non-allowed e-mail address is encountered(see plugin settings), an error will be reported to STDERR, and the message skipped.
+* ''[Untested]'' You can use GMail-style "plus addressing" to specify which blog an e-mail will be posted to. So, if you create the receiving address <code>postoffice@mydomain.com</code> Sending a message to <code>postoffice+2@mydomain.com</code> will post your e-mail to the blog with blog_id of 2.
+* You can specify what category posts will end up in by titling your e-mails in the format "[Category] Title Goes Here" (no quotes) 
+** The space after the closing bracket is not required, but probably looks better. 
+** If the category you specify doesn't exist, it will be created.
+*** There appears to be some normalization here. I sent an e-mail with category of "test" in the subject, and it was assigned to the existing category "Test," even though the system does allow those to be separate things. This may need pointing out.
+** The category block is retained in the post title. (Ew. Fbz case filed.)
+* Images can be posted to your blog by sending as attachments which will be saved by MT as assets, with the file placed in the relevant blog root. '''See open issue below'''
+** Multiple images are displayed(as opposed to styled) as block. Fbz case filed to get some explanation before raising objections.
+** Other filetypes are output as a link on its own line.
+
+==Open Issues/Questions==
+
+* There are some issues with attachments causing content to be lost. No clue if it can be resolved from the MT side, but triggering cases:
+** GMail-- Rich formatting, text and attached image: text is lost
+** Thunderbird-- HTML formatting, image dragged inline (text optional): image is lost
+* I haven't been able to get the PO job to pull items from IMAP(via Google Apps, if it ends up being a factor). If someone could confirm it works, possibly on other servers, that would be great.
+* I have not tried the "require API key in address" function.
+* I haven't used the plus addressing feature, since only one blog was set up. I assume this is why the plugin has system-level settings, and that to use this properly will require moving the configuration there.
+* Use of subject category assignment throws warning "Use of uninitialized value in length at lib/MT/Template/ContextHandlers.pm line 4794." from the cron job. (This does not prevent publishing.)
+
+==FogBugz Cases and Patches Filed==
+http://bugs.movabletype.org/default.asp?pg=pgList&search=2&searchFor=postoffice <br />
+(If you don't have fbz access, the important items are mentioned inline above. The rest are mostly display or markup related.)
+
+==Links==
+* [http://plugins.movabletype.org/post-office/ PostOffice Plugin Page]
+* [http://www.blackphoebe.com/msjen/2009/11/how-to-change-the-di.html How to Change the Directory that Movable Type Uploads to When Using the Atom Protocol (Lifeblog, PixelPipe, etc)]

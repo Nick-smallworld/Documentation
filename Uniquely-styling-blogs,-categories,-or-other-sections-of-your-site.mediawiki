@@ -1,0 +1,29 @@
+http://www.textletoorlatar.com 
+
+<pre>
+ <mt:Multiblog include_blogs="1,2,3">
+ <mt:Entries lastn="3">
+   <div class="blog-<mt:BlogID>">
+     <mt:EntryTitle>
+   </div>
+ </mt:Entries>
+ </mt:Multiblog>
+</pre>
+
+Notice that a different class will be assigned to each blog based on the blog ID. Then, in your stylesheet, you'd define the CSS. For example:
+
+<pre>
+ .blog-1 { background: white; }
+ .blog-2 { background: green; }
+ .blog-3 { background: orange; }
+</pre>
+
+This technique can be used elsewhere, too. Examples:
+
+<pre>
+ <div class="body<mt:EntryIfExtended> extended</mt:EntryIfExtended>"> blah </div>
+</pre>
+
+<pre>
+ <div class="<mt:CategoryLabel dirify="1">"> blah </div>
+</pre>

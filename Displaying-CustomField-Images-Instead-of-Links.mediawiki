@@ -1,0 +1,12 @@
+The default loop to display the values of custom fields for entries displays image custom fields as 'View image' links.  Using following code snippet, you can replace these links by the real image:
+
+<pre><MTEntryCustomFields>
+      <MTCustomFieldValue regex_replace="/span class=.mt-enclosure mt-enclosure-image.+?href(.+?)View image<\/a><\/span>/","img src$1">
+</MTEntryCustomFields></pre>
+
+
+[[Category: Template Tag Recipes]]
+
+==A better approach: use the <code>&lt;mt:EntryCustomFieldsAsset&gt;</code> tag==
+As outlined at [http://www.movabletweak.com/templates/image_customfields_in_movable.php Image CustomFields in Movable Type 4.1].
+

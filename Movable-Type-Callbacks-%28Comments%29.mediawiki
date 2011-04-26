@@ -1,0 +1,8 @@
+<div style="float:left; border:thin solid green; padding: 5px; margin-right: 15px;">
+{{Template:Callback Types}}
+</div>
+
+= MT::App::Comments =
+
+* CommentFilter
+* CommentThrottleFilter

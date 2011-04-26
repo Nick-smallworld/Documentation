@@ -1,0 +1,5 @@
+== Errors with Template in MT 4.2 ==
+
+I wrote about the changes I made to the template to make it work for Mt 4.2 here.  You can find my writeup here:
+
+http://www.daveweiss.net/2008/10/google-sitemap.html

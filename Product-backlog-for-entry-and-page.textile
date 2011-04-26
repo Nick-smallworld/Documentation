@@ -1,0 +1,1 @@
+* "FogBugz 105749: Lock the order of fields on Edit Enrty/Page screen.":http://bugs.movabletype.org/default.asp?105749

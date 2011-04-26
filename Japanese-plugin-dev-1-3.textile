@@ -1,0 +1,93 @@
+h1. 環境変数について
+
+h1. +はじめに+
+
+今回は、mt-config.cgiなどで設定する設定項目（環境変数）について解説し、プラグインで追加する方法についても解説します。
+
+h1. +環境変数とは？+
+
+誤解を恐れず一言で表すと「mt-config.cgiで設定できる項目」になります。
+
+もう少し言葉を足すと、Movable Typeの設定で「環境変数」と呼ばれ、mt-config.cgiで設定を行います。
+
+プラグインで利用する場合、未設定の環境変数を呼び出すとエラーになってしまいます。そこで、環境変数の追加が必要になります。
+
+h1. +環境変数の追加+
+
+環境変数の追加はconfig.yaml内で以下のように行います。 
+
+<pre>
+config_settings:
+    MyImageURL:
+        default: http://www.example.com/images/foo.jpg
+</pre>
+
+環境変数は、default以外にも以下のような値を取ります。
+
+* path
+** pathはブーリアン値（0 or 1）を取ります。1が指定された場合、相対パスで指定された環境変数を自動的に絶対パスに読み替えます。 
+
+<pre>
+config_settings:
+    MyLogPath:
+        default: /var/log/mt/errors.log
+        path: 1
+</pre>
+
+* handler
+** handlerは静的（static）なdefaultでは問題がある場合や、明示的に動的なdefault値を設定できるようにするためのものです。 
+
+<pre>
+config_settings:
+    MyLogPath:
+        handler: $Example::Example::Plugin::MyLogPath
+        path: 1
+</pre>
+
+* alias
+** aliasを利用すると既にある環境変数のエイリアスとして指定できます。 
+
+<pre>
+config_settings:
+    MyErrorLogPath:
+        alias: MyLogPath
+</pre>
+
+配列、ハッシュの場合、データの取得方法は以下のようになります。
+
+<pre>
+use MT;
+my $mt = new MT;
+my $scalar = $mt->config->ScalarConfig;
+my @array = $mt->config->ArrayConfig;
+my $hash = $mt->config->HashConfig;
+</pre>
+
+h1. +まとめ+
+
+今回は環境変数についてご紹介しました。後々プラグインを作成するようになるとプラグインの設定をmt-config.cgiで行いたい場合が出てきます。これらは、管理画面のプラグインの設定とは毛色の違う設定になります。管理画面でプラグインの設定をする場合は、テンプレートなどを用意する必要があるため、mt-config.cgiで設定できる方が楽といった面もあります。
+
+ただし、環境変数で指定するのは基本設定を変更しない静的(static)なものを対象にするのが望ましいため、プラグインの挙動を動的に変えるために環境変数を利用するのは、お勧めできません。
+
+今回の環境変数もそうですが、Movable Typeには色々な場面で設定が変更できます。例えばStyleCatcherなどのプラグインやテーマによって拡張できるものもあります。要所要所でベストな設定方法を取っておくとMovable Type本体のバージョンアップや、プラグインのバージョンアップ時に恩恵を受けられることも少なくありません。お作法を勉強してクールなプラグインを書いていきましょう！！
+
+h1. +プラグイン開発ガイド インデックス+
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# 環境変数について
+# [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+# [[プラグインの設定方法|Japanese-plugin-dev-3-1]]
+# [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
+# [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
+# [[MTオブジェクトの利用方法|Japanese-plugin-dev-3-4]]
+# [[独自オブジェクトの作成|Japanese-plugin-dev-4-1]]
+# [[新規アプリケーションの作成|Japanese-plugin-dev-4-2]]
+# [[Transformerプラグインの開発|Japanese-plugin-dev-4-3]]
+# [[管理画面のメニュー修正|Japanese-plugin-dev-4-4]]

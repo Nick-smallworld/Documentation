@@ -1,0 +1,204 @@
+h1. 管理画面のメニュー修正
+
+h1. +はじめに+
+
+前章ではTransformerプラグインを使って管理画面の修正を行う方法を解説しました。
+
+今回はレジストリを利用して管理画面のメニューの修正を行う方法を解説します。
+
+h1. +管理画面のメニューとは？修正とは？+
+
+管理画面には「システムレベル」「サイトレベル」「ブログレベル」のそれぞれの左側にメニューがあり、右上に新規作成メニューがあります。
+
+これらはPerlやテンプレートで制御されているのではなく、レジストリで管理されています。
+
+メニューの修正はレジストリの修正で対応できるため、config.yamlの修正で実現できます。今回はメニューの修正を行います。
+
+h1. +管理画面のメニュー修正プラグインの開発+
+
+h2. 仕様
+
+* 管理者以外は「ツール」メニューを見せなくする
+** 検索置換も管理者以外に使って欲しくない場合を想定
+* ウェブサイトメニューからブログ記事メニューを見せなくする
+** ウェブサイトに直接ブログ記事を表示させたくない場合を想定
+* 親メニュー「新規メニュー」を作成し、そこに「ダッシュボード」メニューを作成する
+** メニューは「システム」「ウェブサイト」「ブログ」「ユーザーダッシュボード」のそれぞれに表示する
+** 「ダッシュボード」メニューをクリックすると、システムはシステムなどそのダッシュボードが表示される
+
+h2. config.yaml
+
+<pre>
+id: MyPlugin14
+key: MyPlugin14
+name: <__trans phrase="Sample Plugin Menu Customize">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin14::L10N
+
+applications:
+    cms:
+        menus:
+            tools:
+                permission: administer
+                system_permission: administer
+            entry:
+                view: blog
+            new_menu:
+                label: New Menu
+                order: 1000
+            new_menu:dashboard:
+                label: Dashboard
+                order: 100
+                view:
+                    - system
+                    - website
+                    - blog
+                    - user
+                mode: dashboard
+                condition: sub { return 1 }
+</pre>
+
+h3. 解説
+
+<pre>
+id: MyPlugin14
+key: MyPlugin14
+name: <__trans phrase="Sample Plugin Menu Customize">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin14::L10N
+</pre>
+
+* 通常のプラグイン設定
+
+<pre>
+applications:
+    cms:
+        menus:
+</pre>
+
+* メニュー操作のためのレジストリへの階層
+
+<pre>
+            tools:
+                permission: administer
+                system_permission: administer
+</pre>
+
+* @tools@ は、「ツール」メニューを指します
+* @permission@ はサイトメニュー、ブログメニューでの権限
+* @system_permission@ はシステムメニューでの権限
+* それぞれ必要な権限をコンマ区切りで列挙する事が出来ます
+* 今回の例では「ツール」メニューが管理者でのみ表示されるようになり、管理者で無い人がログインしても「ツール」メニューは表示されません
+
+<pre>
+            entry:
+                view: blog
+</pre>
+
+* この設定により @entry@ 「ブログ記事」の @view@ を @blog@ だけで表示します
+** このためサイトメニューから「ブログ記事」メニューが消えます
+
+<pre>
+            new_menu:
+                label: New Menu
+                order: 1000
+</pre>
+
+* 新しいメニューを作成します
+** ラベル（表示名）を @New Menu@ とします。メニューは自動的にL10Nからローカライズされるため、「新規メニュー」と表示されます
+** @order@ を 「ツール」メニューの下に出したいため @1000@ としています（「ツール」の @order@ は @900@ ）
+*** @order@ が小さい順にメニューが上から並びます
+
+<pre>
+            new_menu:dashboard:
+                label: Dashboard
+                order: 100
+                view:
+                    - system
+                    - website
+                    - blog
+                    - user
+                mode: dashboard
+                condition: sub { return 1 }
+</pre>
+
+* 「新規メニュー」の中に「ダッシュボード」メニューを追加します
+* @view@ を複数指定する場合は配列型にします
+** @system@ : システムメニュー、 @website@ : サイトメニュー、 @blog@ : ブログメニュー、 @user@ : ユーザーダッシュボード
+* クリックされると、 @mode@ で指定したモード（今回は @dashboard@ ）に遷移します
+* @condition@ は関数の実行によって表示のオンオフを決める事ができます
+** ここでは必ず正が返るので、このメニューは必ず表示されます
+** 返ってきた値が負の場合、このメニューは表示されません
+** perlコードを別に移すのであれば @condition: $MyPlugin14::MyPlugin14::Menues::hndr_get_condition@ などとハンドラを呼ぶことも出来ます
+
+以下のように指定する事も可能です。
+
+<pre>
+                args:
+                    _type: foo
+</pre>
+
+* @args@ に値をセットする事でモードの値に追加して遷移先の画面に変数を渡す事ができます。
+** 今回の例 @http://www.example.com/cgi-bin/mt.cgi?__mode=dashboard&_type=foo&blog_id=1@
+
+<pre>
+                dialog: 1
+</pre>
+
+* @mode@ 指定し、 @dialog: 1@ 指定をした場合モーダルウィンドウ型のダイアログが表示されます
+** モーダルウィンドウの説明について、ここでは省略します。
+
+h1. +ファイルの配置+
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin14/
+      |__ config.yaml
+      |__ lib/
+         |＿ MyPlugin14/
+            |__ L10N.pm
+            |＿ L10N/
+               |＿ en_us.pm
+               |＿ ja.pm
+
+</pre>
+
+h1. +プラグインダウンロード+
+
+[[MyPlugin14.zip(2.01KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin14.zip]]
+
+h1. +まとめ+
+
+メニューの編集方法を見ていただきましたが、いかがでしたでしょうか？比較的簡単にメニューを変更することが出来るのが解っていただけたと思います。
+
+また、 @condition@ を使ってのメニューの動的変更や、権限による表示、非表示なども有効ですので活用してみてください。
+
+h1. +プラグイン開発ガイド インデックス+
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# [[環境変数について|Japanese-plugin-dev-1-3]]
+# [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+# [[プラグインの設定方法|Japanese-plugin-dev-3-1]]
+# [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
+# [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
+# [[MTオブジェクトの利用方法|Japanese-plugin-dev-3-4]]
+# [[独自オブジェクトの作成|Japanese-plugin-dev-4-1]]
+# [[新規アプリケーションの作成|Japanese-plugin-dev-4-2]]
+# [[Transformerプラグインの開発|Japanese-plugin-dev-4-3]]
+# 管理画面のメニュー修正

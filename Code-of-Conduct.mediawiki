@@ -1,0 +1,109 @@
+This '''Code of Conduct''' covers your behavior as a '''member of the Movable Type Open Source community''', in any forum, mailing list, wiki, web site, IRC channel, install-fest, public meeting or private correspondence.  If you have any questions or are just interested in previous discussion of the Code, please see the [[Talk:Code-of-Conduct|Talk page]].
+
+= Use and attribution =
+
+We would like to thank the [http://www.opensource.org/codeofconduct OSI], [http://www.ubuntu.com/community/conduct Ubuntu] and [http://www.gentoo.org/proj/en/council/coc.xml Gentoo] communities for their excellent guidelines which we have used as a foundation of our own. These guidelines are licensed under the [http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons Attribution-Share Alike 3.0 license]. You may re-use it for your own project, and modify it as you wish, just please allow others to use your modifications and give credit to the MTOS Project!
+
+= Core MTOS Code of Conduct =
+
+This Code of Conduct covers your behavior as a member of the Movable Type Open Source community, in any forum, mailing list, wiki, web site, IRC channel, install-fest, public meeting or private correspondence. 
+
+* '''Be considerate.''' Your work will be used by other people, and you in turn will depend on the work of others. Any decision you take will affect users and colleagues, and we expect you to take those consequences into account when making decisions. ''Examples needed''
+
+* '''Be respectful.''' The MTOS community and its members treat one another with respect. Everyone can make a valuable contribution to MTOS. We may not always agree, but disagreement is no excuse for poor behavior and poor manners. We might all experience some frustration now and then, but we cannot allow that frustration to turn into a personal attack. It's important to remember that a community where people feel uncomfortable or threatened is not a productive one. We expect members of the MTOS community to be respectful when dealing with other contributors as well as with people outside the MTOS project and with users of MTOS.
+
+* '''Be collaborative.''' MTOS and Free Software are about collaboration and working together. Collaboration reduces redundancy of work done in the Free Software world, and improves the quality of the software produced. You should aim to collaborate with other MTOS maintainers, as well as with the upstream community that is interested in the work you do. Your work should be done transparently and patches from MTOS should be given back to the community when they are made, not just when the distribution releases. If you wish to work on new code for existing upstream projects, at least keep those projects informed of your ideas and progress. It may not be possible to get consensus from upstream or even from your colleagues about the correct implementation of an idea, so don't feel obliged to have that agreement before you begin, but at least keep the outside world informed of your work, and publish your work in a way that allows outsiders to test, discuss and contribute to your efforts.
+
+* '''When you disagree,''' consult others. Disagreements, both political and technical, happen all the time and the MTOS community is no exception. The important goal is not to avoid disagreements or differing views but to resolve them constructively. You should turn to the community and to the community process to seek advice and to resolve disagreements. We have the Technical Board and the Community Council, both of which will help to decide the right course for MTOS. There are also several Project Teams and Team Leaders, who may be able to help you figure out which direction will be most acceptable. If you really want to go a different way, then we encourage you to make a derivative distribution of MTOS, so that the community can try out your changes and ideas for itself and contribute to the discussion.
+
+* '''When you are unsure,''' ask for help. Nobody knows everything, and nobody is expected to be perfect in the MTOS community (except of course the Brad Choate). Asking questions avoids many problems down the road, and so questions are encouraged. Those who are asked should be responsive and helpful. However, when asking a question, care must be taken to do so in an appropriate forum. Off-topic questions, such as requests for help on a development mailing list, detract from productive discussion.
+
+* '''Step down considerately.''' Developers on every project come and go and MTOS is no different. When you leave or disengage from the project, in whole or in part, we ask that you do so in a way that minimizes disruption to the project. This means you should tell people you are leaving and take the proper steps to ensure that others can pick up where you leave off.
+
+== MTOS-related mailing lists ==
+
+Along with the core code of conduct, these guidelines further define expected behavior on [http://www.sixapart.com/mailman/listinfo/ MTOS mailing lists], which function as the committees of the Movable Type Open Source Project. These supplement the official [http://www.sixapart.com/general-terms/ Terms of Service] which govern all content on the sixapart.com website. If you have not used mailing lists before, we strongly urge you to read [http://rfc.net/rfc1855.html RFC 1855 (Netiquette Guidelines)], about the usual norms for polite interaction on the Internet.
+
+Note that failure to observe these guidelines, or instructions from the moderators, may be grounds for reprimand, probation, or removal.
+
+=== Topicality ===
+
+Please make sure to read, understand, and stick within the list charter. If unsure, please contact the moderator for that list.
+
+=== Civility ===
+
+Mailing lists, like open source projects, require intense collaboration on issues people are passionate (and often sensitive) about. Make an extra effort to treat others with the respect you would like to receive, even if you feel they are treating you unfairly. If you have something negative or critical to say to someone, email them privately, off-list. If you feel someone is behaving inappropriately, contact the moderator.
+
+=== Privacy ===
+
+Do not post off-list emails from other parties without their permission. What happens off-list, stays off-list.
+
+=== Replies to long threads ===
+
+* Ensure the subject line is always current and accurate
+* Trim unnecessary content
+* Write your replies inline instead of "top posting"
+
+=== Extra Addresses ===
+
+Wherever possible, reply to a list post on the list itself. Do not CC the authors of the post or other list members; if you use the ''Reply to All'' function of your mailer, trim extra addresses before hitting ''Send''.
+
+=== Attachments ===
+
+Do not include large (> 10 KB) attachments in email messages unless:
+
+* specifically required by the list charter
+* in an open format (e.g., plain text or HTML), and
+* you have full legal permission to redistribute the contents
+
+Instead, include a link to the content, For example:
+
+* On your blog or website
+* On [http://pastie.caboo.se/ pastie] for code snippets and/or patches (If you use [http://macromates.org TextMate], this is built-in)
+* [http://skitch.com Skitch] for screenshots
+* [http://pownce.com Pownce], or [http://www.4shared.com/ 4shared] or other hosting service for other types of files.
+
+=== Unsubscribes ===
+
+If you wish to leave a list, please see the appropriate [http://www.sixapart.com/mailman/listinfo/ mailing list page].
+
+== Fogbugz issue tracking system ==
+
+The following guidelines are specific to the bug tracking system at [http://bugs.movabletype.org bugs.movabletype.org].
+
+''To be added''
+
+== The MTOS wiki ==
+
+The following guidelines are specific to the [[Main-Page|Movable Type wiki]].
+
+''To be added''
+
+== The MTOS code repository ==
+
+The following guidelines are specific to the MTOS source code repository at [http://code.sixapart.com code.sixapart.com].
+
+''To be added''
+
+== IRC ==
+
+The following guidelines are specific to the [[IRC|Movable Type IRC channels]].
+
+''To be added''
+
+= Consequences =
+
+As we do not yet have a set of moderators or a Council governing the Movable Type Open Source Project, Disciplinary action will be up to the discretion of MTOS czar.  The current holder of this lofty title is Byrne Reese, Product Manager of Movable Type and the main Six Apart representative to MTOS.
+
+If you perceive a breach of the Code of Conduct guidelines, let the Czar know. Though he will also be watching many of the public mediums for any problems, he can not be expected to catch everything.
+
+The Czar will attempt to resolve the problem by talking to involved parties, potentially issuing warnings if appropriate. If the problem repeats itself, there are various options open to the Czar, including temporary or permanent suspension of a person's ability to post to mailing lists, removal of FogBugz access, or in more severe cases suspension of developer privileges. 
+
+= Summary =
+
+With these guidelines, we hope to shape and nurture our growing community into a powerhouse of productivity and positive action where everyone feels that their contributions are both worthy and appreciated.
+
+If there is anything that is not expressly covered in the Code of Conduct, you should use your better judgement (as in: hopefully better than the last time you used it) in order to decide whether something is truly representative of the spirit of the Project.
+
+As your contributions (whether they be emails, FogBugz cases or chatter on IRC) are usually archived for perpetuity, and read by far more people than will be actively involved in any one thread, a comment made in anger can have far-reaching consequences that you might not have thought about at the time. It is most important to remember that the moment you participate in a public discussion on an MTOS medium, you have made yourself a representative of the MTOS community. We hope that you will not take this responsibility lightly, and will prove to be a positive force in it.
+

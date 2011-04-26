@@ -1,0 +1,73 @@
+These Coding Guidelines for Movable Type are the standard conventions that we as a community should follow and that we recommend that others in the MT community follow as well. It covers filenames, file organization, indentation, comments, declarations, statements, white space, naming conventions, programming practices and includes a code example.
+
+Why have code conventions? Code conventions are important to programmers for a number of reasons:
+
+* 80% of the lifetime cost of a piece of software goes to maintenance.
+* Hardly any software is maintained for its whole life by the original author.
+* Code conventions improve the readability of the software, allowing engineers to understand new code more quickly and thoroughly. 
+
+[http://java.sun.com/docs/codeconv/ source]
+
+Each section below outlines the preferred style and rules to apply to formatting MT source code. Code samples illustrating the style are provided as well.
+
+= File Organization =
+
+= Code Layout =
+
+* Indent with sets of four spaces.
+* Use 78-column lines.
+* Unpack your arguments immediately.
+** If the first argument is a class instance variable (e.g. <code>$app</code>) shift it off the incoming argument array so that you can do something like this in your routine: <code>$app->another_function(@_);</code>
+* Code in "paragraphs," grouping tasks performed over multiple lines of code with blank lines.
+* Align corresponding items (whether in constant arrays, hashes, or assignments) vertically across lines.
+
+= Naming Conventions =
+
+= Inline Documentation =
+
+== Template Tags ==
+
+When creating a template tag handler, it is important to document usage of the template tag in close proximity to the handler for the tag. This makes it easier for developers to keep documentation up to date as they make changes.
+
+Template tag documentation utilizes a special syntax to facilitate the process of publishing documentation in various formats: HTML, Man Pages, POD, etc.
+
+* docs should be in POD format
+* the name of the tag should be included at the beginning as a =head2
+* a block of '#' symbols should be used to clearly demarkate different handlers
+* at least one non trivial code sample should be provided to help designers under the usage of the tag
+
+'''Example'''
+
+<pre>
+###########################################################################
+
+=head2 setvar
+
+Takes the content from the tag it is applied to and assigns it
+to the given variable name.
+
+Example, assigning a HTML link of the last published entry with a
+'@featured' tag to a template variable named 'featured_entry_link':
+
+    <mt:Entries lastn="1" tags="@featured" setvar="featured_entry_link">
+        <a href="<$mt:EntryPermalink$>"><$mt:EntryTitle$></a>
+    </mt:Entries>
+
+The output from the L<Entries> tag is suppressed, and placed into
+the template variable 'featured_entry_link' instead. To retrieve it,
+just use the L<Var> tag.
+
+=cut
+
+sub _fltr_setvar {
+    my ($str, $arg, $ctx) = @_;
+    $ctx->var($arg, $str);
+    return '';
+}
+
+###########################################################################
+</pre>
+
+== config directives ==
+== call backs ==
+== packages ==

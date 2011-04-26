@@ -1,0 +1,17 @@
+*Attention: This documentation has been migrated from old wiki.movabletype.com, so there might be an different points from th present.
+
+= Overview =
+
+This page serves as the home page for the set of projects aimed at improving the resources made available to the Movable Type Developer community.
+= Archives = 
+
+The following projects are complete or have stalled.
+
+'''Complete'''
+
+* [[Movable Type Callbacks]] - A page dedicated to the project of making a single comprehensive callback reference
+
+'''Stalled'''
+
+* [[Plugin Schemas, Versions, Upgrade Tasks]] - Guidelines for how and when to trigger the "Upgrade" system, including changes to database schemas and upgrade functions.
+

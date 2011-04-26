@@ -1,0 +1,8 @@
+== APIs are good ==
+
+I don't have any substantive discussion about this because Javascript is not my forte, but as far as I'm concerned the more APIs we have and the better documented they are, the better for us.  MT's Javascript has been historically underdocumented, so many great functions and prototypes to use but hampered by the fact that you have to essentially reverse engineer everything.
+
+If documentation of that Javascript would be improved by this proposal as well, I doubly support it. 
+
+[[User:Jayallen|Jayallen]] 14:28, 29 April 2008 (PDT)
+

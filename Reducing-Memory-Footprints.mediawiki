@@ -1,0 +1,65 @@
+= Reducing memory footprints of MT applications =
+
+''How can we reduce memory footprints of MT applications?''
+
+I can't answer this question shortly.  Because, actually, there are so many solutions we can now employ and/or will be able to employ in the near future, and we can facilitate numerous number of combinations of such solutions for this purpose.  Therefore, it is important that we identify methodologies to reduce memory footprints, and share them as a knowledge.
+
+In the following sections, I would like to identify methodologies to reduce memory footprints.
+
+== Methodologies ==
+
+=== Modularizing applications, and loading modules on demand ===
+
+Modularizing a large application into multiple modules and loading them at runtime as requested, memory footprints are expected to be drastically reduced.  In MT 4.2, modularization of MT::App::CMS has already been finished.
+
+More generally speaking, MT::App::* is a subclass of MT::App which is a subclass of MT, therefore memory footprint of MT::App::* includes those of MT::App and MT classes.  In such a situation, modularization is thought to be done by two different approaches, namely top-down and bottom-up.
+
+In top-down approach, first we modularize MT and MT::App strictly, and then modularize each MT::App::* modules.  This approach is beneficial to keep MT::App framework simpler, smaller, and cleaner, but big changes in superclasses may cause incompatibility issue over other modules, and all apps must be adopted to them.
+
+In bottom-up approach, first we modularize each MT::App::* modules, and then modularize MT::App and MT as the need arises.  This is what we see in MT 4.2.
+
+''[to be described more]''
+
+=== Modularing MT::Template::ContextHandlers ===
+
+Same as the above.
+
+Because MT::Template::ContextHandlers does not have hierarchical structures as MT::Apps have, it may be more straightforward to modularize it.
+
+=== Two-phase rebuilding ===
+
+Facilitating TheSchwartz framework and offloading rebuild tasks into cron jobs, we don't need to perform rebuilding inside of the MT::App processes.  As a result, we can reduce memory consumption of MT applications.  This is alternative solution to make footprints smaller.
+
+Memory footprint of run-periodic-tasks is another problem.
+
+=== Fixing memory leaks ===
+
+Especially in FastCGI and mod_perl environment, fixing memory leaks contributes greatly to make the memory usage smaller.
+
+The following thread is a kind of case study to fix memory leaks by using ''weak references'':
+
+http://www.sixapart.com/pipermail/mtos-dev/2008-January/000265.html
+
+Because this fix requires Sclar::Util::weaken() which may cause Perl version issue, it cannot be easily included in the current MTOS distribution.
+
+UPDATED: http://code.sixapart.com/trac/movabletype/changeset/1427
+
+=== Limiting FCGI process recycling ===
+
+Limiting FCGI process recycling, we can restrict the memory usage of FCGI processes to be moderate.
+
+Basically, we have three types of restriction methods: time based, recycle-count based, and memory usage based.
+
+* time based
+* recycle-count based
+* memory-usage based
+
+''[TBD]''
+
+=== Employing mod_perlite ===
+
+As far as I know, mod_perlite keeps the Perl interpreter and bytecodes resident in memory, but doesn't keep the working set.  Therefore, we benefits by employing mod_perlite as well.
+
+== Authors ==
+
+* Hirotaka Ogawa (hirotaka.ogawa at gmail.com)

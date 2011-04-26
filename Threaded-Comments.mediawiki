@@ -1,0 +1,112 @@
+[[Category: Template Tag Recipes]]
+
+This page contains examples of Comment Threading in Movable Type and is complimentary to this the Comment Threading documentation:
+
+http://www.movabletype.org/documentation/mt42/threading.html
+
+
+=== Example Code for Hierarchically Threaded comments in MT 4.2 ===
+
+This code first sets a variable to contain the comment detail template, then uses includes the template for top-level comments and then child-comments recursively.
+
+<pre>
+<mt:SetVarTemplate name="comment_detail_template">
+    <div id="comment-<$MTCommentID$>" class="comment<mt:IfCommentParent> comment-reply</mt:IfCommentParent>">
+        <div class="inner">
+            <div class="comment-header">
+                <div class="asset-meta">
+                    <span class="byline">
+                        <$MTCommentAuthorIdentity$>
+    <mt:IfCommentParent>
+                        <span class="vcard author"><$MTCommentAuthorLink$></span> replied to <a href="<mt:CommentParent><$mt:CommentLink$></mt:CommentParent>">comment from <mt:CommentParent><$MTCommentAuthor$></mt:CommentParent></a>
+    <mt:else>
+                        <span class="vcard author"><$MTCommentAuthorLink$></span>
+    </mt:IfCommentParent>
+                        | <a href="<$mt:CommentLink$>"><abbr class="published" title="<$MTCommentDate format_name="iso8601"$>"><$MTCommentDate$></abbr></a>
+    <MTIfCommentsAccepted>
+                        | <$MTCommentReplyToLink$>
+    </MTIfCommentsAccepted>
+                    </span>
+                </div>
+            </div>
+            <div class="comment-content">
+                <$MTCommentBody$>
+            </div>
+        </div>
+    </div>
+</mt:SetVarTemplate>
+
+
+<MTComments>
+    <MTCommentsHeader>
+<h2 class="comments-header"><$MTEntryCommentCount singular="1 Comment" plural="# Comments" none="No Comments"$></h2>
+<div class="comments-content">
+    </MTCommentsHeader>
+    <mt:IfCommentParent> <!-- If comment has a parent comment. We ignore this, as we just want the top-level-parent comments -->
+        <mt:Else> <!-- If comment doesn't have a top-level-parent -->
+            <$mt:var name="comment_detail_template"$>
+        <mt:CommentReplies> <!-- Loop through the reply comments -->
+            <mt:CommentsHeader>
+            <div style="margin-left: 20px;">
+            </mt:CommentsHeader>
+            <$mt:var name="comment_detail_template"$>
+            <$mt:CommentRepliesRecurse$> <!-- For each reply comment, recursively display any reply comments -->    
+            <mt:CommentsFooter>
+            </div>
+            </mt:CommentsFooter>
+        </mt:CommentReplies>
+    </mt:IfCommentParent>
+    <MTCommentsFooter>
+</div>
+    </MTCommentsFooter>
+</MTComments>
+</pre>
+
+
+=== Example Code for Hierarchically Threaded ''and Nested'' comments in MT 4.2 ===
+
+Parent comments are output in UL. Each comment is placed in an LI. If a comment has replies, the replies are placed in a new UL included just be fore the closing LI for the parent comment.
+
+This example is from the comment threading implementation in the Forums Template set as of  MT 4.2. Note, comments are called "Replies" in context of the Forums Template set.
+
+<pre>
+<MTIfCommentsActive>
+<div id="comments" class="comments">
+    <MTComments>
+        <MTCommentsHeader>
+    <div class="comments-header">
+        <h2><$MTEntryCommentCount singular="1 Reply" plural="# Replies" none="No Replies"$></h2>
+    <MTIfCommentsAccepted>
+        <span class="separator">|</span>
+        <a href="#comments-open">Add a Reply</a>
+    </MTIfCommentsAccepted>
+    </div>
+    <ul class="comments-content">
+        </MTCommentsHeader>
+        <mt:IfCommentParent>
+            <mt:Else>
+        <li>
+            <$mt:Include module="Comment Detail"$>
+            <mt:CommentReplies>
+                <mt:CommentsHeader>
+            <ul>
+                </mt:CommentsHeader>
+                <li>
+                    <$mt:Include module="Comment Detail"$>
+                    <$mt:CommentRepliesRecurse$>
+                </li>
+                <mt:CommentsFooter>
+            </ul>
+                </mt:CommentsFooter>
+            </mt:CommentReplies>
+        </li>
+        </mt:IfCommentParent>
+        <MTCommentsFooter>
+    </ul>
+        </MTCommentsFooter>
+    </MTComments>
+    <$MTInclude module="Comment Form"$>
+</div>
+</MTIfCommentsActive>
+</pre>
+

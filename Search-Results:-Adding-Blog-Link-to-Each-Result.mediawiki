@@ -1,0 +1,51 @@
+This recipe is for adding a the blog name and link to each result appearing in search results. This is useful if the search is performed against multiple blogs.
+
+Two templates to update:
+# Search Results system template
+# Entry Summary template module
+
+
+== 1. Search Results system template ==
+
+Look for this:
+
+  <$MTInclude module="Entry Summary" hide_counts="1" blog_id="$blog_id"$>
+
+Replace with this (adding show_blog attribute):
+
+  <$MTInclude module="Entry Summary" show_blog="1" hide_counts="1" blog_id="$blog_id"$>
+
+
+== 2. Entry Summary template module ==
+
+Look for this:
+
+  &lt;span class="byline">
+  <MTIfNonEmpty tag="EntryAuthorDisplayName">
+    By &lt;span class="vcard author"><$MTEntryAuthorLink show_hcard="1"$></span> on <abbr class="published" title="<$MTEntryDate format_name="iso8601"$>"><$MTEntryDate format="%x %X"$></abbr>
+  <MTElse>
+    <abbr class="published" title="<$MTEntryDate format_name="iso8601"$>"><$MTEntryDate format="%x %X"$></abbr>
+  </MTIfNonEmpty>
+  </span>
+
+
+Replace with this (adding conditional if show_blog is true):
+
+  &lt;span class="byline">
+  <MTIf name="show_blog">
+      <MTIfNonEmpty tag="EntryAuthorDisplayName">
+      From <$MTEntryBlogName$> by &lt;span class="vcard author"><$MTEntryAuthorLink show_hcard="1"$></span> on <abbr class="published" title="<$MTEntryDate format_name="iso8601"$>"><$MTEntryDate format="%x %X"$></abbr>
+      <MTElse>
+      From <$MTEntryBlogName$> on <abbr class="published" title="<$MTEntryDate format_name="iso8601"$>"><$MTEntryDate format="%x %X"$></abbr>
+      </MTIfNonEmpty>
+  <MTElse>
+      <MTIfNonEmpty tag="EntryAuthorDisplayName">
+      By &lt;span class="vcard author"><$MTEntryAuthorLink show_hcard="1"$></span> on <abbr class="published" title="<$MTEntryDate format_name="iso8601"$>"><$MTEntryDate format="%x %X"$></abbr>
+      <MTElse>
+      <abbr class="published" title="<$MTEntryDate format_name="iso8601"$>"><$MTEntryDate format="%x %X"$></abbr>
+      </MTIfNonEmpty>
+  </MTIf>
+  </span>
+
+[[Category: Template Tag Recipes]]
+

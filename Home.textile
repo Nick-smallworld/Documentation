@@ -1,0 +1,22 @@
+Welcome to the Documentation wiki !
+We are currently migrating the existing wiki from [[wiki.movabletype.org|http://wiki.movabletype.org/]] and [[FogBugz|http://bugs.movabletype.org/default.asp?W5]]to here.
+
+h2. Releases
+
+* [[Movable Type 5.1]]
+
+h2. Developer's guide
+
+* [[English|English developer guide]]
+* [[Japanese|Japanese developer guide]]
+
+h2. Product Backlog
+
+* [[System|Product Backlog for System]]
+* [[Entry / Page|Product Backlog for Entry and Page]]
+* [[Comment / Trackback|Product Backlog for Comment and Trackback]]
+* [[Theme / Template|Product Backlog for Theme and Template]]
+
+h2. Events
+
+* [[Movable Type 5 Theme Contest  2010|Movable-Type-5-Theme-contest--in-japan-2010]]

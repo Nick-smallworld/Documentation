@@ -1,0 +1,132 @@
+=== Breadcrumbs for pages and folders ===
+
+On an MT4+ powered site that has pages and folders, the following code delivers a completely effective breadcrumb navigation trail:
+
+<pre>&lt;a href="&lt;MTBlogURL&gt;"&gt;Home&lt;/a&gt; &raquo;
+&lt;MTParentFolders&gt; 
+  &lt;a href="&lt;MTBlogURL&gt;&lt;MTFolderPath&gt;"&gt;&lt;MTFolderLabel&gt;&lt;/a&gt; &raquo;
+&lt;/MTParentFolders&gt;
+&lt;strong&gt;&lt;MTPageTitle&gt;&lt;/strong&gt;</pre>
+
+
+== Sidebar listing of folders/pages ==
+
+=== Error in MT Template Tag Reference Appendix Documentation for SubFoldersRecurse ===
+
+The [http://www.movabletype.org/documentation/appendices/tags/subfolderrecurse.html MT4 documentation] on the &lt;MTSubFoldersRecurse&gt; tag has an error in the code:
+
+<pre>&lt;MTTopLevelFolders&gt;
+  &lt;MTSubFolderIsFirst&gt;&lt;ul&gt;&lt;/MTSubFolderIsFirst&gt;
+    &lt;MTIfNonZero tag="MTFolderCount"&gt;
+        &lt;li&gt;&lt;a href="&lt;$MTFolderArchiveLink$&gt;"
+        title="&lt;$MTFolderDescription$&gt;"&gt;&lt;MTFolderLabel&gt;&lt;/a&gt;
+    &lt;MTElse&gt;
+        &lt;li&gt;&lt;MTFolderLabel&gt;
+    &lt;/MTElse&gt;
+    &lt;/MTIfNonZero&gt;
+    &lt;mt:SubFolderRecurse&gt;
+    &lt;/li&gt;
+&lt;MTSubFolderIsLast&gt;&lt;/ul&gt;&lt;/MTSubFolderIsLast&gt;
+&lt;/MTTopLevelFolders&gt;</pre>
+
+There's simply no such thing as <code>&lt;MTSubFolderIsFirst&gt;, &lt;MTSubFolderIsLast&gt; and &lt;MTFolderArchiveLink&gt; (duh?) tags. 
+
+=== Recipe 1: List all pages and folders in the system ===
+
+This will list all pages (contained in a folder) and folders across the weblog.
+
+<pre>&lt;ul&gt;
+&lt;MTTopLevelFolders&gt;
+    &lt;li&gt;&lt;a href="&lt;MTFolderPath&gt;"&gt;&lt;MTFolderLabel&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;ul&gt;
+    &lt;MTPages&gt;
+    &lt;li&gt;&lt;a href="&lt;MTPagePermalink&gt;"&gt;&lt;MTPageTitle&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/MTPages&gt;
+    &lt;/ul&gt;
+    &lt;ul&gt;&lt;MTSubFolderRecurse&gt;&lt;/ul&gt;
+&lt;/MTTopLevelFolders&gt;
+&lt;/ul&gt;</pre>
+
+=== Recipe 2: List only folders, not pages ===
+
+This lists <b>only the folders and sub-folders</b>, but no pages.
+
+<pre>
+&lt;ul&gt;
+&lt;MTTopLevelFolders&gt;
+    &lt;li&gt;&lt;a href="&lt;MTFolderPath&gt;"&gt;&lt;MTFolderLabel&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;ul&gt;
+    &lt;/ul&gt;
+    &lt;ul&gt;&lt;MTSubFolderRecurse&gt;&lt;/ul&gt;
+&lt;/MTTopLevelFolders&gt;
+&lt;/ul&gt;
+</pre>
+
+=== Recipe 3: List only top level folders ===
+
+This lists only the <b>top level folders</b>, no sub-folders or pages.
+
+<pre>
+&lt;ul&gt;
+&lt;MTToplevelFolders&gt;
+&lt;li&gt;&lt;a href="&lt;MTBlogURL&gt;&lt;MTFolderBasename&gt;/index.php"&gt;&lt;MTFolderLabel&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/MTToplevelFolders&gt;
+&lt;/ul&gt;
+</pre>
+
+=== Recipe 4: List all pages and sub-folders in the present folder ===
+
+Conceivably useful in a sidebar on every page, this lists <b>all</b> the pages and sub-folders in the present page folder. Note that it also lists the current page.
+
+<pre>
+&lt;ul&gt;
+&lt;MTPageFolder&gt;
+  &lt;MTPages sort_by="date"&gt;
+     &lt;li&gt;&lt;a href="./&lt;MTPageBasename&gt;.php" id="&lt;MTPageBasename&gt;"&gt;&lt;MTPageTitle&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;/MTPages&gt;
+  &lt;MTSubFolders&gt;
+   &lt;li&gt;&lt;a href="&lt;MTBlogURL&gt;&lt;MTFolderPath&gt;/index.php"&gt;&lt;MTFolderLabel&gt;  &raquo;&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;MTPages&gt;&lt;li&gt;&lt;a href="&lt;MTPagePermalink&gt;"&gt;&lt;MTPageTitle&gt;&lt;/a&gt;&lt;/li&gt;&lt;/MTPages&gt;
+        &lt;MTSubFolderRecurse&gt; 
+    &lt;/ul&gt;
+     &lt;/li&gt;
+  &lt;/MTSubFolders&gt;
+&lt;/MTPageFolder&gt;
+&lt;/ul&gt;
+</pre>
+
+=== Recipe 4.5: List all pages <i>except</i> the current page and sub-folders in the present folder ===
+
+This works very well. It eliminates the current page from the listing, and lists all the other pages, sub-folders and sub-folder pages in the present page folder.
+
+<pre>
+&lt;ul&gt;
+&lt;mt:setvarblock name="curpage"&gt;&lt;mt:pageid&gt;&lt;/mt:setvarblock&gt;
+&lt;MTPageFolder&gt;
+  &lt;MTPages sort_by="title" sort_order="ascend"&gt;
+  &lt;mt:setvarblock name="listpage"&gt;&lt;mt:pageid /&gt;&lt;/mt:setvarblock&gt;
+  	&lt;mt:unless name="listpage" eq="$curpage"&gt;
+     &lt;li&gt;&lt;a href="./&lt;MTPageBasename&gt;.php" id="&lt;MTPageBasename&gt;"&gt;&lt;MTPageTitle&gt;&lt;/a&gt;&lt;/li&gt;
+     &lt;/mt:unless&gt;
+  &lt;/MTPages&gt;
+  &lt;MTSubFolders&gt;
+   &lt;li&gt;&lt;a href="&lt;MTBlogURL&gt;&lt;MTFolderPath&gt;/index.php"&gt;&lt;MTFolderLabel&gt;  &raquo;&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;MTPages&gt;&lt;li&gt;&lt;a href="&lt;MTPagePermalink&gt;"&gt;&lt;MTPageTitle&gt;&lt;/a&gt;&lt;/li&gt;&lt;/MTPages&gt;
+        &lt;MTSubFolderRecurse&gt; 
+    &lt;/ul&gt;
+     &lt;/li&gt;
+  &lt;/MTSubFolders&gt;
+&lt;/MTPageFolder&gt;
+&lt;/ul&gt;
+</pre>
+
+== CREDITS ==
+
+Almost all of this is from <b>caribou's</b> [http://forums.sixapart.com/index.php?showtopic=64145&hl=folders post] at the [http://forums.sixapart.com/ sixapart forums].
+
+--[[User:Gspatel|Gautam Patel]] 22:03, 15 December 2007 (PST)
+
+[[Category: Template Tag Recipes]]
+

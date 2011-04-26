@@ -1,0 +1,61 @@
+Using this code with MT Pro 4.21 I always get an error: "Error in <mtEntries> tag: You have an error in your 'tag' attribute: competition OR japan OR space OR spaceelevator OR spacetravel OR spaceward OR times"
+
+Removing the 'normalize="1"' from <$mt:TagName$> solved the problem and seemed to have no adverse affects regarding tags with spaces in. I'm hesitating to correct the code because according to the MT documentation, normalize should work...
+
+-[[User:Philgyford|Philgyford]] 03:24, 9 October 2008 (PST)
+
+----
+
+
+Using the recipe I was still seeing the current entry (or page) being included in the related list, but replacing ''eq='' with ''like='' solved it because it matches the current entry variable ignoring the whitespace and formatting.
+
+-[[User:Jamison|Jamison]] 15:33, 22 February 2008 (PST)
+
+----
+
+
+I tried this recipe with ''pages'' (not entries), but first it returned nothing, and then it insisted on spewing out the current page too. After much headache, heartburn and other sundry ailments, I went back to the [http://www.staggernation.com stagernation] ''Compare'' plugin, as I found the &lt;mt:unless&gt; comparison function (with a setting of ''eq='' or even ''ne='') just did not work.
+
+I finally came up with this code, which works fine:
+
+<pre>
+&lt;mt:pageiftagged&gt;
+    &lt;mt:setvarblock name="curpage"&gt;
+        &lt;mt:pageid /&gt;
+    &lt;/mt:setvarblock&gt;
+    &lt;mt:setvarblock name="relatedtags"&gt;
+        &lt;mt:pagetags glue=","&gt;
+            &lt;mt:tagname /&gt;
+        &lt;/mt:pagetags&gt;
+    &lt;/mt:setvarblock&gt;
+    &lt;mt:setvarblock name="listitems"&gt;
+        &lt;mt:pages tags="$relatedtags"&gt;
+            &lt;mt:setvarblock name="listpage"&gt;
+                &lt;mt:pageid /&gt;
+            &lt;/mt:setvarblock&gt;
+            &lt;MTIfNotEqual a="[MTGetVar name='listpage']" 
+                  b="[MTGetVar name='curpage']" numeric="1"&gt;
+                &lt;li&gt;&lt;a href="&lt;mt:pagepermalink /&gt;"&gt;&lt;mt:pagetitle /&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;/MTIfNotEqual&gt;
+        &lt;/mt:pages&gt;
+    &lt;/mt:setvarblock&gt;
+    &lt;mt:if name="listitems"&gt;
+        &lt;h5&gt;Related Pages&lt;/h5&gt;
+        &lt;mt:var name="listitems"&gt;
+    &lt;/mt:if&gt;
+&lt;/mt:pageiftagged&gt;
+</pre>
+
+
+Note that there are significant differences in my recipe. For one thing, the '''glue=" OR "''' threw the whole thing right out of whack. Second, in the original recipe there is an &lt;li&gt; formatting at two places. It should just be in the first, not in the actual printing section.
+
+Hope this helps.
+
+== No discussion on the wiki page ==
+
+There's a discussion page here for discussion.  Please use it or, preferably, just fix the thing you're saying is broken.  It's the wiki way... - [[User:Jayallen|Jayallen]] 02:57, 26 September 2008 (UTC)
+
+== include_private="1" fails (for me) ==
+
+This modifier is poorly (or not at all) documented, but after failing to extract the @private tags to a variable, I eventually tested the <mt:EntryTags include_private="1"> method if it would return any @private tags and it didn't. (MT Pro 4.25, same with developer's version of MT 4.25). I use dynamic publishing for archive entries. I've seen this modifier quoted numerous times, but is it properly implemented?
+

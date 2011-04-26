@@ -1,0 +1,50 @@
+This document accurate as of MT4.1
+
+== Global ==
+
+[These options don't appear on every page, but when available, their use is consistent.<br />In those cases, they are omitted from being listed for each individual page.]
+
+Q - Access the search box<br/>
+S - Save<br/>
+X - Delete entry
+
+== Login screen ==
+S - Sign in
+
+== Template Edit screen ==
+R - Save and Publish
+
+== Entry Edit screen ==
+V - Preview entry
+
+== Entry Preview screen ==
+E - Re-edit entry<br />
+C - Cancel
+
+== Edit Commenter screen ==
+T - Un/Trust user (toggles)<br/>
+B - Un/Ban user (toggles)
+
+== Author listing screen ==
+E - Enable selected users<br/>
+D - Disable selected users
+
+== Search & Replace screen ==
+S - Search
+
+== Template Refresh Results screen ==
+S - Return to templates
+
+== Install wizard ==
+
+== Initial Blog Setup ==
+S - Finish Install<br/>
+X - Back
+
+== Backup screen ==
+B - Make Backup
+
+== Restore screen ==
+R - Restore
+
+== Upgrade ==

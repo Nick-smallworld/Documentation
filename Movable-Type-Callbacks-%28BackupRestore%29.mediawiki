@@ -1,0 +1,10 @@
+<div style="float:left; border:thin solid green; padding: 5px; margin-right: 15px;">
+{{Template:Callback Types}}
+</div>
+
+= MT::BackupRestore =
+
+* MT::BackupRestore::Backup          
+* MT::BackupRestore::restore          
+* MT::BackupRestore::restore_asset    
+* Restore.$Localname:$Namespace

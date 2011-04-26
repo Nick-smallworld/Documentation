@@ -1,0 +1,58 @@
+*Attention: This documentation has been migrated from old wiki.movabletype.org, so there might be a different point from a present process.
+
+The following document outlines the basic process of idea, from conception to implementation to release. 
+
+== The Process ==
+
+=== Step 1. The idea. ===
+
+All features start first as an idea. Often these ideas are very rough and high level. Perhaps you are not technical, or perhaps the idea came to you in a dream and details are fuzzy, regardless, your first step is to bounce your idea off of others. The single best place to do this is the [http://www.sixapart.com/mailman/listinfo/mtos-dev MTOS-dev mailing list]. The list is ''free'' and joining places you under no obligation of any kind. 
+
+Once you have joined the list, compose an email to the list and try your best to articulate your idea in a reasonable amount of detail. Doing so can provide you with the following benefits:
+
+# Perhaps a solution or a plugin already exists that will meet your needs. If one does, the community can tell you.
+# Flesh out the idea. Community members may raise questions that you did not anticipate or may have additional ideas to consider.
+# You may find people willing to help you in some way. Talking about an idea is the best way to establish yourself as the leader behind the idea and a great way to recruit help.
+
+This process does not need to address every detail, or every edge case, or every challenge. It just needs to be a high level discussion.
+
+You may find that developers, or those more experienced in the software development process may skip this stage and go straight to...
+
+=== Step 2. The proposal. ===
+
+Once you feel like you have got a firm understanding of the idea, the next step is to write a proposal. A proposal is designed to provide enough detail so that someone else could implement the idea if they needed to. It is also intended to help establish goals, requirements and use cases -- the context for the idea that will help others understand how the idea may be applied to a set of problems.
+
+* [[Proposal Template]], [[Template:Proposal]] (we need to select one or merge)
+
+=== Step 3. Feedback ===
+
+Once the proposal has been written it should be placed within your "User:" namespace on the mail Movable Type wiki. Then, send a link to the proposal to mtos-dev@sixapart.com for discussion. Collect feedback.
+
+It will be your responsibility to fold in feedback into your proposal. To help with change control, '''others should NOT edit your proposal.''' Maintaining the proposal is exclusively the responsibility of the original author.
+
+Review changes you make continually on mtos-dev@sixapart.com so that people are aware of what feedback you have incorporated, or chosen not to.
+
+Once the proposal has matured and stabilized, development can begin. But at first find a sponsor.
+
+=== Step 4. Find a Sponsor ===
+
+A sponsor is an individual with commit rights to the repository, and who's job it is to review and ensure that every contribution meets the coding standards governed by the community. They are your representative as well as your mentor to help guide you in your implementation.
+
+A sponsor is also the individual who ultimately is responsible for committing your change to the repository.
+
+* [[List of Sponsors]]
+
+
+=== Step 5. Development. ===
+
+Ideally your idea should be implementable as a plugin. If it cannot be, then there is a bug in the core platform that needs to be fixed because the core API is clearly insufficient. If you encounter legitimate shortcomings with the current API, you may need to formulate a separate proposal to address it, and/or log a bug, and/or submit a patch to address it.
+
+Once you have a working prototype give the community access to it for another round of feedback. 
+
+Iterate.
+
+=== Step 6. Release. ===
+
+You now have a working prototype, or plugin that implements your proposed idea. At this point a decision can more easily be made as to whether your idea can or should be folded into the core. Suffice it to say that the higher the quality of the plugin, the more likely it will be folded into the core (if that is your end game).
+
+

@@ -1,0 +1,300 @@
+h1. グローバル・モディファイアプラグインの開発について
+
+h1. +はじめに+
+
+今回は具体的なプラグインとしてグローバル・モディファイアプラグインを作成していく手順を解説します。
+
+h1. +グローバル・モディファイアとは？+
+
+グローバル・モディファイアは与えられた文字列に対して、すべて大文字に変換する、一部分にURLを付加するなどの加工処理を行います。
+
+グローバル・モディファイアは、利用する際に'&lt;MTEntryTitle lower_case="1"&gt;'といった形で、タグに対して付与し利用します。
+
+h1. +プラグインの仕様とテストケースの作成+
+
+プラグインの仕様を決定し、それを元にテストケースの作成を作成しましょう。
+
+h2. プラグインの仕様
+
+# タグによって与えられた文章を "rot13暗号":http://ja.wikipedia.org/wiki/ROT13 を用いて暗号化するグローバル・モディファイアを実装する。
+# 呼び出し時の引数が1のときのみ動作する
+
+h2. テストケース（00-compile.t）
+
+前回行ったMyPlugin03の内容と基本的に同じです。
+
+<pre>
+use strict;
+use lib qw( t/lib lib extlib );
+use warnings;
+use MT;
+use Test::More tests => 5;
+use MT::Test;
+
+ok(MT->component ('MyPlugin04'), "MyPlugin04 plugin loaded correctry");
+
+require_ok('MyPlugin04::L10N');
+require_ok('MyPlugin04::L10N::ja');
+require_ok('MyPlugin04::L10N::en_us');
+require_ok('MyPlugin04::Tags');
+
+1;
+</pre>
+
+h2. テストケース（01-tags.t）
+
+前回行ったテストからJSON部分を修正し利用します。エントリーを１件取得し、そのタイトルに対してrot13暗号をかけます。
+
+テストするのは以下の４項目です。 
+
+# 空文字列をインプットすると、空文字列が戻ってくる。
+# エントリー１件を取得し、そのタイトル"A Rainy Day"が戻ってくる。
+# エントリー１件を取得し、そのタイトル"A Rainy Day"をrot13暗号化しない"A Rainy Day"が戻ってくる。(rot13="0")
+# エントリー１件を取得し、そのタイトル"A Rainy Day"をrot13暗号化した"N Enval Qnl"が戻ってくる。(rot13="1")
+
+<pre>
+（前略）
+
+#===== Edit here
+my $test_json = <<'JSON';
+[
+{ "r" : "1", "t" : "", "e" : ""},
+{ "r" : "1", "t" : "<MTEntries lastn=\"1\"><MTEntryTitle></MTEntries>", "e" : "A Rainy Day"},
+{ "r" : "1", "t" : "<MTEntries lastn=\"1\"><MTEntryTitle rot13=\"0\"></MTEntries>", "e" : "A Rainy Day"},
+{ "r" : "1", "t" : "<MTEntries lastn=\"1\"><MTEntryTitle rot13=\"1\"></MTEntries>", "e" : "N Enval Qnl"}
+]
+JSON
+#=====
+
+（後略）
+</pre>
+
+h1. +rot13グローバル・モディファイアの開発（Perl）+
+
+前章で作成したMyPlugin03を元にプラグインを作成します。
+
+h2. config.yaml
+
+グローバル・モディファイアを追加には以下のように"tags"=&gt; "modifier"=&gt; "モディファイア名" =&gt; $プラグイン名::ハンドラ名 を記述します。 
+
+<pre>
+id: MyPlugin04
+name: <__trans phrase="Sample Plugin rot13 globale modifier">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin04::L10N
+
+tags:
+    modifier:
+        rot13: $MyPlugin04::MyPlugin04::Tags::_hdlr_rot13
+</pre>
+
+h2. L10N.pm
+
+<pre>
+package MyPlugin04::L10N;
+use strict;
+use base 'MT::Plugin::L10N';
+
+1;
+</pre>
+
+h2. L10N/en_us.pm
+
+<pre>
+package MyPlugin04::L10N::en_us;
+
+use strict;
+use base 'MyPlugin04::L10N';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    '_PLUGIN_DESCRIPTION' => 'Sample rot13 global modifier',
+    '_PLUGIN_AUTHOR' => 'Plugin author',
+);
+
+1;
+</pre>
+
+h2. L10N/ja.pm
+
+<pre>
+package MyPlugin04::L10N::ja;
+
+use strict;
+use base 'MyPlugin04::L10N::en_us';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    'Sample Plugin rot13 globale modifier' => 'サンプルプラグイン rot13 グローバル・モディファイア',
+    '_PLUGIN_DESCRIPTION' => 'rot13 テストプラグイン',
+    '_PLUGIN_AUTHOR' => 'プラグイン作者',
+);
+
+1;
+</pre>
+
+h2. Tags.pm
+
+rot13の実装です。$arg（引数）に１が設定されていない場合は、そのままreturnします。１が設定されていた場合はrot13暗号をかけた$strをreturnします。 
+
+<pre>
+package MyPlugin04::Tags;
+use strict;
+
+sub _hdlr_rot13 {
+    my ($str, $arg, $ctx) = @_;
+    return $str if $arg != 1;
+
+    $str =~ tr/a-zA-Z/n-za-mN-ZA-M/;
+
+    return $str;
+}
+
+1;
+</pre>
+
+h2. ファイルの配置
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin04/
+      |__ config.yaml
+      |__ lib/
+      |  |＿ MyPlugin04/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |＿ Tags.pm
+      |__ t/
+         |＿00-compile.t
+         |＿01-tags.t
+</pre>
+
+h1. +rot13グローバル・モディファイアの開発（PHP）+
+
+PHP版のプラグイン開発を行います。
+
+h2. modifier.rot13.php
+
+ファイル名はグローバル・モディファイアである事と、モディファイア名がrot13である事から、modifier.rot13.phpとなります。 
+
+<pre>
+<?php
+    function smarty_modifier_rot13($str, $args) {
+        if ($args != 1) {
+            return $str;
+        }
+
+        return str_rot13($str);
+    }
+?>
+</pre>
+
+function名はsmarty記法にのっとってsmarty_modifier_rot13となります。
+
+また実装に関してはPHP4.2以降にはrot13を行う"str_rot13()"関数があるので、そちらを用います。
+
+h2. ファイルの配置
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin04/
+      |__ config.yaml
+      |__ lib/
+      |  |＿ MyPlugin04/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |＿ Tags.pm
+      |__ php/
+      |  |＿modifier.rot13.php
+      |__ t/
+         |＿00-compile.t
+         |＿01-tags.t
+</pre>
+
+h1. +テストの実行+
+
+では、作成したプラグインに対してテストを行います。
+
+h2. 00-compile.t
+
+<pre>
+$ perl plugins/MyPlugin04/t/00-compile.t 
+1..5
+ok 1 - MyPlugin04 plugin loaded correctry
+ok 2 - require MyPlugin04::L10N;
+ok 3 - require MyPlugin04::L10N::ja;
+ok 4 - require MyPlugin04::L10N::en_us;
+ok 5 - require MyPlugin04::Tags;
+</pre>
+
+h2. 01-tags.t
+
+<pre>
+$ perl plugins/MyPlugin04/t/01-tags.t
+1..7
+ok 1 - 'blog-name' template found
+ok 2 - Test blog loaded
+ok 3 - Test entry loaded
+
+ok 4 - perl test 1
+A Rainy Day
+ok 5 - perl test 2
+N Enval Qnl
+ok 6 - perl test 3
+ok 7 - ok - php test 1 ok - php test 2 ok - php test 3 
+</pre>
+
+h2. proveコマンドでのテスト
+
+<pre>
+$ prove plugins/MyPlugin04/t/*.t
+plugins/MyPlugin04/t/00-compile....ok                                        
+plugins/MyPlugin04/t/01-tags.......ok                                        
+All tests successful.
+Files=2, Tests=12, 24 wallclock secs (12.23 cusr +  4.98 csys = 17.21 CPU)
+</pre>
+
+全てのテストにパスし、初めに考えた仕様どおりに動作している事がわかります。
+
+h1. +まとめ+
+
+グローバル・モディファイアは色々な場面で利用されます。（ "グローバル・モディファイアリファレンス":http://www.movabletype.jp/documentation/appendices/modifiers/ ）
+
+新規でファンクションタグを作成しなくても、新規にグローバル・モディファイアを作成する方が簡単な場合があります。これは状況や条件によるので、ケースバイケースでプラグインを作成してください。
+
+プラグイン開発ステップ・バイ・ステップ シーズン１はこれで終了です。プラグイン作成の大枠を体感していただけたでしょうか？シーズン２ではさらにブロックタグやコンディショナルタグなどの解説に進む予定です。
+
+h1. +プラグインダウンロード+
+
+[[MyPlugin04.zip(5.94KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin04.zip]]
+
+h1. +プラグイン開発ガイド インデックス+
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# [[環境変数について|Japanese-plugin-dev-1-3]]
+# [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# グローバル・モディファイアプラグインの開発について
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+# [[プラグインの設定方法|Japanese-plugin-dev-3-1]]
+# [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
+# [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
+# [[MTオブジェクトの利用方法|Japanese-plugin-dev-3-4]]
+# [[独自オブジェクトの作成|Japanese-plugin-dev-4-1]]
+# [[新規アプリケーションの作成|Japanese-plugin-dev-4-2]]
+# [[Transformerプラグインの開発|Japanese-plugin-dev-4-3]]
+# [[管理画面のメニュー修正|Japanese-plugin-dev-4-4]]

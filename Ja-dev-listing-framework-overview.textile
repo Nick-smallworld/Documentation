@@ -1,0 +1,181 @@
+h1. リスティングフレームワーク
+
+h2. 特徴
+
+リスティングフレームワークは、 @MT::Object@ を継承したオブジェクトに対して、フィルタリングやソートなどの機能を含む、共通のリスト画面を提供します。プラグイン作成者は、レジストリに各種設定を追加することで、独自のオブジェクトのリスト画面を作成し、振る舞いを設定することが出来ます。
+また、既存のコアオブジェクトの一覧画面に対しても、カラムやフィルタの追加をレジストリ経由で行うことが出来ます。
+
+h3. 既存のリスト画面との互換性
+
+新しいリスティングフレームワークでは、テンプレートタグ @mtapp:listing@ は使用していません。 @mtapp:listing@ タグは後方互換性のため引き続きサポートされますが、リスティングフレームワークの各種機能を利用することは出来ません。
+既存の @list_actions@ や、フィルタ設定を含むリスト画面へのリンク[1]は可能な限り動作するようになっています。
+
+h3. レジストリからの拡張
+
+エントリ一覧画面に新しいカラムを追加する例
+
+```yaml
+# In config.yaml of your plugin.
+list_properties:
+    entry:
+        my_column1: My Column #データベースのカラム定義からフィルタ/ソート/表示を自動作成
+        my_column2:           #ソートとカラムの表示を独自に定義
+            base: __common.string
+            sort: |
+                sub {
+                    #do something
+                } 
+            html: |
+                sub {
+                    return qq{<a href="$foo">$bar <img src="$buz" /></a>};
+                }
+```
+
+h3. リスト画面の起動
+
+リスティングフレームワークは、 @mt.cgi?__mode=list&_type=foo@ というリクエストに対し、対応するメソッド @applications/cms/methods/list_foo@ が存在しない場合、 レジストリの @listing_screens/foo@ および @list_properties/foo@ から情報を収集して、自動的にリスト画面を生成します。
+
+h3. リスト画面の構造
+
+リスティングフレームワークが作成するリスト画面では、XMLHttpRequestを利用してリストの内容を動的に取得します。以下、リスト画面全体のHTMLページを「リスト画面」と呼びます。また、リスト画面がXHRでリクエストするオブジェクトの内容を「リストの内容」または「フィルタされたリスト」と呼びます。コールバックを作成し、カスタマイズを行う場合には、カスタマイズを行う対象が「リスト画面」なのか「リストの内容」なのかを把握し、適切なコールバックを選択する必要があります。
+
+リスト画面は、JavaScriptコードや、現在ユーザーが利用可能なフィルタの一覧、オブジェクトに対して実行可能なアクションの一覧などを含むHTMLページです。リスト画面のロードが完了した時や、ユーザーがリスト画面でフィルタの設定を変更した時に、リスト画面はMTに対して、XHRでリストの内容を要求します。要求には、フィルタの種類や、件数の上限、表示したいカラムの一覧などが含まれます。MTは、要求に応じてデータベースからオブジェクトのロードを行い、適切なHTMLスニペットに変換し、JSON形式でリストの内容を返します。リスト画面は受け取ったJSONデータを展開し、テーブルにレンダリングします。
+
+* [[JSONデータの例|https://gist.github.com/807368]]
+
+h2. Registry
+
+以下のレジストリキーに値を追加していくことで、リストを作成/カスタマイズ出来ます。
+
+- listing_screens := リスト画面の全体の振る舞いを設定します
+- list_properties := リストにカラムやフィルタを追加します
+- system_filters := リストに、すぐに利用可能なビルトインフィルタを追加します
+- list_actions := リストに、オブジェクト単位で適用可能なアクションを追加します
+- content_actions := リストに、画面全体に適用するアクションを追加します
+
+これらのレジストリキーの下に、任意のリストIDを指定し、リストの定義を行います。通常は表示するオブジェクトのobject_typeと同じものを指定します。
+
+```yaml
+listing_screens:
+    foo:
+        # オブジェクトfooを表示するリストfooを定義し、基本的な振る舞いを指定
+list_properties:
+    foo:
+        fizz:
+            # リストfooにプロパティfizzを追加
+list_actions:
+    foo:
+        buzz:
+            # リストfooにアクションbuzzを追加
+```
+
+* [[Registry: listing-screens|Ja-dev-registry-listing-screens]]
+* [[Registry: list_properties|Ja-dev-registry-list-properties]]
+* [[Registry: system_filters|Ja-dev-registry-system-filters]]
+* [[Registry: list_actions|Ja-dev-registry-list-actions]]
+* [[Registry: content_actions|Ja-dev-registry-content-actions]]
+
+h2. Callbacks
+
+h3. list_template_param.object
+
+リスト画面が作成された際に、テンプレートのビルドの直前に呼び出されます。通常のテンプレートでの @template_param@ コールバックに相当します。
+
+h4. Synopsis
+
+```perl
+sub list_template_param_foo {
+    my $cb = shift;
+    my ( $app, $param, $tmpl ) = @_;
+    # Do something
+}
+```
+
+h4. Attributes
+
+- $app := MT::App クラスのインスタンスです
+- $param := テンプレートの構築時に渡されるパラメータを含むハッシュリファレンスです
+- $tmpl := 構築に使用される @MT::Template@ オブジェクトです
+
+h4. Return Value
+
+このコールバックは戻り値を要求しません。
+
+h3. cms_pre_load_filtered_list.object
+
+リストが要求された際、オブジェクトのロードの直前に呼び出されます。
+
+h4. Synopsis
+
+```perl
+sub cms_pre_load_filtered_list_foo {
+    my $cb = shift;
+    my ( $app, $filter, $options, $cols ) = @_;
+    # Do something
+}
+```
+
+h4. Attributes
+
+- $app := MT::App クラスのインスタンスです
+- $filter := MT::Filter クラスのインスタンスです
+- $options := 実行中のフィルタの @$terms@ などを含むハッシュリファレンスです
+- $cols := 現在要求されているカラムの一覧を含む配列リファレンスです
+
+h4. Return Value
+
+このコールバックは戻り値を要求しません。
+
+h3. cms_filtered_list_param.object
+
+リストが要求された際、作成されたリストが出力される直前に呼び出されます。
+
+h4. Synopsis
+
+```perl
+sub cms_filtered_list_param_foo {
+    my $cb = shift;
+    my ( $app, $res, $objs ) = @_;
+    # Do something
+}
+```
+
+h4. Attributes
+
+- $app := MT::App クラスのインスタンスです
+- $res := リクエストにマッチしたオブジェクトを、画面表示用に加工された配列リファレンスです
+- $objs := リクエストにマッチしたオブジェクトの配列リファレンスです
+
+h4. Return Value
+
+このコールバックは戻り値を要求しません。
+
+h2. More Customizing
+
+h3. list_common.tmpl 
+
+テンプレートのサーチパスに @listing/foo_list_header.tmpl@ が存在する場合、自動的にインクルードされます。インクルードされたテンプレートからMTMLの変数にアクセスすることで、様々なカスタマイズやJavascriptコードの追加などが行えます。
+
+```xml
+<mt:setvarblock name="jq_js_include" append="1"> 
+    // Some JavaScript 
+</mt:setvarblock>
+```
+
+h2. JavaScript and jQuery API in Common Listing Screen
+
+h3. Events
+
+h4. listReady
+
+XHRを利用したリストの内容の読み込みが完了したタイミングでイベント @listReady@ が発生します。
+
+```js
+jQuery(window).bind('listReady', function() {
+    // Do something after the List table was rendered.
+})
+```
+
+h2. Foot Notes
+
+fn1. 以前のバージョンで使われていた @http://example.com/mt.cgi?__mode=list&_type=entry&filter=status&filter_val=2@ のような形式のリンク

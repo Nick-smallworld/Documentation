@@ -1,0 +1,111 @@
+== Overview ==
+
+Brad took it upon himself to solve some long standing issues with how user sessions are managed on the application and blog side. His work solves a number of key problems customers have experienced:
+
+# the blog saying to a user they are logged in, but then saying registration is required when they submit a comment
+# the inability to access a user's profile data via the blog side, especially a userpic
+# blog administrators who are unable to leave a comment on their own blog
+
+== The Implementation ==
+
+Brad is best to provide these details, but the most important aspect of this feature is clearly understanding each case that needs to be planned for, and what the end user experience will be in each of those cases. Each case is a permutation of three variables:
+
+# does the current user have a blog side cookie?
+# does the current user have an app side cookie?
+# is authentication ''required'' for the current blog?
+
+=== The Comment Forms ===
+
+'''Anonymous Only, No Authentication Accepted'''
+
+    h2:Comment Anonymously:/h2
+    
+     Name: [ INPUT ]
+    Email: [ INPUT ]
+      URL: [ INPUT ]
+    
+    Comment:
+    [ TEXT AREA ]
+
+''In the event that captcha is enabled, then the call to mt-comments.cgi to retrieve a captcha image will be done on the on_focus event for any of the above fields.''
+
+'''Registration Required, no blog cookie'''
+
+    Sign in to leave a comment.
+
+'''Registration Required, blog cookie'''
+
+    Thanks for signing in, NAME. (sign out)
+
+    Comment:
+    [ TEXT AREA ]
+
+'''Registration Accepted, Anonymous OK, blog cookie'''
+
+    Thanks for signing in, NAME. (sign out)
+
+    Comment:
+    [ TEXT AREA ]
+
+'''Registration Accepted, Anonymous OK, no blog cookie'''
+
+    (Sign in) to leave a comment, or...
+    
+    h2:Comment Anonymously:/h2
+    
+     Name: [ INPUT ]
+    Email: [ INPUT ]
+      URL: [ INPUT ]
+    
+    Comment:
+    [ TEXT AREA ]
+
+=== The Cases ===
+
+{| border="1" cellspacing="0" cellpadding="5" align="center"
+! blog cookie?
+! app cookie?
+! auth accepted?
+! description
+|- 
+| Y
+| Y
+| Y 
+| Show the comment form. 
+|- 
+| N
+| Y
+| Y 
+| Show the link "leave a comment". User is to click on that link which will trigger a javascript function that will fetch the user's profile information. Because they are logged into the app, the comment form is simply appear. They will not ever leave the page.
+|- 
+| Y
+| N
+| Y 
+| Show the comment form. When the user clicks submit, the comment app will check their cookie, see that they don't have an app cookie, and prompt the user to login. The comment they submitted will be held for embargo until they auth properly. When they have authed, the comment will be accepted, published and the user will be redirected to the comment confirmation page or the entry.
+|- 
+| N
+| N
+| Y 
+| Show the link, "Sign in to comment." User will be sent to login form, they will login, and be redirected back to entry for comment.
+|- 
+| Y
+| Y
+| N 
+| Show the comment form.
+|- 
+| N
+| Y
+| N 
+| Show the anonymous comment form, with a link above that says, "Sign in to leave a comment." above the "Comment Anonymously" form.
+|- 
+| Y
+| N
+| N 
+| Show the anonymous comment form, with a link above that says, "Sign in to leave a comment." above the "Comment Anonymously" form.
+|- 
+| N
+| N
+| N 
+| Show only the comment anonymously form.
+|-
+|}

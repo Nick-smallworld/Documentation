@@ -1,0 +1,47 @@
+[[Category: Template Tag Recipes]]
+
+<p>This assumes that you have a folder of pages for partners and a folder of pages for industries and you would like to list partners related to each industry on each industry page</p>
+
+<pre>http://domain.com/industries/electronics.html
+http://domain.com/partners/homer_simpson.html
+</pre>
+
+<ol>
+<li><p>Create custom fields for Pages with the following tags:</p>
+
+<pre>&lt;$mt:PageDataPartnerEmail$&gt;
+&lt;$mt:PageDataPartnerLocation$&gt;
+&lt;$mt:PageDataPartnerHeadshot$&gt;
+</pre>
+
+<p>I&#8217;m assuming that you&#8217;ll use the Page title for the Partners full title: &#8220;Dr. Homer Simpson, Esq the 3rd&#8221;</p></li>
+<li><p>Add this to your Page archive template:</p>
+
+<pre>&lt;mt:setvarblock name="industry_basename_tag"&gt;@&lt;$mt:EntryBasename$&gt;&lt;/mt:setvarblock&gt;
+&lt;$mt:include module="Partners Module" industry_basename_tag="$industry_basename_tag"$&gt;
+</pre></li>
+<li><p>Create a new module named &#8220;Partners Module&#8221; and paste this content in:</p>
+
+<pre>&lt;mt:Pages tag="$industry_basename_tag"&gt;
+   &lt;mt:PagesHeader&gt;
+&lt;div class="partners"&gt;
+   &lt;div class="partnerID"&gt;
+       &lt;h3&gt;Partners&lt;/h3&gt;
+   &lt;/mt:PagesHeader&gt;
+       &lt;div class="partner"&gt;
+           &lt;p class="name"&gt;&lt;a href="mailto:&lt;$mt:PageDataEmail$&gt;"&gt;&lt;$mt:PageTitle$&gt;&lt;/a&gt;&lt;/p&gt;
+           &lt;p class="location"&gt;&lt;$mt:PageDataLocation$&gt;&lt;/p&gt;
+           &lt;a href="&lt;$mt:PagePermalink$&gt;"&gt;&lt;mt:PageDataPartnerHeadshotAsset&gt;&lt;img width="87" height="116" alt="&lt;$mt:PageTitle$&gt;" src="&lt;$mt:AssetURL$&gt;"/&gt;&lt;/mt:PageDataPartnerHeadshotAsset&gt;&lt;/a&gt;
+           &lt;p class="meta"&gt;&lt;a href="mailto:&lt;$mt:PageDataEmail$&gt;"&gt;E-mail&lt;/a&gt; · &lt;a href="&lt;$mt:PagePermalink$&gt;"&gt;Biography&lt;/a&gt;&lt;/p&gt;
+       &lt;/div&gt;
+   &lt;mt:PagesFooter&gt;
+   &lt;/div&gt;
+&lt;/div&gt;
+   &lt;/mt:PagesFooter&gt;
+&lt;/mt:Pages&gt;
+</pre></li>
+<li><p>Now add the tag corresponding to the industry each Partner should be displayed with. ie. if Dr. Homer Simpsom, Esq the 3rd is should be associated with the &#8220;Electronics&#8221; and &#8220;Chemical&#8221; industry pages, then add the tags &#8220;@electronics&#8221; and &#8220;@chemical&#8221;&#8230;. assuming these (minus the &#8220;@&#8221;) are the basenames of the industry pages.</p></li>
+<li><p>Save the Partner page</p></li>
+<li>Rebuild the Industry page</li>
+</ol>
+

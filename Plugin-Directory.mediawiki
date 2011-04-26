@@ -1,0 +1,45 @@
+== Shortcuts ==
+
+* [http://plugins.movabletype.org Plugin Directory Homepage]
+* [http://www.movabletype.org/cgi-bin/mt/mt-cp.cgi?__mode=register&blog_id=32&return_to=http%3A%2F%2Fplugins.movabletype.org%2F Login/Register/Dashboard]
+
+== Reported Issues ==
+
+Have you encountered an issue using the plugin directory? Please log a change request or bug report below:
+
+== Plugins to Remove ==
+
+If you feel there is a plugin that should be removed, please nominate it below.
+
+
+== Plugins to Add ==
+
+If you know of a plugin that should be added to the directory, please nominate it below.
+
+== Open Source Plugins ==
+
+Plugins which [http://plugins.movabletype.org/cgi-bin/mt4community/mt-search.cgi?tag=works%20with%20mt4&blog_id=1 work with MT4] and have an open source license.
+
+* [http://plugins.movabletype.org/ghostwriter/ Ghostwriter] - GPL
+* [http://plugins.movabletype.org/imt/ iMT] - GPL
+* [http://plugins.movabletype.org/clean-sweep/ Clean Sweep] - GPL
+* [http://plugins.movabletype.org/feedswidget/ FeedsWidget] - Perl Artistic
+* [http://plugins.movabletype.org/thi-is-good/ This is Good] - Perl Artistic
+* [http://plugins.movabletype.org/favicon-manager/ Favicon Manager] - GPL
+* [http://plugins.movabletype.org/fiscalyearlyarchives/ Fiscal Yearly Archives] - Perl Artistic
+* [http://plugins.movabletype.org/dashboar/ Dashboar] - Perl Artistic
+* [http://plugins.movabletype.org/bloggerimporter/ BloggerImporter] - GPL
+* [http://plugins.movabletype.org/aim-openid-login/ AIM OpenID Login] - GPL
+* [http://plugins.movabletype.org/wordpress-openid-plugin/ WordPress OpenID Plugin] - GPL
+* [http://plugins.movabletype.org/mtkwikiformatter/ MT-Wiki Formatter] - Perl Artistic
+* [http://plugins.movabletype.org/quote/ Quote] - GPL
+* [http://plugins.movabletype.org/refeed/ Refeed] - Perl Artistic
+* [http://plugins.movabletype.org/feed-manager/ Feed Manager] - Perl Artistic
+* [http://plugins.movabletype.org/akismet/ Akismet] - GPL
+* [http://plugins.movabletype.org/process-tags/ Process Tags] - MIT
+* [http://plugins.movabletype.org/keyvalues/ Key Values] - MIT
+* [http://plugins.movabletype.org/media-manager/ MediaManager] - GPL
+* [http://plugins.movabletype.org/podcasting-plugin-for-movable/ Podcasting] - GPL
+* [http://plugins.movabletype.org/wordpress-openid-plugin/ WordPress OpenID] - GPL
+* [http://plugins.movabletype.org/promote-this/ Promote This!] - GPL
+* [http://plugins.movabletype.org/dashoff/ DashOff] - GPL

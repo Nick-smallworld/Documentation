@@ -1,0 +1,24 @@
+== Overview ==
+
+This recipe shows how to display a userpic in MT if it exists, and if not, to fall back to gravatar.
+
+== Get the Plugin ==
+
+* [http://code.sixapart.com/svn/mtplugins/trunk/Gravatar/ svn] 
+* [http://code.sixapart.com/trac/mtplugins/changeset/latest/trunk/Gravatar/?old_path=/&filename=Gravatar&format=zip zip]
+
+== Recipe ==
+
+Enables user icon pictures from the Gravatar service.
+
+
+    <mt:IfNonEmpty tag="CommenterUserpic">
+        <mt:CommenterUserpicAsset>
+            <img src="<mt:AssetThumbnailURL width="32" height="32">" width="32" height="32" alt="<mt:CommentAuthor />" class="avatar" />
+        </mt:CommenterUserpicAsset>
+    <mt:Else>
+        <img src="<$MTGravatar rating="g" default="static-URL/images/default-userpic-36.jpg" size="32"$>" alt="<mt:CommentAuthor />" width="32" height="32" class="avatar" />
+    </mt:IfNonEmpty>
+
+[[Category: Template Tag Recipes]]
+

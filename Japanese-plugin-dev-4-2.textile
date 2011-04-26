@@ -1,0 +1,464 @@
+h1. 新規アプリケーションの作成
+
+h1. +はじめに+
+
+今まで１５回に渡ってMTのプラグインの解説をしてきましたが、今回は必ずしもプラグインにする必要はありません。後々の事を考えプラグインとしてパッケージングします。
+
+管理画面の機能を増やす方法はいくつかありますが、そのうちの１つ（新規アプリケーションの作成）を見ていきます。
+
+h1. +アプリケーションとは？+
+
+MTで言う所のアプリケーションとは、mt.cgiやmt-comments.cgiに代表されるようなWebブラウザからアクセスされる機能の事を指します。（○○.cgi）
+
+今回は前章で作成したMT::Fooオブジェクトのリスト表示、新規作成、修正ができるようなアプリケーション作成を解説します。
+
+h1. +新規アプリケーションの作成+
+
+MyPlugin11（MT::Fooクラスを追加）が既にインストール済みとして話を進めます。
+
+h2. 仕様
+
+* view画面、edit画面、new画面の３つを持ち、それぞれでMT::Fooの一覧表示、編集画面、新規作成画面とする。
+* 編集、新規作成されたものはsaveされデータベースに保存される。
+* 画面出力される値のうち、HTMLが混入しているものはグローバルモディファイア @encode_html=1@ をつけスクリプト等の混入を伏せぐ。
+* @http://www.example.com/cgi-bin/mt504/plugins/MyPlugin12/newapp.cgi?blog_id=2@ といったURLにアクセスする。（blog_id必須）
+
+h2. config.yaml
+
+単純なアプリケーションの追加に通常はconfig.yamlは必要ありませんが、機能が追加されているよう可視化するためにconfig.yamlをプラグインに置きます。
+
+<pre>
+id: MyPlugin12
+key: MyPlugin12
+name: <__trans phrase="Sample Plugin New Application">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin12::L10N
+</pre>
+
+h2. newapp.cgi
+
+このCGIファイルはアクセスされると、他 @mt-○○.cgi@ 等とおなじく @MT::Bootstrap@ に @App => 'MyPlugin12::NewApp'@ という風に記載しMyPlugin12::NewAppというアプリケーションが起動します。
+
+<pre>
+#!/usr/bin/perl -w
+use strict;
+
+use lib '../../lib';
+use lib '../../extlib';
+
+use MT::Bootstrap App => 'MyPlugin12::NewApp';
+</pre>
+
+<p>LinuxやUNIXなどの場合、Zipファイルを展開した後、実行権限を与える必要がある場合があります。</p>
+
+<pre>
+$ cd $MT_DIR/plugins/MyPlugin12/
+$ sudo chmod +x newapp.cgi
+</pre>
+
+h2. MtPlugin12/NewApp.pm
+
+このアプリケーションの本体です。init_request{}でアプリケーションを初期化し、view, new, edit, save 関数でそれぞれの処理をします。
+
+<pre>
+package MyPlugin12::NewApp;
+use strict;
+
+use base qw( MT::App );
+
+sub init_request {
+    my $app = shift;
+    $app->SUPER::init_request(@_);
+    $app->add_methods( main => \&view,
+                       view => \&view,
+                       new  => \&foo_new,
+                       edit => \&edit,
+                       save => \&save,
+                     );
+    $app->{ default_mode }   = 'main';
+    $app->{ requires_login } = 1;
+}
+
+sub view {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $class = $app->model('foo');
+    my ( $terms, $args );
+    $terms = { blog_id => $blog_id };
+    $args  = { sort      => 'created_on',
+               direction => 'descend',
+               limit     => 10,
+             };
+    my @foos = $class->load( $terms, $args );
+    my $param;
+    $param = { blog_name   => $blog->name,
+               foos        => \@foos,
+               plugin_template_path => 'tmpl',
+             };
+    $app->build_page( 'view_foo.tmpl', $param );
+}
+
+sub edit {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $id = $q->param('id');
+    my $class = $app->model('foo');
+    my $foo = $class->load( $id );
+    my $param;
+    $param = { blog_name   => $blog->name,
+               id      => $id,
+               blog_id => $blog_id,
+               title   => $foo->title(),
+               bar     => $foo->bar(),
+               plugin_template_path => 'tmpl',
+             };
+    $app->build_page( 'edit_foo.tmpl', $param );
+}
+
+sub save {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $class = $app->model('foo');
+    my $foo;
+    my $id;
+    if ( $id = $q->param('id') ) {
+        $foo = $class->load($id);
+    } else {
+        $foo = $class->new();
+        $foo->blog_id($blog_id);
+    }
+
+    $foo->title($q->param('title'));
+    $foo->bar($q->param('bar'));
+
+    $foo->save()
+        or die $foo->errstr;
+
+    $app->redirect( $app->return_uri . "blog_id=$blog_id" );
+}
+
+sub foo_new {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+
+    my $param = { blog_name => $blog->name,
+                  blog_id   => $blog_id,
+                };
+
+    $app->build_page( 'new_foo.tmpl', $param );
+}
+
+1;
+</pre>
+
+h3. 解説
+
+<pre>
+package MyPlugin12::NewApp;
+use strict;
+
+use base qw( MT::App );
+</pre>
+
+* モジュールのパッケージ名 @MyPlugin12::NewApp@ を指定しています。
+* @MT::App@ クラスを継承します。
+
+<pre>
+sub init_request {
+    my $app = shift;
+    $app->SUPER::init_request(@_);
+    $app->add_methods( main => \&view,
+                       view => \&view,
+                       new  => \&foo_new,
+                       edit => \&edit,
+                       save => \&save,
+                     );
+    $app->{ default_mode } = 'main';
+    $app->{ requires_login } = 1;
+}
+</pre>
+
+* この関数はアプリケーションの初期化をする関数です。
+* @$app@ を取得します。
+* 親クラスの @init_request()@ を呼び初期化します。
+* @$app->add_meshods();@ このアプリケーションのモードと関数の紐づけを記載します。
+** @main => \&view@ , @view => \&view@ modeのmainとviewを関数viewに紐づけます。
+** @new => \&new@ modeのnewを関数newに紐づけます。
+** @new => \&edit@ modeのeditを関数editに紐づけます。
+** @new => \&save@ modeのsaveを関数saveに紐づけます。
+* @$app->{ default_mode }   = 'main';@ mode指定が無かった場合、modeをmainにします。
+* @$app->{ requires_login } = 1;@ ログインが必須かどうか指定します。
+** @1@ : ログイン中に処理ができます。ログインしていない場合、ログイン画面にジャンプします。
+** @0@ : ログインの有無に関係なく処理できます。
+
+<pre>
+sub view {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $class = $app->model('foo');
+    my ( $terms, $args );
+    $terms = { blog_id => $blog_id };
+    $args  = { sort      => 'created_on',
+               direction => 'descend',
+               limit     => 10,
+             };
+    my @foos = $class->load( $terms, $args );
+    my $param;
+    $param = { blog_name   => $blog->name,
+               foos        => \@foos,
+               plugin_template_path => 'tmpl',
+             };
+    $app->build_page( 'view_foo.tmpl', $param );
+}
+</pre>
+
+* この関数はMT::Fooの一覧を表示する関数です。
+* @$app@ を取得します。
+* @$q@ にパラメータを取得します。
+* パラメータから @$blog_id@ を取得します。
+* @$blog_id@ から、 @blog@ オブジェクトを取得します。
+* @foo@ クラスを準備します。
+* @terms@ , @args@ を準備し、 @@foos@ を取得します。
+* @$param@ にパラメータをセットし、 @$app->build_page( 'view_foo.tmpl', $param );@ でページを出力します。テンプレートは @view_foo.tmpl@ を利用します。
+
+<pre>
+sub edit {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $id = $q->param('id');
+    my $class = $app->model('foo');
+    my $foo = $class->load( $id );
+    my $param;
+    $param = { blog_name   => $blog->name,
+               id      => $id,
+               blog_id => $blog_id,
+               title   => $foo->title(),
+               bar     => $foo->bar(),
+               plugin_template_path => 'tmpl',
+             };
+    $app->build_page( 'edit_foo.tmpl', $param );
+}
+</pre>
+
+* この関数はMT::Fooを編集する関数です。
+* @$app@ を取得します。
+* @$q@ にパラメータを取得します。
+* パラメータから @$blog_id@ を取得します。
+* @$blog_id@ から、 @blog@ オブジェクトを取得します。
+* @$id@ に @MT::Foo@ のIDを取得します。
+* @foo@ クラスを準備します。
+* @$id@ を使って、 @$foo@ を取得します。
+* @$param@ にパラメータをセットし、 @$app->build_page( 'edit_foo.tmpl', $param );@ でページを出力します。テンプレートは @edit_foo.tmpl@ を利用します。
+
+<pre>
+sub save {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+    my $class = $app->model('foo');
+    my $foo;
+    my $id;
+    if ( $id = $q->param('id') ) {
+        $foo = $class->load($id);
+    } else {
+        $foo = $class->new();
+        $foo->blog_id($blog_id);
+    }
+
+    $foo->title($q->param('title'));
+    $foo->bar($q->param('bar'));
+
+    $foo->save()
+        or die $foo->errstr;
+
+    $app->redirect( $app->return_uri . "blog_id=$blog_id" );
+}
+</pre>
+
+* この関数はMT::Fooを保存する関数です。
+* @$app@ を取得します。
+* @$q@ にパラメータを取得します。
+* パラメータから @$blog_id@ を取得します。
+* @$blog_id@ から、 @blog@ オブジェクトを取得します。
+* @$id@ がある場合は修正なので、 @id@ を使って @$foo@ をロードします。
+* @$id@ が無い場合は新規作成なので、クラスを @new()@ した上で、 @$foo->blog_id($blog_id)@ で @blog_id@ をセットします。
+* @title@ と @bar@ をセットします。
+* @$foo@ をセーブし、エラーが起きればdieします。
+* セーブが終了したら @CGI@ の URLにジャンプします。
+
+<pre>
+sub foo_new {
+    my $app = shift;
+    my $q = $app->param;
+    my $blog_id = $q->param('blog_id');
+    my $blog = MT->model('blog')->load($blog_id);
+
+    my $param = { blog_name => $blog->name,
+                  blog_id   => $blog_id,
+                };
+
+    $app->build_page( 'new_foo.tmpl', $param );
+}
+</pre>
+
+* この関数はMT::Fooを新規作成する関数です。
+* @$app@ を取得します。
+* @$q@ にパラメータを取得します。
+* パラメータから @$blog_id@ を取得します。
+* @$blog_id@ から、 @blog@ オブジェクトを取得します。
+* @$param@ にパラメータをセットし、 @$app->build_page( 'new_foo.tmpl', $param );@ でページを出力します。テンプレートは @new_foo.tmpl@ を利用します。
+
+h2. tmpl/view_foo.tmpl
+
+MT::Fooオブジェクトの一覧画面用テンプレート。
+
+<pre>
+<html>
+<head>
+    <title>MT::Foo View</title>
+</head>
+<body>
+<h1><mt:var name="blog_name" encode_html=1/></h1>
+
+    <ul>
+<mt:loop name="foos">
+        <li><a href="<mt:GetVar name="script_url" />?__mode=edit&amp;id=<mt:GetVar name="id" />&amp;blog_id=<mt:GetVar name="blog_id" />"><mt:GetVar name="title" encode_html=1/></a></li>
+</mt:loop>
+    </ul>
+
+<p><a href="<mt:GetVar name="script_url" />?__mode=new&amp;blog_id=2">New</a></p>
+
+</body>
+</html>
+</pre>
+
+h2. tmpl/edit_foo.tmpl
+
+既存のMT::Fooオブジェクトを修正する画面用テンプレート。
+
+<pre>
+<html>
+<head>
+    <title>MT::Foo Edit</title>
+</head>
+<body>
+<h1><mt:var name="blog_name" /></h1>
+
+<form method="post" action="<mt:GetVar name="script_url" escape_html=1 />">
+<input type="hidden" name="__mode" value="save">
+<input type="hidden" name="id" value="<mt:GetVar name="id">">
+<input type="hidden" name="blog_id" value="<mt:GetVar name="blog_id">">
+<table border="2">
+    <tr><td>id</td><td><mt:GetVar name="id"></td></tr>
+    <tr><td>blog_id</td><td><mt:GetVar name="blog_id"></td></tr>
+    <tr><td>title</td><td><input name="title" type="text" value="<mt:GetVar name="title" escape_html=1>"></td></tr>
+    <tr><td>bar</td><td><textarea name="bar"><mt:GetVar name="bar" escape_html=1></textarea></td></tr>
+</table>
+<br />
+<input type="submit"><input type="reset">
+</form>
+
+<p><a href="<mt:GetVar name="script_url" />?__mode=main&amp;blog_id=2">Back</a></p>
+
+</body>
+</html>
+</pre>
+
+h2. tmpl/new_foo.tmpl
+
+新規のMT::Fooオブジェクトを作成する画面用テンプレート。
+
+<pre>
+<html>
+<head>
+    <title>MT::Foo New</title>
+</head>
+<body>
+<h1><mt:var name="blog_name" /></h1>
+
+<form method="post" action="<mt:GetVar name="script_url" />">
+<input type="hidden" name="__mode" value="save">
+<input type="hidden" name="blog_id" value="<mt:GetVar name="blog_id">">
+<table border="2">
+    <tr><td>blog_id</td><td><mt:GetVar name="blog_id"></td></tr>
+    <tr><td>title</td><td><input name="title" type="text" value="<mt:GetVar name="title">"></td></tr>
+    <tr><td>bar</td><td><textarea name="bar"><mt:GetVar name="bar"></textarea></td></tr>
+</table>
+<br />
+<input type="submit">
+</form>
+
+<p><a href="<mt:GetVar name="script_url" />?__mode=main&amp;blog_id=2">Back</a></p>
+
+</body>
+</html>
+</pre>
+
+h1. +ファイルの配置+
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin12/
+      |__ config.yaml
+      |__ lib/
+      |  |＿ MyPlugin12/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |__ NewApp.pm
+      |__ newapp.cgi
+      |__ tmpl/
+         |＿ edit_foo.tmpl
+         |＿ new_foo.tmpl
+         |＿ view_foo.tmpl
+</pre>
+
+h1. +プラグインダウンロード+
+
+[[MyPlugin12.zip(4.34KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin12.zip]]
+
+h1. +まとめ+
+
+今回あつかった管理アプリケーションは極々簡単な物です。本来は入力されたデータの空白チェックであるとか、エラーのハンドリングなど必要ですが最小限の物しか使っていません。また、編集対象のクラスをMT::Fooとしましたが別のプラグインに分けずに一つにすることもできますし、対象となるクラスを既存の物にする事も可能です。
+
+日頃「こんな機能があればいいのに」と思っている方は、アプリケーションを自作してMTを拡張してみてはいかがでしょうか？
+
+h1. +プラグイン開発ガイド インデックス+
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# [[環境変数について|Japanese-plugin-dev-1-3]]
+# [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# [[コンディショナルタグ プラグインの開発について|Japanese-plugin-dev-2-3]]
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+# [[プラグインの設定方法|Japanese-plugin-dev-3-1]]
+# [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
+# [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
+# [[MTオブジェクトの利用方法|Japanese-plugin-dev-3-4]]
+# [[独自オブジェクトの作成|Japanese-plugin-dev-3-4]]
+# 新規アプリケーションの作成
+# [[Transformerプラグインの開発|Japanese-plugin-dev-4-3]]
+# [[管理画面のメニュー修正|Japanese-plugin-dev-4-4]]

@@ -1,0 +1,13 @@
+<div style="float:left; border:thin solid green; padding: 5px; margin-right: 15px;">
+{{Template:Callback Types}}
+</div>
+
+= Web Services (MT::AtomServer and MT::XMLRPCServer) =
+
+* api_post_save.$obj_type
+* api_post_save.entry
+* api_pre_save.$obj_type
+* api_pre_save.entry
+* api_upload_file
+* api_upload_file.$asset->class
+* api_upload_image

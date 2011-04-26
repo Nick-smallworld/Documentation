@@ -1,0 +1,8 @@
+h2. Administrator's Guide
+
+* [[General Settings|Administrator's-Guide/General-Settings]]
+* Ultimate Guide to Template Module Caching
+* The Top 5 Ways to Make Movable Type Even Faster
+* Setting up run-periodic-tasks
+* Global User Banning
+* Using Apache Basic Authentication

@@ -1,0 +1,56 @@
+__NOTOC__
+
+Movable Type is an open source project that is open to everyone. Don't let the term "open source" fool you, contributions are ''not'' restricted to developers alone. Literally anyone can contribute according to their knowledge, means and time.
+
+Every aspect of Movable Type can benefit from another person loaning their time to the project. If you are looking to participate in some way here are just some of the many ways you can help:
+
+== Spread the Word ==
+
+One of the most important things any Movable Type community member can do is to spread the word about this publishing system we love so much. There are literally countless ways in which we can all work to elevate people's appreciation and awareness of MT; here are just a few: 
+
+* '''Blog about Movable Type'''
+* '''Recommend Movable Type''' to user's asking what they should choose
+* '''Share bookmarks''' about Movable Type with friends (e.g. on [http://delicious.com/tag/movabletype Del.icio.us])
+* '''Tell your friends''' about Movable Type
+* '''Respond to people's comments and questions''' about Movable Type in [http://forums.movabletype.org/ the forums], in blog comments or anywhere on the web
+* '''Link to and promote''' great sites powered by Movable Type ([http://www.movabletype.com/showcase/ here are some]!)
+* Let people know what a great and supportive community we have
+
+== Help Others Make the Switch ==
+
+There are lots of people out there who want to try Movable Type, switch from another platform, or upgrade their existing install. Let people know how you or others can help them make the switch or to upgrade successfully.
+
+== Join the Discussion ==
+
+Join the [http://www.sixapart.com/mailman/listinfo/mtos-dev MTOS-dev@sixapart.com mailing list]. Everyone is welcome, including those who just want to lurk. There is no barrier to entry and no expectations of your level of participation. In other words: just listen if you want, and if you are inspired to respond or create a conversation on your own, then by all means!
+
+* [http://www.movabletype.org/opensource/mailing-lists.html All Movable Type Mailing Lists]
+
+== Ideas and Feature Requests ==
+
+Movable Type is blessed with a community full of great ideas and also a community full of people with the ability to implement those ideas. If you have an idea, small or large, that you think would make a great addition to Movable Type then ''we want to hear it''! So please, jot down the detail in whatever level of detail you must and send it to us! 
+
+* [[How to submit a feature request]]
+
+== Bug Reports ==
+
+== Beta Testing ==
+
+We endeavor to release a new version of Movable Type several times a year. When we do, the success of that release is largely dependent upon the feedback we receive from the community during a public beta process. One great way for virtually any user to help is to participate in this process. By simply installing the beta and sharing with the community any issues, quirks or problems you run into, you can dramatically increase the overall quality of Movable Type for everyone!
+
+* [http://en.wikipedia.org/wiki/Software_release_life_cycle#Beta What is a beta?]
+
+== Community Support and Forum Contributions ==
+
+Every day people in the Movable Type community have a question about or ask for help with Movable Type. Jumping in and helping them will not only help them be successful using Movable Type, but it also shows them what a great, supportive and helpful community we have!
+
+* [http://forums.movabletype.org/ Movable Type Forums]
+* [http://getsatisfaction.com/sixapart/products/sixapart_movable_type Movable Type on GetSatisfaction]
+* [http://search.twitter.com/search?q=movabletype+%22movable+type%22 Twitter Search]
+
+== Themes ==
+
+== Plugins ==
+
+== Core Code ==
+

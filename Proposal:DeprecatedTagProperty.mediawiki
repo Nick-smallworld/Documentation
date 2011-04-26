@@ -1,0 +1,37 @@
+== Abstract ==
+
+Frequently tags are deprecated, but users are never informed when they are using such a tag. To help people use the proper and intended tags, we need someway to identify what those tags are.
+
+== Problems ==
+
+* there is no feedback to the developer/admin that deprecated tags are in use
+
+== Proposal ==
+
+'''Additions to Registry'''
+
+I propose we augment the tags registry to support the following syntax:
+
+    tags:
+        function: 
+            tagname:
+                handler: $Example::Example::Plugin::tagname
+                deprecated: "This tag has been deprecated in favor of tagfoo."
+
+The absence of a deprecated tag means the tag is kosher.
+
+'''Messaging in Edit Template UI'''
+
+Finally, when a user edits a template that contains a tag that is deprecated, a warning message should appear for each deprecated tag that is in use. The message that appears should be what is registered for that tag in the tag's 'deprecated' registry property.
+
+== Open Issues ==
+
+* Should these messages only appear when DebugMode is enabled?
+** No. 
+
+== Related Bugs ==
+
+* [http://bugs.movabletype.org/default.asp?81750 Bug 81750]
+
+[[Category:MTOS Proposals]]
+

@@ -1,0 +1,359 @@
+h1. コンディショナルタグ プラグインの開発について
+
+h1. +はじめに+
+
+今回はコンディショナルタグを実現するプラグインを解説します。
+
+h1. +コンディショナルタグとは？+
+
+コンディショナルタグの代表格は&lt;MTIf&gt;&lt;MTIfBlog&gt;&lt;MTIfCategory&gt;などのタグです。
+
+&lt;MTIfBlog&gt;〜&lt;MTElse&gt;〜&lt;/MTIfBlog&gt; のように利用します。
+
+これらは条件分岐を実装したMTタグです。
+
+コンディショナルタグもブロックタグと同じようにPerl版とPHP版で記述方法が若干違いますがPHPの実装の章で解説させていただきます。
+
+h1. +プラグインの仕様とテストケースの作成+
+
+h2. プラグインの仕様
+
+プラグインの仕様は以下になります。
+
+* タグ名（&lt;MTCategoryIfToplevel&gt;）
+* ブログ記事アーカイブで利用する
+* メインのカテゴリがトップレベル（親）カテゴリの時は正、違えば負
+* ブログ記事にカテゴリが設置されていない場合も負
+* 以下のようにタグを記述する
+
+<pre>
+<MTCategoryIfToplevel>
+<p>このブログ記事にはトップレベルカテゴリが設定されています。</p>
+<MTElse>
+<p>このブログ記事にはカテゴリが設定されていないか、トップレベルカテゴリ以外が設定されています。</p>
+</MTCategoryIfToplevel
+</pre>
+
+* 結果が正な場合 @<p>このブログ記事にはトップレベルカテゴリが設定されています。</p>@ が表示される
+* 結果が負な場合 @<p>このブログ記事にはカテゴリが設定されていないか、トップレベルカテゴリ以外が設定されています。</p>@ が表示される
+
+h2. テストケース１（00-compile.t）の作成
+
+以前に行ったものと同じです。各オブジェクトが正しくロードされているかを確認します。
+
+<pre>
+use strict;
+use lib qw( t/lib lib extlib );
+use warnings;
+use MT;
+use Test::More tests => 5;
+use MT::Test;
+
+ok(MT->component ('MyPlugin07'), "MyPlugin07 plugin loaded correctry");
+
+require_ok('MyPlugin07::L10N');
+require_ok('MyPlugin07::L10N::ja');
+require_ok('MyPlugin07::L10N::en_us');
+require_ok('MyPlugin07::Tags');
+
+1;
+</pre>
+
+h2. テストケース２（01-tags.t）の作成
+
+テストするのは以下の３項目です。
+
+# 空文字列をインプットすると、空文字列が戻ってくる
+# メインカテゴリにトップレベルカテゴリが設定されている場合文字列"AAA"が返る
+# メインカテゴリにトップレベルカテゴリが設定されていない場合文字列"BBB"が返る
+
+<pre>
+（前略）
+#===== Edit here
+my $test_json = <<'JSON';
+[
+{ "r" : "1", "t" : "", "e" : ""},
+{ "r" : "1", "t" : "<mt:Entries id=\"6\"><MTCategoryIfToplevel>AAA<MTElse>BBB</MTCategoryIfToplevel></mt:Entries>", "e" : "AAA"},
+{ "r" : "1", "t" : "<mt:Entries id=\"8\"><MTCategoryIfToplevel>AAA<MTElse>BBB</MTCategoryIfToplevel></mt:Entries>", "e" : "BBB"}
+]
+JSON
+#=====
+（後略）
+</pre>
+
+h1. +コンディショナルタグ プラグインの開発（Perl）+
+
+前章で作成したMyPlugin06を元にプラグインを作成します。
+
+h2. config.yaml
+
+グローバル・モディファイアの追加には以下のように"tags"=&gt; "modifier"=&gt; "モディファイア名?" =&gt; $プラグイン名::ハンドラ名 を記述します。
+
+"modifier"には、ブロックタグは"block"を記載します。
+
+モディファイア名の後に"?"が入っているのに注意してください。このように書くとブロックタグではなくコンディショナルタグと認識されます。
+
+<pre>
+id: MyPlugin07
+name: <__trans phrase="Sample Plugin Conditional tag">
+version: 1.0
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.example.com/about/
+doc_link: http://www.example.com/docs/
+l10n_class: MyPlugin07::L10N
+
+tags:
+    block:
+        CategoryIfToplevel?: $MyPlugin07::MyPlugin07::Tags::hdlr_category_if_toplevel
+</pre>
+
+h2. L10N.pm
+
+<pre>
+package MyPlugin07::L10N;
+use strict;
+use base 'MT::Plugin::L10N';
+
+1;
+</pre>
+
+h2. L10N/en_us.pm
+
+<pre>
+package MyPlugin07::L10N::en_us;
+
+use strict;
+use base 'MyPlugin07::L10N';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    '_PLUGIN_DESCRIPTION' => 'Sample conditional tag',
+    '_PLUGIN_AUTHOR' => 'Plugin author',
+);
+
+1;
+</pre>
+
+h2. L10N/ja.pm
+
+<pre>
+package MyPlugin07::L10N::ja;
+
+use strict;
+use base 'MyPlugin07::L10N::en_us';
+use vars qw( %Lexicon );
+
+%Lexicon = (
+    'Sample Plugin Conditional tag' => 'サンプルプラグイン コンディショナルタグ',
+    '_PLUGIN_DESCRIPTION' => ' テストプラグイン',
+    '_PLUGIN_AUTHOR' => 'プラグイン作者',
+);
+
+1;
+</pre>
+
+h2. Tags.pm
+
+<pre>
+package MyPlugin07::Tags;
+use strict;
+
+sub hdlr_category_if_toplevel {
+    my ($ctx, $args, $cond) = @_;
+
+    my $entry = $ctx->stash('entry');
+    my $cat = $entry->category() || return 0;
+
+    return ($cat->parent() == 0);
+}
+
+1;
+</pre>
+
+h2. 解説
+
+* パッケージ宣言
+初めにpackage宣言をし、"use strict;"しています。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-01.png]]
+
+* ハンドラ宣言（&lt;MTCategoryIfToplevel&gt;）
+ハンドラ関数宣言と呼び出し時の"$ctx", "$args"の代入です。この関数はブロックタグ(&lt;MTCategoryIfToplevel&gt;)になります。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-02.png]]
+
+* コンテキスト（$ctx）からのオブジェクトの取得
+７行めでコンテキストからブログ記事オブジェクト（エントリオブジェクト）を取得します。
+８行めでエントリのカテゴリを取得します。取得できない（カテゴリが設定されていない）場合は0（負）を返します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-03.png]]
+
+* 正・負の判定
+親カテゴリのカテゴリIDをチェックし、値が"0"だった場合は親カテゴリなので1（正）を返します。値が"0"以外だった場合は親カテゴリではないので0（負）を返します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-04.png]]
+
+h1. +コンディショナルタグ プラグインの開発（PHP）+
+
+h2. block.mtcategoryiftoplevel.php
+
+ファイル名はコンディショナルタグの場合でもblockタグとして扱い、&lt;MTCategoryIfToplevel&gt;タグである事から、block.mtcategoryiftoplevel.phpとなります。
+
+<pre>
+<?php
+    function smarty_block_mtcategoryiftoplevel ($args, $content, &$ctx, &$repeat) {
+        if (!isset($content)) {
+            $entry = $ctx->stash('entry');
+            $cat = $entry->category();
+            if (!$cat) {
+                $flag = 0;
+            } else {
+                if ($cat->parent == 0) {
+                    $flag = 1;
+                } else {
+                    $flag = 0;
+                }
+            }
+            return $ctx->_hdlr_if($args, $content, $ctx, $repeat, $flag);
+        } else {
+            return $ctx->_hdlr_if($args, $content, $ctx, $repeat);
+        }
+    }
+?>
+</pre>
+
+h2. 解説
+
+* ハンドラ関数宣言(&lt;MTCategoryIfToplevel&gt;)
+block名はsmarty記法にのっとって smarty_block_mtcategoryiftoplevel となります。一緒に呼び出し時の"$args", "$content", "$ctx", "$repeat"の取得をします。Perl版と異なる事に注意してください。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-05.png]]
+
+* 正・負判定
+１行目で$contentに何もセットされない場合は２〜１５行が実行されます。セットされていた場合は１７行目で次の処理に移行します。
+４行目で$ctxからブログ記事（エントリ）オブジェクトを取得します。５行目でブログ記事のカテゴリを取得します。
+６行目でカテゴリが取得できない（カテゴリが設定されていない）場合、$flagに0（負）を設定し、１５行目で処理を戻します。
+カテゴリが取得できた場合は、親カテゴリのIDが0の場合、設定されているカテゴリは親カテゴリなので$flagに1（正）を設定し、１５行目で処理を戻します。親カテゴリのIDが0以外の場合、親カテゴリではないため、$flagに0（負）を設定し、１５行目で処理を戻します。
+
+[[https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/images/02-03-06.png]]
+
+h1.  +ファイルの配置+
+
+<pre>
+$MT_DIR/
+|__ plugins/
+   |__ MyPlugin07/
+      |__ config.yaml
+      |__ lib/
+      |  |＿ MyPlugin07/
+      |     |__ L10N.pm
+      |     |＿ L10N/
+      |     |  |＿ en_us.pm
+      |     |  |＿ ja.pm
+      |     |＿ Tags.pm
+      |__ php/
+      |  |＿block.mtcategoryiftoplevel.php
+      |__ t/
+         |＿00-compile.t
+         |＿01-tags.t
+</pre>
+
+h1. +テストの実行+
+
+では、作成したプラグインに対してテストを行います。
+
+h2. 00-compile.t
+
+<pre>
+$ perl plugins/MyPlugin07/t/00-compile.t 
+1..5
+ok 1 - MyPlugin07 plugin loaded correctry
+ok 2 - require MyPlugin07::L10N;
+ok 3 - require MyPlugin07::L10N::ja;
+ok 4 - require MyPlugin07::L10N::en_us;
+ok 5 - require MyPlugin07::Tags;
+</pre>
+
+h2. 01-tags.t
+
+<pre>
+$ perl plugins/MyPlugin07/t/01-tags.t 
+1..7
+ok 1 - 'blog-name' template found
+ok 2 - Test blog loaded
+ok 3 - Test entry loaded
+ok 4 - perl test 1
+ok 5 - perl test 2
+ok 6 - perl test 3
+ok 7 - ok - php test 1 ok - php test 2 ok - php test 3 
+</pre>
+
+h2. proveコマンドでのテスト
+
+<pre>
+$ prove plugins/MyPlugin07/t/*.t
+plugins/MyPlugin07/t/00-compile.t .. ok   
+plugins/MyPlugin07/t/01-tags.t ..... ok   
+All tests successful.
+Files=2, Tests=12, 29 wallclock secs ( 0.08 usr  0.07 sys + 15.45 cusr  4.73 csys = 20.33 CPU)
+Result: PASS
+</pre>
+
+テストでの確認は終了しました。実際に管理画面からブログ記事アーカイブの"&lt;div id="alphe-inner"&gt;"の下にタグを記入し、スタティックの場合は再構築後、ダイナミックではそのまま各ブログ記事にトップレベルカテゴリに関する事が書き込まれます。
+
+* 記入例
+
+<pre>
+（前略）
+<div id="alpha">
+  <div id="alpha-inner">
+    <MTCategoryIfToplevel>
+    <p>このブログ記事にはトップレベルカテゴリが設定されています。</p>
+    <MTElse>
+    <p>このブログ記事にはカテゴリが設定されていないか、トップレベルカテゴリ以外が設定されています。</p>
+    </MTCategoryIfToplevel>
+（後略）
+</pre>
+
+* 出力例
+
+<pre>
+（前略）
+<div id="alpha">
+  <div id="alpha-inner">
+
+    <p>このブログ記事にはトップレベルカテゴリが設定されています。</p>
+（後略）
+</pre>
+
+h1. +まとめ+
+
+前回のブロックタグと同じく、Perl版はコード内で処理をし、PHP版はコードを一旦抜けるようになっています。
+
+やはり直感的なのはPerl版ですが、PHP版も今回の解説でご理解頂いたと思います。Perl版のプラグインを書く場合は一緒にPHP版も書いてみましょう。
+
+h1. +プラグインダウンロード+
+
+[[MyPlugin07.zip(5.98KB)|https://github.com/movabletype/Documentation/raw/master/assets/Japanese-plugin-dev/files/MyPlugin07.zip]]
+
+h1. +プラグイン開発ガイド インデックス+
+
+# [[プラグイン開発のためのファーストステップ|Japanese-plugin-dev-1-1]]
+# [[レジストリ、YAMLについて|Japanese-plugin-dev-1-2]]
+# [[環境変数について|Japanese-plugin-dev-1-3]]
+# [[プラグインのローカライゼーションについて|Japanese-plugin-dev-1-4]]
+# [[テストドリブンでのプラグインの開発について|Japanese-plugin-dev-1-5]]
+# [[グローバル・モディファイアプラグインの開発について|Japanese-plugin-dev-1-6]]
+# [[ファンクションタグ プラグインの開発について|Japanese-plugin-dev-2-1]]
+# [[ブロックタグ プラグインの開発について|Japanese-plugin-dev-2-2]]
+# コンディショナルタグ プラグインの開発について
+# [[プラグインのデバッグ|Japanese-plugin-dev-2-4]]
+# [[プラグインの設定方法|Japanese-plugin-dev-3-1]]
+# [[コールバックとフックポイント|Japanese-plugin-dev-3-2]]
+# [[スケジュールタスクの開発|Japanese-plugin-dev-3-3]]
+# [[MTオブジェクトの利用方法|Japanese-plugin-dev-3-4]]
+# [[独自オブジェクトの作成|Japanese-plugin-dev-4-1]]
+# [[新規アプリケーションの作成|Japanese-plugin-dev-4-2]]
+# [[Transformerプラグインの開発|Japanese-plugin-dev-4-3]]
+# [[管理画面のメニュー修正|Japanese-plugin-dev-4-4]]

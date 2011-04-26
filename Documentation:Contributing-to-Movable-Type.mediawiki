@@ -1,0 +1,11 @@
+== Overview ==
+
+Anyone, and I mean ''anyone'' can make a contribution to Movable Type. All you need is an idea and a computer, which by virtue of reading this document you already have. But how do you take an idea and turn into a product reality? What is the process? Who is involved? Is bribery involved? What if I can't code?
+
+Those are just some of the question people wanting to contribute ask themselves. The following documentation aims to answer these questions by outlining a process by which anyone with an idea can contribute to Movable Type. 
+
+== Documentation ==
+
+* [[How can I contribute to Movable Type?]]
+* [[The Contribution Process]]
+* [[Coding Guidelines]]
